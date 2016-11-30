@@ -1,0 +1,18 @@
+#########################
+## Sample Sass Lint File
+#########################
+# Linter Options
+options:
+  # Don't merge default rules
+  merge-default-rules: false
+  # Set the formatter to 'html'
+  formatter: html
+# File Options
+files:
+  include: 'src/styles/**/*.s+(a|c)ss'
+  ignore:
+    - 'vendor/**/*.*'
+# Rule Configuration
+rules:
+  no-important: 2
+  hex-notation: 2

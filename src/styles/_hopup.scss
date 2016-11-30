@@ -1,0 +1,23 @@
+.weave-hopup {
+  display: none;
+  background-color: #fff;
+  z-index: 11;
+  top: 40%;
+  left: 50%;
+  height: 200px;
+  width: 400px;
+  transform: translate(-50%, -50%);
+  color: #000;
+  box-shadow: 0px 7px 25px #b9b9b9;
+
+  &.active {
+    display: block
+  }
+}
+
+.weave-hopup-close {
+  height: 20px;
+  a {
+    float: right;
+  }
+}
