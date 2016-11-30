@@ -1,3 +1,13 @@
+@import "../../src/styles/index.scss";
+@import "markdown.css";
+@import "syntax.css";
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body {
+  background-color: $sand;
+  font-family: 'Roboto', sans-serif;
+}
+
 .component-example-page {
   text-align: left;
   padding: 20px;
@@ -16,6 +26,10 @@ h3 {
   margin-left: 0;
 }
 
+a {
+  display: block;
+}
+
 .prop-table .header {
   border-bottom: 1px solid black;
 }
@@ -24,18 +38,9 @@ h3 {
   min-width: 100px;
 }
 
-.prop-table tr:nth-child(even) {
-  background-color: #c9c9c9;
-}
-
 .component-demo {
   height: 400px;
   position: relative;
-  border: 1px solid black;
-}
-
-.demo-wrap {
-  overflow-y: auto;
 }
 
 .content-section {

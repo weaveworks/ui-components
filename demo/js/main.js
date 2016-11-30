@@ -2,10 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './pages/Root';
 
-import '../../src/styles/index.scss';
-import '../css/markdown.css';
-import '../css/syntax.css';
-import '../css/demo.css';
+import '../css/demo.scss';
 
 
 ReactDOM.render(

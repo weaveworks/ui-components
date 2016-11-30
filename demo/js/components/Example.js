@@ -43,9 +43,9 @@ export default class Example extends React.Component {
   }
   renderPropTable() {
     return (
-      <table>
+      <table className="weave-table">
         <tbody>
-          <tr className="header">
+          <tr className="weave-table-header">
             <th>Prop Name</th>
             <th>Required</th>
             <th>Type</th>
@@ -54,7 +54,7 @@ export default class Example extends React.Component {
           </tr>
           {
             _.map(this.props.doc.props, (value, name) => (
-              <tr key={name}>
+              <tr className="weave-table-row" key={name}>
                 <td>{name}</td>
                 <td>{value.required && value.required.toString()}</td>
                 <td>{value.type ? value.type.name : ''}</td>
@@ -90,13 +90,17 @@ export default class Example extends React.Component {
           </div>
         </div>
         <div className="content-section">
-          <div>
-            <h3>Example</h3>
-            <div className="component-demo">
-              <div className="demo-wrap">
-                {this.props.example
-                  ? <this.props.example />
-                  : <this.props.element {...this.props.element.props} {...newProps} />}
+          <div className="weave-panel">
+            <div className="weave-panel-header">
+              <h3>Example</h3>
+            </div>
+            <div className="weave-panel-body">
+              <div className="component-demo">
+                <div className="demo-wrap">
+                  {this.props.example
+                    ? <this.props.example />
+                    : <this.props.element {...this.props.element.props} {...newProps} />}
+                </div>
               </div>
             </div>
           </div>
