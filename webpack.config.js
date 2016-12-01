@@ -15,10 +15,10 @@ module.exports = {
   },
   entry: {
     components: ['./src/index'],
-    demo: [
+    docs: [
       'webpack-dev-server/client?http://0.0.0.0:8080',
       'webpack/hot/only-dev-server',
-      './demo/js/main',
+      './docs/js/main',
     ],
   },
   output: {
@@ -30,7 +30,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       chunks: ['vendors', 'app'],
-      template: 'demo/index.html',
+      template: 'docs/index.html',
       filename: 'index.html'
     })
   ],

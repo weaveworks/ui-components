@@ -12,9 +12,7 @@
     "lint-js": "eslint src",
     "lint-styles": "sass-lint",
     "lint": "npm run lint-js && npm run lint-styles",
-    "get-version": "cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g'",
-    "bump": "CURRENT=$(npm run get-version) echo $CURRENT",
-    "release": "npm run lint && npm test && npm run build && npm run get-version"
+    "release": "npm run lint && npm test && npm run build && npm version $1"
   },
   "repository": {
     "type": "git",
