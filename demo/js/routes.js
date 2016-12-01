@@ -26,11 +26,15 @@ function buildExampleComponent(el, doc, example) {
 }
 
 export default function getRoutes() {
+  // Build this here to use as the index route and as the /button route.
+  // This is a placeholder for a real landing page.
+  const button = buildExampleComponent(Button, ButtonDoc);
   return (
     <Route name="app" path="/" component={RouterComponent}>
       <IndexRoute component={App} />
       <Route path="components" component={ComponentsPage}>
-        <Route path="button" component={buildExampleComponent(Button, ButtonDoc)} />
+        <IndexRoute component={button} />
+        <Route path="button" component={button} />
         <Route path="grid" component={buildExampleComponent(Grid, GridDoc, GridExample)} />
         <Route path="menu" component={buildExampleComponent(null, MenuItemDoc, MenuExample)} />
       </Route>
