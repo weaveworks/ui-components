@@ -8,18 +8,24 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.components-page {
+  margin: 0 auto;
+  .weave-grid {
+    .col-span-2 {
+      margin-right: 0;
+    }
+  }
+}
+
 .component-example-page {
   text-align: left;
   padding: 20px;
+  max-width: 1440px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-}
-
-code {
-  max-width: 75%;
 }
 
 h3 {
@@ -49,4 +55,30 @@ a {
 
 .component-demo {
   overflow: auto;
+}
+
+.nav {
+  margin-top: 40px;
+}
+
+.logo {
+  position: relative;
+  margin: 20px;
+}
+
+.header {
+  border-bottom-width: 1px;
+  box-shadow: 0 4px 2px -2px rgba(0,0,0,.16);
+  border-bottom: 1px solid $gray;
+  height: 50px;
+  width: 100%;
+  line-height: 50px;
+  .logo {
+    width: 200px;
+    height: 50px;
+  }
+}
+
+.description code {
+  max-width: 600px;
 }
