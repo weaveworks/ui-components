@@ -1,30 +1,3 @@
 machine:
-  services:
-    - docker
-
-dependencies:
-  cache_directories:
-    - "~/docker"
-  post:
-    - go get -u github.com/weaveworks/build-tools/cmd/wcloud
-    - |
-        cd client && \
-        ../tools/rebuild-image quay.io/weaveworks/client . \
-          Dockerfile package.json webpack.local.config.js webpack.production.config.js .babelrc && \
-        touch .uptodate
-    - sudo apt-get update && sudo apt-get install python-pip && sudo pip install awscli
-
-test:
-  override:
-    - make RM= client-lint
-    - make RM=
-
-deployment:
-  push:
-    branch: master
-    commands:
-      - make ui-upload
-      - docker login -e '.' -u "$DOCKER_REGISTRY_USER" -p "$DOCKER_REGISTRY_PASSWORD" quay.io
-      - docker push quay.io/weaveworks/ui-server:$(./tools/image-tag)
-      - docker push quay.io/weaveworks/ui-server:latest
-      - wcloud deploy quay.io/weaveworks/ui-server:$(./tools/image-tag)
+  node:
+    version: 6.9.0
