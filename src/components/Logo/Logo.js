@@ -1,6 +1,15 @@
 /* eslint-disable */
 import React from 'react';
 
+/**
+ * An SVG Weaveworks logo
+ * ```javascript
+ * import React from 'react';
+ * import { Logo } from 'weaveworks-ui-components'
+ *
+ * React.render(<Logo />, document.getElementById('logo'))
+ * ```
+ */
 export default class Logo extends React.Component {
   render() {
     return (
