@@ -9,9 +9,13 @@ import Example from './components/Example';
 
 import Button from '../../src/components/Button';
 import ButtonDoc from '!!react-docs!../../src/components/Button/Button.js';
+
 import Grid from '../../src/components/Grid';
 import GridDoc from '!!react-docs!../../src/components/Grid/Grid.js';
 import GridExample from '../../src/components/Grid/example';
+
+import MenuItemDoc from '!!react-docs!../../src/components/Menu/MenuItem.js';
+import MenuExample from '../../src/components/Menu/example';
 
 function buildExampleComponent(el, doc, example) {
   return function ExampleWrapper() {
@@ -28,6 +32,7 @@ export default function getRoutes() {
       <Route path="components" component={ComponentsPage}>
         <Route path="button" component={buildExampleComponent(Button, ButtonDoc)} />
         <Route path="grid" component={buildExampleComponent(Grid, GridDoc, GridExample)} />
+        <Route path="menu" component={buildExampleComponent(null, MenuItemDoc, MenuExample)} />
       </Route>
     </Route>
   );

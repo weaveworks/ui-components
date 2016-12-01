@@ -57,7 +57,20 @@
   height: 36px;
   min-width: 90px;
   &:hover {
-    @include transition(color, .2s, ease);
-    background-color: $gray
+    @include hover-background;
+  }
+}
+
+.weave-menu {
+  color: $lavender;
+  
+  &-item {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+    &:hover {
+      @include hover-background;
+    }
   }
 }

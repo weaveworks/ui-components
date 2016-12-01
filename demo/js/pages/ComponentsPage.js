@@ -11,6 +11,7 @@ export default function ComponentsPage({children}) {
             <h4><Link to="/components">Weave UI Components</Link></h4>
             <Link to="/components/button">Button</Link>
             <Link to="/components/grid">Grid</Link>
+            <Link to="/components/menu">Menu</Link>
           </div>
         </GridColumn>
         <GridColumn span={10}>

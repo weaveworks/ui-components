@@ -22,3 +22,10 @@
   -o-transition: $args;
   transition: $args;
 }
+
+@mixin hover-background {
+  @include transition(color, .3s, ease);
+  cursor: pointer;
+  color: $gunpowder;
+  background-color: $lightgray;
+}
