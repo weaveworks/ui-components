@@ -12,7 +12,8 @@
     "lint-js": "eslint src",
     "lint-styles": "sass-lint",
     "lint": "npm run lint-js && npm run lint-styles",
-    "release": "npm run lint && npm test && npm run build && npm version $1"
+    "bump" : "npm version patch",
+    "release": "npm run lint && npm test && npm run build && npm run bump"
   },
   "repository": {
     "type": "git",
@@ -58,7 +59,6 @@
     "react-router": "3.0.0",
     "sass-lint": "1.10.2",
     "sass-loader": "4.0.2",
-    "semver": "^5.3.0",
     "style-loader": "0.13.1",
     "webpack": "1.13.3",
     "webpack-dev-server": "1.16.2"
