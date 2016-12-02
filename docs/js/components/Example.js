@@ -2,8 +2,10 @@
 import React from 'react';
 import { ObjectInspector } from 'react-inspector';
 import _ from 'lodash';
+
 import Hopup from '../../../src/components/Hopup';
 import { renderMarkdown } from '../utils';
+
 
 export default class Example extends React.Component {
   constructor(props, context) {
@@ -11,12 +13,15 @@ export default class Example extends React.Component {
     this.state = {
       hopupActive: false,
       callbackName: '',
-      demoOutput: ''
+      demoOutput: '',
+      fetchingDocs: true
     };
     this.instrumentElement = this.instrumentElementProps.bind(this);
     this.renderPropTable = this.renderPropTable.bind(this);
     this.closeHopup = this.closeHopup.bind(this);
+    this.handleAction = this.handleAction.bind(this);
   }
+
   handleAction(propName, ...args) {
     this.setState({
       hopupActive: true,
@@ -30,8 +35,8 @@ export default class Example extends React.Component {
       })
     });
   }
-  instrumentElementProps() {
-    return _.reduce(this.props.doc.props, (result, value, prop) => {
+  instrumentElementProps(props) {
+    return _.reduce(props, (result, value, prop) => {
       if (value.type && value.type.name === 'func') {
         // Intercept any callbacks and inject the special `handleAction` method.
         // This allows a user to see what args get returned by interacting with the
@@ -41,7 +46,7 @@ export default class Example extends React.Component {
       return result;
     }, {});
   }
-  renderPropTable() {
+  renderPropTable(props) {
     return (
       <table className="weave-table">
         <tbody>
@@ -53,7 +58,7 @@ export default class Example extends React.Component {
             <th>Default</th>
           </tr>
           {
-            _.map(this.props.doc.props, (value, name) => (
+            _.map(props, (value, name) => (
               <tr className="weave-table-row" key={name}>
                 <td>{name}</td>
                 <td>{value.required && value.required.toString()}</td>
@@ -74,11 +79,13 @@ export default class Example extends React.Component {
     });
   }
   render() {
-    const { description, name } = this.props.doc;
-    const newProps = this.instrumentElementProps();
+    // Docs are rendered as JSON by a webpack loader/plugin. When the component mounts,
+    // it does a network request to fetch its docs, then renders based on the data returned.
+    const { description, props } = this.props.doc;
+    const newProps = this.instrumentElementProps(props);
     return (
       <div className="component-example">
-        <h2>{name}</h2>
+        <h2>{this.props.name}</h2>
         <div className="content-section">
           <div className="description">
             <div dangerouslySetInnerHTML={renderMarkdown(description)} />
@@ -86,7 +93,7 @@ export default class Example extends React.Component {
         </div>
         <div className="content-section">
           <div className="prop-table">
-            {this.props.doc.props && this.renderPropTable()}
+            {props && this.renderPropTable(props)}
           </div>
         </div>
         <div className="content-section">
@@ -98,20 +105,20 @@ export default class Example extends React.Component {
               <div className="component-demo">
                 <div className="demo-wrap">
                   {this.props.example
-                    ? <this.props.example />
+                    ? <this.props.example clickHandler={this.handleAction} />
                     : <this.props.element {...this.props.element.props} {...newProps} />}
                 </div>
               </div>
             </div>
           </div>
-          <Hopup
-            onClose={this.closeHopup}
-            active={this.state.hopupActive}
-          >
-            <div className="callback-name">{`"${this.state.callbackName}" called with:`}</div>
-            <ObjectInspector data={this.state.demoOutput} />
-          </Hopup>
         </div>
+        <Hopup
+          onClose={this.closeHopup}
+          active={this.state.hopupActive}
+        >
+          <div className="callback-name">{`"${this.state.callbackName}" called with:`}</div>
+          <ObjectInspector data={this.state.demoOutput} />
+        </Hopup>
       </div>
     );
   }

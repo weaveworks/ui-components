@@ -1,13 +1,13 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ReactDocsPlugin = require('./loaders/plugin');
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
   resolveLoader: {
     alias: {
-      'react-docs': path.join(__dirname, 'loaders/react-docs.js')
+      'react-docs': path.join(__dirname, 'loaders/react-docs.js'),
+      example: path.join(__dirname, 'loaders/examples.js')
     },
     root: path.join(__dirname, 'node_modules')
   },
@@ -21,6 +21,7 @@ module.exports = {
       'webpack/hot/only-dev-server',
       './docs/js/main',
     ],
+    // examples: ['./docs/js/examples']
   },
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -33,8 +34,7 @@ module.exports = {
       chunks: ['vendors', 'app'],
       template: 'docs/index.html',
       filename: 'index.html'
-    }),
-    new ReactDocsPlugin()
+    })
   ],
   module: {
     loaders: [
