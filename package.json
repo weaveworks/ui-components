@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -61,7 +61,6 @@
     "sass-lint": "1.10.2",
     "sass-loader": "4.0.2",
     "style-loader": "0.13.1",
-    "superagent": "^3.1.0",
     "webpack": "1.13.3",
     "webpack-dev-server": "1.16.2"
   }

@@ -3,8 +3,8 @@ import React from 'react';
 import { ObjectInspector } from 'react-inspector';
 import _ from 'lodash';
 
-import Hopup from '../../../src/components/Hopup';
-import { renderMarkdown } from '../utils';
+import Hopup from '../../src/components/Hopup';
+import { renderMarkdown } from './utils';
 
 
 export default class Example extends React.Component {
@@ -27,7 +27,7 @@ export default class Example extends React.Component {
       hopupActive: true,
       callbackName: propName,
       demoOutput: _.map(args, (arg) => {
-        if (arg.persist) {
+        if (arg && arg.persist) {
           // Synthetic mouse events throw warnings unless you persist them.
           arg.persist();
         }
@@ -79,8 +79,6 @@ export default class Example extends React.Component {
     });
   }
   render() {
-    // Docs are rendered as JSON by a webpack loader/plugin. When the component mounts,
-    // it does a network request to fetch its docs, then renders based on the data returned.
     const { description, props } = this.props.doc;
     const newProps = this.instrumentElementProps(props);
     return (

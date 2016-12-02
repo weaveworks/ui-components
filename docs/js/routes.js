@@ -3,13 +3,8 @@ import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
 import { includes } from 'lodash';
 
-import App from './pages/App';
-import RouterComponent from './components/RouterComponent';
-import Example from './components/Example';
-
-import examples from './examples';
-import docs from './docs';
-import components from './components';
+import App from './App';
+import Example from './Example';
 
 function buildExampleComponent(el, doc, example, sub) {
   return function ExampleWrapper() {
@@ -31,11 +26,11 @@ function isSubComponent(resource) {
   return dir !== module;
 }
 
-export default function getRoutes() {
+export default function getRoutes(components, examples, docs) {
   const availableExamples = examples.keys();
   return (
-    <Route name="app" path="/" component={RouterComponent}>
-      <Route path="components" component={App}>
+    <Route path="/" component={App}>
+      <Route path="components">
         {components.keys().map((resource) => {
           const name = resource.split('/').pop();
           const component = components(resource).default;
