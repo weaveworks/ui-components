@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import { Grid, GridColumn } from '../../../src/components/Grid';
 import { Menu, MenuItem } from '../../../src/components/Menu';
@@ -19,12 +20,25 @@ export default class App extends React.Component {
   }
 
   render() {
-    // We only want links to top-level directories. For example, we should only have a link to
-    // /Menu, insted of /Menu and /MenuItem. The filter cb will test to make sure the resrouce
-    // being called is ./Menu/Menu.
-    const links = components.keys().filter(resource =>
-      resource.split('/').filter(n => n !== '.').every((el, i, ary) => el === ary[0])
-    );
+    // Renders a tree structure for the left-hand navigation links.
+    // Filters out .js resources to avoid duplicates.
+    // => { Grid: {name: 'Grid', subModules: ['GridColumn']}, Button: {...}, ...}
+    const links = components.keys().filter(n => !_.includes(n, '.js'));
+    const tree = _.reduce(links, (result, resource) => {
+      const [dir, module] = resource.split('/').filter(n => n !== '.');
+      const isDefault = dir === module;
+      // Determine the link matches the top level dir. Else, creates an array of subModules.
+      if (isDefault && !result[dir]) {
+        result[dir] = { name: module };
+      } else if (!isDefault && result[dir]) {
+        if (!result[dir].subModules) {
+          result[dir].subModules = [module];
+        } else {
+          result[dir].subModules.push(module);
+        }
+      }
+      return result;
+    }, {});
     return (
       <div className="components-page">
         <div className="header"><a href="http://weave.works"><Logo /></a></div>
@@ -33,9 +47,16 @@ export default class App extends React.Component {
             <div className="nav">
               <div className="content-section">
                 <Menu>
-                  {links.map(dir => (
-                    <MenuItem key={dir} onClick={this.navigate} text={dir.split('/').pop()} />
-                  ))}
+                  {_.map(tree, ({name, subModules}) => {
+                    const children = _.map(subModules, m => (
+                      <MenuItem key={m} onClick={this.navigate} text={m} />
+                    ));
+                    return (
+                      <MenuItem key={name} onClick={this.navigate} text={name}>
+                        {children.length > 0 && <div className="sub-modules">{children}</div>}
+                      </MenuItem>
+                    );
+                  })}
                 </Menu>
               </div>
             </div>

@@ -96,22 +96,24 @@ export default class Example extends React.Component {
             {props && this.renderPropTable(props)}
           </div>
         </div>
-        <div className="content-section">
-          <div className="weave-panel">
-            <div className="weave-panel-header">
-              <h3>Example</h3>
-            </div>
-            <div className="weave-panel-body">
-              <div className="component-demo">
-                <div className="demo-wrap">
-                  {this.props.example
-                    ? <this.props.example clickHandler={this.handleAction} />
-                    : <this.props.element {...this.props.element.props} {...newProps} />}
+        {!this.props.isSubComponent &&
+          <div className="content-section">
+            <div className="weave-panel">
+              <div className="weave-panel-header">
+                <h3>Example</h3>
+              </div>
+              <div className="weave-panel-body">
+                <div className="component-demo">
+                  <div className="demo-wrap">
+                    {this.props.example
+                      ? <this.props.example clickHandler={this.handleAction} />
+                      : <this.props.element {...this.props.element.props} {...newProps} />}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        }
         <Hopup
           onClose={this.closeHopup}
           active={this.state.hopupActive}

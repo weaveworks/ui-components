@@ -79,6 +79,10 @@ a {
   }
 }
 
+.description p code {
+  display: inline-block;
+}
+
 .description code {
   max-width: 600px;
 }

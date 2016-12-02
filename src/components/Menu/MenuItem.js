@@ -8,6 +8,7 @@ class MenuItem extends React.Component {
   }
 
   handleClick(e) {
+    e.stopPropagation();
     e.preventDefault();
     this.props.onClick(this.props.text);
   }

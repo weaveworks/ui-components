@@ -1,7 +1,9 @@
 import React from 'react';
 
 /**
- * A responsive grid. Use the `<GridColumn />` component to specify a col-span.
+ * A responsive grid.
+ *
+ * Use the `<GridColumn />` component to specify a col-span.
  * The max number of columns is 12, so a col-span of 12 will span 100% of the available width.
  *
  * ```javascript
@@ -21,6 +23,9 @@ import React from 'react';
  *     </Grid>
  * )}
  * ```
+ *
+ * See also:
+ * [GridColumn](/components/gridcolumn)
  */
 export default function Grid({children}) {
   return (
