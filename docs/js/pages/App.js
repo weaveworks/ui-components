@@ -1,7 +1,11 @@
 import React from 'react';
+import includes from 'lodash/includes';
+
 import { Grid, GridColumn } from '../../../src/components/Grid';
 import { Menu, MenuItem } from '../../../src/components/Menu';
 import Logo from '../../../src/components/Logo';
+
+import components from '../components';
 
 
 export default class App extends React.Component {
@@ -16,6 +20,9 @@ export default class App extends React.Component {
   }
 
   render() {
+    const dirs = components.keys().filter(dir =>
+      !includes(dir.split('/').pop(), '.js')
+    );
     return (
       <div className="components-page">
         <div className="header"><a href="http://weave.works"><Logo /></a></div>
@@ -24,10 +31,9 @@ export default class App extends React.Component {
             <div className="nav">
               <div className="content-section">
                 <Menu>
-                  <MenuItem onClick={this.navigate} text="Logo" />
-                  <MenuItem onClick={this.navigate} text="Button" />
-                  <MenuItem onClick={this.navigate} text="Grid" />
-                  <MenuItem onClick={this.navigate} text="Menu" />
+                  {dirs.map(dir => (
+                    <MenuItem key={dir} onClick={this.navigate} text={dir.split('/').pop()} />
+                  ))}
                 </Menu>
               </div>
             </div>

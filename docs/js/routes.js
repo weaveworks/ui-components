@@ -3,7 +3,6 @@ import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
 import { includes } from 'lodash';
 
-// import ComponentsPage from './pages/ComponentsPage';
 import App from './pages/App';
 import RouterComponent from './components/RouterComponent';
 import Example from './components/Example';
@@ -26,8 +25,6 @@ function buildExampleComponent(el, doc, example) {
 }
 
 export default function getRoutes() {
-  // Build this here to use as the index route and as the /logo route.
-  // This is a placeholder for a real landing page.
   const availableExamples = examples.keys();
   return (
     <Route name="app" path="/" component={RouterComponent}>
