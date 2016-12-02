@@ -74,14 +74,12 @@
     }
     .sub-modules {
       @include font-size(medium);
-      padding: 0;
-      padding-left: 10px;
       &:hover {
         cursor: pointer;
         text-decoration: underline;
       }
       .weave-menu-item {
-        padding-left: 0;
+        padding-left: 10px;
         line-height: 20px;
         min-height: 10px;
       }

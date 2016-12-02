@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * A child of the `<Menu />` component.
+ *
+ * See also [Menu](/components/menu)
+ */
 class MenuItem extends React.Component {
   constructor(props, context) {
     super(props, context);
