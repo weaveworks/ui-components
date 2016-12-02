@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactDocsPlugin = require('./loaders/plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -32,7 +33,8 @@ module.exports = {
       chunks: ['vendors', 'app'],
       template: 'docs/index.html',
       filename: 'index.html'
-    })
+    }),
+    new ReactDocsPlugin()
   ],
   module: {
     loaders: [
