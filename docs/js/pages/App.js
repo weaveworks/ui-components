@@ -1,5 +1,4 @@
 import React from 'react';
-import includes from 'lodash/includes';
 
 import { Grid, GridColumn } from '../../../src/components/Grid';
 import { Menu, MenuItem } from '../../../src/components/Menu';
@@ -20,8 +19,11 @@ export default class App extends React.Component {
   }
 
   render() {
-    const dirs = components.keys().filter(dir =>
-      !includes(dir.split('/').pop(), '.js')
+    // We only want links to top-level directories. For example, we should only have a link to
+    // /Menu, insted of /Menu and /MenuItem. The filter cb will test to make sure the resrouce
+    // being called is ./Menu/Menu.
+    const links = components.keys().filter(resource =>
+      resource.split('/').filter(n => n !== '.').every((el, i, ary) => el === ary[0])
     );
     return (
       <div className="components-page">
@@ -31,7 +33,7 @@ export default class App extends React.Component {
             <div className="nav">
               <div className="content-section">
                 <Menu>
-                  {dirs.map(dir => (
+                  {links.map(dir => (
                     <MenuItem key={dir} onClick={this.navigate} text={dir.split('/').pop()} />
                   ))}
                 </Menu>

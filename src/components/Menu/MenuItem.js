@@ -1,8 +1,5 @@
 import React from 'react';
 
-/**
- * A menu component that can be used for navigation
- */
 class MenuItem extends React.Component {
   constructor(props, context) {
     super(props, context);
