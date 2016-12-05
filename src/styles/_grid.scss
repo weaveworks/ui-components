@@ -1,0 +1,10 @@
+
+.weave-grid {
+  @include outer-container(100%);
+}
+
+@for $i from 1 through 12 {
+  .col-span-#{$i} {
+    @include span-columns($i);
+  }
+}

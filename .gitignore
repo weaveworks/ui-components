@@ -1,0 +1,10 @@
+# Emacs backup files
+*~
+.DS_Store
+
+# Project specific
+.uptodate
+node_modules/
+build/
+dist/
+yarn.lock

@@ -1,0 +1,88 @@
+.weave-table {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-collapse: collapse;
+  border-left-color: $gray;
+  border-right-color: $gray;
+  border-top-color: $gray;
+
+  &-header {
+    box-shadow: 0 4px 2px -2px rgba(0,0,0,.16);
+    border-bottom: 1px solid $gray;
+
+    th {
+      @include font-size(small);
+      font-weight: normal;
+      color: $lavender;
+      text-transform: uppercase;
+    }
+  }
+  &-row {
+    @include font-size(medium);
+    color: $gunpowder;
+    &:nth-child(odd) {
+      background-color: $athens;
+    }
+    td {
+      padding: 3px 4px;
+    }
+  }
+}
+
+.weave-panel {
+  @include material-shadow;
+  &-header {
+    height: 50px;
+    padding-left: 20px;
+    background-color: $athens;
+    color: $gunpowder;
+    &:first-child {
+      line-height: 50px;
+    }
+  }
+
+  &-body {
+    padding: 20px;
+  }
+}
+
+.weave-button {
+  @include font-size(medium);
+  @include material-shadow;
+  text-transform: uppercase;
+  background-color: $white;
+  outline: none;
+  border: 0;
+  cursor: pointer;
+  height: 36px;
+  min-width: 90px;
+  &:hover {
+    @include hover-background;
+  }
+}
+
+.weave-menu {
+  color: $lavender;
+  text-align: left;
+  &-item {
+    display: block;
+    min-height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+    &:hover {
+      @include hover-background;
+    }
+    .sub-modules {
+      @include font-size(medium);
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+      .weave-menu-item {
+        padding-left: 10px;
+        line-height: 20px;
+        min-height: 10px;
+      }
+    }
+  }
+}
