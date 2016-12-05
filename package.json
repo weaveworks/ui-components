@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.1.8",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,7 @@
     "lint-js": "eslint src",
     "lint-styles": "sass-lint",
     "lint": "npm run lint-js && npm run lint-styles",
+    "ci" : "npm run lint && npm test",
     "release": "npm run lint && npm test && npm run build && npm version patch && git push --tags"
   },
   "repository": {
