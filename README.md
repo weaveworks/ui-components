@@ -44,69 +44,64 @@ import 'weaveworks-ui-components/styles';
 
 To develop a component locally, start the `webpack-dev-server` using `npm start`. Any components in the `src/components` directory will auto-magically be visible in the left-hand navigation. Editing a component will hot-reload it in the page. NOTE: when adding a component file for the first time, you will need to restart the `webpack-dev-server` to see the component appear in the navigation.
 
-#### Example Implementation
-Here is how to set up a webpack project that uses the `weaveworks-ui-components` package.
+### Parallel development with LocalModuleProxy
+It is possible to proxy module imports to a local copy of the `weaveworks-ui-components` repository to allow for parallel development. For example, if you want to add a new component to your project, but you want to re-use the component on other projects, you can do you can add a component in the `ui-components/src/components` directory, then add the `LocalModuleProxy` resolver plugin to your webpack config:
 
-`package.json`
-```json
-{
-  "name": "my-project",
-  "scripts": {
-    "build": "webpack"
-  },
-  "dependencies": {
-    "lodash": "^4.17.2",
-    "react": "~15.4.0",
-    "react-dom": "~15.4.0",
-    "weaveworks-ui-components": "https://github.com/weaveworks/ui-components"
-  },
-  "devDependencies": {
-    "babel-loader": "^6.2.8",
-    "css-loader": "^0.26.1",
-    "sass-loader": "^4.0.2",
-    "style-loader": "^0.13.1",
-    "webpack": "~1.13.3"
-  }
+```javascript
+const webpack = require('webpack');
+const LocalModuleProxy = require('weaveworks-ui-components/resolvers').LocalModuleProxy;
+const COMPONENT_LIB_PATH = '/Users/myusername/path/to/ui-components';
+
+module.exports = {
+  ...
+  plugins: [
+    new webpack.ResolverPlugin(new LocalModuleProxy({
+      moduleName: 'weaveworks-ui-components',
+      path: `${COMPONENT_LIB_PATH}/src/components/index.js`
+    }))
+  ]
 }
 ```
 
-`webpack.config.js`
+Webpack will resolve imports that match `moduleName` from the path supplied to the `path` key. This should work for all webpack-related functionality, including hot reload.
+
+One weird trick to remove the `COMPONENT_LIB_PATH` variable from version control:
+
+In your `.bash_profile` or equivalent:
+```
+export COMPONENT_LIB_PATH="/absolute/path/to/ui-components"
+```
+In your `webpack.config.js`:
 ```javascript
 module.exports = {
-  entry: {
-    app: './src/components/App.js'
-  },
-  output: {
-    path: 'dist/',
-    filename: '[name].js'
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.(scss|css)$/,
-        loader: 'style-loader!css-loader!sass-loader'
-      },
-      {
-        test: /\.js?$/,
-        loaders: ['babel-loader']
-      }
-    ]
-  }
+  ...
+  plugins: [
+    new webpack.ResolverPlugin(new LocalModuleProxy({
+      moduleName: 'weaveworks-ui-components',
+      path: `${process.env.COMPONENT_LIB_PATH}/src/components/index.js`
+    }))
+  ]
 }
 ```
-`src/components/App.js`
+
+#### Exclude proxied modules from preLoaders
+Since the request for `weaveworks-ui-components` is no longer resolving to `node_modules`, you may need to add an additional clause to the `exclude` option in your webpack `preLoaders`:
 ```javascript
-const React = require('react');
-const ReactDOM = require('react-dom');
+// Change this:
+preLoaders: [
+  {
+    test: /\.js$/,
+    exclude: /node_modules|vendor/,
+    loader: 'eslint-loader'
+  }
+]
 
-require('weaveworks-ui-components/styles');
-
-const WeaveComponents = require('weaveworks-ui-components');
-
-const App = React.createElement('div', { className: 'my-app' }, [
-  React.createElement(WeaveComponents.Logo)
-]);
-
-ReactDOM.render(App, document.getElementById('app'));
-
+// To this:
+preLoaders: [
+  {
+    test: /\.js$/,
+    exclude: new RegExp(`node_modules|vendor|${process.env.COMPONENT_LIB_PATH}`),
+    loader: 'eslint-loader'
+  }
+],
 ```
