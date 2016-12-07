@@ -105,8 +105,30 @@ preLoaders: [
   }
 ],
 ```
+<<<<<<< 0c011082b67c64ff7956a55b9f76a64be482bbe3
 
 #### Deploying to S3
 Configure your AWS CLI tools: http://docs.aws.amazon.com/cli/latest/userguide/installing.html.
 
 Then run `npm run s3`. Static files will get pushed when doing an `npm release` as well.
+=======
+## Partial imports
+It is possible to import a single component at a time using partial imports. This will allow webpack to do tree-shaking and keep bundle sizes smaller. Since the `weaveworks-ui-components` package is hosted on github (and not `npm`), you will need to add a resolver to your webpack configuration:
+```javascript
+const WeaveworksPartialImport = require('weaveworks-ui-components/resolvers').WeaveworksPartialImport;
+module.exports = {
+  ...
+  plugins: [
+    ...
+    new webpack.ResolverPlugin(new WeaveworksPartialImport())
+  ]
+}
+```
+This will allow for partial imports, like so:
+```javascript
+import Button from 'weaveworks-ui-components/Button';
+// is equivalent to
+import { Button } from 'weaveworks-ui-components';
+```
+The `WeaveworksPartialImport` package will only work for the `weaveworks-ui-components` package, hence the Weaveworks-specific name
+>>>>>>> Added partial-import resolver
