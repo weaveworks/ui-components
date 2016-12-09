@@ -10,8 +10,6 @@ function getFiles(path) {
   return fs.readdirSync(path).filter(d => !/^\.|index|example|test/.test(d));
 }
 
-debugger;
-
 describe('index', () => {
   it('should contain the components', () => {
     expect(WeaveComponents).toExist();
