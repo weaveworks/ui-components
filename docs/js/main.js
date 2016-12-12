@@ -4,6 +4,7 @@ import Root from './Root';
 import getRoutes from './routes';
 
 import '../css/demo.scss';
+import '../img/favicon.ico';
 
 // webpack will make separate bundles for each of these contexts. They each get used to render
 // components and their docs dynamically.
@@ -18,4 +19,6 @@ ReactDOM.render(
   document.getElementById('demo')
 );
 
-module.hot.accept();
+if (module.hot) {
+  module.hot.accept();
+}

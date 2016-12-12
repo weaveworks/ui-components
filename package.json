@@ -8,12 +8,13 @@
     "test": "jest",
     "start": "node bin/dev-server",
     "debug": "node debug ./node_modules/.bin/jest -i",
-    "build": "RELEASE=true webpack --config webpack.config.js",
+    "build": "RELEASE=true rm -rf dist && webpack --config webpack.config.js",
     "lint-js": "eslint src",
     "lint-styles": "sass-lint",
     "lint": "npm run lint-js && npm run lint-styles",
     "ci": "npm run lint && npm test",
-    "release": "npm run lint && npm test && npm run build && npm version patch && git push --tags"
+    "s3": "aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
+    "release": "npm run lint && npm test && npm run build && npm version patch && git push --tags && npm run s3"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
     "eslint-plugin-react": "6.7.1",
     "expect": "1.20.2",
     "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
     "highlight.js": "9.8.0",
     "html-webpack-plugin": "2.24.1",
     "jest": "17.0.3",
