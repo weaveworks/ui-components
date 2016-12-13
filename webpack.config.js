@@ -14,7 +14,8 @@ let entry = {
 
 const output = {
   path: path.join(__dirname, '/dist/'),
-  filename: '[name].js'
+  filename: '[name].js',
+  publicPath: '/'
 };
 
 let plugins = [
