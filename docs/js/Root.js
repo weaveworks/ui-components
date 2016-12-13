@@ -1,5 +1,7 @@
 import React from 'react';
-import { Router, browserHistory } from 'react-router';
+import { Router, browserHistory, hashHistory } from 'react-router';
+
+const onS3 = window.location.href.indexOf('s3') !== -1;
 
 class Root extends React.Component {
   getChildContext() {
@@ -10,7 +12,7 @@ class Root extends React.Component {
   }
   render() {
     return (
-      <Router history={browserHistory} routes={this.props.routes} />
+      <Router history={onS3 ? hashHistory : browserHistory} routes={this.props.routes} />
     );
   }
 }

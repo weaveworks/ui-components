@@ -105,3 +105,8 @@ preLoaders: [
   }
 ],
 ```
+
+#### Deploying to S3
+Configure your AWS CLI tools: http://docs.aws.amazon.com/cli/latest/userguide/installing.html.
+
+Then run `npm run s3`. Static files will get pushed when doing an `npm release` as well.

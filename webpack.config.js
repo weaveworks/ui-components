@@ -12,7 +12,7 @@ let entry = {
   ]
 };
 
-let output = {
+const output = {
   path: path.join(__dirname, '/dist/'),
   filename: '[name].js'
 };
@@ -37,7 +37,7 @@ const loaders = [
   },
   {
     test: /\.(ttf|eot|svg|ico)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-    loader: 'file-loader'
+    loader: 'file-loader?name=[name].[ext]'
   },
   {
     test: /\.js?$/,
@@ -47,24 +47,22 @@ const loaders = [
 ];
 
 if (process.env.RELEASE) {
-  externals = {
-    lodash: true,
-    react: true,
-    'react-dom': true
-  };
-  entry = './src/webpack-build';
-  output = {
-    library: 'weaveworks-ui-components',
-    libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '/dist/'),
-    filename: 'weaveworks-ui-components.js'
+  entry = {
+    docs: './docs/js/main'
   };
   // Compile sass into css
   loaders.push({
     test: /\.(scss|css)$/,
     loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
   });
-  plugins = [new ExtractTextPlugin('weaveworks-ui-components.css')];
+  plugins = [
+    new ExtractTextPlugin('docs.css'),
+    new HtmlWebpackPlugin({
+      chunks: ['docs'],
+      template: 'docs/index.html',
+      filename: 'index.html'
+    })
+  ];
 } else {
   // Normal sass loader. This complains if it runs in the RELEASE job, so only apply it if RELEASE
   // is falsey.
