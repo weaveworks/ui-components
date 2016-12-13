@@ -24,18 +24,27 @@ class App extends React.Component {
     const tree = _.reduce(links, (result, resource) => {
       const [dir, module] = resource.split('/').filter(n => n !== '.');
       const isDefault = dir === module;
+      const item = (
+        <MenuItem
+          key={module}
+          className={isDefault ? 'weave-menu-item' : 'weave-menu-sub-item'}
+          onClick={this.navigate}
+          text={module}
+        />
+      );
       // Determine the link matches the top level dir. Else, creates an array of subModules.
       if (isDefault && !result[dir]) {
-        result[dir] = { name: module };
+        result[dir] = { component: item };
       } else if (!isDefault && result[dir]) {
         if (!result[dir].subModules) {
-          result[dir].subModules = [module];
+          result[dir].subModules = [item];
         } else {
-          result[dir].subModules.push(module);
+          result[dir].subModules.push(item);
         }
       }
       return result;
     }, {});
+
     return (
       <div className="components-page">
         <div className="header"><a href="http://weave.works"><Logo /></a></div>
@@ -44,16 +53,7 @@ class App extends React.Component {
             <div className="nav">
               <div className="content-section">
                 <Menu>
-                  {_.map(tree, ({name, subModules}) => {
-                    const children = _.map(subModules, m => (
-                      <MenuItem key={m} onClick={this.navigate} text={m} />
-                    ));
-                    return (
-                      <MenuItem key={name} onClick={this.navigate} text={name}>
-                        {children.length > 0 && <div className="sub-modules">{children}</div>}
-                      </MenuItem>
-                    );
-                  })}
+                  {_(tree).map(t => [t.component, t.subModules]).flatten().value()}
                 </Menu>
               </div>
             </div>

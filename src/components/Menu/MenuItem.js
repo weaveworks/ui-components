@@ -19,9 +19,9 @@ class MenuItem extends React.Component {
   }
 
   render() {
-    const { text, children } = this.props;
+    const { text, children, className } = this.props;
     return (
-      <div onClick={this.handleClick} className="weave-menu-item">
+      <div onClick={this.handleClick} className={className || 'weave-menu-item'}>
         <div className="menu-text">{text}</div>
         {children}
       </div>

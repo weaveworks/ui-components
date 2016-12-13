@@ -64,25 +64,24 @@
 .weave-menu {
   color: $lavender;
   text-align: left;
+  &-item, &-sub-item {
+    &:hover {
+      @include hover-background;
+      cursor: pointer;
+    }
+  }
+
   &-item {
     display: block;
     min-height: 40px;
     line-height: 40px;
     padding-left: 20px;
-    &:hover {
-      @include hover-background;
-    }
-    .sub-modules {
-      @include font-size(medium);
-      &:hover {
-        cursor: pointer;
-        text-decoration: underline;
-      }
-      .weave-menu-item {
-        padding-left: 10px;
-        line-height: 20px;
-        min-height: 10px;
-      }
-    }
+  }
+
+  &-sub-item {
+    @include font-size(medium);
+    padding-left: 40px;
+    line-height: 30px;
+    min-height: 30px;
   }
 }
