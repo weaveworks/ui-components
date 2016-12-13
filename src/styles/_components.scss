@@ -85,3 +85,66 @@
     min-height: 30px;
   }
 }
+
+.weave-dialog {
+  @include transition(opacity .2s ease);
+  position: fixed;
+  padding-top: 30vh;
+  opacity: 0;
+
+  &, &-overlay {
+    height: 100%;
+    left: -100%;
+    top: 0;
+    width: 100%;
+  }
+
+  &.active {
+    left: 0;
+    opacity: 1;
+  }
+
+  &-window {
+    @include material-shadow(heavy);
+    background-color: $white;
+    color: $gunpowder;
+    margin: 0 auto;
+    max-width: $dialog-max-width;
+    padding: 20px;
+    width: 75%;
+    z-index: 30;
+    position: relative;
+  }
+
+  &-overlay {
+    background-color: $black;
+    opacity: 0;
+    position: absolute;
+    z-index: 2;
+    &.overlay-active {
+      opacity: .5;
+      left: 0;
+    }
+  }
+
+
+
+  &-close {
+    text-align: right;
+    & > span:hover {
+      cursor: pointer;
+    }
+  }
+
+  &-actions {
+    text-align: right;
+    min-height: 36px;
+    .weave-button:first-child {
+      margin-right: 10px;
+    }
+  }
+
+  &-content {
+    // padding: 20px;
+  }
+}

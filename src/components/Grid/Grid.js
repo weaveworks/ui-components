@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * A responsive grid.
+ * A grid for building layouts.
  *
  * Use the `<GridColumn />` component to specify a col-span.
  * The max number of columns is 12, so a col-span of 12 will span 100% of the available width.

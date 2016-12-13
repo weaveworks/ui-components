@@ -29,3 +29,11 @@
   color: $gunpowder;
   background-color: $lightgray;
 }
+
+@mixin hover-border-highlight {
+
+}
+
+@mixin-fade-in-out {
+  @include transition(opacity, .2s, ease-in);
+}

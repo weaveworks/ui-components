@@ -6,25 +6,44 @@ import React from 'react';
  *  <Button onClick={alert('hai!')}>Submit</Button>
  * ```
  */
-const Button = (props) => {
-  const { children, className, onClick } = props;
-  const cl = className ? `weave-button ${className}` : 'weave-button';
-  return (
-    <button {...props} onClick={onClick} className={cl}>
-      {children}
-    </button>
-  );
-};
+class Button extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    if (this.props.text) {
+      return this.props.onClick(this.props.text);
+    }
+    return this.props.onClick();
+  }
+
+  render() {
+    const { children, className, text } = this.props;
+    return (
+      <button onClick={this.handleClick} className={className || 'weave-button'}>
+        {children || text}
+      </button>
+    );
+  }
+}
 
 Button.propTypes = {
   /**
  * Callback that will be run when the button is clicked.
  */
-  onClick: React.PropTypes.func.isRequired
+  onClick: React.PropTypes.func.isRequired,
+/**
+ * Text that will be used as the button label.
+ * If this props is provided, it will be passed back to the `onClick` handler
+ */
+  text: React.PropTypes.string
 };
 
 Button.defaultProps = {
-  children: 'Submit'
+  text: 'Submit'
 };
 
 export default Button;

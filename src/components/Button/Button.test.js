@@ -17,4 +17,10 @@ describe('<Button />', () => {
     button.simulate('click');
     expect(spy).toHaveBeenCalled();
   });
+  it('passes the text prop to the click handler if provided', () => {
+    button.setProps({ text: 'MyCustomText' });
+    expect(button.text()).toEqual('MyCustomText');
+    button.simulate('click');
+    expect(spy).toHaveBeenCalledWith('MyCustomText');
+  });
 });

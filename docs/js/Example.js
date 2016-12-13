@@ -1,9 +1,8 @@
 /* eslint-disable react/no-danger */
 import React from 'react';
-import { ObjectInspector } from 'react-inspector';
 import _ from 'lodash';
 
-import Hopup from '../../src/components/Hopup';
+import Dialog from '../../src/components/Dialog';
 import { renderMarkdown } from './utils';
 
 
@@ -11,20 +10,20 @@ export default class Example extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      hopupActive: false,
+      dialogActive: false,
       callbackName: '',
       demoOutput: '',
       fetchingDocs: true
     };
     this.instrumentElement = this.instrumentElementProps.bind(this);
     this.renderPropTable = this.renderPropTable.bind(this);
-    this.closeHopup = this.closeHopup.bind(this);
+    this.closeDialog = this.closeDialog.bind(this);
     this.handleAction = this.handleAction.bind(this);
   }
 
   handleAction(propName, ...args) {
     this.setState({
-      hopupActive: true,
+      dialogActive: true,
       callbackName: propName,
       demoOutput: _.map(args, (arg) => {
         if (arg && arg.persist) {
@@ -72,10 +71,9 @@ export default class Example extends React.Component {
       </table>
     );
   }
-  closeHopup(ev) {
-    ev.preventDefault();
+  closeDialog() {
     this.setState({
-      hopupActive: false
+      dialogActive: false
     });
   }
   render() {
@@ -112,13 +110,17 @@ export default class Example extends React.Component {
             </div>
           </div>
         }
-        <Hopup
-          onClose={this.closeHopup}
-          active={this.state.hopupActive}
+        <Dialog
+          onClose={this.closeDialog}
+          active={this.state.dialogActive}
+          actions={[]}
+          overlay={false}
         >
           <div className="callback-name">{`"${this.state.callbackName}" called with:`}</div>
-          <ObjectInspector data={this.state.demoOutput} />
-        </Hopup>
+          {_.map(this.state.demoOutput, (o, i) => (
+            <div key={o}>args[{i.toString()}]: {JSON.stringify(o)}</div>
+          ))}
+        </Dialog>
       </div>
     );
   }

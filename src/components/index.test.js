@@ -29,7 +29,6 @@ describe('index', () => {
       .flatten()
       .map(f => f.replace('.js', ''))
       .value();
-
     _.each(files, (f) => {
       expect(WeaveComponents[f]).toExist(
         `${f} module is missing. Did you export it from "src/components/index.js"?`
