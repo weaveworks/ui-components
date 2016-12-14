@@ -14,7 +14,7 @@
     "lint": "npm run lint-js && npm run lint-styles",
     "ci": "npm run lint && npm test",
     "s3": "aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
-    "release": "npm run lint && npm test && npm run build && npm version patch && git push --tags && npm run s3"
+    "release": "npm run lint && npm test && npm run build && npm version patch && git push origin --follow-tags && npm run s3"
   },
   "repository": {
     "type": "git",
@@ -33,7 +33,8 @@
     "babel-preset-es2015": "6.18.0",
     "babel-preset-react": "6.16.0",
     "bourbon-neat": "1.8.0",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "node-sass": "3.13.0"
   },
   "devDependencies": {
     "babel-core": "6.18.2",
@@ -57,7 +58,6 @@
     "json-loader": "0.5.4",
     "lodash": "4.17.2",
     "marked": "0.3.6",
-    "node-sass": "3.13.0",
     "raw-loader": "0.5.1",
     "react": "15.4.0",
     "react-addons-test-utils": "15.4.0",

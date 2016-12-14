@@ -5,9 +5,9 @@ import React from 'react';
  * An SVG Weave logo
  * ```javascript
  * import React from 'react';
- * import { Logo } from 'weaveworks-ui-components'
+ * import { WeaveLogo } from 'weaveworks-ui-components'
  *
- * React.render(<Logo />, document.getElementById('logo'))
+ * React.render(<WeaveLogo />, document.getElementById('logo'))
  * ```
  */
 export default class WeaveLogo extends React.Component {
