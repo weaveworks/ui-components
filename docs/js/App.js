@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import { Grid, GridColumn } from '../../src/components/Grid';
 import { Menu, MenuItem } from '../../src/components/Menu';
-import Logo from '../../src/components/Logo';
+import Logo from '../../src/components/WeaveWorksLogo';
 
 class App extends React.Component {
   constructor(props, context) {
