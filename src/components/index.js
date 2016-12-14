@@ -1,5 +1,11 @@
 export Button from './Button';
+
 export Grid, { GridColumn } from './Grid';
+
 export Dialog from './Dialog';
-export Logo from './Logo';
+
+export WeaveLogo from './WeaveLogo';
+export WeaveCloudLogo from './WeaveCloudLogo';
+export WeaveWorksLogo from './WeaveWorksLogo';
+
 export Menu, { MenuItem } from './Menu';
