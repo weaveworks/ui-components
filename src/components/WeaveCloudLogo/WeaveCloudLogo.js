@@ -1,8 +1,6 @@
 /* eslint-disable */
 import React from 'react';
 
-import ColorizedLogo from '../../hoc/ColorizedLogo';
-
 /**
  * The Weaveworks 'Weavecloud' logo. The logo can be rendered using a 'dark' or 'light' argument
  * to the `theme` prop.

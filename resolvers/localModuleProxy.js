@@ -7,7 +7,7 @@ module.exports = class LocalModuleProxy {
     const self = this;
     resolver.plugin('module', function (request, callback) {
       const { moduleName, path } = self.opts;
-      if (moduleName === request.request) {
+      if (self.opts.enabled && moduleName === request.request) {
         const proxyReq = {
           path: request.path,
           request: path,

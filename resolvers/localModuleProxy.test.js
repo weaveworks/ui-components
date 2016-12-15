@@ -20,6 +20,7 @@ describe('webpack LocalModuleProxy', () => {
     spy = createSpy();
     mockResolver.doResolve = spy;
     proxy = new LocalModuleProxy({
+      enabled: true,
       moduleName: 'foo',
       path: `${process.cwd()}/tmp/foo.js`
     });
@@ -33,5 +34,15 @@ describe('webpack LocalModuleProxy', () => {
       query: null,
       directory: false
     }, stub);
+  });
+  it('only runs if enabled', () => {
+    proxy = new LocalModuleProxy({
+      enabled: false,
+      moduleName: 'foo',
+      path: `${process.cwd()}/tmp/foo.js`
+    });
+    proxy.apply(mockResolver);
+    mockResolver.simulate({ path: 'myfile.js', request: 'foo', query: null, directory: false });
+    expect(spy).toNotHaveBeenCalled();
   });
 });
