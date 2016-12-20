@@ -74,13 +74,62 @@ a {
   height: 50px;
   width: 100%;
   line-height: 50px;
+  overflow: hidden;
   .logo {
     width: 200px;
     height: 50px;
+  }
+
+  a {
+    display: inline-block;
+  }
+  
+  .weave-menu-item {
+    display: inline-block;
+    padding: 0 10px 0 10px;
+  }
+
+  .logo {
+    margin-top: 0;
   }
 }
 
 .description p code {
   font-size: 16px;
   display: inline-block;
+}
+
+a:-webkit-any-link {
+  text-decoration: none;
+}
+
+.landing-page {
+  .weave-grid-column {
+    @include shift(2);
+  }
+}
+
+.big-nav-button {
+  @include material-shadow(heavy);
+  border-radius: 10px;
+  border: 1px solid $lavender;
+  display: block;
+  height: 250px;
+  margin-top: 100px;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+    background-color: $gunpowder;
+    color: $sand;
+    path,
+    g {
+      fill: $white;
+    }
+  }
+
+  svg {
+    height: 200px;
+    width: 200px;
+  }
 }
