@@ -25,6 +25,7 @@ class ComponentsPage extends React.Component {
       const isDefault = dir === module;
       const item = (
         <MenuItem
+          active={window.location.pathname.split('/').pop() === module.toLowerCase()}
           key={module}
           className={isDefault ? 'weave-menu-item' : 'weave-menu-sub-item'}
           onClick={this.navigate}

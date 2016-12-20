@@ -20,4 +20,13 @@ describe('<Menu />', () => {
     menu.childAt(0).simulate('click');
     expect(spy).toHaveBeenCalledWith('Item 1');
   });
+  it('should show the active menu item', () => {
+    menu = mount(
+      <Menu>
+        <MenuItem text="Item 1" />
+        <MenuItem active text="Item 2" />
+      </Menu>
+    );
+    expect(menu.childAt(1).find('.weave-menu-item').hasClass('menu-item-active')).toBe(true);
+  });
 });
