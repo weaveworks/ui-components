@@ -1,9 +1,10 @@
 /* eslint-disable import/first, import/no-unresolved, import/extensions*/
 import React from 'react';
-import { Route, IndexRedirect } from 'react-router';
 import { includes } from 'lodash';
 
 import App from './App';
+import ComponentsPage from './ComponentsPage';
+import LandingPage from './LandingPage';
 import Example from './Example';
 
 function buildExampleComponent(el, doc, example, sub) {
@@ -28,26 +29,28 @@ function isSubComponent(resource) {
 
 export default function getRoutes(components, examples, docs) {
   const availableExamples = examples.keys();
-  return (
-    <Route path="/" component={App}>
-      <Route path="components">
-        {components.keys().map((resource) => {
-          const name = resource.split('/').pop();
-          const component = components(resource).default;
-          const doc = docs(`${resource}`);
-          const example = includes(availableExamples, `./${name}/example.js`)
-            ? examples(`./${name}/example.js`).default
-            : null;
-          return (
-            <Route
-              key={name}
-              path={name.replace('.js', '').toLowerCase()}
-              component={buildExampleComponent(component, doc, example, isSubComponent(resource))}
-            />
-          );
-        })}
-      </Route>
-      <IndexRedirect to="components" />
-    </Route>
-  );
+
+  const componentRoutes = components.keys().map((resource) => {
+    const name = resource.split('/').pop();
+    const component = components(resource).default;
+    const doc = docs(`${resource}`);
+    const example = includes(availableExamples, `./${name}/example.js`)
+      ? examples(`./${name}/example.js`).default
+      : null;
+    return {
+      path: name.replace('.js', '').toLowerCase(),
+      component: buildExampleComponent(component, doc, example, isSubComponent(resource))
+    };
+  });
+
+  return {
+    path: '/',
+    component: App,
+    indexRoute: { component: LandingPage },
+    childRoutes: [{
+      path: 'components',
+      component: ComponentsPage,
+      childRoutes: componentRoutes
+    }]
+  };
 }
