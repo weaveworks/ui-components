@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 
 /**
  * A child of the `<Menu />` component.
@@ -19,9 +20,11 @@ class MenuItem extends React.Component {
   }
 
   render() {
-    const { text, children, className } = this.props;
+    const { text, children, className, active } = this.props;
+    // Use the className the users gives, or fall back to 'weave-menu-item'.
+    const cl = classnames(className || 'weave-menu-item', {'menu-item-active': active});
     return (
-      <div onClick={this.handleClick} className={className || 'weave-menu-item'}>
+      <div onClick={this.handleClick} className={cl}>
         <div className="menu-text">{text}</div>
         {children}
       </div>
