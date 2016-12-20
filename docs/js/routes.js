@@ -50,6 +50,7 @@ export default function getRoutes(components, examples, docs) {
     childRoutes: [{
       path: 'components',
       component: ComponentsPage,
+      indexRoute: { onEnter: (nextState, replace) => replace('components/weavelogo') },
       childRoutes: componentRoutes
     }]
   };
