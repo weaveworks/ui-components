@@ -1,2 +1,2 @@
-exports.LocalModuleProxy = require('./resolvers/LocalModuleProxy');
-exports.WeaveworksPartialImport = require('./resolvers/WeaveworksPartialImport');
+exports.LocalModuleProxy = require('./src/resolvers/LocalModuleProxy');
+exports.WeaveworksPartialImport = require('./src/resolvers/WeaveworksPartialImport');
