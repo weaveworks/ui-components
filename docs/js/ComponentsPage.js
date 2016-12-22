@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 
+import { isActivePage } from './utils';
+
 import { Grid, GridColumn } from '../../src/components/Grid';
 import { Menu, MenuItem } from '../../src/components/Menu';
 
@@ -25,7 +27,7 @@ class ComponentsPage extends React.Component {
       const isDefault = dir === module;
       const item = (
         <MenuItem
-          active={window.location.pathname.split('/').pop() === module.toLowerCase()}
+          active={isActivePage(module.toLowerCase())}
           key={module}
           className={isDefault ? 'weave-menu-item' : 'weave-menu-sub-item'}
           onClick={this.navigate}

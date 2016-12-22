@@ -18,3 +18,9 @@ marked.setOptions({
 export function renderMarkdown(string) {
   return { __html: marked(string) };
 }
+
+export function isActivePage(item) {
+  // If hosted on s3, we use hash instead of browser history
+  return window.location.pathname.split('/').pop() === item ||
+    window.location.hash.split('/').pop() === item;
+}

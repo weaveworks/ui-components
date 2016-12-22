@@ -1,6 +1,8 @@
 import React from 'react';
 import { capitalize } from 'lodash';
 
+import { isActivePage } from './utils';
+
 import { Menu, MenuItem } from '../../src/components/Menu';
 import {Grid, GridColumn } from '../../src/components/Grid';
 
@@ -19,7 +21,7 @@ class StyleGuidePage extends React.Component {
       const pageName = page.split('/').pop().replace('.md', '');
       return (
         <MenuItem
-          active={window.location.pathname.split('/').pop() === pageName}
+          active={isActivePage(pageName)}
           key={page}
           onClick={this.navigate}
           text={capitalize(pageName)}
