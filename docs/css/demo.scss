@@ -6,8 +6,10 @@
 body {
   background-color: $sand;
   font-family: 'Roboto', sans-serif;
+  text-align: left;
 }
 
+.styleguide-page,
 .components-page {
   margin: 0 auto;
   .weave-grid {
@@ -17,6 +19,7 @@ body {
   }
 }
 
+.style-guide-page-body,
 .component-example-page {
   text-align: left;
   padding: 20px;
@@ -83,7 +86,7 @@ a {
   a {
     display: inline-block;
   }
-  
+
   .weave-menu-item {
     display: inline-block;
     padding: 0 10px 0 10px;
@@ -95,7 +98,6 @@ a {
 }
 
 .description p code {
-  font-size: 16px;
   display: inline-block;
 }
 
@@ -117,6 +119,7 @@ a:-webkit-any-link {
   height: 250px;
   margin-top: 100px;
   position: relative;
+  text-align: center;
 
   &:hover {
     cursor: pointer;

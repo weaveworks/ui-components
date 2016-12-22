@@ -20,7 +20,9 @@ export default function LandingPage({children}) {
               <Link to="/components">
                 <MenuItem text="Components" />
               </Link>
-              <MenuItem text="Style Guide" />
+              <Link to="/styleguide">
+                <MenuItem text="Style Guide" />
+              </Link>
             </Menu>
           </GridColumn>
         </Grid>

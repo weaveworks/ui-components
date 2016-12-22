@@ -63,10 +63,12 @@ export default function LandingPage() {
           </Link>
         </GridColumn>
         <GridColumn span={3}>
-          <div className="big-nav-button">
-            <Pallete />
-            <div className="nav-title">Style Guide</div>
-          </div>
+          <Link to="styleguide">
+            <div className="big-nav-button">
+              <Pallete />
+              <div className="nav-title">Style Guide</div>
+            </div>
+          </Link>
         </GridColumn>
       </Grid>
     </div>

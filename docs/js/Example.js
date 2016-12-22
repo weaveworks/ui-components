@@ -83,7 +83,7 @@ export default class Example extends React.Component {
       <div className="component-example">
         <h2>{this.props.name}</h2>
         <div className="content-section">
-          <div className="description">
+          <div className="description markdown-body">
             <div dangerouslySetInnerHTML={renderMarkdown(description)} />
           </div>
         </div>

@@ -59,7 +59,7 @@
     "json-loader": "0.5.4",
     "lodash": "4.17.2",
     "marked": "0.3.6",
-    "raw-loader": "0.5.1",
+    "raw-loader": "^0.5.1",
     "react": "15.4.0",
     "react-addons-test-utils": "15.4.0",
     "react-docgen": "2.12.1",

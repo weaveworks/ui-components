@@ -10,14 +10,16 @@ const onS3 = window.location.href.indexOf('s3') !== -1;
 const componentCtx = require.context('../../src/components', true, /^((?!test|index|example).)*$/);
 const exampleCtx = require.context('../../src/components', true, /example\.js$/);
 const docCtx = require.context('!!react-docs!../../src/components', true, /^((?!test|index|example).)*$/);
+const styleGuideCtx = require.context('raw-loader!../../styleguide');
 
-const routes = getRoutes(componentCtx, exampleCtx, docCtx);
+const routes = getRoutes(componentCtx, exampleCtx, docCtx, styleGuideCtx);
 
 class Root extends React.Component {
   getChildContext() {
     return {
       router: this.props.router,
-      components: componentCtx
+      components: componentCtx,
+      styles: styleGuideCtx
     };
   }
   render() {
@@ -29,7 +31,8 @@ class Root extends React.Component {
 
 Root.childContextTypes = {
   router: React.PropTypes.object,
-  components: React.PropTypes.func
+  components: React.PropTypes.func,
+  styles: React.PropTypes.func
 };
 
 export default Root;
