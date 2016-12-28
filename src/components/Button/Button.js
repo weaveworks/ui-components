@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * A button that will run a callback on click
  * ```javascript
- *  <Button onClick={alert('hai!')}>Submit</Button>
+ *  <Button onClick={alert} text="Submit" />
  * ```
  */
 class Button extends React.Component {

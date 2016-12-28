@@ -130,3 +130,9 @@ import Button from 'weaveworks-ui-components/Button';
 import { Button } from 'weaveworks-ui-components';
 ```
 The `WeaveworksPartialImport` package will only work for the `weaveworks-ui-components` package, hence the Weaveworks-specific name
+
+## Adding Style Guide articles
+To add a page to the style guide:
+1. Add a markdown file to the `/styleguide` directory of this repo
+2. ???
+3. Profit

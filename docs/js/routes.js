@@ -70,13 +70,13 @@ export default function getRoutes(components, examples, docs, styles) {
       {
         path: 'components',
         component: ComponentsPage,
-        indexRoute: { onEnter: (nextState, replace) => replace('components/weavelogo') },
+        indexRoute: { onEnter: (nextState, replace) => replace('components/button') },
         childRoutes: componentRoutes
       },
       {
         path: 'styleguide',
         component: StyleGuidePage,
-        indexRoute: { onEnter: (nextState, replace) => replace('styleguide/colors') },
+        indexRoute: { onEnter: (nextState, replace) => replace('styleguide/intro') },
         childRoutes: styleguideRoutes
       }
     ]

@@ -35,7 +35,7 @@ class StyleGuidePage extends React.Component {
             <div className="content-section">
               <div className="nav">
                 <Menu>
-                  {items}
+                  {items.sort(page => (page.props.text === 'Intro' ? -1 : 1))}
                 </Menu>
               </div>
             </div>
