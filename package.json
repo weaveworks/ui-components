@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "chmod a+x ./bin/postinstall.sh && ./bin/postinstall.sh && babel lib/ --out-dir lib",
+    "install": "babel src/components --out-dir lib --ignore *.test.js,example.js",
     "test": "jest",
     "start": "node bin/dev-server",
     "debug": "node debug ./node_modules/.bin/jest -i",
