@@ -20,19 +20,28 @@ ReactDOM.render(
 ### Importing Styles
 To import the stylesheets, you must have a webpack Sass loader configured:
 ```javascript
-module: {
-  loaders: [
-    {
-      test: /\.(scss|css)$/,
-      loader: 'style-loader!css-loader!sass-loader'
-    }
-  ]
+module.exports = {
+  ...
+  module: {
+    loaders: [
+      {
+        test: /\.(scss|css)$/,
+        loader: 'style-loader!css-loader!sass-loader'
+      }
+    ]
+  },
+  sassLoader: {
+    includePaths: [
+      path.resolve(__dirname, './node_modules/weaveworks-ui-components')
+    ]
+  }
+  ...
 }
 ```
 
 To import styles:
-```javascript
-import 'weaveworks-ui-components/styles';
+```css
+@import "~weaveworks-ui-components/styles.scss";
 ```
 ## Development
 ### Adding a component

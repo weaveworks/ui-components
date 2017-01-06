@@ -94,8 +94,7 @@ module.exports = {
   },
   sassLoader: {
     includePaths: [
-      path.resolve(__dirname, './node_modules/bourbon-neat'),
-      path.resolve(__dirname, './node_modules/font-awesome')
+      path.resolve(__dirname, './node_modules/bourbon-neat')
     ]
   }
 };
