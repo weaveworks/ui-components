@@ -1,10 +1,20 @@
 
 .weave-grid {
-  @include outer-container(100%);
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+
+  &-column {
+    display: block;
+    margin-left: .5em;
+    margin-right: .5em;
+    float: left;
+  }
 }
 
 @for $i from 1 through 12 {
   .col-span-#{$i} {
-    @include span-columns($i);
+    width: 100% / 12 * $i;
   }
 }

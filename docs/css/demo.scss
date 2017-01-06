@@ -75,7 +75,6 @@ a {
   overflow: hidden;
   .logo {
     width: 200px;
-    height: 50px;
   }
 
   a {
@@ -98,12 +97,6 @@ a {
 
 a:-webkit-any-link {
   text-decoration: none;
-}
-
-.landing-page {
-  .weave-grid-column {
-    @include shift(2);
-  }
 }
 
 .big-nav-button {
