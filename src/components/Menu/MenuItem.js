@@ -13,9 +13,7 @@ class MenuItem extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e) {
-    e.stopPropagation();
-    // e.preventDefault();
+  handleClick() {
     if (this.props.onClick) {
       this.props.onClick(this.props.text);
     }
