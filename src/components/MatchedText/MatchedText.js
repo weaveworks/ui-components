@@ -72,14 +72,6 @@ function truncateChunks(chunks, text, maxLength) {
 }
 
 
-const STYLES = {
-  match: {
-    backgroundColor: 'rgba(0, 210, 255, .3)',
-    border: '1px solid #00d2ff',
-  }
-};
-
-
 /**
  * Renders a block of text with matched sections highlighted
  *
