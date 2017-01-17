@@ -9,3 +9,4 @@ export WeaveCloudLogo from './WeaveCloudLogo';
 export WeaveWorksLogo from './WeaveWorksLogo';
 
 export Menu, { MenuItem } from './Menu';
+export MatchedText from './MatchedText';

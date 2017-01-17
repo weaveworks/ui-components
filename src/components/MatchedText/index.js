@@ -1,1 +1,1 @@
-export MatchedText from './MatchedText';
+export default from './MatchedText';

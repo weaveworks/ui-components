@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MatchedText } from '.';
+import MatchedText from '.';
 
 export default function MatchedTextExample() {
   return (
