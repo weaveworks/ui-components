@@ -10,8 +10,7 @@
     "debug": "node debug ./node_modules/.bin/jest -i",
     "build": "RELEASE=true rm -rf dist && webpack --config webpack.config.js",
     "lint-js": "eslint src",
-    "lint-styles": "sass-lint",
-    "lint": "npm run lint-js && npm run lint-styles",
+    "lint": "npm run lint-js",
     "ci": "npm run lint && npm test",
     "s3": "aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
     "release": "npm run lint && npm test && npm run build && npm version patch && git push origin --follow-tags && npm run s3"
