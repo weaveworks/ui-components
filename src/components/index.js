@@ -10,3 +10,6 @@ export WeaveWorksLogo from './WeaveWorksLogo';
 
 export Menu, { MenuItem } from './Menu';
 export MatchedText from './MatchedText';
+
+export CircularProgress from './CircularProgress';
+export LogoProgress from './LogoProgress';
