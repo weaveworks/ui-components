@@ -27,7 +27,7 @@ class Button extends React.Component {
         style={style}
         disabled={disabled}
         onClick={this.handleClick}
-        className={className || "weave-button"}
+        className={className || 'weave-button'}
       >
         {children || text}
       </button>
