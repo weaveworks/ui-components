@@ -114,7 +114,7 @@ export default class Example extends React.Component {
           onClose={this.closeDialog}
           active={this.state.dialogActive}
           actions={[]}
-          overlay={false}
+          overlay
         >
           <div className="callback-name">{`"${this.state.callbackName}" called with:`}</div>
           {_.map(this.state.demoOutput, (o, i) => (
