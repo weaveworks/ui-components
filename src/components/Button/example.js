@@ -2,8 +2,8 @@ import React from 'react';
 
 import Button from '.';
 
-export default function MatchedTextExample() {
-  const onClick = () => console.log('clickity clack');
+export default function ButtonExample({ clickHandler }) {
+  const onClick = () => clickHandler('onClick', 'Button clicked!');
   return (
     <ul>
       <li>
