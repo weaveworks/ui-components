@@ -21,9 +21,14 @@ class Button extends React.Component {
   }
 
   render() {
-    const { children, className, text } = this.props;
+    const { children, className, text, disabled, style } = this.props;
     return (
-      <button onClick={this.handleClick} className={className || 'weave-button'}>
+      <button
+        style={style}
+        disabled={disabled}
+        onClick={this.handleClick}
+        className={className || "weave-button"}
+      >
         {children || text}
       </button>
     );
@@ -35,11 +40,15 @@ Button.propTypes = {
  * Callback that will be run when the button is clicked.
  */
   onClick: React.PropTypes.func.isRequired,
-/**
+  /**
  * Text that will be used as the button label.
  * If this props is provided, it will be passed back to the `onClick` handler
  */
-  text: React.PropTypes.string
+  text: React.PropTypes.string,
+  /**
+ * Disable the button.
+ */
+  disabled: React.PropTypes.bool,
 };
 
 Button.defaultProps = {

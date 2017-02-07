@@ -51,13 +51,19 @@
   @include material-shadow;
   text-transform: uppercase;
   background-color: $white;
+
   outline: none;
   border: 0;
   cursor: pointer;
   height: 36px;
+  padding: 0 12px;
   min-width: 90px;
-  &:hover {
+  &:not([disabled]):hover {
     @include hover-background;
+  }
+  &[disabled] {
+    @include material-shadow(none);
+    background-color: $lightgray;
   }
 }
 
