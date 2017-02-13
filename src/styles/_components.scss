@@ -46,6 +46,10 @@
   }
 }
 
+.weave-shadow {
+  @include material-shadow;
+}
+
 .weave-button {
   @include font-size(medium);
   @include material-shadow;
@@ -163,6 +167,22 @@
 .weave-matched-text {
   background-color: rgba($weave-blue, 0.3);
   border: 1px solid $weave-blue;
+}
+
+
+.weave-list-item {
+  display: block;
+  position: relative;
+  padding: 12px 16px;
+
+  &-active {
+    background-color: #eee;
+  }
+
+  .weave-list-item-subtext {
+    opacity: 0.5;
+    font-size: 13px;
+  }
 }
 
 
