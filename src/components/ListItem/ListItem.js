@@ -43,7 +43,7 @@ class ListItem extends React.Component {
   render() {
     const { active, text, subText, onClick, children, style } = this.props;
     const BaseTag = onClick ? 'a' : 'div';
-    const props = onClick && { href: '#' }
+    const props = onClick && { href: '#' };
     const className = `weave-list-item${active ? ' weave-list-item-active' : ''}`;
     return (
       <BaseTag style={style} className={className} onClick={this.handleClick} {...props}>
