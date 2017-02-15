@@ -4,6 +4,8 @@ export Grid, { GridColumn } from './Grid';
 
 export Dialog from './Dialog';
 
+export ListItem from './ListItem';
+
 export WeaveLogo from './WeaveLogo';
 export WeaveCloudLogo from './WeaveCloudLogo';
 export WeaveWorksLogo from './WeaveWorksLogo';
