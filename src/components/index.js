@@ -1,6 +1,6 @@
 export Button from './Button';
 
-export Grid, { GridColumn } from './Grid';
+export Grid, { GridColumn, GridRow } from './Grid';
 
 export Dialog from './Dialog';
 
