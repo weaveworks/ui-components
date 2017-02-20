@@ -4,7 +4,7 @@ import { capitalize } from 'lodash';
 import { isActivePage } from './utils';
 
 import { Menu, MenuItem } from '../../src/components/Menu';
-import {Grid, GridColumn } from '../../src/components/Grid';
+import {Grid, GridColumn as Column, GridRow as Row } from '../../src/components/Grid';
 
 class StyleGuidePage extends React.Component {
   constructor(props, context) {
@@ -31,18 +31,20 @@ class StyleGuidePage extends React.Component {
     return (
       <div className="styleguide-page">
         <Grid>
-          <GridColumn span={2}>
-            <div className="content-section">
-              <div className="nav">
-                <Menu>
-                  {items.sort(page => (page.props.text === 'Intro' ? -1 : 1))}
-                </Menu>
+          <Row>
+            <Column span={2}>
+              <div className="content-section">
+                <div className="nav">
+                  <Menu>
+                    {items.sort(page => (page.props.text === 'Intro' ? -1 : 1))}
+                  </Menu>
+                </div>
               </div>
-            </div>
-          </GridColumn>
-          <GridColumn span={10}>
-            <div className="style-guide-page-body markdown-body">{this.props.children}</div>
-          </GridColumn>
+            </Column>
+            <Column span={10}>
+              <div className="style-guide-page-body markdown-body">{this.props.children}</div>
+            </Column>
+          </Row>
         </Grid>
       </div>
     );

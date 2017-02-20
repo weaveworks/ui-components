@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { Grid, GridColumn } from '../../src/components/Grid';
+import { Grid, GridColumn, GridRow as Row } from '../../src/components/Grid';
 
 export default function LandingPage() {
   const Blocks = () => (
@@ -54,22 +54,25 @@ export default function LandingPage() {
   return (
     <div className="landing-page">
       <Grid>
-        <GridColumn span={3}>
-          <Link to="components">
-            <div className="big-nav-button">
-              <Blocks />
-              <div className="nav-title">Components</div>
-            </div>
-          </Link>
-        </GridColumn>
-        <GridColumn span={3}>
-          <Link to="styleguide">
-            <div className="big-nav-button">
-              <Pallete />
-              <div className="nav-title">Style Guide</div>
-            </div>
-          </Link>
-        </GridColumn>
+        <Row alignContent="center">
+          <GridColumn span={3}>
+            <Link to="components">
+              <div className="big-nav-button">
+                <Blocks />
+                <div className="nav-title">Components</div>
+              </div>
+            </Link>
+          </GridColumn>
+
+          <GridColumn span={3}>
+            <Link to="styleguide">
+              <div className="big-nav-button">
+                <Pallete />
+                <div className="nav-title">Style Guide</div>
+              </div>
+            </Link>
+          </GridColumn>
+        </Row>
       </Grid>
     </div>
   );

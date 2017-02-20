@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 import { isActivePage } from './utils';
 
-import { Grid, GridColumn } from '../../src/components/Grid';
+import { Grid, GridColumn as Column, GridRow as Row } from '../../src/components/Grid';
 import { Menu, MenuItem } from '../../src/components/Menu';
 
 class ComponentsPage extends React.Component {
@@ -20,7 +20,7 @@ class ComponentsPage extends React.Component {
   render() {
     // Renders a tree structure for the left-hand navigation links.
     // Filters out .js resources to avoid duplicates.
-    // => { Grid: {name: 'Grid', subModules: ['GridColumn']}, Button: {...}, ...}
+    // => { Grid: {name: 'Grid', subModules: ['Column']}, Button: {...}, ...}
     const links = this.context.components.keys().filter(n => !_.includes(n, '.js'));
     const tree = _.reduce(links, (result, resource) => {
       const [dir, module] = resource.split('/').filter(n => n !== '.');
@@ -50,20 +50,22 @@ class ComponentsPage extends React.Component {
     return (
       <div className="components-page">
         <Grid>
-          <GridColumn span={2}>
-            <div className="nav">
-              <div className="content-section">
-                <Menu>
-                  {_(tree).map(t => [t.component, t.subModules]).flatten().value()}
-                </Menu>
+          <Row>
+            <Column span={2}>
+              <div className="nav">
+                <div className="content-section">
+                  <Menu>
+                    {_(tree).map(t => [t.component, t.subModules]).flatten().value()}
+                  </Menu>
+                </div>
               </div>
-            </div>
-          </GridColumn>
-          <GridColumn span={10}>
-            <div className="component-example-page">
-              {this.props.children}
-            </div>
-          </GridColumn>
+            </Column>
+            <Column span={10}>
+              <div className="component-example-page">
+                {this.props.children}
+              </div>
+            </Column>
+          </Row>
         </Grid>
       </div>
     );

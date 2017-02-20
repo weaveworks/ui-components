@@ -47,6 +47,12 @@ a {
   position: relative;
 }
 
+.landing-page {
+  .weave-grid-column {
+    min-width: 220px;
+  }
+}
+
 .content-section {
   margin-bottom: 50px;
 }
@@ -69,13 +75,8 @@ a {
   border-bottom-width: 1px;
   box-shadow: 0 4px 2px -2px rgba(0,0,0,.16);
   border-bottom: 1px solid $gray;
-  height: 50px;
   width: 100%;
-  line-height: 50px;
   overflow: hidden;
-  .logo {
-    width: 200px;
-  }
 
   a {
     display: inline-block;
@@ -87,7 +88,18 @@ a {
   }
 
   .logo {
-    margin-top: 0;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    width: 200px;
+  }
+
+  .weave-grid-row {
+    margin: 0;
+  }
+
+  .weave-grid-column {
+    min-width: 200px;
   }
 }
 
@@ -108,6 +120,7 @@ a:-webkit-any-link {
   margin-top: 100px;
   position: relative;
   text-align: center;
+  min-width: 220px;
 
   &:hover {
     cursor: pointer;

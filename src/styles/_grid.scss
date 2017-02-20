@@ -3,13 +3,33 @@
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
-  display: flex;
 
   &-column {
     display: block;
     margin-left: .5em;
     margin-right: .5em;
     float: left;
+  }
+
+  &-row {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  .align-left {
+    justify-content: flex-start;
+  }
+
+  .align-center {
+    justify-content: center;
+  }
+
+  .align-right {
+    justify-content: flex-end;
   }
 }
 
