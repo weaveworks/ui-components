@@ -1,3 +1,7 @@
+See it in action:
+
+http://weaveworks-ui-components.s3-website-us-west-2.amazonaws.com/
+
 ## Prerequisites
 * `React` & `ReactDOM` ~15.4.0
 * `lodash` ^4.17.0
@@ -123,11 +127,10 @@ preLoaders: [
 ],
 ```
 
-#### Deploying to S3
+#### Releasing this repo
 Configure your AWS CLI tools: http://docs.aws.amazon.com/cli/latest/userguide/installing.html.
 
-Then run `npm run s3`. Static files will get pushed when doing an `npm release` as well.
-
+Then run `npm run release`. A new `git` tag will get pushed as well as static files to S3.
 ## Adding Style Guide articles
 To add a page to the style guide:
 
