@@ -84,6 +84,20 @@ module.exports = {
 }
 ```
 
+You can also proxy multiple modules by adding a lookup to the `modules` key in the `LocalModuleProxy` constructor:
+
+```javascript
+plugins: [
+  new webpack.ResolverPlugin(new LocalModuleProxy({
+    enabled: true,
+    modules: {
+      'weave-scope/reducer': `${SCOPE_COMPONENT_PATH}/client/app/scripts/reducers/root.js`,
+      'weave-scope/component' : `${SCOPE_COMPONENT_PATH}/client/app/scripts/components/app.js`
+    }
+  }))
+]
+```
+
 Webpack will resolve imports that match `moduleName` from the path supplied to the `path` key. This should work for all webpack-related functionality, including hot reload.
 
 One weird trick to remove the `COMPONENT_LIB_PATH` variable from version control:

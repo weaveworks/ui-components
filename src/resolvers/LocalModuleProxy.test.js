@@ -45,4 +45,28 @@ describe('webpack LocalModuleProxy', () => {
     mockResolver.simulate({ path: 'myfile.js', request: 'foo', query: null, directory: false });
     expect(spy).toNotHaveBeenCalled();
   });
+  it('proxies a list of modules', () => {
+    proxy = new LocalModuleProxy({
+      enabled: true,
+      modules: {
+        foo: `${process.cwd()}/tmp/foo.js`,
+        bar: `${process.cwd()}/tmp/bar.js`
+      }
+    });
+    proxy.apply(mockResolver);
+    mockResolver.simulate({ path: 'myFoo.js', request: 'foo', query: null, directory: false });
+    expect(spy).toHaveBeenCalledWith(['file'], {
+      path: 'myFoo.js',
+      request: `${process.cwd()}/tmp/foo.js`,
+      query: null,
+      directory: false
+    }, stub);
+    mockResolver.simulate({ path: 'myBar.js', request: 'bar', query: null, directory: false });
+    expect(spy).toHaveBeenCalledWith(['file'], {
+      path: 'myBar.js',
+      request: `${process.cwd()}/tmp/bar.js`,
+      query: null,
+      directory: false
+    }, stub);
+  });
 });
