@@ -21,7 +21,7 @@ class CircularProgress extends React.Component {
     };
 
     return (
-      <div style={styles}>
+      <div className="weave-circular-progress-wrapper" style={styles}>
         <div className="weave-circular-progress"><div></div></div>
       </div>
     );
