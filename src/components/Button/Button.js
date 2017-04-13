@@ -39,7 +39,7 @@ Button.propTypes = {
   /**
  * Callback that will be run when the button is clicked.
  */
-  onClick: React.PropTypes.func.isRequired,
+  onClick: React.PropTypes.func,
   /**
  * Text that will be used as the button label.
  * If this props is provided, it will be passed back to the `onClick` handler
