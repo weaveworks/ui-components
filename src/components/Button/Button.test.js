@@ -21,6 +21,6 @@ describe('<Button />', () => {
     button.setProps({ text: 'MyCustomText' });
     expect(button.text()).toEqual('MyCustomText');
     button.simulate('click');
-    expect(spy).toHaveBeenCalledWith('MyCustomText');
+    expect(spy.calls[0].arguments[1]).toBe('MyCustomText');
   });
 });

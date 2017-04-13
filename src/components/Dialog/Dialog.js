@@ -49,7 +49,7 @@ class Dialog extends React.Component {
     this.handleActionClick = this.handleActionClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-  handleActionClick(text) {
+  handleActionClick(ev, text) {
     this.props.onActionClick(text);
   }
   handleClose() {
