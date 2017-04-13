@@ -13,9 +13,9 @@ class Button extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick() {
+  handleClick(ev) {
     if (this.props.onClick) {
-      this.props.onClick(this.props.text);
+      this.props.onClick(ev, this.props.text);
     }
   }
 
