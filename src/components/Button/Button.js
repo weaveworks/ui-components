@@ -6,6 +6,8 @@ import React from 'react';
  *  <Button onClick={alert} text="Submit" />
  * ```
  */
+import classnames from 'classnames';
+
 class Button extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -20,13 +22,14 @@ class Button extends React.Component {
   }
 
   render() {
-    const { children, className, text, disabled, style } = this.props;
+    const { children, className, text, disabled, style, primary } = this.props;
+    const cl = classnames('weave-button', { primary });
     return (
       <button
         style={style}
         disabled={disabled}
         onClick={this.handleClick}
-        className={className || 'weave-button'}
+        className={className || cl}
       >
         {children || text}
       </button>
@@ -48,6 +51,10 @@ Button.propTypes = {
  * Disable the button.
  */
   disabled: React.PropTypes.bool,
+  /**
+   * Render the button in $turquoise (useful for CTAs)
+   */
+  primary: React.PropTypes.bool
 };
 
 Button.defaultProps = {
