@@ -69,6 +69,16 @@
     @include material-shadow(none);
     background-color: $lightgray;
   }
+
+  &.primary {
+    color: $white;
+    background-color: $turquoise;
+
+    &:hover {
+      color: $white;
+      background-color: darken($turquoise, 15);
+    }
+  }
 }
 
 .weave-menu {
@@ -306,4 +316,3 @@
     opacity: 1;
   }
 }
-
