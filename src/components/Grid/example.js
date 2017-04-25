@@ -1,4 +1,5 @@
 import React from 'react';
+import times from 'lodash/times';
 
 import { Grid, GridColumn, GridRow as Row } from '.';
 
@@ -87,6 +88,16 @@ export default function GridExample() {
             <div style={{backgroundColor: '#8383ac', height: '200px', width: '100%'}} />
           </GridColumn>
         </Row>
+      </Grid>
+      <p><b>Use columns without a {'<Row />'} element to get items to wrap nicely</b></p>
+      <Grid>
+        {
+          times(20, i => (
+            <GridColumn key={i} span={1}>
+              <div style={{backgroundColor: '#8383ac', height: '200px', width: '100%'}} />
+            </GridColumn>
+          ))
+        }
       </Grid>
     </div>
 
