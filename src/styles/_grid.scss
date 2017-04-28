@@ -1,13 +1,11 @@
 
 .weave-grid {
   max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
 
   &-column {
+    @include clearfix;
     display: block;
-    margin-left: .5em;
-    margin-right: .5em;
+    margin: .5em;
     float: left;
   }
 
@@ -17,7 +15,6 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-
   }
 
   .align-left {
@@ -35,6 +32,6 @@
 
 @for $i from 1 through 12 {
   .col-span-#{$i} {
-    width: 100% / 12 * $i;
+    width: percentage($i / 12);
   }
 }
