@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * The Weaveworks 'Weavecloud' logo. The logo can be rendered using a 'dark' or 'light' argument
@@ -55,7 +56,7 @@ WeaveCloudLogo.propTypes = {
   /**
    * The color that the logo will be rendered in.
    */
-  theme: React.PropTypes.string
+  theme: PropTypes.string
 }
 
 WeaveCloudLogo.defaultProps = {

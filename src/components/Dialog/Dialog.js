@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Button from '../Button';
 
@@ -87,27 +88,27 @@ Dialog.propTypes = {
   /**
    * Flag to show/hide the dialog
    */
-  active: React.PropTypes.bool,
+  active: PropTypes.bool,
   /**
    * An array of options that the user will be able to click.
    * Each item in the array will be rendered as a <Button /> in the dialog window.
    * Items can also be React elements.
    */
-  actions: React.PropTypes.array,
+  actions: PropTypes.array,
   /**
    * Callback that will be run when the dialog is closed
    */
-  onClose: React.PropTypes.func,
+  onClose: PropTypes.func,
   /**
    * Callback that runs when an action is clicked by the user. If the actions
    * If the `actions` prop is an array of strings,
    * this callback will return the action that was clicked.
    */
-  onActionClick: React.PropTypes.func,
+  onActionClick: PropTypes.func,
   /**
    * Toggles a modal overlay. If set to true, the overlay will appear,
    */
-  overlay: React.PropTypes.bool
+  overlay: PropTypes.bool
 };
 
 Dialog.defaultProps = {

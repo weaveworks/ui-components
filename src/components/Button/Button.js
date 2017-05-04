@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * A button that will run a callback on click
@@ -41,20 +42,20 @@ Button.propTypes = {
   /**
  * Callback that will be run when the button is clicked.
  */
-  onClick: React.PropTypes.func,
+  onClick: PropTypes.func,
   /**
  * Text that will be used as the button label.
  * If this props is provided, it will be passed back to the `onClick` handler
  */
-  text: React.PropTypes.string,
+  text: PropTypes.string,
   /**
  * Disable the button.
  */
-  disabled: React.PropTypes.bool,
+  disabled: PropTypes.bool,
   /**
    * Render the button in $turquoise (useful for CTAs)
    */
-  primary: React.PropTypes.bool
+  primary: PropTypes.bool
 };
 
 Button.defaultProps = {

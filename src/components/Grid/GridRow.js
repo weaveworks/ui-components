@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 /**
@@ -17,7 +18,7 @@ GridRow.propTypes = {
   /**
    * The direction in which to justify content. Should be 'left', 'center', or 'right';
   */
-  alignContent: React.PropTypes.string
+  alignContent: PropTypes.string
 };
 
 export default GridRow;
