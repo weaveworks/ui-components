@@ -23,8 +23,8 @@
   "license": "UNLICENSED",
   "peerDependencies": {
     "lodash": "^4.17.2",
-    "react": "~15.4.0",
-    "react-dom": "~15.4.0"
+    "react": "~15.5.0",
+    "react-dom": "~15.5.0"
   },
   "dependencies": {
     "babel-cli": "^6.18.0",
