@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const TRUNCATE_CONTEXT = 6;
 const TRUNCATE_ELLIPSIS = '…';
@@ -118,13 +119,13 @@ MatchedText.propTypes = {
   /**
    * The base text to display
    */
-  text: React.PropTypes.string,
+  text: PropTypes.string,
   /**
    * {start: 3, length: 2} describes the area to highlight
    */
-  match: React.PropTypes.shape({
-    start: React.PropTypes.number,
-    length: React.PropTypes.number
+  match: PropTypes.shape({
+    start: PropTypes.number,
+    length: PropTypes.number
   }),
 };
 

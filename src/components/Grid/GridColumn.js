@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * A child of the `<Grid />` component. Used for building layouts.
@@ -15,7 +16,7 @@ GridColumn.propTypes = {
   /**
    * The desired col-span; maximum of 12 columns
    */
-  span: React.PropTypes.number
+  span: PropTypes.number
 };
 
 export default GridColumn;

@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Size is set in px
@@ -34,7 +35,7 @@ CircularProgress.propTypes = {
   /**
   * Size of spinner in px
   */
-  size: React.PropTypes.number
+  size: PropTypes.number
 };
 
 CircularProgress.defaultProps = {

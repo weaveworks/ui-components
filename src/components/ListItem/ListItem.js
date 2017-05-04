@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * A list item component that can be used for or showing off summary details about something!
@@ -57,12 +58,12 @@ class ListItem extends React.Component {
 
 
 ListItem.propTypes = {
-  active: React.PropTypes.bool,
-  text: React.PropTypes.any,
-  subText: React.PropTypes.any,
-  onClick: React.PropTypes.func,
-  style: React.PropTypes.object,
-  value: React.PropTypes.any
+  active: PropTypes.bool,
+  text: PropTypes.any,
+  subText: PropTypes.any,
+  onClick: PropTypes.func,
+  style: PropTypes.object,
+  value: PropTypes.any
 };
 
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 /**
@@ -36,11 +37,11 @@ MenuItem.propTypes = {
   /**
    * Handler that will be run on click. The `text` prop is passed to the handler function
    */
-  onClick: React.PropTypes.func,
+  onClick: PropTypes.func,
   /**
    * Text that will be displayed as the menu item.
    */
-  text: React.PropTypes.string
+  text: PropTypes.string
 };
 
 export default MenuItem;
