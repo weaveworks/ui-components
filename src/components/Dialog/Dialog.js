@@ -68,7 +68,7 @@ class Dialog extends React.Component {
             {children}
           </div>
           <div className="weave-dialog-actions">
-            {actions.map((Action, i) => {
+            {actions && actions.map((Action, i) => {
               if (React.isValidElement(Action)) {
                 return React.cloneElement(Action, { key: i });
               }
