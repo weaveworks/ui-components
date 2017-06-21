@@ -79,6 +79,10 @@
       background-color: darken($turquoise, 15);
     }
   }
+
+  &.selected {
+    @include selected;
+  }
 }
 
 .weave-menu {
