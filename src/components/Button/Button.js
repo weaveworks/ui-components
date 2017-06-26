@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 /**
  * A button that will run a callback on click
@@ -7,7 +8,6 @@ import PropTypes from 'prop-types';
  *  <Button onClick={alert} text="Submit" />
  * ```
  */
-import classnames from 'classnames';
 
 class Button extends React.Component {
   constructor(props, context) {
@@ -23,8 +23,8 @@ class Button extends React.Component {
   }
 
   render() {
-    const { children, className, text, disabled, style, primary } = this.props;
-    const cl = classnames('weave-button', { primary });
+    const { children, className, text, disabled, style, primary, selected } = this.props;
+    const cl = classnames('weave-button', { primary, selected });
     return (
       <button
         style={style}
@@ -55,7 +55,11 @@ Button.propTypes = {
   /**
    * Render the button in $turquoise (useful for CTAs)
    */
-  primary: PropTypes.bool
+  primary: PropTypes.bool,
+  /**
+   * Add styling to show the button as selected
+   */
+  selected: PropTypes.bool
 };
 
 Button.defaultProps = {
