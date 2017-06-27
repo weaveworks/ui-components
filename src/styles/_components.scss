@@ -83,6 +83,16 @@
   &.selected {
     @include selected;
   }
+
+  &.danger {
+    color: $white;
+    background-color: red;
+
+    &:hover {
+      color: $white;
+      background-color: darken(red, 15);
+    }
+  }
 }
 
 .weave-menu {

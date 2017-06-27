@@ -10,6 +10,7 @@ export default function ButtonExample({ clickHandler }) {
       <p><Button disabled onClick={onClick} text="Disabled" /></p>
       <p><Button primary onClick={onClick} text="Primary" /></p>
       <p><Button selected onClick={onClick} text="Selected" /></p>
+      <p><Button danger onClick={onClick} text="Danger" /></p>
     </div>
   );
 }
