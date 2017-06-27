@@ -23,8 +23,8 @@ class Button extends React.Component {
   }
 
   render() {
-    const { children, className, text, disabled, style, primary, selected } = this.props;
-    const cl = classnames('weave-button', { primary, selected });
+    const { children, className, text, disabled, style, primary, selected, danger } = this.props;
+    const cl = classnames('weave-button', { primary, selected, danger });
     return (
       <button
         style={style}
@@ -59,7 +59,11 @@ Button.propTypes = {
   /**
    * Add styling to show the button as selected
    */
-  selected: PropTypes.bool
+  selected: PropTypes.bool,
+  /**
+   * Turn the button red to indicate something bad might happen
+   */
+  danger: PropTypes.bool,
 };
 
 Button.defaultProps = {
