@@ -28,11 +28,10 @@ release: image
 		npm version patch && \
 		git push origin --follow-tags \
 
-
 docs: release
-	$(SUDO) docker run $(RM) -ti \
-		-v $(shell pwd)/dist:/home/weave/dist \
-		$(IMAGE_PREFIX) yarn s3
+	AWS_ACCESS_KEY_ID=$$UI_BUCKET_KEY_ID \
+	AWS_SECRET_ACCESS_KEY=$$UI_BUCKET_KEY_SECRET \
+	aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read
 
 shell: image
 	$(SUDO) docker run $(RM) -ti \
