@@ -1,16 +1,6 @@
 machine:
-  services:
-    - docker
   node:
-    version: 8.4.0
+    version: 6.9.0
 test:
-  override:
-    - make lint
-    - make tests
-
-deployment:
-  release:
-    branch: master
-    commands:
-      - make release
-      - make docs
+  pre:
+    - npm run lint
