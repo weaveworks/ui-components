@@ -23,7 +23,17 @@ class Button extends React.Component {
   }
 
   render() {
-    const { children, className, text, disabled, style, primary, selected, danger } = this.props;
+    const {
+      children,
+      className,
+      text, disabled,
+      style,
+      primary,
+      selected,
+      danger,
+      type,
+    } = this.props;
+
     const cl = classnames('weave-button', { primary, selected, danger });
     return (
       <button
@@ -31,6 +41,7 @@ class Button extends React.Component {
         disabled={disabled}
         onClick={this.handleClick}
         className={className || cl}
+        type={type}
       >
         {children || text}
       </button>
@@ -64,6 +75,10 @@ Button.propTypes = {
    * Turn the button red to indicate something bad might happen
    */
   danger: PropTypes.bool,
+  /**
+   * The type of button, as it relates to <form> components
+   */
+  type: PropTypes.string,
 };
 
 Button.defaultProps = {
