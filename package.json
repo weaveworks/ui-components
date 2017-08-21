@@ -8,12 +8,9 @@
     "test": "jest",
     "start": "node bin/dev-server",
     "debug": "node debug ./node_modules/.bin/jest -i",
-    "build": "RELEASE=true rm -rf dist && webpack --config webpack.config.js",
-    "lint-js": "eslint src",
-    "lint": "npm run lint-js",
-    "ci": "npm run lint && npm test",
-    "s3": "aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
-    "release": "npm run lint && npm test && npm run build && npm version patch && git push origin --follow-tags && npm run s3"
+    "build": "RELEASE=true mkdir -p dist && webpack --config webpack.config.js",
+    "lint": "eslint src",
+    "s3": "aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read"
   },
   "repository": {
     "type": "git",
@@ -69,8 +66,5 @@
     "url-loader": "^0.5.7",
     "webpack": "1.13.3",
     "webpack-dev-server": "1.16.2"
-  },
-  "engines": {
-    "node": "^6.9.0"
   }
 }
