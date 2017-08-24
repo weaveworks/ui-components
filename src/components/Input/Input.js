@@ -40,7 +40,7 @@ class Input extends React.Component {
           <i className={classnames('fa fa-times-circle input-icon', { show: !valid })} />
         </div>
         <span
-          className={classnames('validation-message', { invalid: !valid, show: message })}
+          className={classnames('validation-message', { invalid: !valid, show: message && !valid })}
         >
           {message}
         </span>
@@ -56,7 +56,7 @@ Input.propTypes = {
   label: PropTypes.string,
   /**
    * A message that will appear below the field; used to indicate validity.
-   * This should be undefined if no message should be shown.
+   * This will not appear if `valid` is truthy.
    */
   message: PropTypes.any,
   /**
