@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { ThemeProvider } from 'styled-components';
 
 import { isActivePage } from './utils';
+import theme from '../../theme';
 
 import Logo from '../../src/components/WeaveWorksLogo';
 import { Menu, MenuItem } from '../../src/components/Menu';
@@ -31,7 +33,9 @@ export default function LandingPage({children}) {
           </Row>
         </Grid>
       </div>
-      {children}
+      <ThemeProvider theme={theme}>
+        {children}
+      </ThemeProvider>
     </div>
   );
 }

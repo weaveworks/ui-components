@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button /> snapshots renders danger 1`] = `
+.c0 {
+  height: 36px;
+  min-width: 90px;
+  padding: 0 12px;
+  border: 0;
+  outline: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
+  background: #ff0000;
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.c0:hover {
+  -webkit-transition: color .3s ease;
+  transition: color .3s ease;
+  background: #b30000;
+  color: #fff;
+}
+
+<button
+  className="c0"
+  nature="danger"
+  onClick={[Function]}
+>
+  Danger
+</button>
+`;
+
+exports[`<Button /> snapshots renders default 1`] = `
+.c0 {
+  height: 36px;
+  min-width: 90px;
+  padding: 0 12px;
+  border: 0;
+  outline: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
+  background: #fff;
+  color: #000;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.c0:hover {
+  -webkit-transition: color .3s ease;
+  transition: color .3s ease;
+  background: #d7d7d7;
+  color: #3c3c5b;
+}
+
+<button
+  className="c0"
+  nature="default"
+  onClick={[Function]}
+>
+  Submit
+</button>
+`;
+
+exports[`<Button /> snapshots renders disabled 1`] = `
+.c0 {
+  height: 36px;
+  min-width: 90px;
+  padding: 0 12px;
+  border: 0;
+  outline: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
+  background: #d7d7d7;
+  color: #aaaaaa;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.c0:hover {
+  -webkit-transition: color .3s ease;
+  transition: color .3s ease;
+  background: #d7d7d7;
+  color: #aaaaaa;
+}
+
+<button
+  className="c0"
+  disabled={true}
+  nature="disabled"
+  onClick={[Function]}
+>
+  Disabled
+</button>
+`;
+
+exports[`<Button /> snapshots renders primary 1`] = `
+.c0 {
+  height: 36px;
+  min-width: 90px;
+  padding: 0 12px;
+  border: 0;
+  outline: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
+  background: #00bcd4;
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.c0:hover {
+  -webkit-transition: color .3s ease;
+  transition: color .3s ease;
+  background: #007888;
+  color: #fff;
+}
+
+<button
+  className="c0"
+  nature="primary"
+  onClick={[Function]}
+>
+  Primary
+</button>
+`;
+
+exports[`<Button /> snapshots renders selected 1`] = `
+.c0 {
+  height: 36px;
+  min-width: 90px;
+  padding: 0 12px;
+  border: 0;
+  outline: none;
+  box-shadow: 0px 0px 2px 2px #8383ac;
+  background: #fff;
+  color: #000;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.c0:hover {
+  -webkit-transition: color .3s ease;
+  transition: color .3s ease;
+  background: #d7d7d7;
+  color: #3c3c5b;
+}
+
+<button
+  className="c0"
+  nature="default"
+  onClick={[Function]}
+  selected={true}
+>
+  Selected
+</button>
+`;

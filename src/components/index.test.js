@@ -28,6 +28,7 @@ describe('index', () => {
       .map(d => getFiles(`${componentsDir}/${d}`))
       .flatten()
       .map(f => f.replace('.js', ''))
+      .filter(f => f !== '__snapshots__')
       .value();
     _.each(files, (f) => {
       expect(WeaveComponents[f]).toExist(
