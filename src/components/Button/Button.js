@@ -2,14 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const StyledButton = styled.button.attrs({
-  nature: (props) => {
-    if (props.disabled) return 'disabled';
-    if (props.primary) return 'primary';
-    if (props.danger) return 'danger';
-    return 'default';
-  }
-})`
+const StyledButton = styled.button`
   /* Display & Box Model */
   height: 36px;
   min-width: 90px;
@@ -19,8 +12,8 @@ const StyledButton = styled.button.attrs({
   box-shadow: ${props => (props.selected ? props.theme.boxShadow.selected : props.theme.boxShadow.light)};
 
   /* Color */
-  background: ${props => props.theme.atoms.Button[props.nature].background};
-  color: ${props => props.theme.atoms.Button[props.nature].color};
+  background: ${props => props.theme.atoms.Button[props.variety].background};
+  color: ${props => props.theme.atoms.Button[props.variety].color};
 
   /* Text */
   font-size: ${props => props.theme.fontSizes.medium};
@@ -32,8 +25,8 @@ const StyledButton = styled.button.attrs({
   /* Pseudo-selectors */
   &:hover {
     transition: color .3s ease;
-    background: ${props => props.theme.atoms.Button[props.nature].hoverBackground};
-    color: ${props => props.theme.atoms.Button[props.nature].hoverColor};
+    background: ${props => props.theme.atoms.Button[props.variety].hoverBackground};
+    color: ${props => props.theme.atoms.Button[props.variety].hoverColor};
   }
 `;
 
@@ -45,7 +38,11 @@ const StyledButton = styled.button.attrs({
  */
 
 const Button = ({ children, text, onClick, ...props }) => (
-  <StyledButton {...props} onClick={e => onClick(e, text)}>
+  <StyledButton
+    {...props}
+    variety={(props.disabled && 'disabled') || (props.primary && 'primary') || (props.danger && 'danger') || 'default'}
+    onClick={e => onClick(e, text)}
+  >
     {children || text}
   </StyledButton>
 );
@@ -81,7 +78,7 @@ Button.propTypes = {
    */
   type: PropTypes.string,
 
-  nature: PropTypes.string,
+  variety: PropTypes.string,
 };
 
 Button.defaultProps = {

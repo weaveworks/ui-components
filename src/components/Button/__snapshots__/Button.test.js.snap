@@ -24,7 +24,6 @@ exports[`<Button /> snapshots renders danger 1`] = `
 
 <button
   className="c0"
-  nature="danger"
   onClick={[Function]}
 >
   Danger
@@ -55,7 +54,6 @@ exports[`<Button /> snapshots renders default 1`] = `
 
 <button
   className="c0"
-  nature="default"
   onClick={[Function]}
 >
   Submit
@@ -87,7 +85,6 @@ exports[`<Button /> snapshots renders disabled 1`] = `
 <button
   className="c0"
   disabled={true}
-  nature="disabled"
   onClick={[Function]}
 >
   Disabled
@@ -118,7 +115,6 @@ exports[`<Button /> snapshots renders primary 1`] = `
 
 <button
   className="c0"
-  nature="primary"
   onClick={[Function]}
 >
   Primary
@@ -149,7 +145,6 @@ exports[`<Button /> snapshots renders selected 1`] = `
 
 <button
   className="c0"
-  nature="default"
   onClick={[Function]}
   selected={true}
 >
