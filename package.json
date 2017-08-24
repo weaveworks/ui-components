@@ -24,7 +24,8 @@
   "peerDependencies": {
     "lodash": "^4.17.2",
     "react": "~15.5.0",
-    "react-dom": "~15.5.0"
+    "react-dom": "~15.5.0",
+    "font-awesome": "4.7.0"
   },
   "dependencies": {
     "babel-cli": "^6.18.0",
@@ -50,11 +51,14 @@
     "expect": "1.20.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
+    "font-awesome": "4.7.0",
+    "font-awesome-webpack": "0.0.4",
     "highlight.js": "9.8.0",
     "html-webpack-plugin": "2.24.1",
     "jest": "17.0.3",
     "json-loader": "0.5.4",
     "lodash": "4.17.2",
+    "less": "2.7.2",
     "marked": "0.3.6",
     "raw-loader": "^0.5.1",
     "react": "15.5.0",

@@ -330,3 +330,48 @@
     opacity: 1;
   }
 }
+
+.weave-input {
+  padding: 15px 10px;
+  margin-bottom: 10px;
+  display: inline-block;
+
+  input {
+    @include placeholder {
+      color: $gray;
+    };
+    display: inline-block;
+    box-shadow: none;
+    padding: 8px;
+    border: 1px solid $gray;
+    border-radius: 2px;
+    font-size: 16px;
+  }
+
+  .input-icon {
+    visibility: hidden;
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 21px;
+    color: $red;
+  }
+
+  .validation-message {
+    font-size: 14px;
+    padding-left: 8px;
+    visibility: hidden;
+
+    &.invalid {
+      color: $red;
+    }
+  }
+
+  .input-wrapper {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .show {
+    visibility: visible;
+  }
+}
