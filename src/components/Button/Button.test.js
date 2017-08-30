@@ -1,32 +1,35 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
+import { ThemeProvider } from 'styled-components';
 import 'jest-styled-components';
 
 import theme from '../../../theme';
 
 import Button from './Button';
 
+const withTheme = component => <ThemeProvider theme={theme}>{component}</ThemeProvider>;
+
 describe('<Button />', () => {
   describe('snapshots', () => {
     it('renders default', () => {
-      const tree = renderer.create(<Button text="Submit" theme={theme} />).toJSON();
+      const tree = renderer.create(withTheme(<Button text="Submit" />)).toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders disabled', () => {
-      const tree = renderer.create(<Button disabled text="Disabled" theme={theme} />).toJSON();
+      const tree = renderer.create(withTheme(<Button disabled text="Disabled" />)).toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders primary', () => {
-      const tree = renderer.create(<Button primary text="Primary" theme={theme} />).toJSON();
+      const tree = renderer.create(withTheme(<Button primary text="Primary" />)).toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders selected', () => {
-      const tree = renderer.create(<Button selected text="Selected" theme={theme} />).toJSON();
+      const tree = renderer.create(withTheme(<Button selected text="Selected" />)).toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders danger', () => {
-      const tree = renderer.create(<Button danger text="Danger" theme={theme} />).toJSON();
+      const tree = renderer.create(withTheme(<Button danger text="Danger" />)).toJSON();
       expect(tree).toMatchSnapshot();
     });
   });

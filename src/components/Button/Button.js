@@ -2,18 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const StyledButton = styled.button`
+const StyledButton = styled('button')`
   /* Display & Box Model */
   height: 36px;
   min-width: 90px;
   padding: 0 12px;
   border: 0;
   outline: none;
-  box-shadow: ${props => (props.style.selected ? props.theme.boxShadow.selected : props.theme.boxShadow.light)};
+  box-shadow: ${props => (props.styled.selected ? props.theme.boxShadow.selected : props.theme.boxShadow.light)};
 
   /* Color */
-  background: ${props => props.theme.atoms.Button[props.style.type].background};
-  color: ${props => props.theme.atoms.Button[props.style.type].color};
+  background: ${props => props.theme.atoms.Button[props.styled.type].background};
+  color: ${props => props.theme.atoms.Button[props.styled.type].color};
 
   /* Text */
   font-size: ${props => props.theme.fontSizes.medium};
@@ -25,8 +25,8 @@ const StyledButton = styled.button`
   /* Pseudo-selectors */
   &:hover {
     transition: color .3s ease;
-    background: ${props => props.theme.atoms.Button[props.style.type].hoverBackground};
-    color: ${props => props.theme.atoms.Button[props.style.type].hoverColor};
+    background: ${props => props.theme.atoms.Button[props.styled.type].hoverBackground};
+    color: ${props => props.theme.atoms.Button[props.styled.type].hoverColor};
   }
 `;
 
@@ -42,7 +42,7 @@ const Button = ({ children, text, onClick, type, primary, disabled, danger, sele
     disabled={disabled}
     onClick={e => onClick(e, text)}
     type={type}
-    style={{
+    styled={{
       selected,
       type: (disabled && 'disabled') || (primary && 'primary') || (danger && 'danger') || 'default',
     }}

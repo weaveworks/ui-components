@@ -24,7 +24,9 @@ exports[`<Button /> snapshots renders danger 1`] = `
 
 <button
   className="c0"
+  disabled={undefined}
   onClick={[Function]}
+  type={undefined}
 >
   Danger
 </button>
@@ -54,7 +56,9 @@ exports[`<Button /> snapshots renders default 1`] = `
 
 <button
   className="c0"
+  disabled={undefined}
   onClick={[Function]}
+  type={undefined}
 >
   Submit
 </button>
@@ -86,6 +90,7 @@ exports[`<Button /> snapshots renders disabled 1`] = `
   className="c0"
   disabled={true}
   onClick={[Function]}
+  type={undefined}
 >
   Disabled
 </button>
@@ -115,7 +120,9 @@ exports[`<Button /> snapshots renders primary 1`] = `
 
 <button
   className="c0"
+  disabled={undefined}
   onClick={[Function]}
+  type={undefined}
 >
   Primary
 </button>
@@ -145,8 +152,9 @@ exports[`<Button /> snapshots renders selected 1`] = `
 
 <button
   className="c0"
+  disabled={undefined}
   onClick={[Function]}
-  selected={true}
+  type={undefined}
 >
   Selected
 </button>
