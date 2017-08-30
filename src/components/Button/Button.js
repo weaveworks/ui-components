@@ -9,11 +9,11 @@ const StyledButton = styled.button`
   padding: 0 12px;
   border: 0;
   outline: none;
-  box-shadow: ${props => (props.selected ? props.theme.boxShadow.selected : props.theme.boxShadow.light)};
+  box-shadow: ${props => (props.style.selected ? props.theme.boxShadow.selected : props.theme.boxShadow.light)};
 
   /* Color */
-  background: ${props => props.theme.atoms.Button[props.variety].background};
-  color: ${props => props.theme.atoms.Button[props.variety].color};
+  background: ${props => props.theme.atoms.Button[props.style.type].background};
+  color: ${props => props.theme.atoms.Button[props.style.type].color};
 
   /* Text */
   font-size: ${props => props.theme.fontSizes.medium};
@@ -25,8 +25,8 @@ const StyledButton = styled.button`
   /* Pseudo-selectors */
   &:hover {
     transition: color .3s ease;
-    background: ${props => props.theme.atoms.Button[props.variety].hoverBackground};
-    color: ${props => props.theme.atoms.Button[props.variety].hoverColor};
+    background: ${props => props.theme.atoms.Button[props.style.type].hoverBackground};
+    color: ${props => props.theme.atoms.Button[props.style.type].hoverColor};
   }
 `;
 
@@ -37,11 +37,15 @@ const StyledButton = styled.button`
  * ```
  */
 
-const Button = ({ children, text, onClick, ...props }) => (
+const Button = ({ children, text, onClick, type, primary, disabled, danger, selected }) => (
   <StyledButton
-    {...props}
-    variety={(props.disabled && 'disabled') || (props.primary && 'primary') || (props.danger && 'danger') || 'default'}
+    disabled={disabled}
     onClick={e => onClick(e, text)}
+    type={type}
+    style={{
+      selected,
+      type: (disabled && 'disabled') || (primary && 'primary') || (danger && 'danger') || 'default',
+    }}
   >
     {children || text}
   </StyledButton>
@@ -77,8 +81,6 @@ Button.propTypes = {
    * The type of button, as it relates to <form> components
    */
   type: PropTypes.string,
-
-  variety: PropTypes.string,
 };
 
 Button.defaultProps = {
