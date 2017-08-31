@@ -1,6 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import styled from 'styled-components';
+
+const StyledButton = styled('button')`
+  /* Display & Box Model */
+  height: 36px;
+  min-width: 90px;
+  padding: 0 12px;
+  border: 0;
+  outline: none;
+  box-shadow: ${props => (props.styled.selected ? props.theme.boxShadow.selected : props.theme.boxShadow.light)};
+
+  /* Color */
+  background: ${props => props.theme.atoms.Button[props.styled.type].background};
+  color: ${props => props.theme.atoms.Button[props.styled.type].color};
+
+  /* Text */
+  font-size: ${props => props.theme.fontSizes.medium};
+  text-transform: uppercase;
+
+  /* Other */
+  cursor: pointer;
+
+  /* Pseudo-selectors */
+  &:hover {
+    transition: color .3s ease;
+    background: ${props => props.theme.atoms.Button[props.styled.type].hoverBackground};
+    color: ${props => props.theme.atoms.Button[props.styled.type].hoverColor};
+  }
+`;
 
 /**
  * A button that will run a callback on click
@@ -9,45 +37,19 @@ import classnames from 'classnames';
  * ```
  */
 
-class Button extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(ev) {
-    if (this.props.onClick) {
-      this.props.onClick(ev, this.props.text);
-    }
-  }
-
-  render() {
-    const {
-      children,
-      className,
-      text, disabled,
-      style,
-      primary,
+const Button = ({ children, text, onClick, type, primary, disabled, danger, selected }) => (
+  <StyledButton
+    disabled={disabled}
+    onClick={e => onClick(e, text)}
+    type={type}
+    styled={{
       selected,
-      danger,
-      type,
-    } = this.props;
-
-    const cl = classnames('weave-button', { primary, selected, danger });
-    return (
-      <button
-        style={style}
-        disabled={disabled}
-        onClick={this.handleClick}
-        className={className || cl}
-        type={type}
-      >
-        {children || text}
-      </button>
-    );
-  }
-}
+      type: (disabled && 'disabled') || (primary && 'primary') || (danger && 'danger') || 'default',
+    }}
+  >
+    {children || text}
+  </StyledButton>
+);
 
 Button.propTypes = {
   /**
@@ -82,7 +84,7 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  text: 'Submit'
+  text: 'Submit',
 };
 
 export default Button;

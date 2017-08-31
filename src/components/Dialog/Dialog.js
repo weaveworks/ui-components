@@ -50,7 +50,7 @@ class Dialog extends React.Component {
     this.handleActionClick = this.handleActionClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-  handleActionClick(ev, text) {
+  handleActionClick(text) {
     this.props.onActionClick(text);
   }
   handleClose() {
@@ -72,7 +72,9 @@ class Dialog extends React.Component {
               if (React.isValidElement(Action)) {
                 return React.cloneElement(Action, { key: i });
               }
-              return (<Button key={i} onClick={this.handleActionClick} text={Action} />);
+              return (
+                <Button key={i} onClick={() => this.handleActionClick(Action)} text={Action} />
+              );
             })}
           </div>
         </div>

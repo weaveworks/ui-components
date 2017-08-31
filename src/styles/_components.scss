@@ -50,51 +50,6 @@
   @include material-shadow;
 }
 
-.weave-button {
-  @include font-size(medium);
-  @include material-shadow;
-  text-transform: uppercase;
-  background-color: $white;
-
-  outline: none;
-  border: 0;
-  cursor: pointer;
-  height: 36px;
-  padding: 0 12px;
-  min-width: 90px;
-  &:not([disabled]):hover {
-    @include hover-background;
-  }
-  &[disabled] {
-    @include material-shadow(none);
-    background-color: $lightgray;
-  }
-
-  &.primary {
-    color: $white;
-    background-color: $turquoise;
-
-    &:hover {
-      color: $white;
-      background-color: darken($turquoise, 15);
-    }
-  }
-
-  &.selected {
-    @include selected;
-  }
-
-  &.danger {
-    color: $white;
-    background-color: red;
-
-    &:hover {
-      color: $white;
-      background-color: darken(red, 15);
-    }
-  }
-}
-
 .weave-menu {
   color: $lavender;
   text-align: left;
