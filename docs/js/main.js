@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import 'font-awesome-webpack';
 
+import '../../src/fonts/proximanova-regular.woff';
+
 import Root from './Root';
 
 import '../css/demo.scss';

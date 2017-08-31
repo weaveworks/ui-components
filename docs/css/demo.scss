@@ -3,6 +3,11 @@
 @import "syntax.css";
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+@font-face {
+  font-family: 'proxima-nova';
+  src: url('../../src/fonts/proximanova-regular.woff');
+}
+
 body {
   background-color: $sand;
   font-family: 'Roboto', sans-serif;

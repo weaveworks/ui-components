@@ -16,7 +16,7 @@ const StyledButton = styled('button')`
   color: ${props => props.theme.atoms.Button[props.styled.type].color};
 
   /* Text */
-  font-size: ${props => props.theme.fontSizes.medium};
+  font-size: ${props => props.theme.fontSizes.normal};
   text-transform: uppercase;
 
   /* Other */

@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Text /> renderes large 1`] = `
+.c0 {
+  font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  color: #1a1a1a;
+  font-size: 2em;
+  font-weight: 400;
+  text-transform: none;
+  font-style: normal;
+}
+
+<span
+  className="c0"
+/>
+`;
+
+exports[`<Text /> renders bold 1`] = `
+.c0 {
+  font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  color: #1a1a1a;
+  font-size: 1em;
+  font-weight: 400;
+  text-transform: none;
+  font-style: italic;
+}
+
+<span
+  className="c0"
+/>
+`;
+
+exports[`<Text /> renders default 1`] = `
+.c0 {
+  font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  color: #1a1a1a;
+  font-size: 1em;
+  font-weight: 400;
+  text-transform: none;
+  font-style: normal;
+}
+
+<span
+  className="c0"
+/>
+`;
+
+exports[`<Text /> renders italic 1`] = `
+.c0 {
+  font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  color: #1a1a1a;
+  font-size: 2em;
+  font-weight: 400;
+  text-transform: none;
+  font-style: normal;
+}
+
+<span
+  className="c0"
+/>
+`;
+
+exports[`<Text /> renders xl 1`] = `
+.c0 {
+  font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  color: #1a1a1a;
+  font-size: 2.827em;
+  font-weight: 400;
+  text-transform: none;
+  font-style: normal;
+}
+
+<span
+  className="c0"
+/>
+`;
