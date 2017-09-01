@@ -42,7 +42,6 @@ describe('<Button />', () => {
   });
   it('accepts a style prop', () => {
     const tree = renderer.create(withTheme(<Button style={{ color: 'blue' }} />)).toJSON();
-    debugger;
     expect(tree).toMatchSnapshot();
   });
 });
