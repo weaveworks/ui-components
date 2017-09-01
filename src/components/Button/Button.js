@@ -37,7 +37,7 @@ const StyledButton = styled('button')`
  * ```
  */
 
-const Button = ({ children, text, onClick, type, primary, disabled, danger, selected }) => (
+const Button = ({ children, text, onClick, type, primary, disabled, danger, selected, style }) => (
   <StyledButton
     disabled={disabled}
     onClick={e => onClick(e, text)}
@@ -46,6 +46,7 @@ const Button = ({ children, text, onClick, type, primary, disabled, danger, sele
       selected,
       type: (disabled && 'disabled') || (primary && 'primary') || (danger && 'danger') || 'default',
     }}
+    style={style}
   >
     {children || text}
   </StyledButton>

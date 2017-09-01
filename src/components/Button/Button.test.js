@@ -40,4 +40,9 @@ describe('<Button />', () => {
     button.simulate('click');
     expect(spy.mock.calls[0][1]).toBe('MyCustomText');
   });
+  it('accepts a style prop', () => {
+    const tree = renderer.create(withTheme(<Button style={{ color: 'blue' }} />)).toJSON();
+    debugger;
+    expect(tree).toMatchSnapshot();
+  });
 });
