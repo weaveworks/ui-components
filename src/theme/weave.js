@@ -18,10 +18,15 @@ const colors = {
 const weave = {
   colors,
 
+  textColor: '#1a1a1a',
+
   fontSizes: {
-    small: '11.7px',
-    medium: '14px',
+    normal: '1em',
+    large: '2em',
+    xl: '2.827em',
   },
+
+  fontFamily: '\'proxima-nova\', sans-serif, \'Helvetica Neue\', Helvetica, Arial, sans-serif',
 
   boxShadow: {
     none: 'none',
