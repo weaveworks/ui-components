@@ -4,16 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "babel src/components --out-dir lib --ignore *.test.js,example.js",
+    "compile:utils": "babel src/utils --out-dir lib/utils --ignore *.test.js,example.js",
+    "compile:components": "babel src/components --out-dir lib --ignore *.test.js,example.js",
+    "install": "yarn compile:utils && yarn compile:components",
     "test": "jest",
     "start": "node bin/dev-server",
     "debug": "node debug ./node_modules/.bin/jest -i",
     "build": "RELEASE=true rm -rf dist && webpack --config webpack.config.js",
     "lint-js": "eslint src",
-    "lint": "npm run lint-js",
-    "ci": "npm run lint && npm test",
+    "lint": "yarn lint-js",
+    "ci": "yarn lint && yarn test",
     "s3": "aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
-    "release": "npm run lint && npm test && npm run build && npm version patch && git push origin --follow-tags && npm run s3"
+    "release": "yarn lint && yarn test && yarn build && npm version patch && git push origin --follow-tags && yarn s3"
   },
   "repository": {
     "type": "git",
