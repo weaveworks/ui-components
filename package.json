@@ -13,7 +13,7 @@
     "start": "node bin/dev-server",
     "debug": "node debug ./node_modules/.bin/jest -i",
     "build": "RELEASE=true rm -rf dist && webpack --config webpack.config.js",
-    "lint-js": "eslint src",
+    "lint-js": "eslint src docs",
     "lint": "yarn lint-js",
     "ci": "yarn lint && yarn test",
     "s3": "aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
