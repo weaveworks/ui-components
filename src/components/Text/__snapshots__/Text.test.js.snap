@@ -19,7 +19,7 @@ exports[`<Text /> renders bold 1`] = `
 .c0 {
   font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
   color: #1a1a1a;
-  font-size: 1em;
+  font-size: 0.875em;
   font-weight: 400;
   text-transform: none;
   font-style: italic;
@@ -34,7 +34,7 @@ exports[`<Text /> renders default 1`] = `
 .c0 {
   font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
   color: #1a1a1a;
-  font-size: 1em;
+  font-size: 0.875em;
   font-weight: 400;
   text-transform: none;
   font-style: normal;
