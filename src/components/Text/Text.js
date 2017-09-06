@@ -15,7 +15,7 @@ const StyledText = styled.span`
 
 
 /**
- * Text! Normal, Large and Extra Large are 1em, 2em, and 2.827em respectively.
+ * Text! Normal, Large and Extra Large are 0.875em, 2em, and 2.827em respectively.
  * The font is proxima-nova.
  * ```javascript
  * import { Text } from 'weaveworks-ui-components';
@@ -60,7 +60,7 @@ Text.propTypes = {
    */
   bold: PropTypes.bool,
   /**
-   * Default text size; 1em
+   * Default text size; 0.875em
    */
   normal: PropTypes.bool,
   /**

@@ -21,7 +21,7 @@ const weave = {
   textColor: '#1a1a1a',
 
   fontSizes: {
-    normal: '1em',
+    normal: '0.875em',
     large: '2em',
     xl: '2.827em',
   },
