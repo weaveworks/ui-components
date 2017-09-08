@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { fromAtoms } from '../../utils';
+
 const StyledButton = styled('button')`
   /* Display & Box Model */
   height: 36px;
@@ -12,21 +14,21 @@ const StyledButton = styled('button')`
   box-shadow: ${props => (props.styled.selected ? props.theme.boxShadow.selected : props.theme.boxShadow.light)};
 
   /* Color */
-  background: ${props => props.theme.atoms.Button[props.styled.type].background};
-  color: ${props => props.theme.atoms.Button[props.styled.type].color};
+  background: ${fromAtoms('Button', 'styled.type', 'background')};
+  color: ${fromAtoms('Button', 'styled.type', 'color')};
 
   /* Text */
   font-size: ${props => props.theme.fontSizes.normal};
   text-transform: uppercase;
 
   /* Other */
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
 
   /* Pseudo-selectors */
   &:hover {
     transition: color .3s ease;
-    background: ${props => props.theme.atoms.Button[props.styled.type].hoverBackground};
-    color: ${props => props.theme.atoms.Button[props.styled.type].hoverColor};
+    background: ${fromAtoms('Button', 'styled.type', 'hoverBackground')};
+    color: ${fromAtoms('Button', 'styled.type', 'hoverColor')};
   }
 `;
 
@@ -37,20 +39,49 @@ const StyledButton = styled('button')`
  * ```
  */
 
-const Button = ({ children, text, onClick, type, primary, disabled, danger, selected, style }) => (
-  <StyledButton
-    disabled={disabled}
-    onClick={e => onClick(e, text)}
-    type={type}
-    styled={{
+class Button extends React.PureComponent {
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    const { onClick, disabled, text } = this.props;
+
+    if (onClick && !disabled) {
+      onClick(e, text);
+    }
+  }
+
+  render() {
+    const {
+      children,
+      text,
+      type,
+      primary,
+      disabled,
+      danger,
       selected,
-      type: (disabled && 'disabled') || (primary && 'primary') || (danger && 'danger') || 'default',
-    }}
-    style={style}
-  >
-    {children || text}
-  </StyledButton>
-);
+      style,
+    } = this.props;
+
+    return (
+      <StyledButton
+        disabled={disabled}
+        onClick={this.handleClick}
+        type={type}
+        styled={{
+          selected,
+          type: (disabled && 'disabled') || (primary && 'primary') || (danger && 'danger') || 'default',
+        }}
+        style={style}
+      >
+        {children || text}
+      </StyledButton>
+    );
+  }
+}
 
 Button.propTypes = {
   /**

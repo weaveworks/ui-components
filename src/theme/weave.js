@@ -7,7 +7,7 @@ const colors = {
   gray: '#aaaaaa',
   gunpowder: '#3c3c5b',
   lavender: '#8383ac',
-  lightgray: '#d7d7d7',
+  lightgray: '#f8f8f8',
   sand: '#f5f4f4',
   stratos: '#001755',
   turquoise: '#00bcd4',
@@ -15,8 +15,16 @@ const colors = {
   white: '#fff',
 };
 
+// Use these when colorizing elements that should indicate a state or outcome, ie Alerts.
+const statusColors = {
+  success: '#38bd93', // green
+  error: '#c7254e', // red
+  warning: '#d4ab27', // amber
+};
+
 const weave = {
   colors,
+  statusColors,
 
   textColor: '#1a1a1a',
 
@@ -63,6 +71,28 @@ const weave = {
         hoverBackground: colors.lightgray,
       },
     },
+    Alert: {
+      default: {
+        color: colors.black,
+        background: colors.lightgray,
+        borderColor: colors.gray,
+      },
+      success: {
+        color: colors.white,
+        background: statusColors.success,
+        borderColor: darken(0.15, statusColors.success),
+      },
+      warning: {
+        color: colors.white,
+        background: statusColors.warning,
+        borderColor: darken(0.15, statusColors.warning),
+      },
+      error: {
+        color: colors.white,
+        background: statusColors.error,
+        borderColor: darken(0.15, statusColors.error),
+      }
+    }
   },
 };
 

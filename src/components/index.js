@@ -20,3 +20,5 @@ export LogoProgress from './LogoProgress';
 export Input from './Input';
 
 export Text from './Text';
+
+export Alert from './Alert';

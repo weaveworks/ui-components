@@ -1,6 +1,11 @@
+import React from 'react';
 import intersection from 'lodash/intersection';
 import first from 'lodash/first';
 import keys from 'lodash/keys';
+import _get from 'lodash/get';
+import { ThemeProvider } from 'styled-components';
+
+import theme from '../theme';
 
 // Return the value of a set of props against a lookup object.
 // Helps when using "ternary" props, ie: <Text small bold />
@@ -14,3 +19,11 @@ export const lookupValue = (props, lookup, _default) => {
 
   return lookup[first(matches)] || _default;
 };
+
+export const withTheme = component => <ThemeProvider theme={theme}>{component}</ThemeProvider>;
+
+// Shorthand for gettings values from the theme.
+// `variationKey` is a string matching the prop to use to lookup `field`.
+// See <Button /> or <Alert /> for an example.
+export const fromAtoms = (component, variationKey, field) => props =>
+  _get(props.theme.atoms, [component, _get(props, variationKey), field]);
