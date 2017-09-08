@@ -1,14 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import { ThemeProvider } from 'styled-components';
 import 'jest-styled-components';
-
-import theme from '../../theme';
+import { withTheme } from '../../utils';
 
 import Button from './Button';
-
-const withTheme = component => <ThemeProvider theme={theme}>{component}</ThemeProvider>;
 
 describe('<Button />', () => {
   describe('snapshots', () => {
@@ -39,6 +35,17 @@ describe('<Button />', () => {
     const button = shallow(<Button onClick={spy} text="MyCustomText" />);
     button.simulate('click');
     expect(spy.mock.calls[0][1]).toBe('MyCustomText');
+  });
+  it('does not run the onClick callback when disabled', () => {
+    const spy = jest.fn();
+    const button = shallow(<Button onClick={spy} text="MyCustomText" disabled />);
+    button.simulate('click');
+    expect(spy.mock.calls.length).toEqual(0);
+  });
+  it('is okay when no onClick callback is provided', () => {
+    const button = shallow(<Button text="MyCustomText" disabled />);
+    // Should not throw
+    button.simulate('click');
   });
   it('accepts a style prop', () => {
     const tree = renderer.create(withTheme(<Button style={{ color: 'blue' }} />)).toJSON();
