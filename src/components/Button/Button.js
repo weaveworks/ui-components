@@ -64,6 +64,7 @@ class Button extends React.PureComponent {
       danger,
       selected,
       style,
+      className,
     } = this.props;
 
     return (
@@ -76,6 +77,7 @@ class Button extends React.PureComponent {
           type: (disabled && 'disabled') || (primary && 'primary') || (danger && 'danger') || 'default',
         }}
         style={style}
+        className={className}
       >
         {children || text}
       </StyledButton>
