@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { fromAtoms } from '../../utils';
+
 const StyledButton = styled('button')`
   /* Display & Box Model */
   height: 36px;
@@ -12,8 +14,8 @@ const StyledButton = styled('button')`
   box-shadow: ${props => (props.styled.selected ? props.theme.boxShadow.selected : props.theme.boxShadow.light)};
 
   /* Color */
-  background: ${props => props.theme.atoms.Button[props.styled.type].background};
-  color: ${props => props.theme.atoms.Button[props.styled.type].color};
+  background: ${fromAtoms('Button', 'styled.type', 'background')};
+  color: ${fromAtoms('Button', 'styled.type', 'color')};
 
   /* Text */
   font-size: ${props => props.theme.fontSizes.normal};
@@ -25,8 +27,8 @@ const StyledButton = styled('button')`
   /* Pseudo-selectors */
   &:hover {
     transition: color .3s ease;
-    background: ${props => props.theme.atoms.Button[props.styled.type].hoverBackground};
-    color: ${props => props.theme.atoms.Button[props.styled.type].hoverColor};
+    background: ${fromAtoms('Button', 'styled.type', 'hoverBackground')};
+    color: ${fromAtoms('Button', 'styled.type', 'hoverColor')};
   }
 `;
 

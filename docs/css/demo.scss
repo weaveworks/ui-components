@@ -142,3 +142,9 @@ a:-webkit-any-link {
     width: 200px;
   }
 }
+
+.demo-wrap {
+  & > div {
+    width: 100%;
+  }
+}
