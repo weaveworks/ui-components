@@ -17,7 +17,8 @@
     "lint": "yarn lint-js",
     "ci": "yarn lint && yarn test",
     "s3": "aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
-    "release": "yarn lint && yarn test && yarn build && npm version patch && git push origin --follow-tags && yarn s3"
+    "copy:images" : "cp -R src/images dist/images",
+    "release": "yarn lint && yarn test && yarn build && npm version patch && git push origin --follow-tags && yarn copy:images && yarn s3"
   },
   "repository": {
     "type": "git",
