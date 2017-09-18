@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.1.40",
+  "version": "0.1.41",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "lint": "yarn lint-js",
     "ci": "yarn lint && yarn test",
     "s3": "aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
-    "copy:images" : "cp -R src/images dist/images",
+    "copy:images": "cp -R src/images dist/images",
     "release": "yarn lint && yarn test && yarn build && npm version patch && git push origin --follow-tags && yarn copy:images && yarn s3"
   },
   "repository": {
