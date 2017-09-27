@@ -2,8 +2,6 @@
 import React from 'react';
 import { includes } from 'lodash';
 
-import { renderMarkdown } from './utils';
-
 import App from './App';
 import ComponentsPage from './ComponentsPage';
 import StyleGuidePage from './StyleGuidePage';
@@ -24,10 +22,12 @@ function buildExampleComponent(el, doc, example, sub) {
   };
 }
 
-function buildMarkdownPage(md) {
-  return function MarkdownWrapper() {
+function buildStyleGuidePage(Component) {
+  return function StyleGuideWrapper() {
     return (
-      <div dangerouslySetInnerHTML={renderMarkdown(md)} />
+      <div>
+        <Component />
+      </div>
     );
   };
 }
@@ -57,8 +57,8 @@ export default function getRoutes(components, examples, docs, styles) {
   const styleguideRoutes = styles.keys().map((resource) => {
     const name = resource.split('/').pop();
     return {
-      path: name.replace('.md', '').toLowerCase(),
-      component: buildMarkdownPage(styles(resource))
+      path: name.replace('.js', '').toLowerCase(),
+      component: buildStyleGuidePage(styles(resource).default)
     };
   });
 
@@ -76,7 +76,6 @@ export default function getRoutes(components, examples, docs, styles) {
       {
         path: 'styleguide',
         component: StyleGuidePage,
-        indexRoute: { onEnter: (nextState, replace) => replace('styleguide/intro') },
         childRoutes: styleguideRoutes
       }
     ]

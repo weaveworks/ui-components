@@ -1,5 +1,6 @@
 import React from 'react';
 import { capitalize } from 'lodash';
+import PropTypes from 'prop-types';
 
 import { isActivePage } from './utils';
 
@@ -18,7 +19,7 @@ class StyleGuidePage extends React.Component {
 
   render() {
     const items = this.context.styles.keys().map((page) => {
-      const pageName = page.split('/').pop().replace('.md', '');
+      const pageName = page.split('/').pop().replace('.js', '');
       return (
         <MenuItem
           active={isActivePage(pageName)}
@@ -28,6 +29,7 @@ class StyleGuidePage extends React.Component {
         />
       );
     });
+
     return (
       <div className="styleguide-page">
         <Grid>
@@ -52,8 +54,8 @@ class StyleGuidePage extends React.Component {
 }
 
 StyleGuidePage.contextTypes = {
-  router: React.PropTypes.object.isRequired,
-  styles: React.PropTypes.func.isRequired
+  router: PropTypes.object.isRequired,
+  styles: PropTypes.func.isRequired
 };
 
 export default StyleGuidePage;
