@@ -76,6 +76,7 @@ export default function getRoutes(components, examples, docs, styles) {
       {
         path: 'styleguide',
         component: StyleGuidePage,
+        indexRoute: { onEnter: (nextState, replace) => replace('styleguide/intro') },
         childRoutes: styleguideRoutes
       }
     ]

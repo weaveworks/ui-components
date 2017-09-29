@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ThemeProvider } from 'styled-components';
 
 import 'font-awesome-webpack';
+
+import theme from '../../src/theme';
 
 import '../../src/fonts/proximanova-regular.woff';
 
@@ -11,7 +14,9 @@ import '../css/demo.scss';
 import '../img/favicon.ico';
 
 ReactDOM.render(
-  <Root />,
+  <ThemeProvider theme={theme}>
+    <Root />
+  </ThemeProvider>,
   document.getElementById('demo')
 );
 
