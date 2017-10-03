@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 
 import { isActivePage } from './utils';
 
@@ -75,8 +76,8 @@ class ComponentsPage extends React.Component {
 // Pass components in as context to give `ComponentsPage` access to them for rendering.
 // This is to avoid having to wire up redux or having a top-level state.
 ComponentsPage.contextTypes = {
-  router: React.PropTypes.object.isRequired,
-  components: React.PropTypes.func.isRequired
+  router: PropTypes.object.isRequired,
+  components: PropTypes.func.isRequired
 };
 
 export default ComponentsPage;

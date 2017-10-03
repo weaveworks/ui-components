@@ -1,6 +1,7 @@
 import { darken } from 'polished';
 
 const colors = {
+  // legacy
   athens: '#e2e2ec',
   black: '#000',
   danger: '#ff0000',
@@ -13,20 +14,34 @@ const colors = {
   turquoise: '#00bcd4',
   weaveblue: '#00D2FF',
   white: '#fff',
-};
-
-// Use these when colorizing elements that should indicate a state or outcome, ie Alerts.
-const statusColors = {
-  success: '#38bd93', // green
-  error: '#c7254e', // red
-  warning: '#d4ab27', // amber
+  // use these for new stuff!
+  primary: {
+    charcoal: '#32324b',
+    lavender: '#8383ac',
+  },
+  accent: {
+    blue: '#00d2ff',
+    orange: '#ff4b19',
+  },
+  status: {
+    // Use these when colorizing elements that should indicate a state or outcome, ie Alerts.
+    success: '#38bd93', // green
+    error: '#c7254e', // red
+    warning: '#d4ab27', // amber
+    info: '#049cd7', // blue
+  },
+  neutral: {
+    black: '#1a1a1a',
+    gray: '#aaaaaa',
+    lightgray: '#f8f8f8',
+    white: '#fff',
+  }
 };
 
 const weave = {
   colors,
-  statusColors,
 
-  textColor: '#1a1a1a',
+  textColor: colors.neutral.black,
 
   fontSizes: {
     normal: '0.875em',
@@ -79,18 +94,18 @@ const weave = {
       },
       success: {
         color: colors.white,
-        background: statusColors.success,
-        borderColor: darken(0.15, statusColors.success),
+        background: colors.status.success,
+        borderColor: darken(0.15, colors.status.success),
       },
       warning: {
         color: colors.white,
-        background: statusColors.warning,
-        borderColor: darken(0.15, statusColors.warning),
+        background: colors.status.warning,
+        borderColor: darken(0.15, colors.status.warning),
       },
       error: {
         color: colors.white,
-        background: statusColors.error,
-        borderColor: darken(0.15, statusColors.error),
+        background: colors.status.error,
+        borderColor: darken(0.15, colors.status.error),
       }
     }
   },
