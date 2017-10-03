@@ -53,6 +53,8 @@ a {
 }
 
 .landing-page {
+  max-width: 1024px;
+  margin: 0 auto;
   .weave-grid-column {
     min-width: 220px;
   }

@@ -21,6 +21,11 @@ export function renderMarkdown(string) {
 
 export function isActivePage(item) {
   // If hosted on s3, we use hash instead of browser history
-  return window.location.pathname.split('/').pop() === item ||
-    window.location.hash.split('/').pop() === item;
+  const path = window.location.hostname === 'localhost'
+    ? window.location.pathname
+    : window.location.hash;
+
+  const [, p, page] = path.split('/');
+
+  return item.toLowerCase() === p || item.toLowerCase() === page;
 }

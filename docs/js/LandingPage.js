@@ -55,7 +55,7 @@ export default function LandingPage() {
     <div className="landing-page">
       <Grid>
         <Row alignContent="center">
-          <GridColumn span={3}>
+          <GridColumn span={4}>
             <Link to="components">
               <div className="big-nav-button">
                 <Blocks />
@@ -64,7 +64,7 @@ export default function LandingPage() {
             </Link>
           </GridColumn>
 
-          <GridColumn span={3}>
+          <GridColumn span={4}>
             <Link to="styleguide">
               <div className="big-nav-button">
                 <Pallete />
