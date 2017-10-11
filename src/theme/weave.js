@@ -1,5 +1,12 @@
 import { darken } from 'polished';
 
+const neutral = {
+  black: '#1a1a1a',
+  gray: '#aaaaaa',
+  lightgray: '#f8f8f8',
+  white: '#fff',
+};
+
 const colors = {
   // legacy
   athens: '#e2e2ec',
@@ -29,13 +36,9 @@ const colors = {
     error: '#c7254e', // red
     warning: '#d4ab27', // amber
     info: '#049cd7', // blue
+    disabled: neutral.gray,
   },
-  neutral: {
-    black: '#1a1a1a',
-    gray: '#aaaaaa',
-    lightgray: '#f8f8f8',
-    white: '#fff',
-  }
+  neutral,
 };
 
 const weave = {
