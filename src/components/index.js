@@ -22,3 +22,5 @@ export Input from './Input';
 export Text from './Text';
 
 export Alert from './Alert';
+
+export TimeTravel from './TimeTravel/TimeTravel';
