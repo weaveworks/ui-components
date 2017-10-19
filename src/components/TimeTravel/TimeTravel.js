@@ -40,63 +40,6 @@ import {
 } from '../../constants/timer';
 
 
-/**
- * A visual component used for time travelling between different states in the system.
- *
- * ```javascript
- *  import React from 'react';
- *  import moment from 'moment';
- *
- *  import { TimeTravel } from 'weaveworks-ui-components';
- *
- *  export default class TimeTravelExample extends React.Component {
- *    constructor() {
- *      super();
- *
- *      this.state = {
- *        timestamp: moment()
- *      };
- *
- *      this.handleChange = this.handleChange.bind(this);
- *    }
- *
- *    handleChange(timestamp) {
- *      this.setState({ timestamp });
- *    }
- *
- *    handleTimestampInputEdit() {
- *      // track timestamp input edit...
- *    }
- *
- *    handleTimestampLabelClick() {
- *      // track timestamp label click...
- *    }
- *
- *    handleTimelinePan() {
- *      // track timeline pan...
- *    }
- *
- *    // zoomedPeriod is one of: ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds']
- *    handleTimelineZoom(zoomedPeriod) {
- *      // track timeline zoom...
- *    }
- *
- *    render() {
- *      return (
- *        <TimeTravel
- *          timestamp={this.state.timestamp}
- *          onChange={this.handleChange}
- *          onTimestampInputEdit={this.handleTimestampInputEdit}
- *          onTimestampLabelClick={this.handleTimestampLabelClick}
- *          onTimelineZoom={this.handleTimelineZoom}
- *          onTimelinePan={this.handleTimelinePan}
- *        />
- *      );
- *    }
- *  }
- * ```
- *
-*/
 const TimeTravelContainer = styled.div`
   transition: all .15s ease-in-out;
   position: relative;
@@ -222,6 +165,66 @@ const TimestampInput = styled.input`
 `;
 
 
+/**
+ * A visual component used for time travelling between different states in the system.
+ *
+ * To make it behave correctly, it requires a `timestamp` (can initially be `null`)
+ * which gets updated with `onChange`.
+ *
+ * ```javascript
+ *  import React from 'react';
+ *  import moment from 'moment';
+ *
+ *  import { TimeTravel } from 'weaveworks-ui-components';
+ *
+ *  export default class TimeTravelExample extends React.Component {
+ *    constructor() {
+ *      super();
+ *
+ *      this.state = {
+ *        timestamp: moment()
+ *      };
+ *
+ *      this.handleChange = this.handleChange.bind(this);
+ *    }
+ *
+ *    handleChange(timestamp) {
+ *      this.setState({ timestamp });
+ *    }
+ *
+ *    handleTimestampInputEdit() {
+ *      // track timestamp input edit...
+ *    }
+ *
+ *    handleTimestampLabelClick() {
+ *      // track timestamp label click...
+ *    }
+ *
+ *    handleTimelinePan() {
+ *      // track timeline pan...
+ *    }
+ *
+ *    // zoomedPeriod is one of: ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds']
+ *    handleTimelineZoom(zoomedPeriod) {
+ *      // track timeline zoom...
+ *    }
+ *
+ *    render() {
+ *      return (
+ *        <TimeTravel
+ *          timestamp={this.state.timestamp}
+ *          onChange={this.handleChange}
+ *          onTimestampInputEdit={this.handleTimestampInputEdit}
+ *          onTimestampLabelClick={this.handleTimestampLabelClick}
+ *          onTimelineZoom={this.handleTimelineZoom}
+ *          onTimelinePan={this.handleTimelinePan}
+ *        />
+ *      );
+ *    }
+ *  }
+ * ```
+ *
+*/
 class TimeTravel extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -254,6 +257,7 @@ class TimeTravel extends React.Component {
     this.handleTimelinePanEnd = this.handleTimelinePanEnd.bind(this);
     this.handleInstantJump = this.handleInstantJump.bind(this);
 
+    this.setTimestampFromProps = this.setTimestampFromProps.bind(this);
     this.instantUpdateTimestamp = this.instantUpdateTimestamp.bind(this);
     this.debouncedUpdateTimestamp = debounce(
       this.instantUpdateTimestamp.bind(this),
@@ -278,17 +282,25 @@ class TimeTravel extends React.Component {
     }, TIMELINE_TICK_INTERVAL);
   }
 
+  componentWillMount() {
+    this.setTimestampFromProps(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setTimestampFromProps(nextProps);
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
 
     clearInterval(this.timer);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ inputValue: timestampToInputValue(nextProps.timestamp) });
+  setTimestampFromProps({ timestamp }) {
+    this.setState({ inputValue: timestampToInputValue(timestamp) });
     // Don't update the focused timestamp if we're not paused (so the timeline is hidden).
-    if (nextProps.timestamp) {
-      this.setState({ focusedTimestamp: nextProps.timestamp });
+    if (timestamp) {
+      this.setState({ focusedTimestamp: timestamp });
     }
   }
 
@@ -567,7 +579,7 @@ class TimeTravel extends React.Component {
     const halfWidth = boundingRect.width / 2;
 
     return (
-      <TimeTravelContainer visible={this.props.visible}>
+      <TimeTravelContainer className="time-travel" visible={this.props.visible}>
         <TimelineContainer className="time-travel-timeline">
           <TimelinePanButton onClick={this.jumpBackward}>
             <span className="fa fa-chevron-left" />
@@ -595,9 +607,13 @@ class TimeTravel extends React.Component {
 
 TimeTravel.propTypes = {
   /**
+   * Shows Time Travel component
+   */
+  visible: PropTypes.bool,
+  /**
    * The timestamp in focus (moment.js object)
    */
-  timestamp: PropTypes.instanceOf(moment).isRequired,
+  timestamp: PropTypes.instanceOf(moment),
   /**
    * Required callback handling every timestamp change
    */
@@ -618,14 +634,11 @@ TimeTravel.propTypes = {
    * Optional callback handling timeline panning (e.g. for tracking)
    */
   onTimelinePan: PropTypes.func,
-  /**
-   * Shows Time Travel component
-   */
-  visible: PropTypes.bool,
 };
 
 TimeTravel.defaultProps = {
   visible: true,
+  timestamp: moment(),
 };
 
 export default TimeTravel;

@@ -8,7 +8,7 @@ export default class TimeTravelExample extends React.Component {
     super();
 
     this.state = {
-      timestamp: moment()
+      timestamp: moment(),
     };
 
     this.handleChange = this.handleChange.bind(this);
