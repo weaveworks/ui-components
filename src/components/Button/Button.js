@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { fromAtoms } from '../../utils';
+import { fromAtoms } from '../../utils/theme';
 
 const StyledButton = styled('button')`
   /* Display & Box Model */

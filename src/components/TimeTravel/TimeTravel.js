@@ -4,112 +4,113 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { map, clamp, find, last, debounce } from 'lodash';
 import { drag } from 'd3-drag';
-import { scaleUtc } from 'd3-scale';
 import { event as d3Event, select } from 'd3-selection';
-import { spring, Motion } from 'react-motion';
+import { Motion } from 'react-motion';
+
+import { linearGradientValue } from '../../utils/math';
+import { strongSpring } from '../../utils/animation';
+import { zoomFactor } from '../../utils/zooming';
+import {
+  nowInSecondsPrecision,
+  clampToNowInSecondsPrecision,
+  scaleDuration,
+} from '../../utils/time';
+import {
+  getTimeScale,
+  findOptimalDurationFit,
+  timestampToInputValue,
+} from '../../utils/timeline';
+
+import {
+  TIMELINE_HEIGHT,
+  MIN_DURATION_PER_PX,
+  INIT_DURATION_PER_PX,
+  MAX_DURATION_PER_PX,
+  MIN_TICK_SPACING_PX,
+  MAX_TICK_SPACING_PX,
+  FADE_OUT_FACTOR,
+  TICKS_ROW_SPACING,
+  MAX_TICK_ROWS,
+  TICK_SETTINGS_PER_PERIOD,
+} from '../../constants/timeline';
+import {
+  ZOOM_TRACK_DEBOUNCE_INTERVAL,
+  TIMELINE_DEBOUNCE_INTERVAL,
+  TIMELINE_TICK_INTERVAL,
+} from '../../constants/timer';
 
 
-// zoom-utils.js
-const ZOOM_SENSITIVITY = 0.0025;
-const DOM_DELTA_LINE = 1;
+/**
+ * A visual component used for time travelling between different states in the system.
+ *
+ * ```javascript
+ *  import React from 'react';
+ *  import moment from 'moment';
+ *
+ *  import { TimeTravel } from 'weaveworks-ui-components';
+ *
+ *  export default class TimeTravelExample extends React.Component {
+ *    constructor() {
+ *      super();
+ *
+ *      this.state = {
+ *        timestamp: moment()
+ *      };
+ *
+ *      this.handleChange = this.handleChange.bind(this);
+ *    }
+ *
+ *    handleChange(timestamp) {
+ *      this.setState({ timestamp });
+ *    }
+ *
+ *    handleTimestampInputEdit() {
+ *      // track timestamp input edit...
+ *    }
+ *
+ *    handleTimestampLabelClick() {
+ *      // track timestamp label click...
+ *    }
+ *
+ *    handleTimelinePan() {
+ *      // track timeline pan...
+ *    }
+ *
+ *    // zoomedPeriod is one of: ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds']
+ *    handleTimelineZoom(zoomedPeriod) {
+ *      // track timeline zoom...
+ *    }
+ *
+ *    render() {
+ *      return (
+ *        <TimeTravel
+ *          timestamp={this.state.timestamp}
+ *          onChange={this.handleChange}
+ *          onTimestampInputEdit={this.handleTimestampInputEdit}
+ *          onTimestampLabelClick={this.handleTimestampLabelClick}
+ *          onTimelineZoom={this.handleTimelineZoom}
+ *          onTimelinePan={this.handleTimelinePan}
+ *        />
+ *      );
+ *    }
+ *  }
+ * ```
+ *
+*/
+const TimeTravelContainer = styled.div`
+  transition: all .15s ease-in-out;
+  position: relative;
+  margin-bottom: 15px;
+  overflow: hidden;
+  z-index: 2001;
+  height: 0;
 
-// See https://github.com/d3/d3-zoom/blob/807f02c7a5fe496fbd08cc3417b62905a8ce95fa/src/zoom.js
-function wheelDelta(ev) {
-  // Only Firefox seems to use the line unit (which we assume to
-  // be 25px), otherwise the delta is already measured in pixels.
-  const unitInPixels = (ev.deltaMode === DOM_DELTA_LINE ? 25 : 1);
-  return -ev.deltaY * unitInPixels * ZOOM_SENSITIVITY;
-}
-
-function zoomFactor(ev) {
-  return Math.exp(wheelDelta(ev));
-}
-
-// animation-utils.js
-// function weakSpring(value) {
-//   return spring(value, { stiffness: 100, damping: 18, precision: 1 });
-// }
-
-function strongSpring(value) {
-  return spring(value, { stiffness: 800, damping: 50, precision: 1 });
-}
-
-// math-utils.js
-// A linear mapping [a, b] -> [0, 1] (maps value x=a into 0 and x=b into 1).
-function linearGradientValue(x, [a, b]) {
-  return (x - a) / (b - a);
-}
-
-// time-utils.js
-function nowInSecondsPrecision() {
-  return moment().startOf('second');
-}
-
-function clampToNowInSecondsPrecision(timestamp) {
-  const now = nowInSecondsPrecision();
-  return timestamp.isAfter(now) ? now : timestamp;
-}
-
-// This is unfortunately not there in moment.js
-function scaleDuration(duration, scale) {
-  return moment.duration(duration.asMilliseconds() * scale);
-}
-
-
-const TICK_SETTINGS_PER_PERIOD = {
-  year: {
-    format: 'YYYY',
-    childPeriod: 'month',
-    intervals: [
-      moment.duration(1, 'year'),
-    ],
-  },
-  month: {
-    format: 'MMMM',
-    parentPeriod: 'year',
-    childPeriod: 'day',
-    intervals: [
-      moment.duration(1, 'month'),
-      moment.duration(3, 'months'),
-    ],
-  },
-  day: {
-    format: 'Do',
-    parentPeriod: 'month',
-    childPeriod: 'minute',
-    intervals: [
-      moment.duration(1, 'day'),
-      moment.duration(1, 'week'),
-    ],
-  },
-  minute: {
-    format: 'HH:mm',
-    parentPeriod: 'day',
-    intervals: [
-      moment.duration(1, 'minute'),
-      moment.duration(5, 'minutes'),
-      moment.duration(15, 'minutes'),
-      moment.duration(1, 'hour'),
-      moment.duration(3, 'hours'),
-      moment.duration(6, 'hours'),
-    ],
-  },
-};
-
-const ZOOM_TRACK_DEBOUNCE_INTERVAL = 5000;
-const TIMELINE_DEBOUNCE_INTERVAL = 500;
-const TIMELINE_TICK_INTERVAL = 1000;
-
-const TIMELINE_HEIGHT = '55px';
-const MIN_DURATION_PER_PX = moment.duration(250, 'milliseconds');
-const INIT_DURATION_PER_PX = moment.duration(1, 'minute');
-const MAX_DURATION_PER_PX = moment.duration(3, 'days');
-const MIN_TICK_SPACING_PX = 70;
-const MAX_TICK_SPACING_PX = 415;
-const FADE_OUT_FACTOR = 1.4;
-const TICKS_ROW_SPACING = 16;
-const MAX_TICK_ROWS = 3;
-
+  ${props => props.visible && `
+    height: calc(${TIMELINE_HEIGHT} + 35px);
+    margin-bottom: 15px;
+    margin-top: -5px;
+  `}
+`;
 
 // From https://stackoverflow.com/a/18294634
 const FullyPannableCanvas = styled.svg`
@@ -124,21 +125,6 @@ const FullyPannableCanvas = styled.svg`
     cursor: grabbing;
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
-  `}
-`;
-
-const TimeTravelContainer = styled.div`
-  transition: all .15s ease-in-out;
-  position: relative;
-  margin-bottom: 15px;
-  overflow: hidden;
-  z-index: 2001;
-  height: 0;
-
-  ${props => props.visible && `
-    height: calc(${TIMELINE_HEIGHT} + 35px);
-    margin-bottom: 15px;
-    margin-top: -5px;
   `}
 `;
 
@@ -236,83 +222,6 @@ const TimestampInput = styled.input`
 `;
 
 
-function getTimeScale({ focusedTimestamp, durationPerPixel }) {
-  const roundedTimestamp = moment(focusedTimestamp).utc().startOf('second');
-  const startDate = moment(roundedTimestamp).subtract(durationPerPixel);
-  const endDate = moment(roundedTimestamp).add(durationPerPixel);
-  return scaleUtc()
-    .domain([startDate, endDate])
-    .range([-1, 1]);
-}
-
-function findOptimalDurationFit(durations, { durationPerPixel }) {
-  const minimalDuration = scaleDuration(durationPerPixel, 1.1 * MIN_TICK_SPACING_PX);
-  return find(durations, d => d >= minimalDuration);
-}
-
-function getInputValue(timestamp) {
-  return {
-    inputValue: (timestamp ? moment(timestamp) : moment()).utc().format(),
-  };
-}
-
-/**
- * A visual component used for time travelling between different states in the system.
- *
- * ```javascript
- *  import React from 'react';
- *  import moment from 'moment';
- *
- *  import { TimeTravel } from 'weaveworks-ui-components';
- *
- *  export default class TimeTravelExample extends React.Component {
- *    constructor() {
- *      super();
- *
- *      this.state = {
- *        timestamp: moment()
- *      };
- *
- *      this.handleChange = this.handleChange.bind(this);
- *    }
- *
- *    handleChange(timestamp) {
- *      this.setState({ timestamp });
- *    }
- *
- *    handleTimestampInputEdit() {
- *      // track timestamp input edit...
- *    }
- *
- *    handleTimestampLabelClick() {
- *      // track timestamp label click...
- *    }
- *
- *    handleTimelinePan() {
- *      // track timeline pan...
- *    }
- *
- *    // zoomedPeriod is one of: ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds']
- *    handleTimelineZoom(zoomedPeriod) {
- *      // track timeline zoom...
- *    }
- *
- *    render() {
- *      return (
- *        <TimeTravel
- *          timestamp={this.state.timestamp}
- *          onChange={this.handleChange}
- *          onTimestampInputEdit={this.handleTimestampInputEdit}
- *          onTimestampLabelClick={this.handleTimestampLabelClick}
- *          onTimelineZoom={this.handleTimelineZoom}
- *          onTimelinePan={this.handleTimelinePan}
- *        />
- *      );
- *    }
- *  }
- * ```
- *
-*/
 class TimeTravel extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -320,10 +229,10 @@ class TimeTravel extends React.Component {
     this.state = {
       timestampNow: nowInSecondsPrecision(),
       focusedTimestamp: nowInSecondsPrecision(),
+      inputValue: timestampToInputValue(props.timestamp),
       durationPerPixel: INIT_DURATION_PER_PX,
       boundingRect: { width: 0, height: 0 },
       isPanning: false,
-      ...getInputValue(props.timestamp),
     };
 
     this.jumpRelativePixels = this.jumpRelativePixels.bind(this);
@@ -376,8 +285,7 @@ class TimeTravel extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // Update the input value
-    this.setState(getInputValue(nextProps.timestamp));
+    this.setState({ inputValue: timestampToInputValue(nextProps.timestamp) });
     // Don't update the focused timestamp if we're not paused (so the timeline is hidden).
     if (nextProps.timestamp) {
       this.setState({ focusedTimestamp: nextProps.timestamp });
@@ -400,7 +308,7 @@ class TimeTravel extends React.Component {
   }
 
   handleTimelinePan(timestamp) {
-    this.setState(getInputValue(timestamp));
+    this.setState({ inputValue: timestampToInputValue(timestamp) });
     this.debouncedUpdateTimestamp(timestamp);
   }
 
@@ -441,8 +349,8 @@ class TimeTravel extends React.Component {
 
   instantUpdateTimestamp(timestamp, callback) {
     if (!timestamp.isSame(this.props.timestamp)) {
+      this.setState({ inputValue: timestampToInputValue(timestamp) });
       this.debouncedUpdateTimestamp.cancel();
-      this.setState(getInputValue(timestamp));
       this.props.onChange(moment(timestamp));
 
       // Used for tracking.
