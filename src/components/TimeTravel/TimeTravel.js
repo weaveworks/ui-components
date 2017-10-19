@@ -256,6 +256,63 @@ function getInputValue(timestamp) {
   };
 }
 
+/**
+ * A visual component used for time travelling between different states in the system.
+ *
+ * ```javascript
+ *  import React from 'react';
+ *  import moment from 'moment';
+ *
+ *  import { TimeTravel } from 'weaveworks-ui-components';
+ *
+ *  export default class TimeTravelExample extends React.Component {
+ *    constructor() {
+ *      super();
+ *
+ *      this.state = {
+ *        timestamp: moment()
+ *      };
+ *
+ *      this.handleChange = this.handleChange.bind(this);
+ *    }
+ *
+ *    handleChange(timestamp) {
+ *      this.setState({ timestamp });
+ *    }
+ *
+ *    handleTimestampInputEdit() {
+ *      // track timestamp input edit...
+ *    }
+ *
+ *    handleTimestampLabelClick() {
+ *      // track timestamp label click...
+ *    }
+ *
+ *    handleTimelinePan() {
+ *      // track timeline pan...
+ *    }
+ *
+ *    // zoomedPeriod is one of: ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds']
+ *    handleTimelineZoom(zoomedPeriod) {
+ *      // track timeline zoom...
+ *    }
+ *
+ *    render() {
+ *      return (
+ *        <TimeTravel
+ *          timestamp={this.state.timestamp}
+ *          onChange={this.handleChange}
+ *          onTimestampInputEdit={this.handleTimestampInputEdit}
+ *          onTimestampLabelClick={this.handleTimestampLabelClick}
+ *          onTimelineZoom={this.handleTimelineZoom}
+ *          onTimelinePan={this.handleTimelinePan}
+ *        />
+ *      );
+ *    }
+ *  }
+ * ```
+ *
+*/
 class TimeTravel extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -338,7 +395,6 @@ class TimeTravel extends React.Component {
 
     if (timestamp.isValid()) {
       const clampedTimestamp = clampToNowInSecondsPrecision(timestamp);
-      console.log(this.props.timestamp, timestamp, clampedTimestamp);
       this.instantUpdateTimestamp(clampedTimestamp, this.props.onTimestampInputEdit);
     }
   }
@@ -387,7 +443,7 @@ class TimeTravel extends React.Component {
     if (!timestamp.isSame(this.props.timestamp)) {
       this.debouncedUpdateTimestamp.cancel();
       this.setState(getInputValue(timestamp));
-      this.props.onTimestampChange(moment(timestamp));
+      this.props.onChange(moment(timestamp));
 
       // Used for tracking.
       if (callback) callback();
@@ -637,7 +693,7 @@ TimeTravel.propTypes = {
   /**
    * Required callback handling every timestamp change
    */
-  onTimestampChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   /**
    * Optional callback handling timestamp change by direct input box editing (e.g. for tracking)
    */

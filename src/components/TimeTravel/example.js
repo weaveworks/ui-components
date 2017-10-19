@@ -11,10 +11,10 @@ export default class TimeTravelExample extends React.Component {
       timestamp: moment()
     };
 
-    this.handleTimestampChange = this.handleTimestampChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleTimestampChange(timestamp) {
+  handleChange(timestamp) {
     this.setState({ timestamp });
   }
 
@@ -22,7 +22,7 @@ export default class TimeTravelExample extends React.Component {
     return (
       <TimeTravel
         timestamp={this.state.timestamp}
-        onTimestampChange={this.handleTimestampChange}
+        onChange={this.handleChange}
       />
     );
   }
