@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { map, clamp, find, last, debounce } from 'lodash';
 import { drag } from 'd3-drag';
@@ -149,6 +150,7 @@ const TimelineContainer = styled.div`
   &:before, &:after {
     border: 1px solid ${props => props.theme.colors.white};
     background-color: ${props => props.theme.colors.accent.orange};
+    box-sizing: border-box;
     content: '';
     position: absolute;
     display: block;
@@ -280,6 +282,7 @@ class TimeTravel extends React.Component {
     this.saveSvgRef = this.saveSvgRef.bind(this);
     this.debouncedTrackZoom = debounce(this.trackZoom.bind(this), ZOOM_TRACK_DEBOUNCE_INTERVAL);
 
+    this.handleResize = debounce(this.handleResize.bind(this), 200);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleTimelinePan = this.handleTimelinePan.bind(this);
     this.handleTimelinePanEnd = this.handleTimelinePanEnd.bind(this);
@@ -293,6 +296,9 @@ class TimeTravel extends React.Component {
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+
     this.svg = select('.time-travel-timeline svg');
     this.drag = drag()
       .on('start', this.handlePanStart)
@@ -307,6 +313,8 @@ class TimeTravel extends React.Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+
     clearInterval(this.timer);
   }
 
@@ -317,7 +325,10 @@ class TimeTravel extends React.Component {
     if (nextProps.timestamp) {
       this.setState({ focusedTimestamp: nextProps.timestamp });
     }
-    // Always update the timeline dimension information.
+  }
+
+  handleResize() {
+    // Update the timeline dimension information.
     this.setState({ boundingRect: this.svgRef.getBoundingClientRect() });
   }
 
@@ -327,7 +338,8 @@ class TimeTravel extends React.Component {
 
     if (timestamp.isValid()) {
       const clampedTimestamp = clampToNowInSecondsPrecision(timestamp);
-      this.instantUpdateTimestamp(clampedTimestamp, this.props.trackTimestampEdit);
+      console.log(this.props.timestamp, timestamp, clampedTimestamp);
+      this.instantUpdateTimestamp(clampedTimestamp, this.props.onTimestampInputEdit);
     }
   }
 
@@ -337,11 +349,11 @@ class TimeTravel extends React.Component {
   }
 
   handleTimelinePanEnd(timestamp) {
-    this.instantUpdateTimestamp(timestamp, this.props.trackTimelinePan);
+    this.instantUpdateTimestamp(timestamp, this.props.onTimelinePan);
   }
 
   handleInstantJump(timestamp) {
-    this.instantUpdateTimestamp(timestamp, this.props.trackTimelineClick);
+    this.instantUpdateTimestamp(timestamp, this.props.onTimestampLabelClick);
   }
 
   handlePanStart() {
@@ -375,7 +387,7 @@ class TimeTravel extends React.Component {
     if (!timestamp.isSame(this.props.timestamp)) {
       this.debouncedUpdateTimestamp.cancel();
       this.setState(getInputValue(timestamp));
-      this.props.changeTimestamp(moment(timestamp));
+      this.props.onTimestampChange(moment(timestamp));
 
       // Used for tracking.
       if (callback) callback();
@@ -390,7 +402,9 @@ class TimeTravel extends React.Component {
     const periods = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
     const duration = scaleDuration(this.state.durationPerPixel, MAX_TICK_SPACING_PX);
     const zoomedPeriod = find(periods, period => Math.floor(duration.get(period)) && period);
-    this.props.trackTimelineZoom(zoomedPeriod);
+    if (this.props.onTimelineZoom) {
+      this.props.onTimelineZoom(zoomedPeriod);
+    }
   }
 
   jumpTo(timestamp) {
@@ -614,5 +628,40 @@ class TimeTravel extends React.Component {
     );
   }
 }
+
+TimeTravel.propTypes = {
+  /**
+   * The timestamp in focus (moment.js object)
+   */
+  timestamp: PropTypes.instanceOf(moment).isRequired,
+  /**
+   * Required callback handling every timestamp change
+   */
+  onTimestampChange: PropTypes.func.isRequired,
+  /**
+   * Optional callback handling timestamp change by direct input box editing (e.g. for tracking)
+   */
+  onTimestampInputEdit: PropTypes.func,
+  /**
+   * Optional callback handling clicks on timeline timestamp labels (e.g. for tracking)
+   */
+  onTimestampLabelClick: PropTypes.func,
+  /**
+   * Optional callback handling timeline zooming (e.g. for tracking)
+   */
+  onTimelineZoom: PropTypes.func,
+  /**
+   * Optional callback handling timeline panning (e.g. for tracking)
+   */
+  onTimelinePan: PropTypes.func,
+  /**
+   * Shows Time Travel component
+   */
+  visible: PropTypes.bool,
+};
+
+TimeTravel.defaultProps = {
+  visible: true,
+};
 
 export default TimeTravel;
