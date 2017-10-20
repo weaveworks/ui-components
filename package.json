@@ -29,6 +29,7 @@
   "peerDependencies": {
     "font-awesome": "4.7.0",
     "lodash": "^4.17.2",
+    "moment": "2.19.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "styled-components": "^2.1.2"
