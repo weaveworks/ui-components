@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import 'jest-styled-components';
-import { withTheme } from '../../utils';
+import { withTheme } from '../../utils/theme';
 
 import Button from './Button';
 

@@ -6,6 +6,12 @@ import Dialog from '../../src/components/Dialog';
 import { renderMarkdown } from './utils';
 
 
+function getReadableValueType(type) {
+  if (!type) return '';
+  if (type.name === 'instanceOf') return type.value;
+  return type.name;
+}
+
 export default class Example extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -61,7 +67,7 @@ export default class Example extends React.Component {
               <tr className="weave-table-row" key={name}>
                 <td>{name}</td>
                 <td>{value.required && value.required.toString()}</td>
-                <td>{value.type ? value.type.name : ''}</td>
+                <td>{getReadableValueType(value.type)}</td>
                 <td>{value.description}</td>
                 <td>{value.defaultValue ? value.defaultValue.value : ''}</td>
               </tr>

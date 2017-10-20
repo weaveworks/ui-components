@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { fromAtoms } from '../../utils';
+import { fromAtoms } from '../../utils/theme';
 
 const StyledAlert = styled.div`
   background: ${fromAtoms('Alert', 'type', 'background')};

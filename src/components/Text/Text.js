@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { lookupValue } from '../../utils';
+import { lookupValue } from '../../utils/theme';
 
 const StyledText = styled.span`
   font-family: ${props => props.theme.fontFamily};
