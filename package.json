@@ -6,9 +6,10 @@
   "scripts": {
     "compile:theme": "babel src/theme --out-dir lib/theme --ignore *.test.js",
     "compile:utils": "babel src/utils --out-dir lib/utils --ignore *.test.js",
+    "compile:constants": "babel src/constants --out-dir lib/constants --ignore *.test.js",
     "compile:components": "babel src/components --out-dir lib/components --ignore *.test.js,example.js",
     "compile:index": "babel src/index.js --out-file lib/index.js",
-    "install": "yarn compile:theme && yarn compile:utils && yarn compile:components && yarn compile:index",
+    "install": "yarn compile:theme && yarn compile:utils && yarn compile:constants && yarn compile:components && yarn compile:index",
     "test": "jest",
     "start": "node bin/dev-server",
     "debug": "node debug ./node_modules/.bin/jest -i",
