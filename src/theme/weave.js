@@ -2,8 +2,8 @@ import { darken } from 'polished';
 
 const neutral = {
   black: '#1a1a1a',
-  gray: '#aaaaaa',
-  lightgray: '#f8f8f8',
+  gray: '#9a9a9a',
+  lightgray: '#c1c1c1',
   white: '#fff',
 };
 
