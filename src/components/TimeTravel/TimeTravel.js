@@ -12,19 +12,20 @@ import { strongSpring } from '../../utils/animation';
 import { zoomFactor } from '../../utils/zooming';
 import {
   nowInSecondsPrecision,
+  clampDuration,
   scaleDuration,
 } from '../../utils/time';
 import {
   getTimeScale,
   findOptimalDurationFit,
   timestampToInputValue,
+  initialDurationPerTimelinePx,
+  minDurationPerTimelinePx,
+  maxDurationPerTimelinePx,
 } from '../../utils/timeline';
 
 import {
   TIMELINE_HEIGHT,
-  MIN_DURATION_PER_PX,
-  INIT_DURATION_PER_PX,
-  MAX_DURATION_PER_PX,
   MIN_TICK_SPACING_PX,
   MAX_TICK_SPACING_PX,
   FADE_OUT_FACTOR,
@@ -232,7 +233,7 @@ class TimeTravel extends React.Component {
       timestampNow: nowInSecondsPrecision(),
       focusedTimestamp: nowInSecondsPrecision(),
       inputValue: timestampToInputValue(props.timestamp),
-      durationPerPixel: INIT_DURATION_PER_PX,
+      durationPerPixel: initialDurationPerTimelinePx(props.earliestTimestamp),
       boundingRect: { width: 0, height: 0 },
       isPanning: false,
     };
@@ -357,9 +358,10 @@ class TimeTravel extends React.Component {
   }
 
   handleZoom(ev) {
+    const minDuration = minDurationPerTimelinePx(this.props.earliestTimestamp);
+    const maxDuration = maxDurationPerTimelinePx(this.props.earliestTimestamp);
     let durationPerPixel = scaleDuration(this.state.durationPerPixel, 1 / zoomFactor(ev));
-    if (durationPerPixel > MAX_DURATION_PER_PX) durationPerPixel = MAX_DURATION_PER_PX;
-    if (durationPerPixel < MIN_DURATION_PER_PX) durationPerPixel = MIN_DURATION_PER_PX;
+    durationPerPixel = clampDuration(durationPerPixel, [minDuration, maxDuration]);
 
     this.setState({ durationPerPixel });
     this.debouncedTrackZoom();

@@ -9,3 +9,14 @@ export function nowInSecondsPrecision() {
 export function scaleDuration(duration, scale) {
   return moment.duration(duration.asMilliseconds() * scale);
 }
+
+export function clampDuration(duration, [minDuration, maxDuration]) {
+  let durationMs = duration.asMilliseconds();
+  if (minDuration && minDuration.asMilliseconds() > durationMs) {
+    durationMs = minDuration.asMilliseconds();
+  }
+  if (maxDuration && maxDuration.asMilliseconds() < durationMs) {
+    durationMs = maxDuration.asMilliseconds();
+  }
+  return moment.duration(durationMs);
+}
