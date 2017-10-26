@@ -12,7 +12,6 @@ import { strongSpring } from '../../utils/animation';
 import { zoomFactor } from '../../utils/zooming';
 import {
   nowInSecondsPrecision,
-  clampToNowInSecondsPrecision,
   scaleDuration,
 } from '../../utils/time';
 import {
@@ -169,7 +168,7 @@ const TimestampInput = styled.input`
  * A visual component used for time travelling between different states in the system.
  *
  * To make it behave correctly, it requires a `timestamp` (can initially be `null`)
- * which gets updated with `onChange`.
+ * which gets updated with `onChangeTimestamp`.
  *
  * ```javascript
  *  import React from 'react';
@@ -213,7 +212,7 @@ const TimestampInput = styled.input`
  *      return (
  *        <TimeTravel
  *          timestamp={this.state.timestamp}
- *          onChange={this.handleChange}
+ *          onChangeTimestamp={this.handleChange}
  *          onTimestampInputEdit={this.handleTimestampInputEdit}
  *          onTimestampLabelClick={this.handleTimestampLabelClick}
  *          onTimelineZoom={this.handleTimelineZoom}
@@ -304,6 +303,14 @@ class TimeTravel extends React.Component {
     }
   }
 
+  clampedTimestamp(timestamp) {
+    const startTimestamp = this.props.earliestTimestamp;
+    const endTimestamp = this.state.timestampNow;
+    if (timestamp.isBefore(startTimestamp)) timestamp = startTimestamp;
+    if (timestamp.isAfter(endTimestamp)) timestamp = endTimestamp;
+    return timestamp;
+  }
+
   handleResize() {
     // Update the timeline dimension information.
     this.setState({ boundingRect: this.svgRef.getBoundingClientRect() });
@@ -314,7 +321,7 @@ class TimeTravel extends React.Component {
     this.setState({ inputValue: ev.target.value });
 
     if (timestamp.isValid()) {
-      const clampedTimestamp = clampToNowInSecondsPrecision(timestamp);
+      const clampedTimestamp = this.clampedTimestamp(timestamp);
       this.instantUpdateTimestamp(clampedTimestamp, this.props.onTimestampInputEdit);
     }
   }
@@ -344,7 +351,7 @@ class TimeTravel extends React.Component {
   handlePan() {
     const dragDuration = scaleDuration(this.state.durationPerPixel, -d3Event.dx);
     const timestamp = moment(this.state.focusedTimestamp).add(dragDuration);
-    const focusedTimestamp = clampToNowInSecondsPrecision(timestamp);
+    const focusedTimestamp = this.clampedTimestamp(timestamp);
     this.handleTimelinePan(focusedTimestamp);
     this.setState({ focusedTimestamp });
   }
@@ -363,7 +370,7 @@ class TimeTravel extends React.Component {
     if (!timestamp.isSame(this.props.timestamp)) {
       this.setState({ inputValue: timestampToInputValue(timestamp) });
       this.debouncedUpdateTimestamp.cancel();
-      this.props.onChange(moment(timestamp));
+      this.props.onChangeTimestamp(moment(timestamp));
 
       // Used for tracking.
       if (callback) callback();
@@ -384,7 +391,7 @@ class TimeTravel extends React.Component {
   }
 
   jumpTo(timestamp) {
-    const focusedTimestamp = clampToNowInSecondsPrecision(timestamp);
+    const focusedTimestamp = this.clampedTimestamp(timestamp);
     this.handleInstantJump(focusedTimestamp);
     this.setState({ focusedTimestamp });
   }
@@ -485,9 +492,11 @@ class TimeTravel extends React.Component {
   }
 
   renderTimestampTick({ timestamp, position, isBehind }, periodFormat, opacity) {
-    // Ticks are disabled if they are in the future or if they are too transparent.
-    const disabled = timestamp.isAfter(this.state.timestampNow) || opacity < 0.4;
     const handleClick = () => this.jumpTo(timestamp);
+    const disabled = (opacity < 0.4
+      || timestamp.isAfter(this.state.timestampNow)
+      || timestamp.isBefore(this.props.earliestTimestamp)
+    );
 
     return (
       <g transform={`translate(${position}, 0)`} key={timestamp.format()}>
@@ -523,13 +532,16 @@ class TimeTravel extends React.Component {
     );
   }
 
-  renderDisabledShadow(timelineTransform) {
-    const timeScale = getTimeScale(timelineTransform);
-    const nowShift = timeScale(this.state.timestampNow);
+  renderDisabledShadow(timelineTransform, [startTimestamp, endTimestamp]) {
     const { width, height } = this.state.boundingRect;
 
+    const timeScale = getTimeScale(timelineTransform);
+    const startShift = startTimestamp ? timeScale(startTimestamp) : -width;
+    const endShift = endTimestamp ? timeScale(endTimestamp) : width;
+    const length = Math.max(0, endShift - startShift);
+
     return (
-      <DisabledRange transform={`translate(${nowShift}, 0)`} width={width} height={height} />
+      <DisabledRange transform={`translate(${startShift}, 0)`} width={length} height={height} />
     );
   }
 
@@ -545,7 +557,8 @@ class TimeTravel extends React.Component {
           height={height}
           fillOpacity={0}
         />
-        {this.renderDisabledShadow(timelineTransform)}
+        {this.renderDisabledShadow(timelineTransform, [null, this.props.earliestTimestamp])}
+        {this.renderDisabledShadow(timelineTransform, [this.state.timestampNow, null])}
         <g className="ticks" transform="translate(0, 1)">
           {this.renderPeriodTicks('year', timelineTransform)}
           {this.renderPeriodTicks('month', timelineTransform)}
@@ -615,9 +628,13 @@ TimeTravel.propTypes = {
    */
   timestamp: PropTypes.instanceOf(moment),
   /**
+   * The earliest timestamp we can travel back in time (moment.js object)
+   */
+  earliestTimestamp: PropTypes.instanceOf(moment),
+  /**
    * Required callback handling every timestamp change
    */
-  onChange: PropTypes.func.isRequired,
+  onChangeTimestamp: PropTypes.func.isRequired,
   /**
    * Optional callback handling timestamp change by direct input box editing (e.g. for tracking)
    */
@@ -639,6 +656,7 @@ TimeTravel.propTypes = {
 TimeTravel.defaultProps = {
   visible: true,
   timestamp: moment(),
+  earliestTimestamp: moment('2014-01-01T00:00:00Z'),
 };
 
 export default TimeTravel;
