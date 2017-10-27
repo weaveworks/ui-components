@@ -2,9 +2,6 @@ import moment from 'moment';
 
 
 export const TIMELINE_HEIGHT = '55px';
-export const MIN_DURATION_PER_PX = moment.duration(250, 'milliseconds');
-export const INIT_DURATION_PER_PX = moment.duration(1, 'minute');
-export const MAX_DURATION_PER_PX = moment.duration(3, 'days');
 export const MIN_TICK_SPACING_PX = 70;
 export const MAX_TICK_SPACING_PX = 415;
 export const FADE_OUT_FACTOR = 1.4;

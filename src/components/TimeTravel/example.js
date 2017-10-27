@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import TimeTravel from '.';
 
+
 export default class TimeTravelExample extends React.Component {
   constructor() {
     super();
@@ -11,10 +12,10 @@ export default class TimeTravelExample extends React.Component {
       timestamp: moment(),
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeTimestamp = this.handleChangeTimestamp.bind(this);
   }
 
-  handleChange(timestamp) {
+  handleChangeTimestamp(timestamp) {
     this.setState({ timestamp });
   }
 
@@ -22,7 +23,7 @@ export default class TimeTravelExample extends React.Component {
     return (
       <TimeTravel
         timestamp={this.state.timestamp}
-        onChange={this.handleChange}
+        onChangeTimestamp={this.handleChangeTimestamp}
       />
     );
   }
