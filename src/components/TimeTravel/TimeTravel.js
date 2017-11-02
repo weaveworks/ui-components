@@ -11,17 +11,12 @@ import { linearGradientValue } from '../../utils/math';
 import { strongSpring } from '../../utils/animation';
 import { zoomFactor } from '../../utils/zooming';
 import {
-  nowInSecondsPrecision,
-  clampDuration,
-  scaleDuration,
-} from '../../utils/time';
-import {
+  formattedTimestamp,
   getTimeScale,
   findOptimalDurationFit,
-  timestampToInputValue,
-  initialDurationPerTimelinePx,
-  minDurationPerTimelinePx,
-  maxDurationPerTimelinePx,
+  initialDurationMsPerTimelinePx,
+  minDurationMsPerTimelinePx,
+  maxDurationMsPerTimelinePx,
 } from '../../utils/timeline';
 
 import {
@@ -182,13 +177,13 @@ const TimestampInput = styled.input`
  *      super();
  *
  *      this.state = {
- *        timestamp: moment()
+ *        timestamp: moment().format(),
  *      };
  *
- *      this.handleChange = this.handleChange.bind(this);
+ *      this.handleChangeTimestamp = this.handleChangeTimestamp.bind(this);
  *    }
  *
- *    handleChange(timestamp) {
+ *    handleChangeTimestamp(timestamp) {
  *      this.setState({ timestamp });
  *    }
  *
@@ -213,7 +208,7 @@ const TimestampInput = styled.input`
  *      return (
  *        <TimeTravel
  *          timestamp={this.state.timestamp}
- *          onChangeTimestamp={this.handleChange}
+ *          onChangeTimestamp={this.handleChangeTimestamp}
  *          onTimestampInputEdit={this.handleTimestampInputEdit}
  *          onTimestampLabelClick={this.handleTimestampLabelClick}
  *          onTimelineZoom={this.handleTimelineZoom}
@@ -230,10 +225,10 @@ class TimeTravel extends React.Component {
     super(props, context);
 
     this.state = {
-      timestampNow: nowInSecondsPrecision(),
-      focusedTimestamp: nowInSecondsPrecision(),
-      inputValue: timestampToInputValue(props.timestamp),
-      durationPerPixel: initialDurationPerTimelinePx(props.earliestTimestamp),
+      timestampNow: formattedTimestamp(),
+      focusedTimestamp: formattedTimestamp(props.timestamp),
+      inputTimestamp: formattedTimestamp(props.timestamp),
+      durationMsPerPixel: initialDurationMsPerTimelinePx(props.earliestTimestamp),
       boundingRect: { width: 0, height: 0 },
       isPanning: false,
     };
@@ -278,7 +273,7 @@ class TimeTravel extends React.Component {
 
     // Force periodic updates of the availability range as time goes by.
     this.timer = setInterval(() => {
-      this.setState({ timestampNow: nowInSecondsPrecision() });
+      this.setState({ timestampNow: formattedTimestamp() });
     }, TIMELINE_TICK_INTERVAL);
   }
 
@@ -297,7 +292,7 @@ class TimeTravel extends React.Component {
   }
 
   setTimestampFromProps({ timestamp }) {
-    this.setState({ inputValue: timestampToInputValue(timestamp) });
+    this.setState({ inputTimestamp: formattedTimestamp(timestamp) });
     // Don't update the focused timestamp if we're not paused (so the timeline is hidden).
     if (timestamp) {
       this.setState({ focusedTimestamp: timestamp });
@@ -307,8 +302,8 @@ class TimeTravel extends React.Component {
   clampedTimestamp(timestamp) {
     const startTimestamp = this.props.earliestTimestamp;
     const endTimestamp = this.state.timestampNow;
-    if (timestamp.isBefore(startTimestamp)) timestamp = startTimestamp;
-    if (timestamp.isAfter(endTimestamp)) timestamp = endTimestamp;
+    if (timestamp < startTimestamp) timestamp = startTimestamp;
+    if (timestamp > endTimestamp) timestamp = endTimestamp;
     return timestamp;
   }
 
@@ -318,17 +313,17 @@ class TimeTravel extends React.Component {
   }
 
   handleInputChange(ev) {
-    const timestamp = moment(ev.target.value);
-    this.setState({ inputValue: ev.target.value });
+    const inputTimestamp = ev.target.value;
+    this.setState({ inputTimestamp });
 
-    if (timestamp.isValid()) {
-      const clampedTimestamp = this.clampedTimestamp(timestamp);
+    if (moment(inputTimestamp).isValid()) {
+      const clampedTimestamp = this.clampedTimestamp(inputTimestamp);
       this.instantUpdateTimestamp(clampedTimestamp, this.props.onTimestampInputEdit);
     }
   }
 
   handleTimelinePan(timestamp) {
-    this.setState({ inputValue: timestampToInputValue(timestamp) });
+    this.setState({ inputTimestamp: timestamp });
     this.debouncedUpdateTimestamp(timestamp);
   }
 
@@ -350,29 +345,30 @@ class TimeTravel extends React.Component {
   }
 
   handlePan() {
-    const dragDuration = scaleDuration(this.state.durationPerPixel, -d3Event.dx);
-    const timestamp = moment(this.state.focusedTimestamp).add(dragDuration);
-    const focusedTimestamp = this.clampedTimestamp(timestamp);
+    const dragDurationMs = -this.state.durationMsPerPixel * d3Event.dx;
+    const momentTimestamp = moment(this.state.focusedTimestamp).add(dragDurationMs);
+    const focusedTimestamp = this.clampedTimestamp(formattedTimestamp(momentTimestamp));
     this.handleTimelinePan(focusedTimestamp);
     this.setState({ focusedTimestamp });
   }
 
   handleZoom(ev) {
-    const minDuration = minDurationPerTimelinePx(this.props.earliestTimestamp);
-    const maxDuration = maxDurationPerTimelinePx(this.props.earliestTimestamp);
-    let durationPerPixel = scaleDuration(this.state.durationPerPixel, 1 / zoomFactor(ev));
-    durationPerPixel = clampDuration(durationPerPixel, [minDuration, maxDuration]);
+    const minDurationMs = minDurationMsPerTimelinePx(this.props.earliestTimestamp);
+    const maxDurationMs = maxDurationMsPerTimelinePx(this.props.earliestTimestamp);
+    let durationMsPerPixel = this.state.durationMsPerPixel / zoomFactor(ev);
+    // console.log(durationMsPerPixel, minDurationMs, maxDurationMs);
+    durationMsPerPixel = clamp(durationMsPerPixel, minDurationMs, maxDurationMs);
 
-    this.setState({ durationPerPixel });
+    this.setState({ durationMsPerPixel });
     this.debouncedTrackZoom();
     ev.preventDefault();
   }
 
   instantUpdateTimestamp(timestamp, callback) {
-    if (!timestamp.isSame(this.props.timestamp)) {
-      this.setState({ inputValue: timestampToInputValue(timestamp) });
+    if (timestamp !== this.props.timestamp) {
+      this.setState({ inputTimestamp: timestamp });
       this.debouncedUpdateTimestamp.cancel();
-      this.props.onChangeTimestamp(moment(timestamp));
+      this.props.onChangeTimestamp(timestamp);
 
       // Used for tracking.
       if (callback) callback();
@@ -385,8 +381,8 @@ class TimeTravel extends React.Component {
 
   trackZoom() {
     const periods = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
-    const duration = scaleDuration(this.state.durationPerPixel, MAX_TICK_SPACING_PX);
-    const zoomedPeriod = find(periods, period => Math.floor(duration.get(period)) && period);
+    const momentDuration = moment.duration(this.state.durationMsPerPixel * MAX_TICK_SPACING_PX);
+    const zoomedPeriod = find(periods, period => Math.floor(momentDuration.get(period)) && period);
     if (this.props.onTimelineZoom) {
       this.props.onTimelineZoom(zoomedPeriod);
     }
@@ -399,9 +395,9 @@ class TimeTravel extends React.Component {
   }
 
   jumpRelativePixels(pixels) {
-    const duration = scaleDuration(this.state.durationPerPixel, pixels);
-    const timestamp = moment(this.state.focusedTimestamp).add(duration);
-    this.jumpTo(timestamp);
+    const durationMs = this.state.durationMsPerPixel * pixels;
+    const momentTimestamp = moment(this.state.focusedTimestamp).add(durationMs);
+    this.jumpTo(formattedTimestamp(momentTimestamp));
   }
 
   jumpForward() {
@@ -412,25 +408,24 @@ class TimeTravel extends React.Component {
     this.jumpRelativePixels(-this.state.boundingRect.width / 4);
   }
 
-  getVerticalShiftForPeriod(period, { durationPerPixel }) {
+  getVerticalShiftForPeriod(period, { durationMsPerPixel }) {
     const { childPeriod, parentPeriod } = TICK_SETTINGS_PER_PERIOD[period];
 
     let shift = 1;
     if (parentPeriod) {
       const durationMultiplier = 1 / MAX_TICK_SPACING_PX;
-      const parentPeriodStartInterval = TICK_SETTINGS_PER_PERIOD[parentPeriod].intervals[0];
-      const fadedInDuration = scaleDuration(parentPeriodStartInterval, durationMultiplier);
-      const fadedOutDuration = scaleDuration(fadedInDuration, FADE_OUT_FACTOR);
+      const parentPeriodStartIntervalMs = TICK_SETTINGS_PER_PERIOD[parentPeriod].intervalsMs[0];
+      const fadedInDurationMs = parentPeriodStartIntervalMs * durationMultiplier;
+      const fadedOutDurationMs = fadedInDurationMs * FADE_OUT_FACTOR;
 
-      const durationLog = d => Math.log(d.asMilliseconds());
-      const transitionFactor = durationLog(fadedOutDuration) - durationLog(durationPerPixel);
-      const transitionLength = durationLog(fadedOutDuration) - durationLog(fadedInDuration);
+      const transitionFactor = Math.log(fadedOutDurationMs) - Math.log(durationMsPerPixel);
+      const transitionLength = Math.log(fadedOutDurationMs) - Math.log(fadedInDurationMs);
 
       shift = clamp(transitionFactor / transitionLength, 0, 1);
     }
 
     if (childPeriod) {
-      shift += this.getVerticalShiftForPeriod(childPeriod, { durationPerPixel });
+      shift += this.getVerticalShiftForPeriod(childPeriod, { durationMsPerPixel });
     }
 
     return shift;
@@ -439,30 +434,30 @@ class TimeTravel extends React.Component {
   getTicksForPeriod(period, timelineTransform) {
     // First find the optimal duration between the ticks - if no satisfactory
     // duration could be found, don't render any ticks for the given period.
-    const { parentPeriod, intervals } = TICK_SETTINGS_PER_PERIOD[period];
-    const duration = findOptimalDurationFit(intervals, timelineTransform);
-    if (!duration) return [];
+    const { parentPeriod, intervalsMs } = TICK_SETTINGS_PER_PERIOD[period];
+    const durationMs = findOptimalDurationFit(intervalsMs, timelineTransform);
+    if (!durationMs) return [];
 
     // Get the boundary values for the displayed part of the timeline.
     const timeScale = getTimeScale(timelineTransform);
     const startPosition = -this.state.boundingRect.width / 2;
     const endPosition = this.state.boundingRect.width / 2;
-    const startDate = moment(timeScale.invert(startPosition));
-    const endDate = moment(timeScale.invert(endPosition));
+    const momentStart = moment(timeScale.invert(startPosition)).utc();
+    const momentEnd = moment(timeScale.invert(endPosition)).utc();
 
     // Start counting the timestamps from the most recent timestamp that is not shown
     // on screen. The values are always rounded up to the timestamps of the next bigger
     // period (e.g. for days it would be months, for months it would be years).
-    let timestamp = moment(startDate).utc().startOf(parentPeriod || period);
-    while (timestamp.isBefore(startDate)) {
-      timestamp = moment(timestamp).add(duration);
+    let momentTimestamp = moment(momentStart).startOf(parentPeriod || period);
+    while (momentTimestamp.isBefore(momentStart)) {
+      momentTimestamp = moment(momentTimestamp).add(durationMs);
     }
-    timestamp = moment(timestamp).subtract(duration);
+    momentTimestamp = moment(momentTimestamp).subtract(durationMs);
 
     // Make that hidden timestamp the first one in the list, but position
     // it inside the visible range with a prepended arrow to the past.
     const ticks = [{
-      timestamp: moment(timestamp),
+      timestamp: formattedTimestamp(momentTimestamp),
       position: startPosition,
       isBehind: true,
     }];
@@ -474,21 +469,21 @@ class TimeTravel extends React.Component {
       // we output [Jan 22nd, Jan 29th, Feb 1st]. Right now this case only happens between
       // days and months, but in theory it could happen whenever bigger periods are not
       // divisible by the duration we are using as a step between the ticks.
-      let newTimestamp = moment(timestamp).add(duration);
-      if (parentPeriod && newTimestamp.get(parentPeriod) !== timestamp.get(parentPeriod)) {
+      let newTimestamp = moment(momentTimestamp).add(durationMs);
+      if (parentPeriod && newTimestamp.get(parentPeriod) !== momentTimestamp.get(parentPeriod)) {
         newTimestamp = moment(newTimestamp).utc().startOf(parentPeriod);
       }
-      timestamp = newTimestamp;
+      momentTimestamp = newTimestamp;
 
       // If the new tick is too close to the previous one, drop that previous tick.
-      const position = timeScale(timestamp);
+      const position = timeScale(momentTimestamp);
       const previousPosition = last(ticks) && last(ticks).position;
       if (position - previousPosition < MIN_TICK_SPACING_PX) {
         ticks.pop();
       }
 
-      ticks.push({ timestamp, position });
-    } while (timestamp.isBefore(endDate));
+      ticks.push({ timestamp: formattedTimestamp(momentTimestamp), position });
+    } while (momentTimestamp.isBefore(momentEnd));
 
     return ticks;
   }
@@ -496,17 +491,17 @@ class TimeTravel extends React.Component {
   renderTimestampTick({ timestamp, position, isBehind }, periodFormat, opacity) {
     const handleClick = () => this.jumpTo(timestamp);
     const disabled = (opacity < 0.4
-      || timestamp.isAfter(this.state.timestampNow)
-      || timestamp.isBefore(this.props.earliestTimestamp)
+      || timestamp > this.state.timestampNow
+      || timestamp < this.props.earliestTimestamp
     );
 
     return (
-      <g transform={`translate(${position}, 0)`} key={timestamp.format()}>
+      <g transform={`translate(${position}, 0)`} key={timestamp}>
         {!isBehind && <line y2="75" stroke="#ddd" strokeWidth="1" />}
-        {!disabled && <title>Jump to {timestamp.utc().format()}</title>}
+        {!disabled && <title>Jump to {timestamp}</title>}
         <foreignObject width="100" height="20" style={{ lineHeight: '20px' }}>
           <TimestampLabel disabled={disabled} onClick={!disabled && handleClick}>
-            {timestamp.utc().format(periodFormat)}
+            {moment(timestamp).utc().format(periodFormat)}
           </TimestampLabel>
         </foreignObject>
       </g>
@@ -538,8 +533,8 @@ class TimeTravel extends React.Component {
     const { width, height } = this.state.boundingRect;
 
     const timeScale = getTimeScale(timelineTransform);
-    const startShift = startTimestamp ? timeScale(startTimestamp) : -width;
-    const endShift = endTimestamp ? timeScale(endTimestamp) : width;
+    const startShift = startTimestamp ? timeScale(moment(startTimestamp)) : -width;
+    const endShift = endTimestamp ? timeScale(moment(endTimestamp)) : width;
     const length = Math.max(0, endShift - startShift);
 
     return (
@@ -572,18 +567,15 @@ class TimeTravel extends React.Component {
   }
 
   renderAnimatedContent() {
-    const focusedTimestampValue = this.state.focusedTimestamp.valueOf();
-    const durationPerPixelValue = this.state.durationPerPixel.asMilliseconds();
-
     return (
       <Motion
         style={{
-          focusedTimestampValue: strongSpring(focusedTimestampValue),
-          durationPerPixelValue: strongSpring(durationPerPixelValue),
+          focusedTimestampMs: strongSpring(moment(this.state.focusedTimestamp).valueOf()),
+          durationMsPerPixel: strongSpring(this.state.durationMsPerPixel),
         }}>
         {interpolated => this.renderAxis({
-          focusedTimestamp: moment(interpolated.focusedTimestampValue),
-          durationPerPixel: moment.duration(interpolated.durationPerPixelValue),
+          focusedTimestamp: formattedTimestamp(interpolated.focusedTimestampMs),
+          durationMsPerPixel: interpolated.durationMsPerPixel,
         })}
       </Motion>
     );
@@ -611,7 +603,7 @@ class TimeTravel extends React.Component {
         </TimelineContainer>
         <TimestampContainer>
           <TimestampInput
-            value={this.state.inputValue}
+            value={this.state.inputTimestamp}
             onChange={this.handleInputChange}
           /> UTC
         </TimestampContainer>
@@ -626,13 +618,13 @@ TimeTravel.propTypes = {
    */
   visible: PropTypes.bool,
   /**
-   * The timestamp in focus (moment.js object)
+   * The timestamp in focus
    */
-  timestamp: PropTypes.instanceOf(moment),
+  timestamp: PropTypes.string,
   /**
-   * The earliest timestamp we can travel back in time (moment.js object)
+   * The earliest timestamp we can travel back in time to
    */
-  earliestTimestamp: PropTypes.instanceOf(moment),
+  earliestTimestamp: PropTypes.string,
   /**
    * Required callback handling every timestamp change
    */
@@ -657,8 +649,7 @@ TimeTravel.propTypes = {
 
 TimeTravel.defaultProps = {
   visible: true,
-  timestamp: moment(),
-  earliestTimestamp: moment('2014-01-01T00:00:00Z'),
+  earliestTimestamp: '2014-01-01T00:00:00Z',
 };
 
 export default TimeTravel;
