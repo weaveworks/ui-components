@@ -14,7 +14,7 @@ import React from 'react';
  */
 class LogoProgress extends React.Component {
   render() {
-    const {size} = 150;
+    const {size = 150} = this.props;
     const styles = {
       width: size,
       height: size
