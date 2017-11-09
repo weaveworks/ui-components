@@ -21,6 +21,12 @@
     "copy:images": "cp -R src/images dist/images",
     "release": "yarn lint && yarn test && yarn build && npm version patch && git push origin --follow-tags && yarn copy:images && yarn s3"
   },
+  "jest": {
+    "setupFiles": [
+      "./test-shim.js",
+      "./test-setup.js"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/weaveworks/ui-components.git"
@@ -31,8 +37,8 @@
     "font-awesome": "4.7.0",
     "lodash": "^4.17.2",
     "moment": "2.19.1",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "styled-components": "2.2.1"
   },
   "dependencies": {
@@ -57,7 +63,8 @@
     "babel-jest": "^17.0.2",
     "babel-loader": "6.2.8",
     "css-loader": "0.26.0",
-    "enzyme": "^2.9.1",
+    "enzyme": "3.1.1",
+    "enzyme-adapter-react-16": "^1.0.4",
     "eslint": "3.10.2",
     "eslint-config-airbnb": "13.0.0",
     "eslint-loader": "1.9.0",
@@ -79,12 +86,12 @@
     "lodash": "4.17.2",
     "marked": "0.3.6",
     "raw-loader": "^0.5.1",
-    "react": "15.6.1",
+    "react": "16.0.0",
     "react-docgen": "2.16.0",
-    "react-dom": "15.6.1",
+    "react-dom": "16.0.0",
     "react-hot-loader": "3.0.0-beta.6",
-    "react-router": "3.0.0",
-    "react-test-renderer": "15.6.1",
+    "react-router": "3.2.0",
+    "react-test-renderer": "16.0.0",
     "sass-lint": "1.10.2",
     "sass-loader": "4.1.1",
     "style-loader": "0.13.1",
