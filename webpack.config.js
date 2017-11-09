@@ -79,7 +79,6 @@ module.exports = {
   resolveLoader: {
     alias: {
       'react-docs': path.join(__dirname, 'src/loaders/react-docs.js'),
-      example: path.join(__dirname, 'src/loaders/examples.js')
     },
     root: path.join(__dirname, 'node_modules')
   },
