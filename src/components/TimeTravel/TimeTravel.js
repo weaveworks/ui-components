@@ -534,7 +534,7 @@ class TimeTravel extends React.Component {
     );
   }
 
-  renderDisabledShadow(timelineTransform, [startTimestamp, endTimestamp]) {
+  renderDisabledShadow(timelineTransform, startTimestamp, endTimestamp) {
     const { width, height } = this.state.boundingRect;
 
     const timeScale = getTimeScale(timelineTransform);
@@ -559,8 +559,8 @@ class TimeTravel extends React.Component {
           height={height}
           fillOpacity={0}
         />
-        {this.renderDisabledShadow(timelineTransform, [null, this.props.earliestTimestamp])}
-        {this.renderDisabledShadow(timelineTransform, [this.state.timestampNow, null])}
+        {this.renderDisabledShadow(timelineTransform, null, this.props.earliestTimestamp)}
+        {this.renderDisabledShadow(timelineTransform, this.state.timestampNow, null)}
         <g className="ticks" transform="translate(0, 1)">
           {this.renderPeriodTicks('year', timelineTransform)}
           {this.renderPeriodTicks('month', timelineTransform)}
