@@ -3,7 +3,7 @@ See it in action:
 http://weaveworks-ui-components.s3-website-us-west-2.amazonaws.com/
 
 ## Prerequisites
-* `React` & `ReactDOM` ~15.4.0
+* `React` & `ReactDOM` ~16.0.0
 * `lodash` ^4.17.0
 
 ## Installation
