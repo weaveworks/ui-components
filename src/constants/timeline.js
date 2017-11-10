@@ -12,38 +12,38 @@ export const TICK_SETTINGS_PER_PERIOD = {
   year: {
     format: 'YYYY',
     childPeriod: 'month',
-    intervals: [
-      moment.duration(1, 'year'),
+    intervalsMs: [
+      moment.duration(1, 'year').asMilliseconds(),
     ],
   },
   month: {
     format: 'MMMM',
     parentPeriod: 'year',
     childPeriod: 'day',
-    intervals: [
-      moment.duration(1, 'month'),
-      moment.duration(3, 'months'),
+    intervalsMs: [
+      moment.duration(1, 'month').asMilliseconds(),
+      moment.duration(3, 'months').asMilliseconds(),
     ],
   },
   day: {
     format: 'Do',
     parentPeriod: 'month',
     childPeriod: 'minute',
-    intervals: [
-      moment.duration(1, 'day'),
-      moment.duration(1, 'week'),
+    intervalsMs: [
+      moment.duration(1, 'day').asMilliseconds(),
+      moment.duration(1, 'week').asMilliseconds(),
     ],
   },
   minute: {
     format: 'HH:mm',
     parentPeriod: 'day',
-    intervals: [
-      moment.duration(1, 'minute'),
-      moment.duration(5, 'minutes'),
-      moment.duration(15, 'minutes'),
-      moment.duration(1, 'hour'),
-      moment.duration(3, 'hours'),
-      moment.duration(6, 'hours'),
+    intervalsMs: [
+      moment.duration(1, 'minute').asMilliseconds(),
+      moment.duration(5, 'minutes').asMilliseconds(),
+      moment.duration(15, 'minutes').asMilliseconds(),
+      moment.duration(1, 'hour').asMilliseconds(),
+      moment.duration(3, 'hours').asMilliseconds(),
+      moment.duration(6, 'hours').asMilliseconds(),
     ],
   },
 };

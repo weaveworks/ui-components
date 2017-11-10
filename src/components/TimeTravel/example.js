@@ -9,7 +9,7 @@ export default class TimeTravelExample extends React.Component {
     super();
 
     this.state = {
-      timestamp: moment(),
+      timestamp: moment().format(),
     };
 
     this.handleChangeTimestamp = this.handleChangeTimestamp.bind(this);
