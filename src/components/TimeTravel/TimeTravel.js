@@ -489,18 +489,22 @@ class TimeTravel extends React.Component {
   }
 
   renderTimestampTick({ timestamp, position, isBehind }, periodFormat, opacity) {
-    const handleClick = () => this.jumpTo(timestamp);
     const disabled = (opacity < 0.4
       || timestamp > this.state.timestampNow
       || timestamp < this.props.earliestTimestamp
     );
+    const handleClick = () => {
+      if (!disabled) {
+        this.jumpTo(timestamp);
+      }
+    };
 
     return (
       <g transform={`translate(${position}, 0)`} key={timestamp}>
         {!isBehind && <line y2="75" stroke="#ddd" strokeWidth="1" />}
         {!disabled && <title>Jump to {timestamp}</title>}
         <foreignObject width="100" height="20" style={{ lineHeight: '20px' }}>
-          <TimestampLabel disabled={disabled} onClick={!disabled && handleClick}>
+          <TimestampLabel disabled={disabled} onClick={handleClick}>
             {moment(timestamp).utc().format(periodFormat)}
           </TimestampLabel>
         </foreignObject>
