@@ -19,6 +19,8 @@ import {
   maxDurationMsPerTimelinePx,
 } from '../../utils/timeline';
 
+import RangeSelector from './RangeSelector';
+
 import {
   TIMELINE_HEIGHT,
   MIN_TICK_SPACING_PX,
@@ -34,15 +36,6 @@ import {
   TIMELINE_TICK_INTERVAL,
 } from '../../constants/timer';
 
-
-const rangeSelectorOptions = [
-  { label: '15min', valueMs: moment.duration(15, 'minutes').asMilliseconds() },
-  { label: '30min', valueMs: moment.duration(30, 'minutes').asMilliseconds() },
-  { label: '1h', valueMs: moment.duration(1, 'hour').asMilliseconds() },
-  { label: '3h', valueMs: moment.duration(3, 'hours').asMilliseconds() },
-  { label: '6h', valueMs: moment.duration(6, 'hours').asMilliseconds() },
-  { label: '24h', valueMs: moment.duration(24, 'hours').asMilliseconds() },
-];
 
 const TimeTravelContainer = styled.div`
   transition: all .15s ease-in-out;
@@ -199,26 +192,6 @@ const TimestampInput = styled.input`
   outline: 0;
 `;
 
-const RangeSelector = styled.select`
-  border: 0;
-  border-left: 1px solid ${props => props.theme.colors.neutral.lightgray};
-  color: ${props => props.theme.colors.primary.charcoal};
-  background-color: transparent;
-  cursor: pointer;
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
-  margin-right: 5px;
-  text-align: center;
-  text-align-last: center;
-  outline: 0;
-  padding: 3px;
-
-  // Remove outline on Firefox
-  &::-moz-focus-inner {
-    border: 0;
-  }
-`;
-
 const TimeControlsWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -352,7 +325,7 @@ class TimeTravel extends React.Component {
       const timestampNow = formattedTimestamp();
       this.setState({ timestampNow });
 
-      if (this.state.hasLiveMode && this.state.showingLive) {
+      if (this.props.hasLiveMode && this.state.showingLive) {
         this.setTimestamp(timestampNow);
       }
     }, TIMELINE_TICK_INTERVAL);
@@ -373,13 +346,17 @@ class TimeTravel extends React.Component {
     clearInterval(this.timer);
   }
 
-  setTimestampFromProps({ timestamp }) {
-    if (!this.state.hasLiveMode || !this.state.showingLive) {
-      this.setState({ inputTimestamp: formattedTimestamp(timestamp) });
-      // Don't update the focused timestamp if we're not paused (so the timeline is hidden).
-      if (timestamp) {
-        this.setState({ focusedTimestamp: timestamp });
-      }
+  setTimestampFromProps({ timestamp, showingLive }) {
+    // Don't update the timestamp if in live mode.
+    if (this.props.hasLiveMode && showingLive) return;
+
+    // Keep the most recent live timestamp if just switched from live to paused.
+    if (!showingLive && this.props.showingLive) return;
+
+    this.setState({ inputTimestamp: formattedTimestamp(timestamp) });
+    // Don't update the focused timestamp if we're not paused (so the timeline is hidden).
+    if (timestamp) {
+      this.setState({ focusedTimestamp: timestamp });
     }
   }
 
@@ -391,13 +368,19 @@ class TimeTravel extends React.Component {
     return timestamp;
   }
 
+  shouldStickySwitchToLiveMode() {
+    const momentFocusedTimestamp = moment(this.state.focusedTimestamp).utc();
+    const diffDurationMs = moment().utc().diff(momentFocusedTimestamp);
+    const pixelsToEndTime = diffDurationMs / this.state.durationMsPerPixel;
+    return pixelsToEndTime < 10 && this.props.hasLiveMode && !this.state.showingLive;
+  }
+
   handleResize() {
     // Update the timeline dimension information.
     this.setState({ boundingRect: this.svgRef.getBoundingClientRect() });
   }
 
-  handleRangeChange(ev) {
-    const rangeMs = Number(ev.target.value);
+  handleRangeChange(rangeMs) {
     this.props.onChangeRange(rangeMs);
     this.setState({ rangeMs });
 
@@ -428,13 +411,7 @@ class TimeTravel extends React.Component {
   handleTimelinePanEnd() {
     this.setState({ isPanning: false });
 
-    const momentFocusedTimestamp = moment(this.state.focusedTimestamp).utc();
-    const diffDurationMs = moment().utc().diff(momentFocusedTimestamp);
-    const pixelsToEndTime = diffDurationMs / this.state.durationMsPerPixel;
-
-    // TODO: Make right side of available interval sticky so that it automatically
-    // switches to live mode when dragged there.
-    if (pixelsToEndTime < 10 && this.props.hasLiveMode && !this.state.showingLive) {
+    if (this.shouldStickySwitchToLiveMode()) {
       this.setLiveMode(true);
       this.instantUpdateTimestamp(this.state.timestampNow, this.props.onTimelinePan);
     } else {
@@ -529,6 +506,7 @@ class TimeTravel extends React.Component {
   }
 
   handleJumpForward() {
+    // TODO: Consider making this action sticky-transition to live mode as well.
     this.jumpRelativePixels(this.state.boundingRect.width / 4);
   }
 
@@ -754,17 +732,13 @@ class TimeTravel extends React.Component {
               <TimestampInput
                 value={this.state.inputTimestamp}
                 onChange={this.handleInputChange}
-                disabled={this.state.hasLiveMode && this.state.showingLive}
+                disabled={this.props.hasLiveMode && this.state.showingLive}
               /> UTC
             </TimestampContainer>
             {this.props.hasRangeSelector && <RangeSelector
-              value={this.state.rangeMs}
+              rangeMs={this.state.rangeMs}
               onChange={this.handleRangeChange}
-            >
-              {rangeSelectorOptions.map(({ valueMs, label }) => (
-                <option key={valueMs} value={valueMs}>{label}</option>
-              ))}
-            </RangeSelector>}
+            />}
           </TimeControlsContainer>
         </TimeControlsWrapper>
       </TimeTravelContainer>
