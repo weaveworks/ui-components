@@ -16,9 +16,9 @@ function availableTimelineDurationMs(earliestTimestamp) {
   return currentMomentTimestamp.diff(earliestMomentTimestamp);
 }
 
-// The most granular zoom is 1px per second, probably we don't want any more granular than that.
+// The most granular zoom is 2px per second, probably we don't want any more granular than that.
 export function minDurationMsPerTimelinePx() {
-  return moment.duration(1, 'second').asMilliseconds();
+  return moment.duration(500, 'milliseconds').asMilliseconds();
 }
 
 // Maximum level we can zoom out is such that the available range takes 400px. The 3 days

@@ -212,6 +212,10 @@ const TimeControlsContainer = styled.div`
  * To make it behave correctly, it requires a `timestamp` (can initially be `null`)
  * which gets updated with `onChangeTimestamp`.
  *
+ * Optional features include:
+ *   * Auto-update live mode on top of the default paused mode
+ *   * Range selection instead of the default point-in-time selection
+ *
  * ```javascript
  *  import React from 'react';
  *  import moment from 'moment';
@@ -313,7 +317,7 @@ class TimeTravel extends React.Component {
     window.addEventListener('resize', this.handleResize);
     this.handleResize();
 
-    this.svg = select('.time-travel-timeline svg');
+    this.svg = select(this.svgRef);
     this.drag = drag()
       .on('start', this.handleTimelinePanStart)
       .on('end', this.handleTimelinePanEnd)
@@ -658,7 +662,7 @@ class TimeTravel extends React.Component {
     const startTimestamp = moment(focusedTimestamp).subtract(rangeMs).utc().format();
 
     return (
-      <g id="axis">
+      <g className="axis">
         <rect
           className="tooltip-container"
           transform={`translate(${-width / 2}, 0)`}
@@ -792,11 +796,11 @@ TimeTravel.propTypes = {
    */
   onChangeLiveMode: PropTypes.func,
   /**
-   * Optional range selector
+   * Adds a range selector to the timestamp selector, for when the timestamp info is not enough
    */
   hasRangeSelector: PropTypes.bool,
   /**
-   * Duration in milliseconds of the observed interval (which ends at `timestamp`)
+   * Duration in milliseconds of the focused range (which ends at `timestamp`)
    */
   rangeMs: PropTypes.number,
   /**
