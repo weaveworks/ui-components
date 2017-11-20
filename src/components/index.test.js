@@ -24,12 +24,7 @@ describe('index', () => {
   });
   it('should export all the components from "src/components"', () => {
     const componentsDir = './src/components';
-    const files = _(getFiles(componentsDir))
-      .map(d => getFiles(`${componentsDir}/${d}`))
-      .flatten()
-      .map(f => f.replace('.js', ''))
-      .filter(f => f !== '__snapshots__')
-      .value();
+    const files = getFiles(componentsDir);
     _.each(files, (f) => {
       expect(WeaveComponents[f]).toExist(
         `${f} module is missing. Did you export it from "src/components/index.js"?`
