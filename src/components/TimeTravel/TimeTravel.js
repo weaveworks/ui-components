@@ -750,6 +750,8 @@ class TimeTravel extends React.Component {
   }
 }
 
+// TODO: Consider removing `showingLive` property. See the PR comment for details:
+// https://github.com/weaveworks/ui-components/pull/68#discussion_r152771727
 TimeTravel.propTypes = {
   /**
    * Shows Time Travel component
