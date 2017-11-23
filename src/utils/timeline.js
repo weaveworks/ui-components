@@ -16,16 +16,22 @@ function availableTimelineDurationMs(earliestTimestamp) {
   return currentMomentTimestamp.diff(earliestMomentTimestamp);
 }
 
-// The most granular zoom is 4px per second, probably we don't want any more granular than that.
+// The most granular zoom is 2px per second, probably we don't want any more granular than that.
 export function minDurationMsPerTimelinePx() {
-  return moment.duration(250, 'milliseconds').asMilliseconds();
+  return moment.duration(500, 'milliseconds').asMilliseconds();
 }
 
 // Maximum level we can zoom out is such that the available range takes 400px. The 3 days
 // per pixel upper bound on that scale is to prevent ugly rendering in extreme cases.
-export function maxDurationMsPerTimelinePx(earliestTimestamp) {
+export function maxDurationMsPerTimelinePx(earliestTimestamp, rangeMs) {
   const durationMsLowerBound = minDurationMsPerTimelinePx();
-  const durationMsUpperBound = moment.duration(3, 'days').asMilliseconds();
+  let durationMsUpperBound = moment.duration(3, 'days').asMilliseconds();
+  if (rangeMs) {
+    // If a time range is shown on the timeline, allow only so much zooming
+    // out that at least 10px of that range is shown in the timeline.
+    durationMsUpperBound = Math.min(durationMsUpperBound, rangeMs / 10);
+  }
+
   const durationMs = availableTimelineDurationMs(earliestTimestamp) / 400.0;
   return clamp(durationMs, durationMsLowerBound, durationMsUpperBound);
 }
