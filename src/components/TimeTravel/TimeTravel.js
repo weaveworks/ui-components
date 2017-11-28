@@ -128,6 +128,7 @@ const ShallowButton = styled.button`
 `;
 
 const TimestampLabel = ShallowButton.extend`
+  font-size: 13px;
   margin-left: 2px;
   padding: 3px;
 
@@ -138,6 +139,7 @@ const TimestampLabel = ShallowButton.extend`
 `;
 
 const TimelinePanButton = ShallowButton.extend`
+  font-size: 13px;
   pointer-events: all;
   padding: 2px;
 `;
