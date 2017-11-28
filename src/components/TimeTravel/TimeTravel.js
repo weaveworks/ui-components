@@ -29,6 +29,7 @@ import {
   TICKS_ROW_SPACING,
   MAX_TICK_ROWS,
   TICK_SETTINGS_PER_PERIOD,
+  MIN_RANGE_INTERVAL_PX,
 } from '../../constants/timeline';
 import {
   ZOOM_TRACK_DEBOUNCE_INTERVAL,
@@ -389,7 +390,7 @@ class TimeTravel extends React.Component {
     this.setState({ rangeMs });
 
     const minDurationMs = minDurationMsPerTimelinePx();
-    const maxDurationMs = maxDurationMsPerTimelinePx(this.props.earliestTimestamp, rangeMs);
+    const maxDurationMs = maxDurationMsPerTimelinePx(this.props.earliestTimestamp);
     let durationMsPerPixel = rangeMs / (this.state.boundingRect.width / 3);
     durationMsPerPixel = clamp(durationMsPerPixel, minDurationMs, maxDurationMs);
     this.setState({ durationMsPerPixel });
@@ -647,9 +648,14 @@ class TimeTravel extends React.Component {
     const { width, height } = this.state.boundingRect;
 
     const timeScale = getTimeScale(timelineTransform);
-    const startShift = startTimestamp ? timeScale(moment(startTimestamp)) : -width;
     const endShift = endTimestamp ? timeScale(moment(endTimestamp)) : width;
-    const length = Math.max(0, endShift - startShift);
+    let startShift = startTimestamp ? timeScale(moment(startTimestamp)) : -width;
+
+    // If the range interval is very short or we're zoomed out a lot, render the
+    // interval as at least MIN_RANGE_INTERVAL_PX pixels wide. Then re-adjust the left
+    // and of the interval to account for the calibrated min-width.
+    const length = Math.max(MIN_RANGE_INTERVAL_PX, endShift - startShift);
+    startShift = endShift - length;
 
     return (
       <RangeShadow transform={`translate(${startShift}, 0)`} width={length} height={height} />

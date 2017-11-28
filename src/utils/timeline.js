@@ -23,15 +23,9 @@ export function minDurationMsPerTimelinePx() {
 
 // Maximum level we can zoom out is such that the available range takes 400px. The 3 days
 // per pixel upper bound on that scale is to prevent ugly rendering in extreme cases.
-export function maxDurationMsPerTimelinePx(earliestTimestamp, rangeMs) {
+export function maxDurationMsPerTimelinePx(earliestTimestamp) {
   const durationMsLowerBound = minDurationMsPerTimelinePx();
-  let durationMsUpperBound = moment.duration(3, 'days').asMilliseconds();
-  if (rangeMs) {
-    // If a time range is shown on the timeline, allow only so much zooming
-    // out that at least 10px of that range is shown in the timeline.
-    durationMsUpperBound = Math.min(durationMsUpperBound, rangeMs / 10);
-  }
-
+  const durationMsUpperBound = moment.duration(3, 'days').asMilliseconds();
   const durationMs = availableTimelineDurationMs(earliestTimestamp) / 400.0;
   return clamp(durationMs, durationMsLowerBound, durationMsUpperBound);
 }
