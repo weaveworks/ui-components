@@ -527,8 +527,9 @@ class TimeTravel extends React.Component {
     let shift = 1;
     if (parentPeriod) {
       const durationMultiplier = 1 / MAX_TICK_SPACING_PX;
-      const parentPeriodStartIntervalMs = TICK_SETTINGS_PER_PERIOD[parentPeriod].intervalsMs[0];
-      const fadedInDurationMs = parentPeriodStartIntervalMs * durationMultiplier;
+      const parentInterval = TICK_SETTINGS_PER_PERIOD[parentPeriod].periodIntervals[0];
+      const parentIntervalMs = moment.duration(parentInterval, parentPeriod).asMilliseconds();
+      const fadedInDurationMs = parentIntervalMs * durationMultiplier;
       const fadedOutDurationMs = fadedInDurationMs * FADE_OUT_FACTOR;
 
       const transitionFactor = Math.log(fadedOutDurationMs) - Math.log(durationMsPerPixel);
@@ -547,9 +548,9 @@ class TimeTravel extends React.Component {
   getTicksForPeriod(period, timelineTransform) {
     // First find the optimal duration between the ticks - if no satisfactory
     // duration could be found, don't render any ticks for the given period.
-    const { parentPeriod, intervalsMs } = TICK_SETTINGS_PER_PERIOD[period];
-    const durationMs = findOptimalDurationFit(intervalsMs, timelineTransform);
-    if (!durationMs) return [];
+    const { parentPeriod, periodIntervals } = TICK_SETTINGS_PER_PERIOD[period];
+    const periodInterval = findOptimalDurationFit(periodIntervals, period, timelineTransform);
+    if (!periodInterval) return [];
 
     // Get the boundary values for the displayed part of the timeline.
     const timeScale = getTimeScale(timelineTransform);
@@ -561,11 +562,11 @@ class TimeTravel extends React.Component {
     // Start counting the timestamps from the most recent timestamp that is not shown
     // on screen. The values are always rounded up to the timestamps of the next bigger
     // period (e.g. for days it would be months, for months it would be years).
-    let momentTimestamp = moment(momentStart).startOf(parentPeriod || period);
+    let momentTimestamp = moment(momentStart).utc().startOf(parentPeriod || period);
     while (momentTimestamp.isBefore(momentStart)) {
-      momentTimestamp = moment(momentTimestamp).add(durationMs);
+      momentTimestamp = moment(momentTimestamp).add(periodInterval, period);
     }
-    momentTimestamp = moment(momentTimestamp).subtract(durationMs);
+    momentTimestamp = moment(momentTimestamp).subtract(periodInterval, period);
 
     // Make that hidden timestamp the first one in the list, but position
     // it inside the visible range with a prepended arrow to the past.
@@ -582,7 +583,7 @@ class TimeTravel extends React.Component {
       // we output [Jan 22nd, Jan 29th, Feb 1st]. Right now this case only happens between
       // days and months, but in theory it could happen whenever bigger periods are not
       // divisible by the duration we are using as a step between the ticks.
-      let newTimestamp = moment(momentTimestamp).add(durationMs);
+      let newTimestamp = moment(momentTimestamp).add(periodInterval, period);
       if (parentPeriod && newTimestamp.get(parentPeriod) !== momentTimestamp.get(parentPeriod)) {
         newTimestamp = moment(newTimestamp).utc().startOf(parentPeriod);
       }
