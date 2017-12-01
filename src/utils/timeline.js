@@ -48,7 +48,9 @@ export function getTimeScale({ focusedTimestamp, durationMsPerPixel }) {
     .range([-1, 1]);
 }
 
-export function findOptimalDurationFit(durationsMs, { durationMsPerPixel }) {
+export function findOptimalDurationFit(periodIntervals, period, { durationMsPerPixel }) {
   const minimalDurationMs = durationMsPerPixel * 1.1 * MIN_TICK_SPACING_PX;
-  return find(durationsMs, d => d >= minimalDurationMs);
+  return find(periodIntervals, (
+    p => moment.duration(p, period).asMilliseconds() >= minimalDurationMs
+  ));
 }

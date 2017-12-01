@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 
 export const TIMELINE_HEIGHT = '55px';
 export const MIN_TICK_SPACING_PX = 70;
@@ -13,38 +11,23 @@ export const TICK_SETTINGS_PER_PERIOD = {
   year: {
     format: 'YYYY',
     childPeriod: 'month',
-    intervalsMs: [
-      moment.duration(1, 'year').asMilliseconds(),
-    ],
+    periodIntervals: [1], // 1 year
   },
   month: {
     format: 'MMMM',
     parentPeriod: 'year',
     childPeriod: 'day',
-    intervalsMs: [
-      moment.duration(1, 'month').asMilliseconds(),
-      moment.duration(3, 'months').asMilliseconds(),
-    ],
+    periodIntervals: [1, 3], // 1 month, 1 quarter
   },
   day: {
     format: 'Do',
     parentPeriod: 'month',
     childPeriod: 'minute',
-    intervalsMs: [
-      moment.duration(1, 'day').asMilliseconds(),
-      moment.duration(1, 'week').asMilliseconds(),
-    ],
+    periodIntervals: [1, 7], // 1 day, 1 week
   },
   minute: {
     format: 'HH:mm',
     parentPeriod: 'day',
-    intervalsMs: [
-      moment.duration(1, 'minute').asMilliseconds(),
-      moment.duration(5, 'minutes').asMilliseconds(),
-      moment.duration(15, 'minutes').asMilliseconds(),
-      moment.duration(1, 'hour').asMilliseconds(),
-      moment.duration(3, 'hours').asMilliseconds(),
-      moment.duration(6, 'hours').asMilliseconds(),
-    ],
+    periodIntervals: [1, 5, 15, 60, 180, 360], // 1min, 5min, 15min, 1h, 3h, 6h
   },
 };
