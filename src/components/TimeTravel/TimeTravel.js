@@ -20,8 +20,9 @@ import {
   maxDurationMsPerTimelinePx,
 } from '../../utils/timeline';
 
-import RangeSelector from './RangeSelector';
+import LiveModeToggle from './LiveModeToggle';
 import TimestampInput from './TimestampInput';
+import RangeSelector from './RangeSelector';
 
 import {
   TIMELINE_HEIGHT,
@@ -146,36 +147,6 @@ const TimelinePanButton = ShallowButton.extend`
   padding: 5px 0;
   margin: 0 5px;
   width: 20px;
-`;
-
-const TimelineStatus = styled.button`
-  border: 0;
-  background-color: transparent;
-  border-right: 1px solid ${props => props.theme.colors.neutral.lightgray};
-  color: ${props => props.theme.colors.primary.charcoal};
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
-  padding: 3px 8px;
-  pointer-events: all;
-  display: inline-block;
-  text-align: center;
-  min-width: 80px;
-  outline: 0;
-  cursor: pointer;
-
-  // Remove outline on Firefox
-  &::-moz-focus-inner {
-    border: 0;
-  }
-
-  @keyframes blinker {
-    50% { opacity: 0.5; }
-  }
-
-  ${props => props.selected && `
-    animation: blinker 1.5s linear infinite;
-    background-color: rgba(143, 143, 215, 0.15);
-  `}
 `;
 
 const TimeControlsWrapper = styled.div`
@@ -421,8 +392,7 @@ class TimeTravel extends React.Component {
     ev.preventDefault();
   }
 
-  handleLiveModeToggle() {
-    const showingLive = !this.state.showingLive;
+  handleLiveModeToggle(showingLive) {
     this.setLiveMode(showingLive);
     if (showingLive) {
       this.setState({ focusedTimestamp: this.state.timestampNow });
@@ -704,12 +674,10 @@ class TimeTravel extends React.Component {
         </TimelineContainer>
         <TimeControlsWrapper>
           <TimeControlsContainer>
-            {this.props.hasLiveMode && <TimelineStatus
-              selected={!this.state.showingLive}
-              onClick={this.handleLiveModeToggle}
-            >
-              {this.state.showingLive ? 'Live' : 'Paused'}
-            </TimelineStatus>}
+            {this.props.hasLiveMode && <LiveModeToggle
+              showingLive={this.state.showingLive}
+              onToggle={this.handleLiveModeToggle}
+            />}
             <TimestampInput
               timestamp={this.state.focusedTimestamp}
               onChangeTimestamp={this.handleInputChange}
