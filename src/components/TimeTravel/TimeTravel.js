@@ -21,6 +21,7 @@ import {
 } from '../../utils/timeline';
 
 import RangeSelector from './RangeSelector';
+import TimestampInput from './TimestampInput';
 
 import {
   TIMELINE_HEIGHT,
@@ -177,26 +178,6 @@ const TimelineStatus = styled.button`
   `}
 `;
 
-const TimestampContainer = styled.div`
-  font-size: 13px;
-  align-items: baseline;
-  padding: 3px 8px;
-  pointer-events: all;
-  opacity: 0.8;
-  display: flex;
-`;
-
-const TimestampInput = styled.input`
-  background-color: transparent;
-  font-family: "Roboto", sans-serif;
-  margin-right: 3px;
-  text-align: center;
-  font-size: 1rem;
-  width: 165px;
-  border: 0;
-  outline: 0;
-`;
-
 const TimeControlsWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -283,7 +264,6 @@ class TimeTravel extends React.Component {
       rangeMs: props.rangeMs,
       timestampNow: formattedTimestamp(),
       focusedTimestamp: formattedTimestamp(props.timestamp),
-      inputTimestamp: formattedTimestamp(props.timestamp),
       durationMsPerPixel: initialDurationMsPerTimelinePx(props.earliestTimestamp),
       boundingRect: { width: 0, height: 0 },
       showingLive: props.showingLive,
@@ -332,7 +312,7 @@ class TimeTravel extends React.Component {
       this.setState({ timestampNow });
 
       if (this.props.hasLiveMode && this.state.showingLive) {
-        this.setTimestamp(timestampNow);
+        this.setState({ focusedTimestamp: timestampNow });
       }
     }, TIMELINE_TICK_INTERVAL);
   }
@@ -357,7 +337,6 @@ class TimeTravel extends React.Component {
     // Keep the most recent live timestamp if just switched from live to paused.
     if (!showingLive && this.props.showingLive) return;
 
-    this.setState({ inputTimestamp: formattedTimestamp(timestamp) });
     // Don't update the focused timestamp if we're not paused (so the timeline is hidden).
     if (timestamp) {
       this.setState({ focusedTimestamp: timestamp });
@@ -395,15 +374,10 @@ class TimeTravel extends React.Component {
     this.setState({ durationMsPerPixel });
   }
 
-  handleInputChange(ev) {
-    const inputTimestamp = ev.target.value;
-    this.setState({ inputTimestamp });
-
-    if (moment(inputTimestamp).isValid()) {
-      const clampedTimestamp = this.clampedTimestamp(inputTimestamp);
-      if (inputTimestamp !== this.state.inputTimestamp) {
-        this.instantUpdateTimestamp(clampedTimestamp, this.props.onTimestampInputEdit);
-      }
+  handleInputChange(timestamp) {
+    const clampedTimestamp = this.clampedTimestamp(timestamp);
+    if (clampedTimestamp !== this.state.focusedTimestamp) {
+      this.instantUpdateTimestamp(clampedTimestamp, this.props.onTimestampInputEdit);
     }
   }
 
@@ -428,7 +402,7 @@ class TimeTravel extends React.Component {
     const momentTimestamp = moment(this.state.focusedTimestamp).add(dragDurationMs);
     const timestamp = this.clampedTimestamp(formattedTimestamp(momentTimestamp));
 
-    this.setTimestamp(timestamp);
+    this.setState({ focusedTimestamp: timestamp });
     this.debouncedTimestampUpdateCallbacks(timestamp);
   }
 
@@ -451,15 +425,8 @@ class TimeTravel extends React.Component {
     const showingLive = !this.state.showingLive;
     this.setLiveMode(showingLive);
     if (showingLive) {
-      this.setTimestamp(this.state.timestampNow);
+      this.setState({ focusedTimestamp: this.state.timestampNow });
     }
-  }
-
-  setTimestamp(timestamp) {
-    this.setState({
-      focusedTimestamp: timestamp,
-      inputTimestamp: timestamp,
-    });
   }
 
   instantTimestampUpdateCallbacks(timestamp, callback) {
@@ -472,7 +439,7 @@ class TimeTravel extends React.Component {
     if (timestamp !== this.state.focusedTimestamp) {
       this.debouncedTimestampUpdateCallbacks.cancel();
       this.instantTimestampUpdateCallbacks(timestamp, callback);
-      this.setTimestamp(timestamp);
+      this.setState({ focusedTimestamp: timestamp });
     }
   }
 
@@ -743,13 +710,11 @@ class TimeTravel extends React.Component {
             >
               {this.state.showingLive ? 'Live' : 'Paused'}
             </TimelineStatus>}
-            <TimestampContainer>
-              <TimestampInput
-                value={this.state.inputTimestamp}
-                onChange={this.handleInputChange}
-                disabled={this.props.hasLiveMode && this.state.showingLive}
-              /> UTC
-            </TimestampContainer>
+            <TimestampInput
+              timestamp={this.state.focusedTimestamp}
+              onChangeTimestamp={this.handleInputChange}
+              disabled={this.props.hasLiveMode && this.state.showingLive}
+            />
             {this.props.hasRangeSelector && <RangeSelector
               rangeMs={this.state.rangeMs}
               onChange={this.handleRangeChange}
