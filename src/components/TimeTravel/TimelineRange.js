@@ -5,7 +5,7 @@ import { getTimeScale } from '../../utils/timeline';
 import { MIN_RANGE_INTERVAL_PX } from '../../constants/timeline';
 
 
-const TimelineRange =
+const TimelineInterval =
 ({ color, focusedTimestamp, durationMsPerPixel, startAt, endAt, width, height }) => {
   const timeScale = getTimeScale({ focusedTimestamp, durationMsPerPixel });
   const endShift = endAt ? timeScale(moment(endAt)) : width;
@@ -26,4 +26,4 @@ const TimelineRange =
   );
 };
 
-export default TimelineRange;
+export default TimelineInterval;

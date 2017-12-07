@@ -24,20 +24,34 @@ const TimelineLabelContainer = styled.button`
   }
 `;
 
-const TimelineLabel = ({ periodFormat, timestamp, position, isBehind, disabled, onClick }) => (
-  <g transform={`translate(${position}, 0)`}>
-    {!isBehind && <line y2="75" stroke="#ddd" strokeWidth="1" />}
-    {!disabled && <title>Jump to {timestamp}</title>}
-    <foreignObject width="100" height="20" style={{ lineHeight: '20px' }}>
-      <TimelineLabelContainer
-        onClick={!disabled ? onClick : undefined}
-        disabled={disabled}
-      >
-        {moment(timestamp).utc().format(periodFormat)}
-      </TimelineLabelContainer>
-    </foreignObject>
-  </g>
-);
+class TimelineLabel extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    if (!this.props.disabled) {
+      this.props.onClick(this.props.timestamp);
+    }
+  }
+
+  render() {
+    const { periodFormat, timestamp, position, isBehind, disabled } = this.props;
+    return (
+      <g transform={`translate(${position}, 0)`}>
+        {!isBehind && <line y2="75" stroke="#ddd" strokeWidth="1" />}
+        {!disabled && <title>Jump to {timestamp}</title>}
+        <foreignObject width="100" height="20" style={{ lineHeight: '20px' }}>
+          <TimelineLabelContainer onClick={this.handleClick} disabled={disabled}>
+            {moment(timestamp).utc().format(periodFormat)}
+          </TimelineLabelContainer>
+        </foreignObject>
+      </g>
+    );
+  }
+}
 
 TimelineLabel.propTypes = {
   periodFormat: PropTypes.string.isRequired,
