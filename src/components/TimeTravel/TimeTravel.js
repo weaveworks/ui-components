@@ -3,35 +3,29 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ResizeAware from 'react-resize-aware';
-import { map, clamp, find, last, debounce } from 'lodash';
+import { clamp, find, debounce } from 'lodash';
 import { drag } from 'd3-drag';
 import { event as d3Event, select } from 'd3-selection';
 import { Motion } from 'react-motion';
 
-import { linearGradientValue } from '../../utils/math';
 import { strongSpring } from '../../utils/animation';
 import { zoomFactor } from '../../utils/zooming';
 import {
   formattedTimestamp,
   getTimeScale,
-  findOptimalDurationFit,
   initialDurationMsPerTimelinePx,
   minDurationMsPerTimelinePx,
   maxDurationMsPerTimelinePx,
 } from '../../utils/timeline';
 
+import PeriodLabels from './PeriodLabels';
 import LiveModeToggle from './LiveModeToggle';
 import TimestampInput from './TimestampInput';
 import RangeSelector from './RangeSelector';
 
 import {
   TIMELINE_HEIGHT,
-  MIN_TICK_SPACING_PX,
   MAX_TICK_SPACING_PX,
-  FADE_OUT_FACTOR,
-  TICKS_ROW_SPACING,
-  MAX_TICK_ROWS,
-  TICK_SETTINGS_PER_PERIOD,
   MIN_RANGE_INTERVAL_PX,
 } from '../../constants/timeline';
 import {
@@ -127,17 +121,6 @@ const ShallowButton = styled.button`
 
   &:hover {
     color: ${props => props.theme.colors.primary.charcoal};
-  }
-`;
-
-const TimestampLabel = ShallowButton.extend`
-  font-size: 13px;
-  margin-left: 2px;
-  padding: 3px;
-
-  &[disabled] {
-    color: ${props => props.theme.colors.gray};
-    cursor: inherit;
   }
 `;
 
@@ -455,132 +438,6 @@ class TimeTravel extends React.Component {
     this.jumpRelativePixels(-this.state.boundingRect.width / 4);
   }
 
-  getVerticalShiftForPeriod(period, { durationMsPerPixel }) {
-    const { childPeriod, parentPeriod } = TICK_SETTINGS_PER_PERIOD[period];
-
-    let shift = 1;
-    if (parentPeriod) {
-      const durationMultiplier = 1 / MAX_TICK_SPACING_PX;
-      const parentInterval = TICK_SETTINGS_PER_PERIOD[parentPeriod].periodIntervals[0];
-      const parentIntervalMs = moment.duration(parentInterval, parentPeriod).asMilliseconds();
-      const fadedInDurationMs = parentIntervalMs * durationMultiplier;
-      const fadedOutDurationMs = fadedInDurationMs * FADE_OUT_FACTOR;
-
-      const transitionFactor = Math.log(fadedOutDurationMs) - Math.log(durationMsPerPixel);
-      const transitionLength = Math.log(fadedOutDurationMs) - Math.log(fadedInDurationMs);
-
-      shift = clamp(transitionFactor / transitionLength, 0, 1);
-    }
-
-    if (childPeriod) {
-      shift += this.getVerticalShiftForPeriod(childPeriod, { durationMsPerPixel });
-    }
-
-    return shift;
-  }
-
-  getTicksForPeriod(period, timelineTransform) {
-    // First find the optimal duration between the ticks - if no satisfactory
-    // duration could be found, don't render any ticks for the given period.
-    const { parentPeriod, periodIntervals } = TICK_SETTINGS_PER_PERIOD[period];
-    const periodInterval = findOptimalDurationFit(periodIntervals, period, timelineTransform);
-    if (!periodInterval) return [];
-
-    // Get the boundary values for the displayed part of the timeline.
-    const timeScale = getTimeScale(timelineTransform);
-    const startPosition = -this.state.boundingRect.width / 2;
-    const endPosition = this.state.boundingRect.width / 2;
-    const momentStart = moment(timeScale.invert(startPosition)).utc();
-    const momentEnd = moment(timeScale.invert(endPosition)).utc();
-
-    // Start counting the timestamps from the most recent timestamp that is not shown
-    // on screen. The values are always rounded up to the timestamps of the next bigger
-    // period (e.g. for days it would be months, for months it would be years).
-    let momentTimestamp = moment(momentStart).utc().startOf(parentPeriod || period);
-    while (momentTimestamp.isBefore(momentStart)) {
-      momentTimestamp = moment(momentTimestamp).add(periodInterval, period);
-    }
-    momentTimestamp = moment(momentTimestamp).subtract(periodInterval, period);
-
-    // Make that hidden timestamp the first one in the list, but position
-    // it inside the visible range with a prepended arrow to the past.
-    const ticks = [{
-      timestamp: formattedTimestamp(momentTimestamp),
-      position: startPosition,
-      isBehind: true,
-    }];
-
-    // Continue adding ticks till the end of the visible range.
-    do {
-      // If the new timestamp enters into a new bigger period, we round it down to the
-      // beginning of that period. E.g. instead of going [Jan 22nd, Jan 29th, Feb 5th],
-      // we output [Jan 22nd, Jan 29th, Feb 1st]. Right now this case only happens between
-      // days and months, but in theory it could happen whenever bigger periods are not
-      // divisible by the duration we are using as a step between the ticks.
-      let newTimestamp = moment(momentTimestamp).add(periodInterval, period);
-      if (parentPeriod && newTimestamp.get(parentPeriod) !== momentTimestamp.get(parentPeriod)) {
-        newTimestamp = moment(newTimestamp).utc().startOf(parentPeriod);
-      }
-      momentTimestamp = newTimestamp;
-
-      // If the new tick is too close to the previous one, drop that previous tick.
-      const position = timeScale(momentTimestamp);
-      const previousPosition = last(ticks) && last(ticks).position;
-      if (position - previousPosition < MIN_TICK_SPACING_PX) {
-        ticks.pop();
-      }
-
-      ticks.push({ timestamp: formattedTimestamp(momentTimestamp), position });
-    } while (momentTimestamp.isBefore(momentEnd));
-
-    return ticks;
-  }
-
-  renderTimestampTick({ timestamp, position, isBehind }, periodFormat, opacity) {
-    const disabled = (opacity < 0.4
-      || timestamp > this.state.timestampNow
-      || timestamp < this.props.earliestTimestamp
-    );
-    const handleClick = () => {
-      if (!disabled) {
-        this.jumpTo(timestamp);
-      }
-    };
-
-    return (
-      <g transform={`translate(${position}, 0)`} key={timestamp}>
-        {!isBehind && <line y2="75" stroke="#ddd" strokeWidth="1" />}
-        {!disabled && <title>Jump to {timestamp}</title>}
-        <foreignObject width="100" height="20" style={{ lineHeight: '20px' }}>
-          <TimestampLabel disabled={disabled} onClick={handleClick}>
-            {moment(timestamp).utc().format(periodFormat)}
-          </TimestampLabel>
-        </foreignObject>
-      </g>
-    );
-  }
-
-  renderPeriodTicks(period, timelineTransform) {
-    const periodFormat = TICK_SETTINGS_PER_PERIOD[period].format;
-    const ticks = this.getTicksForPeriod(period, timelineTransform);
-
-    const ticksRow = MAX_TICK_ROWS - this.getVerticalShiftForPeriod(period, timelineTransform);
-    const transform = `translate(0, ${ticksRow * TICKS_ROW_SPACING})`;
-
-    // Ticks quickly fade in from the bottom and then slowly start
-    // fading out towards the top until they are pushed out of canvas.
-    const focusedRow = MAX_TICK_ROWS - 1;
-    const opacity = ticksRow > focusedRow ?
-      linearGradientValue(ticksRow, [MAX_TICK_ROWS, focusedRow]) :
-      linearGradientValue(ticksRow, [-2, focusedRow]);
-
-    return (
-      <g className={period} transform={transform} style={{ opacity }}>
-        {map(ticks, tick => this.renderTimestampTick(tick, periodFormat, opacity))}
-      </g>
-    );
-  }
-
   renderRangeShadow(RangeShadow, timelineTransform, startTimestamp, endTimestamp) {
     const { width, height } = this.state.boundingRect;
 
@@ -620,10 +477,17 @@ class TimeTravel extends React.Component {
           this.renderRangeShadow(SelectedRangeShadow, transform, startTimestamp, focusedTimestamp)}
 
         <g className="ticks" transform="translate(0, 1)">
-          {this.renderPeriodTicks('year', transform)}
-          {this.renderPeriodTicks('month', transform)}
-          {this.renderPeriodTicks('day', transform)}
-          {this.renderPeriodTicks('minute', transform)}
+          {['year', 'month', 'day', 'minute'].map(period => (
+            <PeriodLabels
+              key={period}
+              period={period}
+              width={width}
+              onClick={this.jumpTo}
+              clickableStartAt={this.props.earliestTimestamp}
+              clickableEndAt={this.state.timestampNow}
+              {...transform}
+            />
+          ))}
         </g>
       </g>
     );
