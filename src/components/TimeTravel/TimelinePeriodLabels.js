@@ -21,7 +21,7 @@ import {
 import TimelineLabel from './TimelineLabel';
 
 
-class PeriodLabels extends React.PureComponent {
+class TimelinePeriodLabels extends React.PureComponent {
   getTicksForPeriod(period, timelineTransform) {
     // First find the optimal duration between the ticks - if no satisfactory
     // duration could be found, don't render any ticks for the given period.
@@ -143,7 +143,7 @@ class PeriodLabels extends React.PureComponent {
   }
 }
 
-PeriodLabels.propTypes = {
+TimelinePeriodLabels.propTypes = {
   period: PropTypes.string.isRequired,
   focusedTimestamp: PropTypes.string,
   durationMsPerPixel: PropTypes.number,
@@ -153,4 +153,4 @@ PeriodLabels.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default PeriodLabels;
+export default TimelinePeriodLabels;

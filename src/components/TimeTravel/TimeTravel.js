@@ -12,13 +12,13 @@ import { strongSpring } from '../../utils/animation';
 import { zoomFactor } from '../../utils/zooming';
 import {
   formattedTimestamp,
-  getTimeScale,
   initialDurationMsPerTimelinePx,
   minDurationMsPerTimelinePx,
   maxDurationMsPerTimelinePx,
 } from '../../utils/timeline';
 
-import PeriodLabels from './PeriodLabels';
+import TimelinePeriodLabels from './TimelinePeriodLabels';
+import TimelineRange from './TimelineRange';
 import LiveModeToggle from './LiveModeToggle';
 import TimestampInput from './TimestampInput';
 import RangeSelector from './RangeSelector';
@@ -26,7 +26,6 @@ import RangeSelector from './RangeSelector';
 import {
   TIMELINE_HEIGHT,
   MAX_TICK_SPACING_PX,
-  MIN_RANGE_INTERVAL_PX,
 } from '../../constants/timeline';
 import {
   ZOOM_TRACK_DEBOUNCE_INTERVAL,
@@ -101,35 +100,19 @@ const Timeline = FullyPannableCanvas.extend`
   pointer-events: all;
 `;
 
-const DisabledRangeShadow = styled.rect`
-  fill: ${props => props.theme.colors.gray};
-  fill-opacity: 0.15;
-`;
-
-const SelectedRangeShadow = styled.rect`
-  fill: ${props => props.theme.colors.accent.blue};
-  fill-opacity: 0.1;
-`;
-
-const ShallowButton = styled.button`
+const TimelinePanButton = styled.button`
   background-color: transparent;
-  border: 0;
   color: ${props => props.theme.colors.primary.lavender};
   cursor: pointer;
-  padding: 0;
+  font-size: 13px;
+  pointer-events: all;
+  padding: 2px;
   outline: 0;
+  border: 0;
 
   &:hover {
     color: ${props => props.theme.colors.primary.charcoal};
   }
-`;
-
-const TimelinePanButton = ShallowButton.extend`
-  font-size: 13px;
-  pointer-events: all;
-  padding: 5px 0;
-  margin: 0 5px;
-  width: 20px;
 `;
 
 const TimeControlsWrapper = styled.div`
@@ -438,27 +421,9 @@ class TimeTravel extends React.Component {
     this.jumpRelativePixels(-this.state.boundingRect.width / 4);
   }
 
-  renderRangeShadow(RangeShadow, timelineTransform, startTimestamp, endTimestamp) {
-    const { width, height } = this.state.boundingRect;
-
-    const timeScale = getTimeScale(timelineTransform);
-    const endShift = endTimestamp ? timeScale(moment(endTimestamp)) : width;
-    let startShift = startTimestamp ? timeScale(moment(startTimestamp)) : -width;
-
-    // If the range interval is very short or we're zoomed out a lot, render the
-    // interval as at least MIN_RANGE_INTERVAL_PX pixels wide. Then re-adjust the left
-    // and of the interval to account for the calibrated min-width.
-    const length = Math.max(MIN_RANGE_INTERVAL_PX, endShift - startShift);
-    startShift = endShift - length;
-
-    return (
-      <RangeShadow transform={`translate(${startShift}, 0)`} width={length} height={height} />
-    );
-  }
-
   renderAxis(transform) {
     const { width, height } = this.state.boundingRect;
-    const { focusedTimestamp, rangeMs } = transform;
+    const { focusedTimestamp, durationMsPerPixel, rangeMs } = transform;
     const startTimestamp = moment(focusedTimestamp).subtract(rangeMs).utc().format();
 
     return (
@@ -471,14 +436,32 @@ class TimeTravel extends React.Component {
           fillOpacity={0}
         />
 
-        {this.renderRangeShadow(DisabledRangeShadow, transform, null, this.props.earliestTimestamp)}
-        {this.renderRangeShadow(DisabledRangeShadow, transform, this.state.timestampNow, null)}
-        {this.props.hasRangeSelector &&
-          this.renderRangeShadow(SelectedRangeShadow, transform, startTimestamp, focusedTimestamp)}
+        <TimelineRange
+          color="#aaa"
+          focusedTimestamp={focusedTimestamp}
+          durationMsPerPixel={durationMsPerPixel}
+          endAt={this.props.earliestTimestamp}
+          width={width} height={height}
+        />
+        <TimelineRange
+          color="#aaa"
+          focusedTimestamp={focusedTimestamp}
+          durationMsPerPixel={durationMsPerPixel}
+          startAt={this.state.timestampNow}
+          width={width} height={height}
+        />
+        {this.props.hasRangeSelector && <TimelineRange
+          color="#00d2ff"
+          focusedTimestamp={focusedTimestamp}
+          durationMsPerPixel={durationMsPerPixel}
+          startAt={startTimestamp}
+          endAt={focusedTimestamp}
+          width={width} height={height}
+        />}
 
         <g className="ticks" transform="translate(0, 1)">
           {['year', 'month', 'day', 'minute'].map(period => (
-            <PeriodLabels
+            <TimelinePeriodLabels
               key={period}
               period={period}
               width={width}
