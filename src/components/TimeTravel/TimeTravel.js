@@ -17,6 +17,7 @@ import {
   maxDurationMsPerTimelinePx,
 } from '../../utils/timeline';
 
+import TimelinePanButton from './TimelinePanButton';
 import TimelinePeriodLabels from './TimelinePeriodLabels';
 import TimelineRange from './TimelineRange';
 import LiveModeToggle from './LiveModeToggle';
@@ -98,21 +99,6 @@ const Timeline = FullyPannableCanvas.extend`
   background-color: rgba(255, 255, 255, 0.85);
   box-shadow: inset 0 0 7px ${props => props.theme.colors.gray};
   pointer-events: all;
-`;
-
-const TimelinePanButton = styled.button`
-  background-color: transparent;
-  color: ${props => props.theme.colors.primary.lavender};
-  cursor: pointer;
-  font-size: 13px;
-  pointer-events: all;
-  padding: 2px;
-  outline: 0;
-  border: 0;
-
-  &:hover {
-    color: ${props => props.theme.colors.primary.charcoal};
-  }
 `;
 
 const TimeControlsWrapper = styled.div`
@@ -207,15 +193,11 @@ class TimeTravel extends React.Component {
       isPanning: false,
     };
 
-    this.jumpRelativePixels = this.jumpRelativePixels.bind(this);
-    this.handleJumpForward = this.handleJumpForward.bind(this);
-    this.handleJumpBackward = this.handleJumpBackward.bind(this);
-    this.jumpTo = this.jumpTo.bind(this);
-
     this.handleZoom = this.handleZoom.bind(this);
     this.handleTimelinePanStart = this.handleTimelinePanStart.bind(this);
     this.handleTimelinePanEnd = this.handleTimelinePanEnd.bind(this);
     this.handleTimelinePan = this.handleTimelinePan.bind(this);
+    this.handleJump = this.handleJump.bind(this);
 
     this.saveSvgRef = this.saveSvgRef.bind(this);
     this.debouncedTrackZoom = debounce(this.trackZoom.bind(this), ZOOM_TRACK_DEBOUNCE_INTERVAL);
@@ -358,6 +340,11 @@ class TimeTravel extends React.Component {
     ev.preventDefault();
   }
 
+  handleJump(timestamp) {
+    this.setLiveMode(false);
+    this.instantUpdateTimestamp(this.clampedTimestamp(timestamp), this.props.onTimestampLabelClick);
+  }
+
   handleLiveModeToggle(showingLive) {
     this.setLiveMode(showingLive);
     if (showingLive) {
@@ -399,26 +386,6 @@ class TimeTravel extends React.Component {
     if (this.props.onTimelineZoom) {
       this.props.onTimelineZoom(zoomedPeriod);
     }
-  }
-
-  jumpTo(timestamp) {
-    this.setLiveMode(false);
-    this.instantUpdateTimestamp(this.clampedTimestamp(timestamp), this.props.onTimestampLabelClick);
-  }
-
-  jumpRelativePixels(pixels) {
-    const durationMs = this.state.durationMsPerPixel * pixels;
-    const momentTimestamp = moment(this.state.focusedTimestamp).add(durationMs);
-    this.jumpTo(formattedTimestamp(momentTimestamp));
-  }
-
-  handleJumpForward() {
-    // TODO: Consider making this action sticky-transition to live mode as well.
-    this.jumpRelativePixels(this.state.boundingRect.width / 4);
-  }
-
-  handleJumpBackward() {
-    this.jumpRelativePixels(-this.state.boundingRect.width / 4);
   }
 
   renderAxis(transform) {
@@ -465,7 +432,7 @@ class TimeTravel extends React.Component {
               key={period}
               period={period}
               width={width}
-              onClick={this.jumpTo}
+              onClick={this.handleJump}
               clickableStartAt={this.props.earliestTimestamp}
               clickableEndAt={this.state.timestampNow}
               {...transform}
@@ -495,29 +462,37 @@ class TimeTravel extends React.Component {
   }
 
   render() {
-    const { isPanning, boundingRect } = this.state;
-    const halfWidth = boundingRect.width / 2;
+    const { isPanning, focusedTimestamp, durationMsPerPixel } = this.state;
+    const { width } = this.state.boundingRect;
 
     return (
       <TimeTravelContainer className="time-travel" visible={this.props.visible}>
         <TimelineContainer className="time-travel-timeline">
-          <TimelinePanButton onClick={this.handleJumpBackward}>
-            <span className="fa fa-chevron-left" />
-          </TimelinePanButton>
+          <TimelinePanButton
+            icon="fa fa-chevron-left"
+            focusedTimestamp={focusedTimestamp}
+            durationMsPerPixel={durationMsPerPixel}
+            movePixels={-width / 4}
+            onClick={this.handleJump}
+          />
           <ResizeAware
             onlyEvent onResize={this.handleResize}
             style={{ width: '100%', height: '100%' }}
           >
             <Timeline panning={isPanning} innerRef={this.saveSvgRef} onWheel={this.handleZoom}>
-              <g className="timeline-container" transform={`translate(${halfWidth}, 0)`}>
+              <g className="timeline-container" transform={`translate(${width / 2}, 0)`}>
                 <title>Scroll to zoom, drag to pan</title>
                 {this.renderAnimatedContent()}
               </g>
             </Timeline>
           </ResizeAware>
-          <TimelinePanButton onClick={this.handleJumpForward}>
-            <span className="fa fa-chevron-right" />
-          </TimelinePanButton>
+          <TimelinePanButton
+            icon="fa fa-chevron-right"
+            focusedTimestamp={focusedTimestamp}
+            durationMsPerPixel={durationMsPerPixel}
+            movePixels={width / 4}
+            onClick={this.handleJump}
+          />
         </TimelineContainer>
         <TimeControlsWrapper>
           <TimeControlsContainer>
