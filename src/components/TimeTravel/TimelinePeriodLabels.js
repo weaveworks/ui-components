@@ -169,12 +169,12 @@ class TimelinePeriodLabels extends React.PureComponent {
 
 TimelinePeriodLabels.propTypes = {
   period: PropTypes.string.isRequired,
-  focusedTimestamp: PropTypes.string,
-  durationMsPerPixel: PropTypes.number,
-  width: PropTypes.number,
-  clickableStartAt: PropTypes.string,
-  clickableEndAt: PropTypes.string,
-  onClick: PropTypes.func,
+  focusedTimestamp: PropTypes.string.isRequired,
+  durationMsPerPixel: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  clickableStartAt: PropTypes.string.isRequired,
+  clickableEndAt: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default TimelinePeriodLabels;

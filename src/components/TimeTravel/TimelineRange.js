@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
 import { getTimeScale } from '../../utils/timeline';
 import { MIN_RANGE_INTERVAL_PX } from '../../constants/timeline';
@@ -19,11 +20,21 @@ const TimelineInterval =
 
   return (
     <rect
-      fill={color} fillOpacity="0.15"
+      fill={color} fillOpacity={0.15}
       transform={`translate(${startShift}, 0)`}
       width={length} height={height}
     />
   );
+};
+
+TimelineInterval.propTypes = {
+  color: PropTypes.string.isRequired,
+  focusedTimestamp: PropTypes.string.isRequired,
+  durationMsPerPixel: PropTypes.number.isRequired,
+  startAt: PropTypes.string,
+  endAt: PropTypes.string,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
 };
 
 export default TimelineInterval;

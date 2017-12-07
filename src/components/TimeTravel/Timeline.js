@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ResizeAware from 'react-resize-aware';
-import { clamp, debounce } from 'lodash';
 import { drag } from 'd3-drag';
 import { event as d3Event, select } from 'd3-selection';
 import { Motion } from 'react-motion';
@@ -10,8 +10,6 @@ import { Motion } from 'react-motion';
 import { strongSpring } from '../../utils/animation';
 import {
   formattedTimestamp,
-  minDurationMsPerTimelinePx,
-  maxDurationMsPerTimelinePx,
 } from '../../utils/timeline';
 import { zoomFactor } from '../../utils/zooming';
 import { TIMELINE_HEIGHT } from '../../constants/timeline';
@@ -84,9 +82,9 @@ class Timeline extends React.PureComponent {
     };
 
     this.handleZoom = this.handleZoom.bind(this);
-    this.handleTimelinePanStart = this.handleTimelinePanStart.bind(this);
-    this.handleTimelinePanEnd = this.handleTimelinePanEnd.bind(this);
-    this.handleTimelinePan = this.handleTimelinePan.bind(this);
+    this.handlePanStart = this.handlePanStart.bind(this);
+    this.handlePanEnd = this.handlePanEnd.bind(this);
+    this.handlePan = this.handlePan.bind(this);
     this.handleResize = debounce(this.handleResize.bind(this), 200);
 
     this.saveSvgRef = this.saveSvgRef.bind(this);
@@ -98,9 +96,9 @@ class Timeline extends React.PureComponent {
 
     this.svg = select(this.svgRef);
     this.drag = drag()
-      .on('start', this.handleTimelinePanStart)
-      .on('end', this.handleTimelinePanEnd)
-      .on('drag', this.handleTimelinePan);
+      .on('start', this.handlePanStart)
+      .on('end', this.handlePanEnd)
+      .on('drag', this.handlePan);
     this.svg.call(this.drag);
   }
 
@@ -108,39 +106,32 @@ class Timeline extends React.PureComponent {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  handleTimelinePanStart() {
+  handlePanStart() {
     this.setState({ isPanning: true });
   }
 
-  handleTimelinePanEnd() {
+  handlePanEnd() {
     if (this.state.hasPanned) {
       this.props.onRelease();
     }
     this.setState({ isPanning: false, hasPanned: false });
   }
 
-  handleTimelinePan() {
+  handlePan() {
     const dragDurationMs = -this.props.durationMsPerPixel * d3Event.dx;
     const momentTimestamp = moment(this.props.focusedTimestamp).add(dragDurationMs);
-
-    this.props.onPan(formattedTimestamp(momentTimestamp));
+    this.props.onPan(momentTimestamp);
     this.setState({ hasPanned: true });
   }
 
   handleZoom(ev) {
-    const minDurationMs = minDurationMsPerTimelinePx();
-    const maxDurationMs = maxDurationMsPerTimelinePx(this.props.earliestTimestamp);
-
-    let durationMsPerPixel = this.props.durationMsPerPixel / zoomFactor(ev);
-    durationMsPerPixel = clamp(durationMsPerPixel, minDurationMs, maxDurationMs);
-
-    this.props.onZoom(durationMsPerPixel);
+    const { durationMsPerPixel } = this.props;
+    this.props.onZoom(durationMsPerPixel / zoomFactor(ev));
     ev.preventDefault();
   }
 
   handleResize() {
     const boundingRect = this.svgRef.getBoundingClientRect();
-
     this.props.onResize(boundingRect.width);
     this.setState({ boundingRect });
   }
@@ -159,32 +150,27 @@ class Timeline extends React.PureComponent {
         <rect
           className="tooltip-container"
           transform={`translate(${-width / 2}, 0)`}
-          width={width}
-          height={height}
-          fillOpacity={0}
+          width={width} height={height} fillOpacity={0}
         />
 
         <TimelineRange
-          color="#aaa"
+          color="#aaa" width={width} height={height}
           focusedTimestamp={focusedTimestamp}
           durationMsPerPixel={durationMsPerPixel}
           endAt={this.props.earliestTimestamp}
-          width={width} height={height}
         />
         <TimelineRange
-          color="#aaa"
+          color="#aaa" width={width} height={height}
           focusedTimestamp={focusedTimestamp}
           durationMsPerPixel={durationMsPerPixel}
           startAt={this.props.timestampNow}
-          width={width} height={height}
         />
         {this.props.inspectingInterval && <TimelineRange
-          color="#00d2ff"
+          color="#00d2ff" width={width} height={height}
           focusedTimestamp={focusedTimestamp}
           durationMsPerPixel={durationMsPerPixel}
           startAt={startTimestamp}
           endAt={focusedTimestamp}
-          width={width} height={height}
         />}
 
         <g className="ticks" transform="translate(0, 1)">
@@ -241,5 +227,19 @@ class Timeline extends React.PureComponent {
     );
   }
 }
+
+Timeline.propTypes = {
+  inspectingInterval: PropTypes.bool.isRequired,
+  timestampNow: PropTypes.string.isRequired,
+  focusedTimestamp: PropTypes.string.isRequired,
+  earliestTimestamp: PropTypes.string,
+  durationMsPerPixel: PropTypes.number.isRequired,
+  rangeMs: PropTypes.number.isRequired,
+  onJump: PropTypes.func.isRequired,
+  onZoom: PropTypes.func.isRequired,
+  onPan: PropTypes.func.isRequired,
+  onRelease: PropTypes.func.isRequired,
+  onResize: PropTypes.func.isRequired,
+};
 
 export default Timeline;

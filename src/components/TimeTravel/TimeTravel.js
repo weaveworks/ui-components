@@ -9,6 +9,7 @@ import {
   initialDurationMsPerTimelinePx,
   minDurationMsPerTimelinePx,
   maxDurationMsPerTimelinePx,
+  getTimeScale,
 } from '../../utils/timeline';
 
 import Timeline from './Timeline';
@@ -142,7 +143,7 @@ class TimeTravel extends React.Component {
     this.handleLiveModeToggle = this.handleLiveModeToggle.bind(this);
 
     this.delayedReportZoom = debounce(this.reportZoom.bind(this), 5000);
-    this.delayedReportPan = debounce(this.props.onChangeTimestamp.bind(this), 500);
+    this.delayedOnChangeTimestamp = debounce(this.props.onChangeTimestamp.bind(this), 500);
 
     this.setFocusedTimestamp = this.setFocusedTimestamp.bind(this);
   }
@@ -179,7 +180,8 @@ class TimeTravel extends React.Component {
     clearInterval(this.timer);
   }
 
-  clampedTimestamp(timestamp) {
+  clampedTimestamp(rawTimestamp) {
+    let timestamp = formattedTimestamp(rawTimestamp);
     const startTimestamp = this.props.earliestTimestamp;
     const endTimestamp = this.state.timestampNow;
     if (timestamp < startTimestamp) timestamp = startTimestamp;
@@ -187,23 +189,23 @@ class TimeTravel extends React.Component {
     return timestamp;
   }
 
-  shouldStickySwitchToLiveMode() {
-    const momentFocusedTimestamp = moment(this.state.focusedTimestamp).utc();
-    const diffDurationMs = moment().utc().diff(momentFocusedTimestamp);
-    const pixelsToEndTime = diffDurationMs / this.state.durationMsPerPixel;
-    return pixelsToEndTime < 10 && this.props.hasLiveMode && !this.state.showingLive;
+  clampedDuration(duration) {
+    const minDurationMs = minDurationMsPerTimelinePx();
+    const maxDurationMs = maxDurationMsPerTimelinePx(this.props.earliestTimestamp);
+    return clamp(duration, minDurationMs, maxDurationMs);
+  }
+
+  shouldStickySwitchToLiveMode(nextState) {
+    const timeScale = getTimeScale({ ...this.state, ...nextState });
+    const timestampCloseToNow = timeScale(moment(this.state.timestampNow)) < 10;
+    return timestampCloseToNow && this.props.hasLiveMode && !this.state.showingLive;
   }
 
   handleRangeChange(rangeMs) {
+    const timelineThird = this.state.timelineWidthPx / 3;
+    const durationMsPerPixel = this.clampedDuration(rangeMs / timelineThird);
+    this.setState({ rangeMs, durationMsPerPixel });
     this.props.onChangeRange(rangeMs);
-    this.setState({ rangeMs });
-
-    const minDurationMs = minDurationMsPerTimelinePx();
-    const maxDurationMs = maxDurationMsPerTimelinePx(this.props.earliestTimestamp);
-    let durationMsPerPixel = rangeMs / (this.state.timelineWidthPx / 3);
-    durationMsPerPixel = clamp(durationMsPerPixel, minDurationMs, maxDurationMs);
-
-    this.setState({ durationMsPerPixel });
   }
 
   handleInputChange(timestamp) {
@@ -221,16 +223,16 @@ class TimeTravel extends React.Component {
     this.props.onTimestampLabelClick();
   }
 
-  handleTimelineZoom(durationMsPerPixel) {
+  handleTimelineZoom(duration) {
+    const durationMsPerPixel = this.clampedDuration(duration);
     this.setState({ durationMsPerPixel });
     this.delayedReportZoom();
   }
 
   handleTimelinePan(timestamp) {
     const focusedTimestamp = this.clampedTimestamp(timestamp);
-
     this.setState({ showingLive: false, focusedTimestamp });
-    this.delayedReportPan(focusedTimestamp);
+    this.delayedOnChangeTimestamp(focusedTimestamp);
   }
 
   handleTimelineRelease() {
@@ -252,7 +254,7 @@ class TimeTravel extends React.Component {
   setFocusedTimestamp(timestamp) {
     const focusedTimestamp = this.clampedTimestamp(timestamp);
     if (focusedTimestamp !== this.state.focusedTimestamp) {
-      this.delayedReportPan.cancel();
+      this.delayedOnChangeTimestamp.cancel();
       this.props.onChangeTimestamp(focusedTimestamp);
       this.setState({ focusedTimestamp });
     }

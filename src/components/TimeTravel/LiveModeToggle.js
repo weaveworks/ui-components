@@ -67,8 +67,8 @@ class LiveModeToggle extends React.PureComponent {
 }
 
 LiveModeToggle.propTypes = {
-  showingLive: PropTypes.bool,
-  onToggle: PropTypes.func,
+  showingLive: PropTypes.bool.isRequired,
+  onToggle: PropTypes.func.isRequired,
 };
 
 export default LiveModeToggle;

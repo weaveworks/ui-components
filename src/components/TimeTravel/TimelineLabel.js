@@ -39,6 +39,7 @@ class TimelineLabel extends React.Component {
 
   render() {
     const { periodFormat, timestamp, position, isBehind, disabled } = this.props;
+
     return (
       <g transform={`translate(${position}, 0)`}>
         {!isBehind && <line y2="75" stroke="#ddd" strokeWidth="1" />}
