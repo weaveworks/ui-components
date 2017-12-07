@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { map, last, clamp } from 'lodash';
 
 import { linearGradientValue } from '../../utils/math';
@@ -19,31 +18,8 @@ import {
   TICK_SETTINGS_PER_PERIOD,
 } from '../../constants/timeline';
 
+import TimelineLabel from './TimelineLabel';
 
-// TODO: Unite with the one in TimeTravel.js
-const ShallowButton = styled.button`
-  background-color: transparent;
-  border: 0;
-  color: ${props => props.theme.colors.primary.lavender};
-  cursor: pointer;
-  padding: 0;
-  outline: 0;
-
-  &:hover {
-    color: ${props => props.theme.colors.primary.charcoal};
-  }
-`;
-
-const TimestampLabel = ShallowButton.extend`
-  font-size: 13px;
-  margin-left: 2px;
-  padding: 3px;
-
-  &[disabled] {
-    color: ${props => props.theme.colors.gray};
-    cursor: inherit;
-  }
-`;
 
 class PeriodLabels extends React.PureComponent {
   getTicksForPeriod(period, timelineTransform) {
@@ -126,28 +102,11 @@ class PeriodLabels extends React.PureComponent {
     return shift;
   }
 
-  renderTimestampTick({ timestamp, position, isBehind }, periodFormat, opacity) {
-    const disabled = (opacity < 0.4
-      || timestamp > this.props.clickableEndAt
-      || timestamp < this.props.clickableStartAt
-    );
-    const handleClick = () => {
-      if (!disabled) {
-        this.props.onClick(timestamp);
-      }
-    };
-
-    return (
-      <g transform={`translate(${position}, 0)`} key={timestamp}>
-        {!isBehind && <line y2="75" stroke="#ddd" strokeWidth="1" />}
-        {!disabled && <title>Jump to {timestamp}</title>}
-        <foreignObject width="100" height="20" style={{ lineHeight: '20px' }}>
-          <TimestampLabel disabled={disabled} onClick={handleClick}>
-            {moment(timestamp).utc().format(periodFormat)}
-          </TimestampLabel>
-        </foreignObject>
-      </g>
-    );
+  outsideOfClickableRange(timestamp) {
+    const { clickableStartAt, clickableEndAt } = this.props;
+    const beforeClickableStartAt = clickableStartAt && clickableStartAt > timestamp;
+    const afterClickableEndtAt = clickableEndAt && clickableEndAt < timestamp;
+    return beforeClickableStartAt || afterClickableEndtAt;
   }
 
   render() {
@@ -164,20 +123,31 @@ class PeriodLabels extends React.PureComponent {
     const opacity = ticksRow > focusedRow ?
       linearGradientValue(ticksRow, [MAX_TICK_ROWS, focusedRow]) :
       linearGradientValue(ticksRow, [-2, focusedRow]);
+    const isBarelyVisible = opacity < 0.4;
 
     return (
       <g className={period} transform={transform} style={{ opacity }}>
-        {map(ticks, tick => this.renderTimestampTick(tick, periodFormat, opacity))}
+        {map(ticks, ({ timestamp, position, isBehind }) => (
+          <TimelineLabel
+            key={timestamp}
+            timestamp={timestamp}
+            position={position}
+            isBehind={isBehind}
+            periodFormat={periodFormat}
+            disabled={isBarelyVisible || this.outsideOfClickableRange(timestamp)}
+            onClick={this.props.onClick}
+          />
+        ))}
       </g>
     );
   }
 }
 
 PeriodLabels.propTypes = {
-  period: PropTypes.string,
+  period: PropTypes.string.isRequired,
   focusedTimestamp: PropTypes.string,
-  durationMsPerPixel: PropTypes.integer,
-  width: PropTypes.integer,
+  durationMsPerPixel: PropTypes.number,
+  width: PropTypes.number,
   clickableStartAt: PropTypes.string,
   clickableEndAt: PropTypes.string,
   onClick: PropTypes.func,
