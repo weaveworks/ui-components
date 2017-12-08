@@ -14,6 +14,10 @@ const TimelineLabelContainer = styled.button`
   outline: 0;
   border: 0;
 
+  // Remove outline on Firefox
+  &::-moz-focus-inner { border: 0; }
+  &:focus { outline: none; }
+
   &[disabled] {
     color: ${props => props.theme.colors.gray};
     cursor: inherit;

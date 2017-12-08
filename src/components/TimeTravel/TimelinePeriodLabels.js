@@ -1,24 +1,23 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { map, last, clamp } from 'lodash';
+import { find, map, last, clamp } from 'lodash';
 
 import { linearGradientValue } from '../../utils/math';
 import {
   formattedTimestamp,
   getTimeScale,
-  findOptimalDurationFit,
 } from '../../utils/timeline';
 import {
-  MIN_TICK_SPACING_PX,
   MAX_TICK_SPACING_PX,
-  FADE_OUT_FACTOR,
-  TICKS_ROW_SPACING,
-  MAX_TICK_ROWS,
 } from '../../constants/timeline';
 
 import TimelineLabel from './TimelineLabel';
 
+const MAX_TICK_ROWS = 3;
+const MIN_TICK_SPACING_PX = 70;
+const TICKS_ROW_SPACING = 16;
+const FADE_OUT_FACTOR = 1.4;
 
 const TICK_SETTINGS_PER_PERIOD = {
   year: {
@@ -45,12 +44,20 @@ const TICK_SETTINGS_PER_PERIOD = {
   },
 };
 
+
 class TimelinePeriodLabels extends React.PureComponent {
+  findOptimalDurationFit(period, { durationMsPerPixel }) {
+    const minimalDurationMs = durationMsPerPixel * 1.1 * MIN_TICK_SPACING_PX;
+    return find(TICK_SETTINGS_PER_PERIOD[period].periodIntervals, (
+      p => moment.duration(p, period).asMilliseconds() >= minimalDurationMs
+    ));
+  }
+
   getTicksForPeriod(period, timelineTransform) {
     // First find the optimal duration between the ticks - if no satisfactory
     // duration could be found, don't render any ticks for the given period.
-    const { parentPeriod, periodIntervals } = TICK_SETTINGS_PER_PERIOD[period];
-    const periodInterval = findOptimalDurationFit(periodIntervals, period, timelineTransform);
+    const { parentPeriod } = TICK_SETTINGS_PER_PERIOD[period];
+    const periodInterval = this.findOptimalDurationFit(period, timelineTransform);
     if (!periodInterval) return [];
 
     // Get the boundary values for the displayed part of the timeline.
@@ -126,7 +133,7 @@ class TimelinePeriodLabels extends React.PureComponent {
     return shift;
   }
 
-  outsideOfClickableRange(timestamp) {
+  isOutsideOfClickableRange(timestamp) {
     const { clickableStartAt, clickableEndAt } = this.props;
     const beforeClickableStartAt = clickableStartAt && clickableStartAt > timestamp;
     const afterClickableEndtAt = clickableEndAt && clickableEndAt < timestamp;
@@ -158,7 +165,7 @@ class TimelinePeriodLabels extends React.PureComponent {
             position={position}
             isBehind={isBehind}
             periodFormat={periodFormat}
-            disabled={isBarelyVisible || this.outsideOfClickableRange(timestamp)}
+            disabled={isBarelyVisible || this.isOutsideOfClickableRange(timestamp)}
             onClick={this.props.onClick}
           />
         ))}

@@ -10,6 +10,7 @@ import { Motion } from 'react-motion';
 import { strongSpring } from '../../utils/animation';
 import {
   formattedTimestamp,
+  getTimeScale,
 } from '../../utils/timeline';
 import { zoomFactor } from '../../utils/zooming';
 import { TIMELINE_HEIGHT } from '../../constants/timeline';
@@ -118,8 +119,8 @@ class Timeline extends React.PureComponent {
   }
 
   handlePan() {
-    const dragDurationMs = -this.props.durationMsPerPixel * d3Event.dx;
-    const momentTimestamp = moment(this.props.focusedTimestamp).add(dragDurationMs);
+    const timeScale = getTimeScale(this.props);
+    const momentTimestamp = timeScale.invert(-d3Event.dx);
     this.props.onPan(momentTimestamp);
     this.setState({ hasPanned: true });
   }
@@ -142,8 +143,9 @@ class Timeline extends React.PureComponent {
 
   renderAxis(transform) {
     const { width, height } = this.state.boundingRect;
-    const { focusedTimestamp, durationMsPerPixel, rangeMs } = transform;
-    const startTimestamp = moment(focusedTimestamp).subtract(rangeMs).utc().format();
+    const { focusedTimestamp, rangeMs } = transform;
+    const startTimestamp = moment(focusedTimestamp).subtract(rangeMs).format();
+    const timeScale = getTimeScale(transform);
 
     return (
       <g className="axis">
@@ -155,22 +157,18 @@ class Timeline extends React.PureComponent {
 
         <TimelineRange
           color="#aaa" width={width} height={height}
-          focusedTimestamp={focusedTimestamp}
-          durationMsPerPixel={durationMsPerPixel}
           endAt={this.props.earliestTimestamp}
+          timeScale={timeScale}
         />
         <TimelineRange
           color="#aaa" width={width} height={height}
-          focusedTimestamp={focusedTimestamp}
-          durationMsPerPixel={durationMsPerPixel}
           startAt={this.props.timestampNow}
+          timeScale={timeScale}
         />
         {this.props.inspectingInterval && <TimelineRange
           color="#00d2ff" width={width} height={height}
-          focusedTimestamp={focusedTimestamp}
-          durationMsPerPixel={durationMsPerPixel}
-          startAt={startTimestamp}
-          endAt={focusedTimestamp}
+          startAt={startTimestamp} endAt={focusedTimestamp}
+          timeScale={timeScale}
         />}
 
         <g className="ticks" transform="translate(0, 1)">

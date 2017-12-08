@@ -1,8 +1,6 @@
 import moment from 'moment';
-import { find, clamp } from 'lodash';
+import { clamp } from 'lodash';
 import { scaleUtc } from 'd3-scale';
-
-import { MIN_TICK_SPACING_PX } from '../constants/timeline';
 
 
 export function formattedTimestamp(timestamp) {
@@ -46,11 +44,4 @@ export function getTimeScale({ focusedTimestamp, durationMsPerPixel }) {
   return scaleUtc()
     .domain([startDate, endDate])
     .range([-1, 1]);
-}
-
-export function findOptimalDurationFit(periodIntervals, period, { durationMsPerPixel }) {
-  const minimalDurationMs = durationMsPerPixel * 1.1 * MIN_TICK_SPACING_PX;
-  return find(periodIntervals, (
-    p => moment.duration(p, period).asMilliseconds() >= minimalDurationMs
-  ));
 }

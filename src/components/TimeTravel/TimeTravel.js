@@ -39,7 +39,6 @@ const TimeTravelContainer = styled.div`
 const TimelineBar = styled.div`
   align-items: center;
   display: flex;
-  height: ${TIMELINE_HEIGHT};
 `;
 
 const TimeControlsWrapper = styled.div`
@@ -184,8 +183,8 @@ class TimeTravel extends React.Component {
     let timestamp = formattedTimestamp(rawTimestamp);
     const startTimestamp = this.props.earliestTimestamp;
     const endTimestamp = this.state.timestampNow;
-    if (timestamp < startTimestamp) timestamp = startTimestamp;
-    if (timestamp > endTimestamp) timestamp = endTimestamp;
+    if (startTimestamp && timestamp < startTimestamp) timestamp = startTimestamp;
+    if (endTimestamp && timestamp > endTimestamp) timestamp = endTimestamp;
     return timestamp;
   }
 
@@ -268,15 +267,15 @@ class TimeTravel extends React.Component {
   }
 
   render() {
+    const timeScale = getTimeScale(this.state);
     return (
       <TimeTravelContainer className="time-travel" visible={this.props.visible}>
         <TimelineBar className="timeline">
           <TimelinePanButton
             icon="fa fa-chevron-left"
-            focusedTimestamp={this.state.focusedTimestamp}
-            durationMsPerPixel={this.state.durationMsPerPixel}
             movePixels={-this.state.timelineWidthPx / 4}
             onClick={this.handleTimelineJump}
+            timeScale={timeScale}
           />
           <Timeline
             inspectingInterval={this.props.hasRangeSelector}
@@ -293,10 +292,9 @@ class TimeTravel extends React.Component {
           />
           <TimelinePanButton
             icon="fa fa-chevron-right"
-            focusedTimestamp={this.state.focusedTimestamp}
-            durationMsPerPixel={this.state.durationMsPerPixel}
             movePixels={this.state.timelineWidthPx / 4}
             onClick={this.handleTimelineJump}
+            timeScale={timeScale}
           />
         </TimelineBar>
         <TimeControlsWrapper>

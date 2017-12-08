@@ -2,20 +2,15 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
-import { getTimeScale } from '../../utils/timeline';
-import { MIN_RANGE_INTERVAL_PX } from '../../constants/timeline';
 
-
-const TimelineInterval =
-({ color, focusedTimestamp, durationMsPerPixel, startAt, endAt, width, height }) => {
-  const timeScale = getTimeScale({ focusedTimestamp, durationMsPerPixel });
+const TimelineRange = ({ color, timeScale, startAt, endAt, width, height }) => {
   const endShift = endAt ? timeScale(moment(endAt)) : width;
   let startShift = startAt ? timeScale(moment(startAt)) : -width;
 
   // If the range interval is very short or we're zoomed out a lot, render the
-  // interval as at least MIN_RANGE_INTERVAL_PX pixels wide. Then re-adjust the left
-  // and of the interval to account for the calibrated min-width.
-  const length = Math.max(MIN_RANGE_INTERVAL_PX, endShift - startShift);
+  // interval as at least 4 pixels wide. Then re-adjust the left end of the
+  // interval to account for the calibrated min-width.
+  const length = Math.max(4, endShift - startShift);
   startShift = endShift - length;
 
   return (
@@ -27,14 +22,13 @@ const TimelineInterval =
   );
 };
 
-TimelineInterval.propTypes = {
+TimelineRange.propTypes = {
   color: PropTypes.string.isRequired,
-  focusedTimestamp: PropTypes.string.isRequired,
-  durationMsPerPixel: PropTypes.number.isRequired,
+  timeScale: PropTypes.func.isRequired,
   startAt: PropTypes.string,
   endAt: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };
 
-export default TimelineInterval;
+export default TimelineRange;

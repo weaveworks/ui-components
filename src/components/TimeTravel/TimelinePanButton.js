@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -16,6 +15,10 @@ const PanButton = styled.button`
   outline: 0;
   border: 0;
 
+  // Remove outline on Firefox
+  &::-moz-focus-inner { border: 0; }
+  &:focus { outline: none; }
+
   &:hover {
     color: ${props => props.theme.colors.primary.charcoal};
   }
@@ -30,9 +33,9 @@ class TimelinePanButton extends React.Component {
   }
 
   handleClick() {
-    const { durationMsPerPixel, movePixels, focusedTimestamp } = this.props;
-    const momentTimestamp = moment(focusedTimestamp).add(durationMsPerPixel * movePixels);
-    this.props.onClick(momentTimestamp.utc().format());
+    const { timeScale, movePixels } = this.props;
+    const momentTimestamp = timeScale.invert(movePixels);
+    this.props.onClick(momentTimestamp);
   }
 
   render() {
@@ -45,8 +48,7 @@ class TimelinePanButton extends React.Component {
 }
 
 TimelinePanButton.propTypes = {
-  focusedTimestamp: PropTypes.string.isRequired,
-  durationMsPerPixel: PropTypes.number.isRequired,
+  timeScale: PropTypes.func.isRequired,
   movePixels: PropTypes.number.isRequired,
   icon: PropTypes.string.isRequired,
 };
