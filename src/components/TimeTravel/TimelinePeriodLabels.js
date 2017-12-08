@@ -3,14 +3,8 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { find, map, last, clamp } from 'lodash';
 
-import { linearGradientValue } from '../../utils/math';
-import {
-  formattedTimestamp,
-  getTimeScale,
-} from '../../utils/timeline';
-import {
-  MAX_TICK_SPACING_PX,
-} from '../../constants/timeline';
+import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
+import { MAX_TICK_SPACING_PX } from '../../constants/timeline';
 
 import TimelineLabel from './TimelineLabel';
 
@@ -44,7 +38,12 @@ const TICK_SETTINGS_PER_PERIOD = {
   },
 };
 
+// A linear mapping [a, b] -> [0, 1] (maps value x=a into 0 and x=b into 1).
+function linearGradientValue(x, [a, b]) {
+  return (x - a) / (b - a);
+}
 
+// TODO: Tidy up this component.
 class TimelinePeriodLabels extends React.PureComponent {
   findOptimalDurationFit(period, { durationMsPerPixel }) {
     const minimalDurationMs = durationMsPerPixel * 1.1 * MIN_TICK_SPACING_PX;
@@ -61,8 +60,8 @@ class TimelinePeriodLabels extends React.PureComponent {
     if (!periodInterval) return [];
 
     // Get the boundary values for the displayed part of the timeline.
-    const timeScale = getTimeScale(timelineTransform);
     const halfWidth = this.props.width / 2;
+    const timeScale = getTimeScale(timelineTransform);
     const momentStart = moment(timeScale.invert(-halfWidth)).utc();
     const momentEnd = moment(timeScale.invert(halfWidth)).utc();
 

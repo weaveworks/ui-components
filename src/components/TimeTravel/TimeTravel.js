@@ -4,13 +4,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { clamp, find, debounce, noop } from 'lodash';
 
-import {
-  formattedTimestamp,
-  initialDurationMsPerTimelinePx,
-  minDurationMsPerTimelinePx,
-  maxDurationMsPerTimelinePx,
-  getTimeScale,
-} from '../../utils/timeline';
+import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
+import { MAX_TICK_SPACING_PX } from '../../constants/timeline';
 
 import Timeline from './Timeline';
 import TimelinePanButton from './TimelinePanButton';
@@ -18,22 +13,10 @@ import LiveModeToggle from './LiveModeToggle';
 import TimestampInput from './TimestampInput';
 import RangeSelector from './RangeSelector';
 
-import {
-  TIMELINE_HEIGHT,
-  MAX_TICK_SPACING_PX,
-} from '../../constants/timeline';
-
 
 const TimeTravelContainer = styled.div`
-  transition: all .15s ease-in-out;
   position: relative;
-  overflow: hidden;
   z-index: 1;
-  height: 0;
-
-  ${props => props.visible && `
-    height: calc(${TIMELINE_HEIGHT} + 38px);
-  `}
 `;
 
 const TimelineBar = styled.div`
@@ -54,6 +37,35 @@ const TimeControlsContainer = styled.div`
   display: flex;
 `;
 
+function availableTimelineDurationMs(earliestTimestamp) {
+  const earliestMomentTimestamp = moment(earliestTimestamp);
+  const currentMomentTimestamp = moment(formattedTimestamp());
+  return currentMomentTimestamp.diff(earliestMomentTimestamp);
+}
+
+// The most granular zoom is 2px per second, probably we don't want any more granular than that.
+function minDurationMsPerTimelinePx() {
+  return moment.duration(500, 'milliseconds').asMilliseconds();
+}
+
+// Maximum level we can zoom out is such that the available range takes 400px. The 3 days
+// per pixel upper bound on that scale is to prevent ugly rendering in extreme cases.
+function maxDurationMsPerTimelinePx(earliestTimestamp) {
+  const durationMsLowerBound = minDurationMsPerTimelinePx();
+  const durationMsUpperBound = moment.duration(3, 'days').asMilliseconds();
+  const durationMs = availableTimelineDurationMs(earliestTimestamp) / 400.0;
+  return clamp(durationMs, durationMsLowerBound, durationMsUpperBound);
+}
+
+// The initial zoom level is set to be 10% of the max zoom out level capped at 1px per minute,
+// with the assumption that if we have a long recorded history, we're in most cases by
+// default going to be interested in what happened in last couple of hours or so.
+function initialDurationMsPerTimelinePx(earliestTimestamp) {
+  const durationMsLowerBound = minDurationMsPerTimelinePx();
+  const durationMsUpperBound = moment.duration(1, 'minute').asMilliseconds();
+  const durationMs = maxDurationMsPerTimelinePx(earliestTimestamp) * 0.1;
+  return clamp(durationMs, durationMsLowerBound, durationMsUpperBound);
+}
 
 /**
  * A visual component used for time travelling between different states in the system.
@@ -269,7 +281,7 @@ class TimeTravel extends React.Component {
   render() {
     const timeScale = getTimeScale(this.state);
     return (
-      <TimeTravelContainer className="time-travel" visible={this.props.visible}>
+      <TimeTravelContainer className="time-travel">
         <TimelineBar className="timeline">
           <TimelinePanButton
             icon="fa fa-chevron-left"
@@ -322,10 +334,6 @@ class TimeTravel extends React.Component {
 // TODO: Consider removing `showingLive` property. See the PR comment for details:
 // https://github.com/weaveworks/ui-components/pull/68#discussion_r152771727
 TimeTravel.propTypes = {
-  /**
-   * Shows Time Travel component
-   */
-  visible: PropTypes.bool,
   /**
    * The timestamp in focus
    */
@@ -381,7 +389,6 @@ TimeTravel.propTypes = {
 };
 
 TimeTravel.defaultProps = {
-  visible: true,
   earliestTimestamp: '2014-01-01T00:00:00Z',
   hasLiveMode: false,
   showingLive: true, // only relevant if live mode is enabled

@@ -3,21 +3,20 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ResizeAware from 'react-resize-aware';
+import { debounce } from 'lodash';
 import { drag } from 'd3-drag';
 import { event as d3Event, select } from 'd3-selection';
 import { Motion } from 'react-motion';
 
 import { strongSpring } from '../../utils/animation';
-import {
-  formattedTimestamp,
-  getTimeScale,
-} from '../../utils/timeline';
+import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
 import { zoomFactor } from '../../utils/zooming';
-import { TIMELINE_HEIGHT } from '../../constants/timeline';
 
 import TimelinePeriodLabels from './TimelinePeriodLabels';
 import TimelineRange from './TimelineRange';
 
+
+const TIMELINE_HEIGHT = '55px';
 
 const TimelineWrapper = styled.div`
   width: 100%;
