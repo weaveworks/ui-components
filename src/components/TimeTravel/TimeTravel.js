@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import ResizeAware from 'react-resize-aware';
 import { map, clamp, find, last, debounce } from 'lodash';
 import { drag } from 'd3-drag';
 import { event as d3Event, select } from 'd3-selection';
@@ -102,7 +103,6 @@ const Timeline = FullyPannableCanvas.extend`
   background-color: rgba(255, 255, 255, 0.85);
   box-shadow: inset 0 0 7px ${props => props.theme.colors.gray};
   pointer-events: all;
-  margin: 0 7px;
 `;
 
 const DisabledRangeShadow = styled.rect`
@@ -142,7 +142,9 @@ const TimestampLabel = ShallowButton.extend`
 const TimelinePanButton = ShallowButton.extend`
   font-size: 13px;
   pointer-events: all;
-  padding: 2px;
+  padding: 5px 0;
+  margin: 0 5px;
+  width: 20px;
 `;
 
 const TimelineStatus = styled.button`
@@ -317,9 +319,6 @@ class TimeTravel extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-    this.handleResize();
-
     this.svg = select(this.svgRef);
     this.drag = drag()
       .on('start', this.handleTimelinePanStart)
@@ -348,8 +347,6 @@ class TimeTravel extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-
     clearInterval(this.timer);
   }
 
@@ -382,9 +379,9 @@ class TimeTravel extends React.Component {
     return pixelsToEndTime < 10 && this.props.hasLiveMode && !this.state.showingLive;
   }
 
-  handleResize() {
+  handleResize(boundingRect) {
     // Update the timeline dimension information.
-    this.setState({ boundingRect: this.svgRef.getBoundingClientRect() });
+    this.setState({ boundingRect });
   }
 
   handleRangeChange(rangeMs) {
@@ -723,12 +720,17 @@ class TimeTravel extends React.Component {
           <TimelinePanButton onClick={this.handleJumpBackward}>
             <span className="fa fa-chevron-left" />
           </TimelinePanButton>
-          <Timeline panning={isPanning} innerRef={this.saveSvgRef} onWheel={this.handleZoom}>
-            <g className="timeline-container" transform={`translate(${halfWidth}, 0)`}>
-              <title>Scroll to zoom, drag to pan</title>
-              {this.renderAnimatedContent()}
-            </g>
-          </Timeline>
+          <ResizeAware
+            onlyEvent onResize={this.handleResize}
+            style={{ width: '100%', height: '100%' }}
+          >
+            <Timeline panning={isPanning} innerRef={this.saveSvgRef} onWheel={this.handleZoom}>
+              <g className="timeline-container" transform={`translate(${halfWidth}, 0)`}>
+                <title>Scroll to zoom, drag to pan</title>
+                {this.renderAnimatedContent()}
+              </g>
+            </Timeline>
+          </ResizeAware>
           <TimelinePanButton onClick={this.handleJumpForward}>
             <span className="fa fa-chevron-right" />
           </TimelinePanButton>
