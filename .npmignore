@@ -3,6 +3,7 @@ dist/
 docs/
 src/*
 !src/styles/
+!src/resolvers/
 styleguide/
 
 circle.yml
