@@ -6,7 +6,6 @@ src/*
 styleguide/
 
 circle.yml
-resolvers.js
 test-setup.js
 test-shim.js
 webpack.config.js
