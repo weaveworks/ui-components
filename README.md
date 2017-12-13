@@ -1,13 +1,19 @@
+[![npm version](https://badge.fury.io/js/weaveworks-ui-components.svg)](https://badge.fury.io/js/weaveworks-ui-components)
+[![Circle CI](https://circleci.com/gh/weaveworks/ui-components/tree/master.svg?style=shield)](https://circleci.com/gh/weaveworks/ui-components/tree/master)
+
 See it in action:
 
 http://weaveworks-ui-components.s3-website-us-west-2.amazonaws.com/
 
 ## Prerequisites
-* `React` & `ReactDOM` ~16.0.0
-* `lodash` ^4.17.0
+* `React` & `ReactDOM` ^16.0.0
+* `lodash` ^4.0.0
+* `styled-components` ^2.0.0
+* `moment` ^2.0.0
+* `font-awesome` ^4.0.0
 
 ## Installation
-`npm i --save https://github.com/weaveworks/ui-components`
+`yarn add weaveworks-ui-components`
 
 ```javascript
 import React from 'react';
@@ -144,7 +150,10 @@ preLoaders: [
 #### Releasing this repo
 Configure your AWS CLI tools: http://docs.aws.amazon.com/cli/latest/userguide/installing.html.
 
-Then run `npm run release`. A new `git` tag will get pushed as well as static files to S3.
+Run `yarn publish` and enter the new version. This will build and publish the new version, as well as pushing static files to S3.
+
+After publishing, commit the version change and push to master.
+
 ## Adding Style Guide articles
 To add a page to the style guide:
 
