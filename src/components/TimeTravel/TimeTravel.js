@@ -102,8 +102,12 @@ function initialDurationMsPerTimelinePx(earliestTimestamp) {
  *      // track timestamp input edit...
  *    }
  *
- *    handleTimestampLabelClick() {
- *      // track timestamp label click...
+ *    handleTimelinePanButtonClick() {
+ *      // track timeline pan button click...
+ *    }
+ *
+ *    handleTimelineLabelClick() {
+ *      // track timeline label click...
  *    }
  *
  *    handleTimelinePan() {
@@ -121,7 +125,8 @@ function initialDurationMsPerTimelinePx(earliestTimestamp) {
  *          timestamp={this.state.timestamp}
  *          onChangeTimestamp={this.handleChangeTimestamp}
  *          onTimestampInputEdit={this.handleTimestampInputEdit}
- *          onTimestampLabelClick={this.handleTimestampLabelClick}
+ *          onTimelinePanButtonClick={this.handleTimelinePanButtonClick}
+ *          onTimelineLabelClick={this.handleTimelineLabelClick}
  *          onTimelineZoom={this.handleTimelineZoom}
  *          onTimelinePan={this.handleTimelinePan}
  *        />
@@ -144,11 +149,12 @@ class TimeTravel extends React.Component {
       timelineWidthPx: 1,
     };
 
-    this.handleTimelineResize = this.handleTimelineResize.bind(this);
+    this.handleTimelinePanButtonClick = this.handleTimelinePanButtonClick.bind(this);
     this.handleTimelineJump = this.handleTimelineJump.bind(this);
     this.handleTimelineZoom = this.handleTimelineZoom.bind(this);
     this.handleTimelinePan = this.handleTimelinePan.bind(this);
     this.handleTimelineRelease = this.handleTimelineRelease.bind(this);
+    this.handleTimelineResize = this.handleTimelineResize.bind(this);
     this.handleRangeChange = this.handleRangeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLiveModeToggle = this.handleLiveModeToggle.bind(this);
@@ -224,14 +230,21 @@ class TimeTravel extends React.Component {
     this.props.onTimestampInputEdit();
   }
 
-  handleTimelineResize(timelineWidthPx) {
-    this.setState({ timelineWidthPx });
-  }
-
   handleTimelineJump(timestamp) {
     this.setState({ showingLive: false });
     this.setFocusedTimestamp(timestamp);
-    this.props.onTimestampLabelClick();
+    this.props.onTimelineLabelClick();
+  }
+
+  handleTimelinePanButtonClick(timestamp) {
+    if (this.shouldStickySwitchToLiveMode({ focusedTimestamp: timestamp })) {
+      this.setState({ showingLive: true });
+      this.setFocusedTimestamp(this.state.timestampNow);
+    } else {
+      this.setState({ showingLive: false });
+      this.setFocusedTimestamp(timestamp);
+    }
+    this.props.onTimelinePanButtonClick();
   }
 
   handleTimelineZoom(duration) {
@@ -252,6 +265,10 @@ class TimeTravel extends React.Component {
       this.setFocusedTimestamp(this.state.timestampNow);
     }
     this.props.onTimelinePan();
+  }
+
+  handleTimelineResize(timelineWidthPx) {
+    this.setState({ timelineWidthPx });
   }
 
   handleLiveModeToggle(showingLive) {
@@ -286,7 +303,7 @@ class TimeTravel extends React.Component {
           <TimelinePanButton
             icon="fa fa-chevron-left"
             movePixels={-this.state.timelineWidthPx / 4}
-            onClick={this.handleTimelineJump}
+            onClick={this.handleTimelinePanButtonClick}
             timeScale={timeScale}
           />
           <Timeline
@@ -305,7 +322,7 @@ class TimeTravel extends React.Component {
           <TimelinePanButton
             icon="fa fa-chevron-right"
             movePixels={this.state.timelineWidthPx / 4}
-            onClick={this.handleTimelineJump}
+            onClick={this.handleTimelinePanButtonClick}
             timeScale={timeScale}
           />
         </TimelineBar>
@@ -351,9 +368,13 @@ TimeTravel.propTypes = {
    */
   onTimestampInputEdit: PropTypes.func,
   /**
-   * Optional callback handling clicks on timeline timestamp labels (e.g. for tracking)
+   * Optional callback handling clicks on timeline pan buttons (e.g. for tracking)
    */
-  onTimestampLabelClick: PropTypes.func,
+  onTimelinePanButtonClick: PropTypes.func,
+  /**
+   * Optional callback handling clicks on timeline labels (e.g. for tracking)
+   */
+  onTimelineLabelClick: PropTypes.func,
   /**
    * Optional callback handling timeline zooming (e.g. for tracking)
    */
@@ -395,7 +416,8 @@ TimeTravel.defaultProps = {
   hasRangeSelector: false,
   rangeMs: 3600000, // 1 hour as a default, only relevant if range selector is enabled
   onTimestampInputEdit: noop,
-  onTimestampLabelClick: noop,
+  onTimelinePanButtonClick: noop,
+  onTimelineLabelClick: noop,
   onTimelineZoom: noop,
   onTimelinePan: noop,
 };
