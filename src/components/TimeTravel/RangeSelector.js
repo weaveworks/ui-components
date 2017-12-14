@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 
@@ -78,7 +79,7 @@ const rangeOptions = [
   { label: '24h', valueMs: moment.duration(24, 'hours').asMilliseconds() },
 ];
 
-export default class RangeSelector extends React.Component {
+class RangeSelector extends React.Component {
   constructor(props, context) {
     super(props, context);
 
@@ -141,3 +142,10 @@ export default class RangeSelector extends React.Component {
     );
   }
 }
+
+RangeSelector.propTypes = {
+  rangeMs: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+export default RangeSelector;
