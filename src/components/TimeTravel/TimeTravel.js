@@ -239,7 +239,7 @@ class TimeTravel extends React.Component {
       this.setState({ showingLive: false });
       this.setFocusedTimestamp(timestamp);
     }
-    this.props.onTimelineLabelClick();
+    this.props.onTimelinePanButtonClick();
   }
 
   handleTimelineZoom(duration) {
