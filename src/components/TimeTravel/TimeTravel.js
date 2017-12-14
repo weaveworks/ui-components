@@ -102,8 +102,12 @@ function initialDurationMsPerTimelinePx(earliestTimestamp) {
  *      // track timestamp input edit...
  *    }
  *
- *    handleTimestampLabelClick() {
- *      // track timestamp label click...
+ *    handleTimelinePanButtonClick() {
+ *      // track timeline pan button click...
+ *    }
+ *
+ *    handleTimelineLabelClick() {
+ *      // track timeline label click...
  *    }
  *
  *    handleTimelinePan() {
@@ -121,7 +125,8 @@ function initialDurationMsPerTimelinePx(earliestTimestamp) {
  *          timestamp={this.state.timestamp}
  *          onChangeTimestamp={this.handleChangeTimestamp}
  *          onTimestampInputEdit={this.handleTimestampInputEdit}
- *          onTimestampLabelClick={this.handleTimestampLabelClick}
+ *          onTimelinePanButtonClick={this.handleTimelinePanButtonClick}
+ *          onTimelineLabelClick={this.handleTimelineLabelClick}
  *          onTimelineZoom={this.handleTimelineZoom}
  *          onTimelinePan={this.handleTimelinePan}
  *        />
@@ -411,7 +416,8 @@ TimeTravel.defaultProps = {
   hasRangeSelector: false,
   rangeMs: 3600000, // 1 hour as a default, only relevant if range selector is enabled
   onTimestampInputEdit: noop,
-  onTimestampLabelClick: noop,
+  onTimelinePanButtonClick: noop,
+  onTimelineLabelClick: noop,
   onTimelineZoom: noop,
   onTimelinePan: noop,
 };
