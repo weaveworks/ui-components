@@ -76,7 +76,8 @@ class Timeline extends React.PureComponent {
     super(props);
 
     this.state = {
-      boundingRect: { width: 0, height: 0 },
+      width: 0,
+      height: 0,
       isPanning: false,
       hasPanned: false,
     };
@@ -91,19 +92,12 @@ class Timeline extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-    this.handleResize();
-
     this.svg = select(this.svgRef);
     this.drag = drag()
       .on('start', this.handlePanStart)
       .on('end', this.handlePanEnd)
       .on('drag', this.handlePan);
     this.svg.call(this.drag);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
   }
 
   handlePanStart() {
@@ -130,10 +124,10 @@ class Timeline extends React.PureComponent {
     ev.preventDefault();
   }
 
-  handleResize() {
-    const boundingRect = this.svgRef.getBoundingClientRect();
-    this.props.onResize(boundingRect.width);
-    this.setState({ boundingRect });
+  handleResize({ width, height }) {
+    // Update the timeline dimension information.
+    this.setState({ width, height });
+    this.props.onResize(width);
   }
 
   saveSvgRef(ref) {
@@ -141,7 +135,7 @@ class Timeline extends React.PureComponent {
   }
 
   renderAxis(transform) {
-    const { width, height } = this.state.boundingRect;
+    const { width, height } = this.state;
     const { focusedTimestamp, rangeMs } = transform;
     const startTimestamp = moment(focusedTimestamp).subtract(rangeMs).format();
     const timeScale = getTimeScale(transform);
@@ -188,9 +182,8 @@ class Timeline extends React.PureComponent {
   }
 
   render() {
-    const { isPanning, boundingRect } = this.state;
+    const { isPanning, width } = this.state;
     const { focusedTimestamp, durationMsPerPixel, rangeMs } = this.props;
-    const { width } = boundingRect;
 
     return (
       <TimelineWrapper>
