@@ -29,14 +29,18 @@ import classnames from 'classnames';
  */
 class Input extends React.Component {
   render() {
-    const { valid, message, label, id } = this.props;
-    const inputProps = omit(this.props, ['label', 'valid', 'message']);
+    const { valid, message, label, id, select, children } = this.props;
+    const elProps = omit(this.props, ['label', 'valid', 'message']);
 
     return (
       <div className="weave-input">
         <label htmlFor={id}>{label}</label>
         <div className="input-wrapper">
-          <input {...inputProps} className={classnames({ invalid: !valid })} />
+          {select
+            ? <select {...elProps} className={classnames({ invalid: !valid })}>{children}</select>
+            : <input {...elProps} className={classnames({ invalid: !valid })} />
+          }
+
           <i className={classnames('fa fa-times-circle input-icon', { show: !valid })} />
         </div>
         <span
@@ -63,6 +67,9 @@ Input.propTypes = {
    * Whether or not the form value is valid. The icon will not appear when `valid` is truthy.
    */
   valid: PropTypes.bool,
+  /**
+   * Render a `<select />` element instead of a text input
+   */
 };
 
 Input.defaultProps = {
