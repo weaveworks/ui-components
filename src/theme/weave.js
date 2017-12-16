@@ -15,7 +15,7 @@ const colors = {
   gray: '#aaaaaa',
   gunpowder: '#3c3c5b',
   lavender: '#8383ac',
-  lightgray: '#f8f8f8',
+  lightgray: '#fafafc',
   sand: '#f5f4f4',
   stratos: '#001755',
   turquoise: '#00bcd4',
