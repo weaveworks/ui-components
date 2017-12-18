@@ -19,9 +19,8 @@ const LiveModeToggleWrapper = styled.button`
   cursor: pointer;
 
   // Remove outline on Firefox
-  &::-moz-focus-inner {
-    border: 0;
-  }
+  &::-moz-focus-inner { border: 0; }
+  &:focus { outline: none; }
 
   @keyframes blinker {
     50% { opacity: 0.5; }

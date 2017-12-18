@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 
-const HEIGHT = '27px';
+const HEIGHT_PX = 27;
 
 const RangeSelectorWrapper = styled.div`
   border-left: 1px solid ${props => props.theme.colors.neutral.lightgray};
@@ -51,13 +51,13 @@ const CaretIconsContainer = styled.span`
   margin-left: 8px;
 
   .fa {
-    font-size: 75%;
+    font-size: 12px;
     line-height: 7px;
   }
 `;
 
 const RangeOption = styled.div`
-  line-height: ${HEIGHT};
+  line-height: ${HEIGHT_PX}px;
   cursor: pointer;
   padding: 0 8px;
 
@@ -108,10 +108,11 @@ class RangeSelector extends React.Component {
     const { rangeMs } = this.props;
     const { isOpen } = this.state;
 
+    const selectedRangeIndex = rangeOptions.findIndex(r => r.valueMs === rangeMs);
     const selectedRangeLabel = rangeOptions.find(r => r.valueMs === rangeMs).label;
     const anchorEl = this.containerRef && this.containerRef.getBoundingClientRect();
     const menuStyle = anchorEl ? {
-      top: anchorEl.top - 1,
+      top: anchorEl.top - (selectedRangeIndex * HEIGHT_PX) - 1,
       left: anchorEl.right - anchorEl.width,
       minWidth: anchorEl.width + 1,
     } : {};
