@@ -51,7 +51,7 @@ const CaretIconsContainer = styled.span`
   margin-left: 8px;
 
   .fa {
-    font-size: 75%;
+    font-size: 12px;
     line-height: 7px;
   }
 `;
