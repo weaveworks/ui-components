@@ -8,7 +8,7 @@ const onS3 = window.location.href.indexOf('s3') !== -1;
 
 // webpack will make separate bundles for each of these contexts. They each get used to render
 // components and their docs dynamically.
-const componentCtx = require.context('../../src/components', true, /^((?!test|index|example).)*$/);
+const componentCtx = require.context('../../src/components', true, /^((?!test|index|example|_).)*$/);
 const exampleCtx = require.context('../../src/components', true, /example\.js$/);
 const docCtx = require.context('!!react-docs!../../src/components', true, /^((?!test|index|example).)*$/);
 const styleGuideCtx = require.context('../../styleguide', true, /\.js$/);

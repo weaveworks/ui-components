@@ -7,11 +7,11 @@ import { clamp, find, debounce, noop } from 'lodash';
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
 import { MAX_TICK_SPACING_PX } from '../../constants/timeline';
 
-import Timeline from './Timeline';
-import TimelinePanButton from './TimelinePanButton';
-import LiveModeToggle from './LiveModeToggle';
-import TimestampInput from './TimestampInput';
-import RangeSelector from './RangeSelector';
+import Timeline from './_Timeline';
+import TimelinePanButton from './_TimelinePanButton';
+import LiveModeToggle from './_LiveModeToggle';
+import TimestampInput from './_TimestampInput';
+import RangeSelector from './_RangeSelector';
 
 
 const TimeTravelContainer = styled.div`
