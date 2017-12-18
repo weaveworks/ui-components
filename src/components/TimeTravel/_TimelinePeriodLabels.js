@@ -6,7 +6,7 @@ import { find, map, last, clamp } from 'lodash';
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
 import { MAX_TICK_SPACING_PX } from '../../constants/timeline';
 
-import TimelineLabel from './TimelineLabel';
+import TimelineLabel from './_TimelineLabel';
 
 const MAX_TICK_ROWS = 3;
 const MIN_TICK_SPACING_PX = 70;

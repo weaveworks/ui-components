@@ -12,8 +12,8 @@ import { strongSpring } from '../../utils/animation';
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
 import { zoomFactor } from '../../utils/zooming';
 
-import TimelinePeriodLabels from './TimelinePeriodLabels';
-import TimelineRange from './TimelineRange';
+import TimelinePeriodLabels from './_TimelinePeriodLabels';
+import TimelineRange from './_TimelineRange';
 
 
 const TIMELINE_HEIGHT = '55px';
