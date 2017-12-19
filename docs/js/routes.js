@@ -12,7 +12,7 @@ function buildExampleComponent(el, doc, example, sub) {
   return function ExampleWrapper() {
     return (
       <Example
-        name={el.name}
+        name={el.displayName || el.name}
         element={el}
         example={example}
         doc={doc}
