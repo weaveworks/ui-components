@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.4.4",
+  "version": "0.4.6",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,12 +13,12 @@
     "build:constants": "babel src/constants --out-dir lib/constants --ignore *.test.js",
     "build:components": "babel src/components --out-dir lib/components --ignore *.test.js,example.js",
     "build:index": "babel src/index.js --out-file lib/index.js",
-    "postversion": "git push origin --follow-tags",
+    "postversion": "git tag v$(jq -r '.version' package.json) && git push origin --follow-tags",
     "prepublishOnly": "yarn ci && yarn build",
-    "postpublish": "yarn docs:publish",
+    "postpublish": "yarn postversion && yarn docs:publish",
     "docs:build": "RELEASE=true rm -rf dist && webpack --config webpack.config.js",
     "docs:copy-images": "cp -R src/images dist/images",
-    "docs:s3": "aws s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
+    "docs:s3": "aws --profile default-mfa s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
     "docs:publish": "yarn docs:build && yarn docs:copy-images && yarn docs:s3",
     "start": "node bin/dev-server"
   },
