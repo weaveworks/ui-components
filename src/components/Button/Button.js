@@ -89,21 +89,21 @@ class Button extends React.PureComponent {
 
 Button.propTypes = {
   /**
- * Callback that will be run when the button is clicked.
- */
+   * Callback that will be run when the button is clicked.
+   */
   onClick: PropTypes.func,
   /**
- * Callback that will be run when the button is clicked while disabled.
- */
+   * Callback that will be run when the button is clicked while disabled.
+   */
   onDisabledClick: PropTypes.func,
   /**
- * Text that will be used as the button label.
- * If this props is provided, it will be passed back to the `onClick` handler
- */
+   * Text that will be used as the button label.
+   * If this props is provided, it will be passed back to the `onClick` handler
+   */
   text: PropTypes.string,
   /**
- * Disable the button.
- */
+   * Disable the button.
+   */
   disabled: PropTypes.bool,
   /**
    * Render the button in $turquoise (useful for CTAs)
