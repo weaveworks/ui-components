@@ -47,9 +47,11 @@ class Button extends React.PureComponent {
   }
 
   handleClick(e) {
-    const { onClick, disabled, text } = this.props;
+    const { onClick, onDisabledClick, disabled, text } = this.props;
 
-    if (onClick && !disabled) {
+    if (disabled && onDisabledClick) {
+      onDisabledClick(e, text);
+    } else if (!disabled && onClick) {
       onClick(e, text);
     }
   }
@@ -90,6 +92,10 @@ Button.propTypes = {
  * Callback that will be run when the button is clicked.
  */
   onClick: PropTypes.func,
+  /**
+ * Callback that will be run when the button is clicked while disabled.
+ */
+  onDisabledClick: PropTypes.func,
   /**
  * Text that will be used as the button label.
  * If this props is provided, it will be passed back to the `onClick` handler
