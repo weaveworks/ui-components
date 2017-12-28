@@ -2,7 +2,7 @@
 
 exports[`<Alert /> snapshots renders default 1`] = `
 .c0 {
-  background: #f8f8f8;
+  background: #fafafc;
   border-radius: 4px;
   border: 2px solid #aaaaaa;
   color: #000;
