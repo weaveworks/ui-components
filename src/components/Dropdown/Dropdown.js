@@ -19,11 +19,12 @@ const Popover = styled.div`
   position: absolute;
   background-color: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.neutral.lightgray};
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius};
   z-index: 3;
   box-shadow: ${props => props.theme.boxShadow.light};
   margin-top: 4px;
   width: ${WIDTH};
+  box-sizing: border-box;
 `;
 
 const Overlay = styled.div`
@@ -44,13 +45,18 @@ const ItemWrapper = Item.extend`
     background-color: #eee;
   }
 
+  &:first-child {
+    border-radius: ${props => props.theme.borderRadius} 0 0;
+  }
+
   &:last-child {
     border-bottom: 0;
+    border-radius: 0 0 ${props => props.theme.borderRadius};
   }
 `;
 
 const SelectedItem = Item.extend`
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => props.theme.colors.neutral.white};
   border: 1px solid ${props => props.theme.colors.neutral.gray};
   display: flex;
@@ -67,7 +73,7 @@ const SelectedItem = Item.extend`
 const SelectedItemIcon = styled.span`
   padding-left: 1em;
   float: right;
-  line-height: ${HEIGHT};
+  line-height: ${HEIGHT} !important;
 `;
 
 const StyledDropdown = component => styled(component)`
@@ -135,7 +141,7 @@ class Dropdown extends React.Component {
     const currentItem = find(items, i => i.value === value) || (items && items[0]);
 
     return (
-      <div className={className}>
+      <div className={className} title={currentItem.label}>
         <SelectedItem onClick={this.handleClick}>
           <Item>
             {currentItem && currentItem.label}
@@ -152,6 +158,7 @@ class Dropdown extends React.Component {
                   key={i.value}
                   onClick={ev => this.handleChange(ev, i.value)}
                   selected={i.value === value}
+                  title={i.label}
                 >
                   {i.label}
                 </ItemWrapper>

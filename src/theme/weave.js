@@ -61,6 +61,8 @@ const weave = {
     selected: `0px 0px 2px 2px ${colors.lavender}`,
   },
 
+  borderRadius: '4px',
+
   // component-specific
   atoms: {
     Button: {
