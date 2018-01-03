@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.4.6",
+  "version": "0.4.9",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "build:constants": "babel src/constants --out-dir lib/constants --ignore *.test.js",
     "build:components": "babel src/components --out-dir lib/components --ignore *.test.js,example.js",
     "build:index": "babel src/index.js --out-file lib/index.js",
-    "postversion": "git tag v$(jq -r '.version' package.json) && git push origin --follow-tags",
+    "postversion": "export TAG=$(jq -r '.version' package.json);  git commit -am \"v${TAG}\" && git tag \"v${TAG}\" && git push origin --tags",
     "prepublishOnly": "yarn ci && yarn build",
     "postpublish": "yarn postversion && yarn docs:publish",
     "docs:build": "RELEASE=true rm -rf dist && webpack --config webpack.config.js",
