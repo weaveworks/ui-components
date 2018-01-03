@@ -77,7 +77,6 @@ const SelectedItemIcon = styled.span`
 `;
 
 const StyledDropdown = component => styled(component)`
-  display: inline-block;
   height: ${HEIGHT};
   line-height: ${HEIGHT};
   position: relative;
@@ -155,6 +154,7 @@ class Dropdown extends React.Component {
             <Popover>
               {map(this.props.items, i => (
                 <ItemWrapper
+                  className="dropdown-item"
                   key={i.value}
                   onClick={ev => this.handleChange(ev, i.value)}
                   selected={i.value === value}

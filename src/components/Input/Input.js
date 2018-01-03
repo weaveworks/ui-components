@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import omit from 'lodash/omit';
 import styled from 'styled-components';
@@ -43,7 +44,7 @@ const ValidationMessage = styled.span`
   font-size: 14px;
   padding-left: 8px;
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
-  color: ${props => props.theme.colors.status.error};
+  color: ${props => (props.valid ? 'inherit' : props.theme.colors.status.error)};
 `;
 
 /**
@@ -73,19 +74,41 @@ const ValidationMessage = styled.span`
  */
 
 class Input extends React.Component {
+  componentDidMount() {
+    const { focus, autoSelectText, value } = this.props;
+    if (focus) {
+      this.getInputNode().focus();
+    }
+    if (autoSelectText && value) {
+      this.getInputNode().setSelectionRange(0, value.length);
+    }
+  }
+
+  getInputNode() {
+    return ReactDOM.findDOMNode(this.input); // eslint-disable-line
+  }
+
   render() {
     const { valid, message, label, id, className } = this.props;
-    const inputProps = omit(this.props, ['label', 'valid', 'message', 'className']);
+    const inputProps = omit(this.props, [
+      'label',
+      'valid',
+      'message',
+      'className',
+      'autoSelectText',
+      'focus'
+    ]);
 
     return (
       <div className={className}>
         <label htmlFor={id}>{label}</label>
         <InputWrapper>
-          <input {...inputProps} />
+          <input {...inputProps} ref={(elem) => { this.input = elem; }} />
           <Icon visible={!valid} className="fa fa-times-circle" />
         </InputWrapper>
         <ValidationMessage
-          visible={message && !valid}
+          valid={valid}
+          visible={message}
         >
           {message}
         </ValidationMessage>
@@ -111,7 +134,7 @@ Input.propTypes = {
   /**
    * Callback to run when the input is edited by the user
    */
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
 };
 
 Input.defaultProps = {
