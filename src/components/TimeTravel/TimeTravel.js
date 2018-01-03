@@ -231,17 +231,20 @@ class TimeTravel extends React.Component {
   }
 
   handleTimelineJump(timestamp) {
-    this.setState({ showingLive: false });
+    //  Order of callbacks is important.
+    this.switchToPausedMode();
     this.setFocusedTimestamp(timestamp);
     this.props.onTimelineLabelClick();
   }
 
   handleTimelinePanButtonClick(timestamp) {
     if (this.shouldStickySwitchToLiveMode({ focusedTimestamp: timestamp })) {
-      this.setState({ showingLive: true });
+      //  Order of callbacks is important.
       this.setFocusedTimestamp(this.state.timestampNow);
+      this.switchToLiveMode();
     } else {
-      this.setState({ showingLive: false });
+      //  Order of callbacks is important.
+      this.switchToPausedMode();
       this.setFocusedTimestamp(timestamp);
     }
     this.props.onTimelinePanButtonClick();
@@ -254,15 +257,18 @@ class TimeTravel extends React.Component {
   }
 
   handleTimelinePan(timestamp) {
+    //  Order of callbacks is important.
     const focusedTimestamp = this.clampedTimestamp(timestamp);
-    this.setState({ showingLive: false, focusedTimestamp });
+    this.switchToPausedMode();
+    this.setState({ focusedTimestamp });
     this.delayedOnChangeTimestamp(focusedTimestamp);
   }
 
   handleTimelineRelease() {
     if (this.shouldStickySwitchToLiveMode()) {
-      this.setState({ showingLive: true });
+      //  Order of callbacks is important.
       this.setFocusedTimestamp(this.state.timestampNow);
+      this.switchToLiveMode();
     }
     this.props.onTimelinePan();
   }
@@ -272,11 +278,27 @@ class TimeTravel extends React.Component {
   }
 
   handleLiveModeToggle(showingLive) {
-    this.setState({ showingLive });
     if (showingLive) {
+      //  Order of callbacks is important.
       this.setState({ focusedTimestamp: this.state.timestampNow });
+      this.switchToLiveMode();
+    } else {
+      this.switchToPausedMode();
     }
-    this.props.onChangeLiveMode(showingLive);
+  }
+
+  switchToLiveMode() {
+    if (!this.state.showingLive) {
+      this.setState({ showingLive: true });
+      this.props.onChangeLiveMode(true);
+    }
+  }
+
+  switchToPausedMode() {
+    if (this.state.showingLive) {
+      this.setState({ showingLive: false });
+      this.props.onChangeLiveMode(false);
+    }
   }
 
   setFocusedTimestamp(timestamp) {
