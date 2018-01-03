@@ -35,11 +35,10 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
 .c4 {
   padding-left: 1em;
   float: right;
-  line-height: 36px;
+  line-height: 36px !important;
 }
 
 .c0 {
-  display: inline-block;
   height: 36px;
   line-height: 36px;
   position: relative;
@@ -49,6 +48,7 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
 
 <div
   className="c0"
+  title="First Thing"
 >
   <div
     className="c1"
