@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.4.11",
+  "version": "0.4.12",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "build:index": "babel src/index.js --out-file lib/index.js",
     "postversion": "export TAG=$(jq -r '.version' package.json); git add package.json && git commit -m \"v${TAG}\" && git tag \"v${TAG}\" && git push origin --follow-tags",
     "prepublishOnly": "yarn ci && yarn build",
-    "postpublish": "yarn postversion && yarn docs:publish",
+    "postpublish": "yarn docs:publish",
     "docs:build": "RELEASE=true rm -rf dist && webpack --config webpack.config.js",
     "docs:copy-images": "cp -R src/images dist/images",
     "docs:s3": "aws --profile default-mfa s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
