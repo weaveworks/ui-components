@@ -13,7 +13,7 @@
     "build:constants": "babel src/constants --out-dir lib/constants --ignore *.test.js",
     "build:components": "babel src/components --out-dir lib/components --ignore *.test.js,example.js",
     "build:index": "babel src/index.js --out-file lib/index.js",
-    "postversion": "export TAG=$(jq -r '.version' package.json); git add package.json && git commit -m \"v${TAG}\" && git tag \"v${TAG}\" && git push origin --tags",
+    "postversion": "export TAG=$(jq -r '.version' package.json); git add package.json && git commit -m \"v${TAG}\" && git tag \"v${TAG}\" && git push origin --follow-tags",
     "prepublishOnly": "yarn ci && yarn build",
     "postpublish": "yarn postversion && yarn docs:publish",
     "docs:build": "RELEASE=true rm -rf dist && webpack --config webpack.config.js",
