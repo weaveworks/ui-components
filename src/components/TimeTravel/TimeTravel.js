@@ -32,6 +32,7 @@ const TimeControlsWrapper = styled.div`
 
 const TimeControlsContainer = styled.div`
   border: 1px solid ${props => props.theme.colors.neutral.lightgray};
+  box-shadow: 0 0 2px ${props => props.theme.colors.neutral.lightgray};
   background-color: ${props => props.theme.colors.white};
   border-radius: 5px;
   display: flex;
