@@ -25,6 +25,7 @@ const ToggleButton = styled.button`
   ${props => props.disabled && `
     box-shadow: inset 1px 1px 6px ${props.theme.colors.neutral.lightgray};
     color: ${props.theme.colors.gray};
+    cursor: inherit;
     opacity: 0.75;
   `}
 `;
