@@ -11,7 +11,7 @@ const Item = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0 24px;
+  padding: 0 12px;
   cursor: pointer;
 `;
 
@@ -25,6 +25,7 @@ const Popover = styled.div`
   margin-top: 4px;
   width: ${WIDTH};
   box-sizing: border-box;
+  padding: 6px 0;
 `;
 
 const Overlay = styled.div`
@@ -43,15 +44,6 @@ const ItemWrapper = Item.extend`
 
   &:hover {
     background-color: #eee;
-  }
-
-  &:first-child {
-    border-radius: ${props => props.theme.borderRadius} 0 0;
-  }
-
-  &:last-child {
-    border-bottom: 0;
-    border-radius: 0 0 ${props => props.theme.borderRadius};
   }
 `;
 
