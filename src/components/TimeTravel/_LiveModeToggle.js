@@ -22,10 +22,9 @@ const ToggleButton = styled.button`
   &::-moz-focus-inner { border: 0; }
   &:focus { outline: none; }
 
-  ${props => props.disabled && `
+  ${props => props.pressed && `
     box-shadow: inset 1px 1px 6px ${props.theme.colors.neutral.lightgray};
     color: ${props.theme.colors.gray};
-    cursor: inherit;
     opacity: 0.75;
   `}
 `;
@@ -38,8 +37,7 @@ class LiveModeToggle extends React.PureComponent {
       showingLive: props.showingLive,
     };
 
-    this.handleLiveClick = this.handleLiveClick.bind(this);
-    this.handlePausedClick = this.handlePausedClick.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,23 +47,19 @@ class LiveModeToggle extends React.PureComponent {
     }
   }
 
-  handleLiveClick() {
-    this.setState({ showingLive: true });
-    this.props.onToggle(true);
-  }
-
-  handlePausedClick() {
-    this.setState({ showingLive: false });
-    this.props.onToggle(false);
+  handleToggle() {
+    const showingLive = !this.state.showingLive;
+    this.setState({ showingLive });
+    this.props.onToggle(showingLive);
   }
 
   render() {
     return (
       <LiveModeToggleWrapper>
-        <ToggleButton onClick={this.handleLiveClick} disabled={this.state.showingLive}>
+        <ToggleButton onClick={this.handleToggle} pressed={this.state.showingLive}>
           <span className="fa fa-play" />
         </ToggleButton>
-        <ToggleButton onClick={this.handlePausedClick} disabled={!this.state.showingLive}>
+        <ToggleButton onClick={this.handleToggle} pressed={!this.state.showingLive}>
           <span className="fa fa-pause" />
         </ToggleButton>
       </LiveModeToggleWrapper>
