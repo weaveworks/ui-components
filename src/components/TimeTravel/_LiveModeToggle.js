@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 
-const LiveModeToggleWrapper = styled.button`
+const LiveModeToggleWrapper = styled.div`
+  display: flex;
+`;
+
+const ToggleButton = styled.button`
   border: 0;
   background-color: transparent;
   border-right: 1px solid ${props => props.theme.colors.neutral.lightgray};
   color: ${props => props.theme.colors.primary.charcoal};
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
-  padding: 3px 8px;
+  font-size: 14px;
+  padding: 2px 8px;
   pointer-events: all;
-  display: inline-block;
-  text-align: center;
-  min-width: 80px;
   outline: 0;
   cursor: pointer;
 
@@ -22,13 +22,10 @@ const LiveModeToggleWrapper = styled.button`
   &::-moz-focus-inner { border: 0; }
   &:focus { outline: none; }
 
-  @keyframes blinker {
-    50% { opacity: 0.5; }
-  }
-
-  ${props => props.selected && `
-    animation: blinker 1.5s linear infinite;
-    background-color: rgba(143, 143, 215, 0.15);
+  ${props => props.pressed && `
+    box-shadow: inset 1px 1px 6px ${props.theme.colors.neutral.lightgray};
+    color: ${props.theme.colors.gray};
+    opacity: 0.75;
   `}
 `;
 
@@ -40,7 +37,7 @@ class LiveModeToggle extends React.PureComponent {
       showingLive: props.showingLive,
     };
 
-    this.handleClick = this.handleClick.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,7 +47,7 @@ class LiveModeToggle extends React.PureComponent {
     }
   }
 
-  handleClick() {
+  handleToggle() {
     const showingLive = !this.state.showingLive;
     this.setState({ showingLive });
     this.props.onToggle(showingLive);
@@ -58,8 +55,13 @@ class LiveModeToggle extends React.PureComponent {
 
   render() {
     return (
-      <LiveModeToggleWrapper selected={!this.state.showingLive} onClick={this.handleClick}>
-        {this.state.showingLive ? 'Live' : 'Paused'}
+      <LiveModeToggleWrapper>
+        <ToggleButton onClick={this.handleToggle} pressed={this.state.showingLive}>
+          <span className="fa fa-play" />
+        </ToggleButton>
+        <ToggleButton onClick={this.handleToggle} pressed={!this.state.showingLive}>
+          <span className="fa fa-pause" />
+        </ToggleButton>
       </LiveModeToggleWrapper>
     );
   }
