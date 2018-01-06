@@ -51,7 +51,6 @@ export default class DropdownExample extends React.Component {
           items={items}
           value={this.state.selected}
           onChange={onChange}
-          otherOptions={[{ value: 'new', label: 'Create Instance' }]}
         />
       </div>
     );

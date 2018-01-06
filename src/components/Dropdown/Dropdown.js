@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { map, find, filter, includes, lowerCase } from 'lodash';
 
 import Input from '../Input';
+import Text from '../Text';
 
 const WIDTH = '256px';
 const HEIGHT = '36px';
@@ -15,6 +16,11 @@ const Item = styled.div`
   white-space: nowrap;
   padding: 0 24px;
   cursor: pointer;
+`;
+
+const Items = styled.div`
+  max-height: 400px;
+  overflow-y: auto;
 `;
 
 const Popover = styled.div`
@@ -43,9 +49,10 @@ const ItemWrapper = Item.extend`
   color: ${props =>
     props.selected ? props.theme.colors.accent.blue : props.theme.textColor};
   min-height: ${HEIGHT};
+  cursor: ${props => (props.unclickable ? 'not-allowed' : 'pointer')};
 
   &:hover {
-    background-color: #eee;
+    background-color: ${props => (props.unclickable ? 'inherit' : '#eee')};
   }
 
   &:first-child {
@@ -102,6 +109,16 @@ const StyledDropdown = component => styled(component)`
   position: relative;
   width: ${WIDTH};
 `;
+
+function filterItems(items, query) {
+  const result = filter(items, i =>
+    includes(lowerCase(i.label), lowerCase(query))
+  );
+  if (result.length === 0) {
+    return [{ value: null, label: 'No items found' }];
+  }
+  return result;
+}
 
 /**
  * A selectable drop-down menu.
@@ -166,9 +183,7 @@ class Dropdown extends React.Component {
       find(items, i => i.value === value) || (items && items[0]);
 
     const itemsToDisplay =
-      searchable && query
-        ? filter(items, i => includes(lowerCase(i.label), lowerCase(query)))
-        : items;
+      searchable && query ? filterItems(items, query) : items;
 
     return (
       <div className={className}>
@@ -194,17 +209,20 @@ class Dropdown extends React.Component {
         {isOpen && (
           <div>
             <Popover>
-              {map(itemsToDisplay, i => (
-                <ItemWrapper
-                  className="dropdown-item"
-                  key={i.value}
-                  onClick={ev => this.handleChange(ev, i.value)}
-                  selected={i.value === value}
-                  title={i.label}
-                >
-                  {i.label}
-                </ItemWrapper>
-              ))}
+              <Items>
+                {map(itemsToDisplay, i => (
+                  <ItemWrapper
+                    className="dropdown-item"
+                    key={i.value}
+                    unclickable={!i.value}
+                    onClick={ev => i.value && this.handleChange(ev, i.value)}
+                    selected={i.value === value}
+                    title={i.label}
+                  >
+                    <Text italic={!i.value}>{i.label}</Text>
+                  </ItemWrapper>
+                ))}
+              </Items>
               {otherOptions &&
                 otherOptions.length > 0 && (
                   <OtherOptions>
@@ -257,7 +275,11 @@ Dropdown.propTypes = {
       value: PropTypes.string,
       label: PropTypes.string
     })
-  )
+  ),
+  /**
+   * If searchable, the dropdown will render an input box and filter out items in the dropdown list.
+   */
+  searchable: PropTypes.bool
 };
 
 export default StyledDropdown(Dropdown);

@@ -4,7 +4,7 @@ const neutral = {
   black: '#1a1a1a',
   gray: '#9a9a9a',
   lightgray: '#c1c1c1',
-  white: '#fff',
+  white: '#fff'
 };
 
 const colors = {
@@ -24,11 +24,11 @@ const colors = {
   // use these for new stuff!
   primary: {
     charcoal: '#32324b',
-    lavender: '#8383ac',
+    lavender: '#8383ac'
   },
   accent: {
     blue: '#00d2ff',
-    orange: '#ff4b19',
+    orange: '#ff4b19'
   },
   status: {
     // Use these when colorizing elements that should indicate a state or outcome, ie Alerts.
@@ -36,9 +36,9 @@ const colors = {
     error: '#c7254e', // red
     warning: '#d4ab27', // amber
     info: '#049cd7', // blue
-    disabled: neutral.gray,
+    disabled: neutral.gray
   },
-  neutral,
+  neutral
 };
 
 const weave = {
@@ -47,18 +47,19 @@ const weave = {
   textColor: colors.neutral.black,
 
   fontSizes: {
-    normal: '0.875em',
+    normal: '16px',
     large: '2em',
-    xl: '2.827em',
+    xl: '2.827em'
   },
 
-  fontFamily: '\'proxima-nova\', sans-serif, \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+  fontFamily:
+    "'proxima-nova', sans-serif, 'Helvetica Neue', Helvetica, Arial, sans-serif",
 
   boxShadow: {
     none: 'none',
     light: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
     heavy: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
-    selected: `0px 0px 2px 2px ${colors.lavender}`,
+    selected: `0px 0px 2px 2px ${colors.lavender}`
   },
 
   borderRadius: '4px',
@@ -70,50 +71,50 @@ const weave = {
         color: colors.black,
         background: colors.white,
         hoverColor: colors.gunpowder,
-        hoverBackground: colors.lightgray,
+        hoverBackground: colors.lightgray
       },
       primary: {
         color: colors.white,
         background: colors.turquoise,
         hoverColor: colors.white,
-        hoverBackground: darken(0.15, colors.turquoise),
+        hoverBackground: darken(0.15, colors.turquoise)
       },
       danger: {
         color: colors.white,
         background: colors.danger,
         hoverColor: colors.white,
-        hoverBackground: darken(0.15, colors.danger),
+        hoverBackground: darken(0.15, colors.danger)
       },
       disabled: {
         color: colors.gray,
         background: colors.lightgray,
         hoverColor: colors.gray,
-        hoverBackground: colors.lightgray,
-      },
+        hoverBackground: colors.lightgray
+      }
     },
     Alert: {
       default: {
         color: colors.black,
         background: colors.lightgray,
-        borderColor: colors.gray,
+        borderColor: colors.gray
       },
       success: {
         color: colors.white,
         background: colors.status.success,
-        borderColor: darken(0.15, colors.status.success),
+        borderColor: darken(0.15, colors.status.success)
       },
       warning: {
         color: colors.white,
         background: colors.status.warning,
-        borderColor: darken(0.15, colors.status.warning),
+        borderColor: darken(0.15, colors.status.warning)
       },
       error: {
         color: colors.white,
         background: colors.status.error,
-        borderColor: darken(0.15, colors.status.error),
+        borderColor: darken(0.15, colors.status.error)
       }
     }
-  },
+  }
 };
 
 export default weave;
