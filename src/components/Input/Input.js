@@ -32,7 +32,7 @@ const StyledInput = component => styled(component)`
   input {
     ${props => placeholder(props.theme.colors.neutral.gray)};
     display: inline-block;
-    padding: 0 24px;
+    padding: 0 12px;
     line-height: 36px;
     box-shadow: none;
     border: 1px solid ${props => props.theme.colors.neutral.gray};
