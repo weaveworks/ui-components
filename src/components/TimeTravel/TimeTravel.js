@@ -179,18 +179,20 @@ class TimeTravel extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // Don't update the timestamp if in live mode.
-    if (this.props.hasLiveMode && nextProps.showingLive) return;
-
-    // Keep the most recent live timestamp if just switched from live to paused.
-    if (!nextProps.showingLive && this.props.showingLive) return;
-
-    // Don't update the focused timestamp if we're not paused (so the timeline is hidden).
-    if (nextProps.timestamp) {
-      this.setState({
-        focusedTimestamp: formattedTimestamp(nextProps.timestamp),
-        rangeMs: nextProps.rangeMs,
-      });
+    // If live mode is supported and we're in it, ignore the timestamp prop and jump
+    // directly to the present timestamp, otherwise jump to the given timestamp prop.
+    if (nextProps.hasLiveMode && nextProps.showingLive) {
+      this.setState({ focusedTimestamp: this.state.timestampNow });
+    } else {
+      this.setState({ focusedTimestamp: formattedTimestamp(nextProps.timestamp) });
+    }
+    // Update live mode only if live mode toggle is enabled.
+    if (nextProps.hasLiveMode) {
+      this.setState({ showingLive: nextProps.showingLive });
+    }
+    // Update selected range only if range selector is used.
+    if (nextProps.hasRangeSelector) {
+      this.setState({ rangeMs: nextProps.rangeMs });
     }
   }
 
@@ -371,8 +373,6 @@ class TimeTravel extends React.Component {
   }
 }
 
-// TODO: Consider removing `showingLive` property. See the PR comment for details:
-// https://github.com/weaveworks/ui-components/pull/68#discussion_r152771727
 TimeTravel.propTypes = {
   /**
    * The timestamp in focus
