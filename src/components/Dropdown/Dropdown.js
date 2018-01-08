@@ -88,9 +88,15 @@ const SelectedItem = Item.extend`
       display: none;
     }
 
+    & > div {
+      margin: 0 auto;
+    }
+
     input {
       box-sizing: border-box;
       width: 100%;
+      line-height: 24px;
+      padding: 0 12px;
     }
   }
 `;
@@ -104,13 +110,16 @@ const OtherOptions = styled.div`
 `;
 
 const StyledDropdown = component => styled(component)`
-  height: ${HEIGHT};
   line-height: ${HEIGHT};
   position: relative;
   width: ${WIDTH};
 `;
 
 function filterItems(items, query) {
+  if (!query) {
+    return items;
+  }
+
   const result = filter(items, i =>
     includes(lowerCase(i.label), lowerCase(query))
   );
@@ -118,6 +127,10 @@ function filterItems(items, query) {
     return [{ value: null, label: 'No items found' }];
   }
   return result;
+}
+
+function findCurrentItem(items, value) {
+  return find(items, i => i.value === value) || (items && items[0]);
 }
 
 /**
@@ -145,16 +158,30 @@ function filterItems(items, query) {
 class Dropdown extends React.Component {
   constructor(props, context) {
     super(props, context);
+    const { items, query, value } = this.props;
 
     this.state = {
       isOpen: false,
-      query: ''
+      query: '',
+      softSelected: null,
+      items: filterItems(items, query),
+      currentItem: findCurrentItem(items, value)
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleBgClick = this.handleBgClick.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  componentWillReceiveProps({ items, searchable, value }) {
+    this.setState({
+      items:
+        searchable && this.state.query
+          ? filterItems(items, this.state.query)
+          : items,
+      currentItem: findCurrentItem(items, value)
+    });
   }
 
   handleChange(ev, value) {
@@ -173,17 +200,28 @@ class Dropdown extends React.Component {
   }
 
   handleSearch(ev) {
-    this.setState({ query: ev.target.value });
+    const query = ev.target.value;
+    this.setState({
+      query,
+      items: filterItems(this.props.items, query)
+    });
+  }
+
+  handleArrowNavigation(ev) {
+    switch (ev.key) {
+      case 'ArrowDown':
+        console.log('down');
+        break;
+      case 'ArrowUp':
+        console.log('up');
+        break;
+      default:
+    }
   }
 
   render() {
-    const { items, value, className, otherOptions, searchable } = this.props;
-    const { isOpen, query } = this.state;
-    const currentItem =
-      find(items, i => i.value === value) || (items && items[0]);
-
-    const itemsToDisplay =
-      searchable && query ? filterItems(items, query) : items;
+    const { value, className, otherOptions, searchable } = this.props;
+    const { isOpen, items, currentItem } = this.state;
 
     return (
       <div className={className}>
@@ -193,6 +231,7 @@ class Dropdown extends React.Component {
               focus
               onChange={this.handleSearch}
               onClick={e => e.stopPropagation()}
+              onKeyDown={this.handleArrowNavigation}
             />
           ) : (
             <Item title={currentItem.label}>
@@ -210,7 +249,7 @@ class Dropdown extends React.Component {
           <div>
             <Popover>
               <Items>
-                {map(itemsToDisplay, i => (
+                {map(items, i => (
                   <ItemWrapper
                     className="dropdown-item"
                     key={i.value}
