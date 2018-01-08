@@ -116,6 +116,14 @@ const StyledDropdown = component => styled(component)`
   width: ${WIDTH};
 `;
 
+const Label = styled.div`
+  line-height: initial;
+
+  ${Text} {
+    font-size: 12px;
+  }
+`;
+
 function filterItems(items, query) {
   if (!query) {
     return items;
@@ -261,11 +269,14 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    const { value, className, otherOptions, searchable } = this.props;
+    const { value, className, otherOptions, searchable, label } = this.props;
     const { isOpen, items, currentItem, softSelectedIndex } = this.state;
 
     return (
       <div className={className}>
+        <Label>
+          <Text>{label}</Text>
+        </Label>
         <SelectedItem onClick={this.handleToggle}>
           {searchable && isOpen ? (
             <Input

@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 
 import { lookupValue } from '../../utils/theme';
 
-const StyledText = styled.span`
+const StyledText = component => styled(component)`
   font-family: ${props => props.theme.fontFamily};
   color: ${props => props.theme.textColor};
-  font-size: ${props => lookupValue(props, props.theme.fontSizes, props.theme.fontSizes.normal)};
+  font-size: ${props =>
+    lookupValue(props, props.theme.fontSizes, props.theme.fontSizes.normal)};
   font-weight: ${props => (props.bold ? '600' : '400')};
   text-transform: ${props => (props.capitalize ? 'uppercase' : 'none')};
-  font-style: ${props => (props.italic ? 'italic' : 'normal')}
+  font-style: ${props => (props.italic ? 'italic' : 'normal')};
 `;
-
 
 /**
  * Text! Normal, Large and Extra Large are 0.875em, 2em, and 2.827em respectively.
@@ -45,10 +45,11 @@ const StyledText = styled.span`
  * }
  * ```
  */
-// Working around https://github.com/weaveworks/ui-components/issues/38
-const Text = props => (
-  <StyledText {...props} />
-);
+class Text extends React.PureComponent {
+  render() {
+    return <span {...this.props} />;
+  }
+}
 
 Text.propTypes = {
   /**
@@ -70,7 +71,7 @@ Text.propTypes = {
   /**
    * Text size will be 2.827em
    */
-  xl: PropTypes.bool,
+  xl: PropTypes.bool
 };
 
-export default Text;
+export default StyledText(Text);
