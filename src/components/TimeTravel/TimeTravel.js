@@ -291,14 +291,14 @@ class TimeTravel extends React.Component {
   }
 
   switchToLiveMode() {
-    if (!this.state.showingLive) {
+    if (this.props.hasLiveMode && !this.state.showingLive) {
       this.setState({ showingLive: true });
       this.props.onChangeLiveMode(true);
     }
   }
 
   switchToPausedMode() {
-    if (this.state.showingLive) {
+    if (this.props.hasLiveMode && this.state.showingLive) {
       this.setState({ showingLive: false });
       this.props.onChangeLiveMode(false);
     }
@@ -436,8 +436,10 @@ TimeTravel.defaultProps = {
   earliestTimestamp: '2014-01-01T00:00:00Z',
   hasLiveMode: false,
   showingLive: true, // only relevant if live mode is enabled
+  onChangeLiveMode: noop,
   hasRangeSelector: false,
   rangeMs: 3600000, // 1 hour as a default, only relevant if range selector is enabled
+  onChangeRange: noop,
   onTimestampInputEdit: noop,
   onTimelinePanButtonClick: noop,
   onTimelineLabelClick: noop,
