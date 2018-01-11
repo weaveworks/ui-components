@@ -43,7 +43,7 @@ function Alert(props) {
   return (
     <StyledAlert {...props}>
       {children}
-      <CloseIcon onClick={onClose} className="fa fa-remove" />
+      {onClose && <CloseIcon onClick={onClose} className="fa fa-remove" />}
     </StyledAlert>
   );
 }
