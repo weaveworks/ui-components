@@ -6,7 +6,11 @@ export default class Name extends React.Component {
 
   render() {
     return (
-      <CircularProgress size={35} />
+      <div>
+        <CircularProgress size={35} />
+        <CircularProgress inline /> Inline
+        <CircularProgress center />
+      </div>
     );
   }
 }
