@@ -14,21 +14,11 @@ exports[`<Alert /> snapshots renders default 1`] = `
   transition: opacity 0.2s linear;
 }
 
-.c1 {
-  float: right;
-  cursor: pointer;
-  margin-left: 1em;
-}
-
 <div
   className="c0"
   type="default"
 >
   Default
-  <i
-    className="fa fa-remove c1"
-    onClick={undefined}
-  />
 </div>
 `;
 
@@ -46,21 +36,11 @@ exports[`<Alert /> snapshots renders error 1`] = `
   transition: opacity 0.2s linear;
 }
 
-.c1 {
-  float: right;
-  cursor: pointer;
-  margin-left: 1em;
-}
-
 <div
   className="c0"
   type="error"
 >
   Error
-  <i
-    className="fa fa-remove c1"
-    onClick={undefined}
-  />
 </div>
 `;
 
@@ -78,21 +58,11 @@ exports[`<Alert /> snapshots renders success 1`] = `
   transition: opacity 0.2s linear;
 }
 
-.c1 {
-  float: right;
-  cursor: pointer;
-  margin-left: 1em;
-}
-
 <div
   className="c0"
   type="success"
 >
   Success
-  <i
-    className="fa fa-remove c1"
-    onClick={undefined}
-  />
 </div>
 `;
 
@@ -110,20 +80,10 @@ exports[`<Alert /> snapshots renders warning 1`] = `
   transition: opacity 0.2s linear;
 }
 
-.c1 {
-  float: right;
-  cursor: pointer;
-  margin-left: 1em;
-}
-
 <div
   className="c0"
   type="warning"
 >
   Warning
-  <i
-    className="fa fa-remove c1"
-    onClick={undefined}
-  />
 </div>
 `;
