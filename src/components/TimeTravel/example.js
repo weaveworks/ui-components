@@ -1,21 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import styled from 'styled-components';
 
 import TimeTravel from '.';
+import { Example, Info } from '../../utils/example';
 
-
-const Example = styled.div`
-  margin-bottom: 30px;
-`;
-
-const Info = styled.div`
-  color: #888;
-  font-size: 18px;
-  font-style: italic;
-  text-align: center;
-  margin-bottom: 13px;
-`;
 
 export default class TimeTravelExample extends React.Component {
   constructor() {
