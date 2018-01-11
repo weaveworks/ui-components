@@ -42,15 +42,18 @@ class ListItem extends React.Component {
   }
 
   render() {
-    const { active, text, subText, onClick, children, style } = this.props;
+    const { active, text, subText, onClick, children, style, leftIcon } = this.props;
     const BaseTag = onClick ? 'a' : 'div';
     const props = onClick && { href: '#' };
     const className = `weave-list-item${active ? ' weave-list-item-active' : ''}`;
     return (
       <BaseTag style={style} className={className} onClick={this.handleClick} {...props}>
-        {text && <div className="weave-list-item-text">{text}</div>}
-        {children}
-        {subText && <span className="weave-list-item-subtext">{subText}</span>}
+        {leftIcon && <span className="weave-list-item-lefticon">{leftIcon}</span>}
+        <div className="weave-list-item-content">
+          {text && <div className="weave-list-item-text">{text}</div>}
+          {children}
+          {subText && <span className="weave-list-item-subtext">{subText}</span>}
+        </div>
       </BaseTag>
     );
   }
@@ -63,7 +66,8 @@ ListItem.propTypes = {
   subText: PropTypes.any,
   onClick: PropTypes.func,
   style: PropTypes.object,
-  value: PropTypes.any
+  value: PropTypes.any,
+  leftIcon: PropTypes.any,
 };
 
 
