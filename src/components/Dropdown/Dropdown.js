@@ -103,7 +103,7 @@ class Dropdown extends React.Component {
     super(props, context);
 
     this.state = {
-      isOpen: false,
+      isOpen: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -129,19 +129,18 @@ class Dropdown extends React.Component {
   render() {
     const { items, value, className } = this.props;
     const { isOpen } = this.state;
-    const currentItem = find(items, i => i.value === value) || (items && items[0]);
+    const currentItem =
+      find(items, i => i.value === value) || (items && items[0]);
 
     return (
-      <div className={className} title={currentItem.label}>
+      <div className={className} title={currentItem && currentItem.label}>
         <SelectedItem onClick={this.handleClick}>
-          <Item>
-            {currentItem && currentItem.label}
-          </Item>
+          <Item>{currentItem && currentItem.label}</Item>
           <div>
             <SelectedItemIcon className="fa fa-caret-down" />
           </div>
         </SelectedItem>
-        {isOpen &&
+        {isOpen && (
           <div>
             <Popover>
               {map(this.props.items, i => (
@@ -158,7 +157,7 @@ class Dropdown extends React.Component {
             </Popover>
             <Overlay onClick={this.handleBgClick} />
           </div>
-        }
+        )}
       </div>
     );
   }
@@ -169,10 +168,12 @@ Dropdown.propTypes = {
    * Array of items that will be selectable. `value` should be an internal value,
    * `label` is what will be displayed to the user.
    */
-  items: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string,
-    label: PropTypes.string
-  })).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string,
+      label: PropTypes.string
+    })
+  ).isRequired,
   /**
    * The value of the currently selected item. This much match a value in the `items` prop.
    * If no value is provided, the first elements's value will be used.
@@ -181,8 +182,7 @@ Dropdown.propTypes = {
   /**
    * A handler function that will run when a value is selected.
    */
-  onChange: PropTypes.func,
-
+  onChange: PropTypes.func
 };
 
 export default StyledDropdown(Dropdown);
