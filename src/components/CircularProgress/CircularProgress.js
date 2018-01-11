@@ -29,7 +29,8 @@ class CircularProgress extends React.Component {
       styles.verticalAlign = 'middle';
     }
     if (center) {
-      styles.margin = '0 auto';
+      styles.marginLeft = 'auto';
+      styles.marginRight = 'auto';
     }
 
     return (
