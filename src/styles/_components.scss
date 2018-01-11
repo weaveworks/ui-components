@@ -150,12 +150,19 @@
 
 
 .weave-list-item {
-  display: block;
+  display: flex;
   position: relative;
   padding: 12px 16px;
 
   &-active {
     background-color: #eee;
+  }
+  .weave-list-item-content {
+    flex-direction: column;
+  }
+
+  .weave-list-item-lefticon {
+    margin-right: 12px;
   }
 
   .weave-list-item-subtext {
