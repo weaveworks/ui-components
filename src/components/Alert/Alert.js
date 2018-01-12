@@ -31,7 +31,7 @@ const CloseIcon = styled.i`
  *  return (
  *    <div>
  *     <Alert type="warning" visible={true}>
- *       Warning: Hmm, this is not good, but its not terrible.
+ *       Warning: Hmm, this is not good, but it is not terrible.
  *     </Alert>
  *    </div>
  *   )

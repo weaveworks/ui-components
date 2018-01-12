@@ -24,7 +24,7 @@ export default class AlertExample extends React.Component {
       <Grid>
         <GridRow>
           <Alert visible={this.state.default} onClose={onClose('default')}>
-            Default: This is a default alert. Its just giving you some info.
+            Default: This is a default alert. It is just giving you some info.
           </Alert>
         </GridRow>
         <GridRow>
@@ -39,7 +39,7 @@ export default class AlertExample extends React.Component {
         </GridRow>
         <GridRow>
           <Alert type="warning" visible={this.state.warning} onClose={onClose('warning')}>
-            Warning: Hmm, this is not good, but its not terrible.
+            Warning: Hmm, this is not good, but it is not terrible.
           </Alert>
         </GridRow>
         <GridRow>
