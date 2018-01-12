@@ -97,6 +97,11 @@ const weave = {
         background: colors.lightgray,
         borderColor: colors.gray,
       },
+      info: {
+        color: colors.white,
+        background: colors.status.info,
+        borderColor: darken(0.15, colors.status.info),
+      },
       success: {
         color: colors.white,
         background: colors.status.success,
