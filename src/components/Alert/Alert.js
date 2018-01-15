@@ -14,6 +14,14 @@ const StyledAlert = styled.div`
   opacity: ${props => (props.visible ? '1' : '0')};
   padding: 1em;
   transition: opacity 0.2s linear;
+
+  a {
+    color: ${fromAtoms('Alert', 'type', 'color')};
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
 `;
 
 const CloseIcon = styled.i`
