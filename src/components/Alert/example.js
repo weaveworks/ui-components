@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, GridRow } from '../Grid';
+import { Example } from '../../utils/example';
 import Button from '../Button';
 
 import Alert from '.';
@@ -21,8 +21,8 @@ export default class AlertExample extends React.Component {
   render() {
     const onClose = id => () => this.setState({ [id]: false });
     return (
-      <Grid>
-        <GridRow>
+      <div>
+        <Example>
           <Alert visible={this.state.default} onClose={onClose('default')}>
             Default: This is a default alert. It is just giving you some info.
           </Alert>
@@ -31,24 +31,24 @@ export default class AlertExample extends React.Component {
           <Alert type="info" visible={this.state.info} onClose={onClose('info')}>
             Info: Please pay attention to this.
           </Alert>
-        </GridRow>
-        <GridRow>
+        </Example>
+        <Example>
           <Alert type="success" visible={this.state.success} onClose={onClose('success')}>
             Success: Great job! Wow! Much success!
           </Alert>
-        </GridRow>
-        <GridRow>
+        </Example>
+        <Example>
           <Alert type="warning" visible={this.state.warning} onClose={onClose('warning')}>
             Warning: Hmm, this is not good, but it is not terrible.
           </Alert>
-        </GridRow>
-        <GridRow>
+        </Example>
+        <Example>
           <Alert type="error" visible={this.state.error} onClose={onClose('error')}>
             Error: Wow you really screwed this up...
           </Alert>
-        </GridRow>
+        </Example>
         <Button onClick={() => this.setState(initial)} text="Reset" />
-      </Grid>
+      </div>
     );
   }
 }

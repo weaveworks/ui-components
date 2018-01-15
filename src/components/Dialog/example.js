@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-no-bind*/
 import React from 'react';
 
+import { Example, Info } from '../../utils/example';
 import Dialog from '.';
 import Button from '../Button';
 
@@ -43,27 +44,31 @@ export default class DialogExample extends React.Component {
     );
     return (
       <div>
-        <p>Normal dialog with overlay</p>
-        <Dialog
-          active={this.state.normalButtonActive}
-          actions={['Submit', 'Cancel']}
-          onClose={this.handleClose}
-          onActionClick={this.handleClose}
-          overlay
+        <Example>
+          <Info>Normal dialog with overlay</Info>
+          <Dialog
+            active={this.state.normalButtonActive}
+            actions={['Submit', 'Cancel']}
+            onClose={this.handleClose}
+            onActionClick={this.handleClose}
+            overlay
         >
-          <p>Here is some content that I would like to display</p>
-        </Dialog>
-        <Button onClick={this.handleDialogActivate.bind(this, 'normal')} text="Dialog" />
-        <p>Dialog with pre-created actions</p>
-        <Button onClick={this.handleDialogActivate.bind(this, 'other')} text="Custom Actions" />
-        <Dialog
-          active={this.state.otherButtonActive}
-          actions={[<Action1 />, <Action2 />]}
-          onClose={this.handleClose}
-          overlay
+            <p>Here is some content that I would like to display</p>
+          </Dialog>
+          <Button onClick={this.handleDialogActivate.bind(this, 'normal')} text="Dialog" />
+        </Example>
+        <Example>
+          <Info>Dialog with pre-created actions</Info>
+          <Button onClick={this.handleDialogActivate.bind(this, 'other')} text="Custom Actions" />
+          <Dialog
+            active={this.state.otherButtonActive}
+            actions={[<Action1 />, <Action2 />]}
+            onClose={this.handleClose}
+            overlay
         >
-          <p>This one has custom actions</p>
-        </Dialog>
+            <p>This one has custom actions</p>
+          </Dialog>
+        </Example>
       </div>
     );
   }
