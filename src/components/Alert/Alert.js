@@ -31,7 +31,7 @@ const CloseIcon = styled.i`
  *  return (
  *    <div>
  *     <Alert type="warning" visible={true}>
- *       Warning: Hmm, this is not good, but its not terrible.
+ *       Warning: Hmm, this is not good, but it is not terrible.
  *     </Alert>
  *    </div>
  *   )
@@ -52,7 +52,7 @@ Alert.propTypes = {
   /**
    * Set the color scheme to indicate the nature of the alert.
    */
-  type: PropTypes.oneOf(['default', 'success', 'warning', 'error']),
+  type: PropTypes.oneOf(['default', 'info', 'success', 'warning', 'error']),
 
   /**
    * Toggle whether the alert is shown

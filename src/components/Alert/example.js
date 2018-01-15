@@ -7,6 +7,7 @@ import Alert from '.';
 
 const initial = {
   default: true,
+  info: true,
   success: true,
   warning: true,
   error: true,
@@ -23,7 +24,12 @@ export default class AlertExample extends React.Component {
       <Grid>
         <GridRow>
           <Alert visible={this.state.default} onClose={onClose('default')}>
-            Info: This is a default alert. Its just giving you some info.
+            Default: This is a default alert. It is just giving you some info.
+          </Alert>
+        </GridRow>
+        <GridRow>
+          <Alert type="info" visible={this.state.info} onClose={onClose('info')}>
+            Info: Please pay attention to this.
           </Alert>
         </GridRow>
         <GridRow>
@@ -33,7 +39,7 @@ export default class AlertExample extends React.Component {
         </GridRow>
         <GridRow>
           <Alert type="warning" visible={this.state.warning} onClose={onClose('warning')}>
-            Warning: Hmm, this is not good, but its not terrible.
+            Warning: Hmm, this is not good, but it is not terrible.
           </Alert>
         </GridRow>
         <GridRow>
