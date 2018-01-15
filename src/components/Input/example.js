@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Example, Info } from '../../utils/example';
 import Input from '.';
 
 
@@ -8,11 +9,13 @@ const onChange = () => null;
 export default function InputExample() {
   return (
     <div>
-      <div>
+      <Example>
+        <Info>Plain inputs</Info>
         <Input label="Username" placeholder="your name here" onChange={onChange} />
         <Input label="Email" value="ron@hogwarts.edu" onChange={onChange} />
-      </div>
-      <div>
+      </Example>
+      <Example>
+        <Info>With validation</Info>
         <Input
           label="Email"
           value="invalid-email"
@@ -21,7 +24,7 @@ export default function InputExample() {
           onChange={onChange}
         />
         <Input label="Password" type="password" onChange={onChange} />
-      </div>
+      </Example>
     </div>
   );
 }

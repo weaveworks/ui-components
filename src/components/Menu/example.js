@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-no-bind*/
 import React from 'react';
+
+import { Example } from '../../utils/example';
 import {Menu, MenuItem} from '.';
 
 export default class Name extends React.Component {
@@ -18,20 +20,24 @@ export default class Name extends React.Component {
   }
   render() {
     return (
-      <Menu>
-        <MenuItem active={this.isActive('Item 1')} onClick={this.handleItemClick} text="Item 1" />
-        <MenuItem active={this.isActive('Item 2')} onClick={this.handleItemClick} text="Item 2" />
-        <MenuItem
-          active={this.isActive('Sub Item 1')}
-          onClick={this.handleItemClick}
-          className="weave-menu-sub-item" text="Sub Item 1"
+      <div>
+        <Example>
+          <Menu>
+            <MenuItem active={this.isActive('Item 1')} onClick={this.handleItemClick} text="Item 1" />
+            <MenuItem active={this.isActive('Item 2')} onClick={this.handleItemClick} text="Item 2" />
+            <MenuItem
+              active={this.isActive('Sub Item 1')}
+              onClick={this.handleItemClick}
+              className="weave-menu-sub-item" text="Sub Item 1"
         />
-        <MenuItem
-          active={this.isActive('Sub Item 2')}
-          onClick={this.handleItemClick}
-          className="weave-menu-sub-item" text="Sub Item 2"
+            <MenuItem
+              active={this.isActive('Sub Item 2')}
+              onClick={this.handleItemClick}
+              className="weave-menu-sub-item" text="Sub Item 2"
         />
-      </Menu>
+          </Menu>
+        </Example>
+      </div>
     );
   }
 }

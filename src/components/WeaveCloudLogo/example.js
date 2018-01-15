@@ -1,18 +1,21 @@
 import React from 'react';
 
+import { Example, Info } from '../../utils/example';
 import WeaveCloudLogo from '.';
 
 export default function WeaveCloudLogoExample() {
   return (
     <div>
-      <p>Dark Logo</p>
-      <div>
+      <Example>
+        <Info>Dark Logo</Info>
         <WeaveCloudLogo theme="dark" />
-      </div>
-      <p>Light Logo</p>
-      <div style={{backgroundColor: 'black'}}>
-        <WeaveCloudLogo theme="light" />
-      </div>
+      </Example>
+      <Example>
+        <Info>Light Logo</Info>
+        <div style={{backgroundColor: 'black'}}>
+          <WeaveCloudLogo theme="light" />
+        </div>
+      </Example>
     </div>
   );
 }

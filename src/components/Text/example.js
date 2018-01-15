@@ -1,38 +1,39 @@
 import React from 'react';
 
+import { Example } from '../../utils/example';
 import Text from '.';
 
 export default function TextExample() {
   return (
     <div>
-      <p>
+      <Example>
         <Text>Normal</Text>
-      </p>
-      <p>
+      </Example>
+      <Example>
         <Text italic>Normal Italic</Text>
-      </p>
-      <p>
+      </Example>
+      <Example>
         <Text bold>Normal Bold</Text>
-      </p>
-      <p>
+      </Example>
+      <Example>
         <Text large>Large</Text>
-      </p>
-      <p>
+      </Example>
+      <Example>
         <Text large italic>Large Italic</Text>
-      </p>
-      <p>
+      </Example>
+      <Example>
         <Text large bold>Large Bold</Text>
-      </p>
-      <p>
+      </Example>
+      <Example>
         <Text xl>Extra Large</Text>
-      </p>
-      <p>
+      </Example>
+      <Example>
         <Text xl italic>Extra Large Italic</Text>
-      </p>
-      <p>
+      </Example>
+      <Example>
         <Text xl bold>Extra Large Bold</Text>
-      </p>
-      <div>
+      </Example>
+      <Example>
         <Text>
           Quo non arbitrantur. Et irure comprehenderit iis nescius duis officia cernantur.
           Quae eiusmod voluptatibus, o se magna fugiat quid, culpa adipisicing quamquam
@@ -46,7 +47,7 @@ export default function TextExample() {
           exquisitaque, ingeniis ex eram admodum, quibusdam reprehenderit quo arbitror,
           hic multos consequat.
         </Text>
-      </div>
+      </Example>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Example } from '../../utils/example';
 import Dropdown from '.';
 
 const items = [
@@ -32,7 +33,9 @@ export default class DropdownExample extends React.Component {
 
     return (
       <div>
-        <Dropdown items={items} value={this.state.selected} onChange={onChange} />
+        <Example>
+          <Dropdown items={items} value={this.state.selected} onChange={onChange} />
+        </Example>
       </div>
     );
   }
