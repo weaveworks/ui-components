@@ -147,7 +147,7 @@ class TimeTravel extends React.Component {
       durationMsPerPixel: initialDurationMsPerTimelinePx(props.earliestTimestamp),
       showingLive: props.showingLive,
       rangeMs: props.rangeMs,
-      timelineWidthPx: 1,
+      timelineWidthPx: null,
     };
 
     this.handleTimelinePanButtonClick = this.handleTimelinePanButtonClick.bind(this);
@@ -222,9 +222,8 @@ class TimeTravel extends React.Component {
   }
 
   handleRangeChange(rangeMs) {
-    const timelineThird = this.state.timelineWidthPx / 3;
-    const durationMsPerPixel = this.clampedDuration(rangeMs / timelineThird);
-    this.setState({ rangeMs, durationMsPerPixel });
+    this.setState({ rangeMs });
+    this.adjustZoomToRange(rangeMs, this.state.timelineWidthPx);
     this.props.onChangeRange(rangeMs);
   }
 
@@ -277,6 +276,10 @@ class TimeTravel extends React.Component {
   }
 
   handleTimelineResize(timelineWidthPx) {
+    // If this is the initial resize, adjust the zoom level to the current selected range.
+    if (!this.state.timelineWidthPx) {
+      this.adjustZoomToRange(this.state.rangeMs, timelineWidthPx);
+    }
     this.setState({ timelineWidthPx });
   }
 
@@ -311,6 +314,12 @@ class TimeTravel extends React.Component {
       this.props.onChangeTimestamp(focusedTimestamp);
       this.setState({ focusedTimestamp });
     }
+  }
+
+  adjustZoomToRange(rangeMs, timelineWidthPx) {
+    const rawDurationMsPerPixel = rangeMs / (timelineWidthPx / 3);
+    const durationMsPerPixel = this.clampedDuration(rawDurationMsPerPixel);
+    this.setState({ durationMsPerPixel });
   }
 
   reportZoom() {
