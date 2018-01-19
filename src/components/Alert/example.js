@@ -26,8 +26,6 @@ export default class AlertExample extends React.Component {
           <Alert visible={this.state.default} onClose={onClose('default')}>
             Default: This is a default alert. It is just giving you some info.
           </Alert>
-        </GridRow>
-        <GridRow>
           <Alert type="info" visible={this.state.info} onClose={onClose('info')}>
             Info: Please pay attention to this.
           </Alert>
