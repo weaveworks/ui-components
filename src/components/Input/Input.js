@@ -89,27 +89,30 @@ class Input extends React.Component {
   }
 
   render() {
-    const { valid, message, label, id, className } = this.props;
+    const { valid, message, label, id, className, textarea } = this.props;
     const inputProps = omit(this.props, [
       'label',
       'valid',
       'message',
       'className',
       'autoSelectText',
-      'focus'
+      'focus',
+      'textarea'
     ]);
 
     return (
       <div className={className}>
         <label htmlFor={id}>{label}</label>
         <InputWrapper>
-          <input {...inputProps} ref={(elem) => { this.input = elem; }} />
+          {React.createElement(textarea ? 'textarea' : 'input', {
+            ...inputProps,
+            ref: (elem) => {
+              this.input = elem;
+            }
+          })}
           <Icon visible={!valid} className="fa fa-times-circle" />
         </InputWrapper>
-        <ValidationMessage
-          valid={valid}
-          visible={message}
-        >
+        <ValidationMessage valid={valid} visible={message}>
           {message}
         </ValidationMessage>
       </div>
@@ -135,10 +138,14 @@ Input.propTypes = {
    * Callback to run when the input is edited by the user
    */
   onChange: PropTypes.func,
+  /**
+   * Use a `textarea` element instead of an `input` element
+   */
+  textarea: PropTypes.bool
 };
 
 Input.defaultProps = {
-  valid: true,
+  valid: true
 };
 
 export default StyledInput(Input);
