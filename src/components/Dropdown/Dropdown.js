@@ -170,7 +170,7 @@ Dropdown.propTypes = {
    */
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.string,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       label: PropTypes.string
     })
   ).isRequired,
@@ -178,7 +178,7 @@ Dropdown.propTypes = {
    * The value of the currently selected item. This much match a value in the `items` prop.
    * If no value is provided, the first elements's value will be used.
    */
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /**
    * A handler function that will run when a value is selected.
    */
