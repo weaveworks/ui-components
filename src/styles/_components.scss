@@ -173,36 +173,6 @@
 }
 
 
-/* CircularProgress */
-.weave-circular-progress {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  animation: spin 1s ease-in-out 0s infinite both;
-
-  div {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 4px solid #ccc;
-      border-top-color: #00B4ED;
-      animation: spin 0.73s infinite linear;
-      box-sizing: border-box;
-  }
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-
 /* LogoProgress */
 .weave-logo-progress {
   display: block;
