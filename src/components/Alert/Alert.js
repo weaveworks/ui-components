@@ -19,6 +19,7 @@ const StyledAlert = styled.div`
 const CloseIcon = styled.i`
   float: right;
   cursor: pointer;
+  display: ${props => (props.visible ? 'block' : 'none')};
   margin-left: 1em;
 `;
 
@@ -39,11 +40,11 @@ const CloseIcon = styled.i`
  * ```
  */
 function Alert(props) {
-  const { onClose, children } = props;
+  const { onClose, children, visible } = props;
   return (
     <StyledAlert {...props}>
       {children}
-      {onClose && <CloseIcon onClick={onClose} className="fa fa-remove" />}
+      {onClose && <CloseIcon visible={visible} onClick={onClose} className="fa fa-remove" />}
     </StyledAlert>
   );
 }
