@@ -13,14 +13,15 @@ import {
   first,
   last,
   minBy,
-  map,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
 import { line, stack, area } from 'd3-shape';
 
 import { timeUnits, numericUnits } from './units';
 import { largePalette } from './color-palettes';
+
 import GraphLegend from './_GraphLegend';
+import GraphTooltip from './_GraphTooltip';
 
 const PADDING = 5;
 
@@ -51,14 +52,6 @@ const Graph = styled.div`
 
 const Canvas = styled.svg`
   cursor: crosshair;
-`;
-
-const ColorBox = styled.span`
-  background-color: ${props => props.color};
-  border-radius: 1px;
-  margin-right: 4px;
-  min-width: 10px;
-  height: 4px;
 `;
 
 const AxisLabel = styled.span`
@@ -166,72 +159,6 @@ const DeploymentAnnotationPoint = styled.circle.attrs({
   cursor: default;
 `;
 
-const DeploymentInfo = styled.div``;
-
-const DeploymentInfoLine = styled.span`
-  margin-top: 1px;
-  display: block;
-  font-size: 13px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-`;
-
-const TooltipContainer = styled.div.attrs({
-  // Using attrs prevents extensive styled components
-  // generation every time the tooltip is repositioned.
-  style: ({ x, y }) => ({ left: x, top: y }),
-})`
-  background-color: ${props => props.theme.colors.lightgray};
-  border: 1px solid ${props => props.theme.colors.neutral.lightgray};
-  border-radius: 4px;
-  padding: 10px 15px;
-  color: #555;
-  position: absolute;
-  margin-top: 35px;
-  margin-left: 10px;
-  pointer-events: none;
-  min-width: 250px;
-  max-width: 500px;
-  opacity: 0.95;
-  z-index: 5;
-`;
-
-const TooltipTimestamp = styled.div`
-  font-size: 13px;
-  margin-bottom: 5px;
-`;
-
-const TooltipRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 12px;
-
-  ${props =>
-    props.focused &&
-    `
-    font-weight: bold;
-    font-size: 13px;
-  `};
-`;
-
-const TooltipRowName = styled.span`
-  flex-grow: 1;
-  white-space: pre;
-  display: block;
-  align-items: center;
-  margin-right: 30px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-`;
-
-const TooltipValue = styled.span`
-  font-family: 'Roboto', sans-serif;
-  margin-left: 20px;
-  white-space: nowrap;
-`;
-
 class DashboardGraph extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
@@ -248,7 +175,6 @@ class DashboardGraph extends React.PureComponent {
     };
 
     this.saveSvgRef = this.saveSvgRef.bind(this);
-    this.saveTooltipRef = this.saveTooltipRef.bind(this);
     this.processMultiSeries = this.processMultiSeries.bind(this);
     this.handleResize = debounce(this.handleResize.bind(this), 200);
 
@@ -368,19 +294,9 @@ class DashboardGraph extends React.PureComponent {
     this.svgRef = ref;
   }
 
-  saveTooltipRef(ref) {
-    this.tooltipRef = ref;
-  }
-
   getSvgBoundingRect() {
     return this.svgRef
       ? this.svgRef.getBoundingClientRect()
-      : { width: 0, height: 0, top: 0, left: 0 };
-  }
-
-  getTooltipBoundingRect() {
-    return this.tooltipRef
-      ? this.tooltipRef.getBoundingClientRect()
       : { width: 0, height: 0, top: 0, left: 0 };
   }
 
@@ -527,26 +443,6 @@ class DashboardGraph extends React.PureComponent {
     );
   }
 
-  renderDeploymentInfo() {
-    const { hoveredDeployment } = this.state;
-    if (!hoveredDeployment) return null;
-
-    const [action, ...serviceIDs] = hoveredDeployment.Data.split(', ');
-
-    return (
-      <DeploymentInfo>
-        <DeploymentInfoLine>
-          <strong>{action}</strong>
-        </DeploymentInfoLine>
-        {serviceIDs.map(serviceId => (
-          <DeploymentInfoLine key={serviceId}>
-            &rarr; {serviceId}
-          </DeploymentInfoLine>
-        ))}
-      </DeploymentInfo>
-    );
-  }
-
   renderHoverBar() {
     const { height } = this.getSvgBoundingRect();
     const { hoverXOffset, hoverPoints } = this.state;
@@ -569,47 +465,6 @@ class DashboardGraph extends React.PureComponent {
           />
         ))}
       </g>
-    );
-  }
-
-  renderHoverTooltip() {
-    const tooltipWidth = this.getTooltipBoundingRect().width;
-    const graphWidth = this.getSvgBoundingRect().width;
-    const {
-      hoverPoints,
-      hoverXOffset,
-      hoverYOffset,
-      hoverTimestampSec,
-      hoveredDeployment,
-    } = this.state;
-
-    if (!hoverPoints && !hoveredDeployment) return null;
-
-    // TODO: Consider changing the timestamp to a more standard format.
-    const humanizedTimestamp = new Date(
-      hoveredDeployment ? hoveredDeployment.Stamp : 1000 * hoverTimestampSec
-    ).toUTCString();
-    const x = Math.min(hoverXOffset, graphWidth - tooltipWidth - 15);
-
-    // We want to have same formatting (precision, units, etc...) across
-    // all tooltip values so we create a formatter for a reference value
-    // (1 / 100 of the max value) and use it across all datapoints.
-    const referenceValue = (max(map(hoverPoints, 'value')) || 0) / 100;
-    const formatValue = this.props.yAxisUnits.formatFor(referenceValue);
-
-    return (
-      <TooltipContainer x={x} y={hoverYOffset} innerRef={this.saveTooltipRef}>
-        <TooltipTimestamp>{humanizedTimestamp}</TooltipTimestamp>
-        {hoveredDeployment
-          ? this.renderDeploymentInfo()
-          : hoverPoints.map(datapoint => (
-            <TooltipRow key={datapoint.key} focused={datapoint.focused}>
-              <ColorBox small color={datapoint.color} />
-              <TooltipRowName>{datapoint.name}</TooltipRowName>
-              <TooltipValue>{formatValue(datapoint.value)}</TooltipValue>
-            </TooltipRow>
-          ))}
-      </TooltipContainer>
     );
   }
 
@@ -733,7 +588,15 @@ class DashboardGraph extends React.PureComponent {
             onHoveredLegendSeriesChange={this.handleHoveredLegendSeriesChange}
           />
         )}
-        {this.renderHoverTooltip()}
+        <GraphTooltip
+          hoverPoints={this.state.hoverPoints}
+          hoverXOffset={this.state.hoverXOffset}
+          hoverYOffset={this.state.hoverYOffset}
+          hoverTimestampSec={this.state.hoverTimestampSec}
+          hoveredDeployment={this.state.hoveredDeployment}
+          graphWidth={this.getSvgBoundingRect().width}
+          valueUnits={this.props.yAxisUnits}
+        />
       </GraphContainer>
     );
   }
