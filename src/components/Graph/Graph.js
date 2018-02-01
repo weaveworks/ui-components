@@ -17,7 +17,6 @@ import { scaleLinear, scaleQuantize } from 'd3-scale';
 import { line, stack, area } from 'd3-shape';
 
 import { timeUnits, numericUnits } from './units';
-import { largePalette } from './color-palettes';
 
 import AxesGrid from './_AxesGrid';
 import DeploymentAnnotations from './_DeploymentAnnotations';
@@ -115,6 +114,58 @@ const SeriesAreaChart = styled.path.attrs({
   opacity: ${props => (props.faded ? 0.05 : 0.75)};
   pointer-events: none;
 `;
+
+const colorSchemes = {
+  mixed: (index) => {
+    const colors = [
+      'hsl(209, 44%, 83%)',
+      'hsl(98, 55%, 81%)',
+      'hsl(210, 45%, 74%)',
+      'hsl(166, 44%, 65%)',
+      'hsl(230, 34%, 66%)',
+      'hsl(196, 84%, 52%)', // Weaveworks 'blue accent' color, not interpolated because it looked too dark
+      'hsl(240, 20%, 59%)', // Weaveworks 'lavender' color
+      'hsl(197, 74%, 43%)',
+      'hsl(261, 39%, 44%)',
+      'hsl(213, 66%, 40%)',
+      'hsl(261, 68%, 29%)',
+      'hsl(232, 60%, 36%)',
+      'hsl(248, 82%, 11%)', // Weaveworks 'charcoal' color interpolated for 75% opacity
+      'hsl(212, 88%, 27%)',
+    ];
+
+    return colors[index % colors.length];
+  },
+
+  blue: (index) => {
+    // http://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=9 from d3 without 2 lightest colours
+    const colors = [
+      'hsl(98, 55%, 81%)',
+      'hsl(166, 44%, 65%)',
+      'hsl(196, 84%, 52%)', // Weaveworks 'blue accent' color, not interpolated because it looked too dark
+      'hsl(197, 74%, 43%)',
+      'hsl(213, 66%, 40%)',
+      'hsl(232, 60%, 36%)',
+      'hsl(212, 88%, 27%)',
+    ];
+    return colors[index % colors.length];
+  },
+
+  purple: (index) => {
+    // http://colorbrewer2.org/#type=sequential&scheme=BuPu&n=9 without 2 lightest colours
+    const colors = [
+      'hsl(209, 44%, 83%)',
+      'hsl(210, 45%, 74%)',
+      'hsl(230, 34%, 66%)',
+      'hsl(240, 20%, 59%)', // Weaveworks 'lavender' color
+      'hsl(286, 41%, 44%)',
+      'hsl(303, 79%, 28%)',
+      'hsl(248, 82%, 11%)', // Weaveworks 'charcoal' color interpolated for 75% opacity
+    ];
+    return colors[index % colors.length];
+  },
+};
+
 
 class DashboardGraph extends React.PureComponent {
   constructor(props, context) {
@@ -306,10 +357,11 @@ class DashboardGraph extends React.PureComponent {
     const stackedData = stackFunction(valuesForStacking);
 
     // Finally store the multi-series ready to be graphed.
+    const getColor = colorSchemes[props.colorScheme];
     const multiSeries = multiSeriesNames.map((seriesName, seriesIndex) => ({
       name: seriesName,
       key: `${seriesName}:${seriesIndex}`,
-      color: props.colorScheme(seriesIndex),
+      color: getColor(seriesIndex),
       datapoints: timestampSecs.map((timestampSec, timestampIndex) => ({
         timestampSec,
         value: valuesByTimestamp[timestampSec][seriesName],
@@ -536,7 +588,7 @@ class DashboardGraph extends React.PureComponent {
 }
 
 DashboardGraph.defaultProps = {
-  colorScheme: largePalette,
+  colorScheme: 'mixed',
   yAxisUnits: numericUnits,
   showStacked: false,
   baseMinValue: 0.0,
