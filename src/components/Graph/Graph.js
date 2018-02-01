@@ -19,6 +19,7 @@ import { line, stack, area } from 'd3-shape';
 import { timeUnits, numericUnits } from './units';
 import { largePalette } from './color-palettes';
 
+import AxesGrid from './_AxesGrid';
 import DeploymentAnnotations from './_DeploymentAnnotations';
 import GraphHoverBar from './_GraphHoverBar';
 import GraphLegend from './_GraphLegend';
@@ -75,12 +76,6 @@ const YAxisTicksContainer = AxisTicksContainer.extend`
 const XAxisTicksContainer = AxisTicksContainer.extend`
   bottom: 0;
 `;
-
-const AxisLine = styled.line.attrs({
-  stroke: '#ccc',
-  strokeDasharray: [1, 2],
-  strokeWidth: 1,
-})``;
 
 const TickLabel = styled.span`
   color: #555;
@@ -447,28 +442,11 @@ class DashboardGraph extends React.PureComponent {
             onMouseLeave={this.handleGraphMouseLeave}
           >
             <g transform={`translate(${PADDING}, ${PADDING})`}>
-              <g className="y-axis-grid">
-                {height &&
-                  yAxisTicks.map(({ offset, value }) => (
-                    <AxisLine
-                      key={value}
-                      x2={width}
-                      y1={offset}
-                      y2={offset}
-                    />
-                  ))}
-              </g>
-              <g className="x-axis-grid">
-                {width &&
-                  xAxisTicks.map(({ offset, value }) => (
-                    <AxisLine
-                      key={value}
-                      y2={height}
-                      x1={offset}
-                      x2={offset}
-                    />
-                  ))}
-              </g>
+              <AxesGrid
+                width={width} height={height}
+                xAxisTicks={xAxisTicks}
+                yAxisTicks={yAxisTicks}
+              />
               <g className="graph">
                 {this.getVisibleMultiSeries().map(
                   series => (
