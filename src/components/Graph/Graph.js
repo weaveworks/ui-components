@@ -260,9 +260,17 @@ class DashboardGraph extends React.PureComponent {
   }
 
   getSvgBoundingRect() {
-    return this.svgRef
-      ? this.svgRef.getBoundingClientRect()
-      : { width: 0, height: 0, top: 0, left: 0 };
+    if (!this.svgRef) {
+      return { width: 0, height: 0, top: 0, left: 0 };
+    }
+
+    const boundingRect = this.svgRef.getBoundingClientRect();
+    return {
+      width: boundingRect.width - (2 * PADDING),
+      height: boundingRect.height - (2 * PADDING),
+      left: boundingRect.left + PADDING,
+      top: boundingRect.top + PADDING,
+    };
   }
 
   processMultiSeries(props) {
@@ -375,7 +383,7 @@ class DashboardGraph extends React.PureComponent {
     const { startTime, endTime } = this.props;
     return scaleLinear()
       .domain([startTime, endTime])
-      .range([PADDING, width - PADDING]);
+      .range([0, width]);
   }
 
   getValueScale() {
@@ -383,7 +391,7 @@ class DashboardGraph extends React.PureComponent {
     const { minY, maxY } = this.yAxisSpread();
     return scaleLinear()
       .domain([minY, maxY])
-      .range([height - PADDING, PADDING]);
+      .range([height, 0]);
   }
 
   getDatapointGraphValue(datapoint) {
@@ -433,72 +441,71 @@ class DashboardGraph extends React.PureComponent {
         <AxisLabel>{this.props.yAxisLabel}</AxisLabel>
         <Graph>
           <Canvas
-            width="100%"
-            height="100%"
+            width="100%" height="100%"
             innerRef={this.saveSvgRef}
             onMouseMove={this.handleGraphMouseMove}
             onMouseLeave={this.handleGraphMouseLeave}
           >
-            <g className="y-axis-grid">
-              {height &&
-                yAxisTicks.map(({ offset, value }) => (
-                  <AxisLine
-                    key={value}
-                    x1={PADDING}
-                    x2={width - PADDING}
-                    y1={offset}
-                    y2={offset}
-                  />
-                ))}
-            </g>
-            <g className="x-axis-grid">
-              {width &&
-                xAxisTicks.map(({ offset, value }) => (
-                  <AxisLine
-                    key={value}
-                    y1={PADDING}
-                    y2={height - PADDING}
-                    x1={offset}
-                    x2={offset}
-                  />
-                ))}
-            </g>
-            <g className="graph">
-              {this.getVisibleMultiSeries().map(
-                series => (
-                  this.props.showStacked ? (
-                    <SeriesAreaChart
-                      key={series.key}
-                      faded={this.isFadedSeries(series)}
-                      focused={this.isFocusedSeries(series)}
-                      d={areaFunction(series.datapoints)}
-                      fill={series.color}
+            <g transform={`translate(${PADDING}, ${PADDING})`}>
+              <g className="y-axis-grid">
+                {height &&
+                  yAxisTicks.map(({ offset, value }) => (
+                    <AxisLine
+                      key={value}
+                      x2={width}
+                      y1={offset}
+                      y2={offset}
                     />
-                  ) : (
-                    <SeriesLineChart
-                      key={series.key}
-                      faded={this.isFadedSeries(series)}
-                      d={lineFunction(series.datapoints)}
-                      stroke={series.color}
+                  ))}
+              </g>
+              <g className="x-axis-grid">
+                {width &&
+                  xAxisTicks.map(({ offset, value }) => (
+                    <AxisLine
+                      key={value}
+                      y2={height}
+                      x1={offset}
+                      x2={offset}
                     />
-                  )
-              ))}
-            </g>
-            <DeploymentAnnotations
-              deployments={this.props.deployments}
-              onDeploymentMouseEnter={this.handleDeploymentMouseEnter}
-              onDeploymentMouseLeave={this.handleDeploymentMouseLeave}
-              timeScale={timeScale}
-              height={height}
-            />
-            {!this.state.hoveredDeployment && (
-              <GraphHoverBar
-                hoverPoints={this.state.hoverPoints}
-                hoverXOffset={this.state.hoverXOffset}
-                valueScale={valueScale}
+                  ))}
+              </g>
+              <g className="graph">
+                {this.getVisibleMultiSeries().map(
+                  series => (
+                    this.props.showStacked ? (
+                      <SeriesAreaChart
+                        key={series.key}
+                        faded={this.isFadedSeries(series)}
+                        focused={this.isFocusedSeries(series)}
+                        d={areaFunction(series.datapoints)}
+                        fill={series.color}
+                      />
+                    ) : (
+                      <SeriesLineChart
+                        key={series.key}
+                        faded={this.isFadedSeries(series)}
+                        d={lineFunction(series.datapoints)}
+                        stroke={series.color}
+                      />
+                    )
+                ))}
+              </g>
+              <DeploymentAnnotations
+                deployments={this.props.deployments}
+                onDeploymentMouseEnter={this.handleDeploymentMouseEnter}
+                onDeploymentMouseLeave={this.handleDeploymentMouseLeave}
+                timeScale={timeScale}
                 height={height}
               />
-            )}
+              {!this.state.hoveredDeployment && (
+                <GraphHoverBar
+                  hoverPoints={this.state.hoverPoints}
+                  hoverXOffset={this.state.hoverXOffset}
+                  valueScale={valueScale}
+                  height={height}
+                />
+              )}
+            </g>
           </Canvas>
           <YAxisTicksContainer>
             {height &&

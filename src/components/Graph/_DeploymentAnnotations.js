@@ -2,12 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 
-const PADDING = 5;
-
-const VerticalLine = styled.line.attrs({
-  y1: props => props.height - PADDING,
-  y2: PADDING,
-})`
+const VerticalLine = styled.line`
   pointer-events: none;
 `;
 
@@ -42,10 +37,10 @@ class DeploymentAnnotations extends React.PureComponent {
             key={d.Data}
             transform={`translate(${timeScale(moment(d.Stamp).unix())})`}
           >
-            <DeploymentAnnotationShadow height={height} />
-            <DeploymentAnnotationLine height={height} />
+            <DeploymentAnnotationShadow y2={height} />
+            <DeploymentAnnotationLine y2={height} />
             <DeploymentAnnotationPoint
-              cy={height - PADDING}
+              cy={height}
               onMouseMove={() => this.props.onDeploymentMouseEnter(d)}
               onMouseLeave={() => this.props.onDeploymentMouseLeave()}
             />

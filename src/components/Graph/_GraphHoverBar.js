@@ -1,14 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const PADDING = 5;
 
-const VerticalLine = styled.line.attrs({
-  y1: props => props.height - PADDING,
-  y2: PADDING,
-})``;
-
-const HoverLine = VerticalLine.extend.attrs({
+const HoverLine = styled.line.attrs({
   stroke: '#aaa',
   strokeWidth: 1,
 })`
@@ -34,7 +28,7 @@ class GraphHoverBar extends React.PureComponent {
 
     return (
       <g transform={`translate(${hoverXOffset}, 0)`}>
-        <HoverLine height={height} />
+        <HoverLine y2={height} />
         {sortedHoverPoints.map(datapoint => (
           <HoverCircle
             key={datapoint.key}
