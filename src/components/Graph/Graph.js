@@ -20,6 +20,7 @@ import { line, stack, area } from 'd3-shape';
 
 import { timeUnits, numericUnits } from './units';
 import { largePalette } from './color-palettes';
+import GraphLegend from './_GraphLegend';
 
 const PADDING = 5;
 
@@ -52,70 +53,12 @@ const Canvas = styled.svg`
   cursor: crosshair;
 `;
 
-const Legend = styled.div``;
-
-const LegendItems = styled.div`
-  color: ${props => props.theme.colors.neutral.black};
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-  position: relative;
-  padding: 10px 0;
-  width: 100%;
-`;
-
-const LegendItem = styled.div`
-  cursor: pointer;
-  display: flex;
-  font-size: 13px;
-  align-items: center;
-  padding: 3px 17px 3px 8px;
-  border-radius: 4px;
-  max-width: 45%;
-
-  &:hover {
-    background-color: ${props => props.theme.colors.athens};
-  }
-
-  ${props =>
-    props.selected &&
-    `
-      background-color: ${props.theme.colors.athens};
-    `};
-`;
-
-const LegendItemName = styled.span`
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-`;
-
-const LegendToggle = styled.span`
-  cursor: pointer;
-  color: ${props => props.theme.colors.lavender};
-  display: block;
-  padding: 5px;
-  font-size: 15px;
-  width: fit-content;
-`;
-
-const LegendCaret = styled.span`
-  margin-left: 5px;
-`;
-
 const ColorBox = styled.span`
   background-color: ${props => props.color};
   border-radius: 1px;
   margin-right: 4px;
-  min-width: 13px;
-  height: 5px;
-
-  ${props =>
-    props.small &&
-    `
-    min-width: 10px;
-    height: 4px;
-  `};
+  min-width: 10px;
+  height: 4px;
 `;
 
 const AxisLabel = styled.span`
@@ -294,7 +237,6 @@ class DashboardGraph extends React.PureComponent {
     super(props, context);
 
     this.state = {
-      legendShown: props.legendShown,
       selectedLegendSeriesKey: null,
       hoveredLegendSeriesKey: null,
       hoveredDeployment: null,
@@ -313,8 +255,8 @@ class DashboardGraph extends React.PureComponent {
     this.handleGraphMouseMove = this.handleGraphMouseMove.bind(this);
     this.handleGraphMouseLeave = this.handleGraphMouseLeave.bind(this);
 
-    this.showLegend = this.showLegend.bind(this);
-    this.hideLegend = this.hideLegend.bind(this);
+    this.handleSelectedLegendSeriesChange = this.handleSelectedLegendSeriesChange.bind(this);
+    this.handleHoveredLegendSeriesChange = this.handleHoveredLegendSeriesChange.bind(this);
   }
 
   handleResize() {
@@ -340,20 +282,12 @@ class DashboardGraph extends React.PureComponent {
     }
   }
 
-  handleLegendItemClick(series) {
-    if (this.state.selectedLegendSeriesKey === series.key) {
-      this.setState({ selectedLegendSeriesKey: null });
-    } else {
-      this.setState({ selectedLegendSeriesKey: series.key });
-    }
+  handleSelectedLegendSeriesChange(selectedLegendSeriesKey) {
+    this.setState({ selectedLegendSeriesKey });
   }
 
-  handleLegendItemMouseEnter(series) {
-    this.setState({ hoveredLegendSeriesKey: series.key });
-  }
-
-  handleLegendItemMouseLeave() {
-    this.setState({ hoveredLegendSeriesKey: null });
+  handleHoveredLegendSeriesChange(hoveredLegendSeriesKey) {
+    this.setState({ hoveredLegendSeriesKey });
   }
 
   handleDeploymentMouseEnter(deployment) {
@@ -428,14 +362,6 @@ class DashboardGraph extends React.PureComponent {
       hoverTimestampSec: null,
       hoverPoints: null,
     });
-  }
-
-  showLegend() {
-    this.setState({ legendShown: true });
-  }
-
-  hideLegend() {
-    this.setState({ legendShown: false });
   }
 
   saveSvgRef(ref) {
@@ -799,35 +725,13 @@ class DashboardGraph extends React.PureComponent {
           </XAxisTicksContainer>
         </Graph>
         {this.state.multiSeries.length > 1 && (
-          <Legend>
-            {this.props.legendCollapsable &&
-              (this.state.legendShown ? (
-                <LegendToggle onClick={this.hideLegend}>
-                  Legend <LegendCaret className="fa fa-caret-down" />
-                </LegendToggle>
-              ) : (
-                <LegendToggle onClick={this.showLegend}>
-                  Legend <LegendCaret className="fa fa-caret-right" />
-                </LegendToggle>
-              ))}
-            {this.state.legendShown && (
-              <LegendItems>
-                {this.state.multiSeries.map(series => (
-                  <LegendItem
-                    key={series.key}
-                    title={series.name}
-                    onClick={() => this.handleLegendItemClick(series)}
-                    onMouseEnter={() => this.handleLegendItemMouseEnter(series)}
-                    onMouseLeave={() => this.handleLegendItemMouseLeave()}
-                    selected={this.state.selectedLegendSeriesKey === series.key}
-                  >
-                    <ColorBox color={series.color} />
-                    <LegendItemName>{series.name}</LegendItemName>
-                  </LegendItem>
-                ))}
-              </LegendItems>
-            )}
-          </Legend>
+          <GraphLegend
+            multiSeries={this.state.multiSeries}
+            legendShown={this.props.legendShown}
+            legendCollapsable={this.props.legendCollapsable}
+            onSelectedLegendSeriesChange={this.handleSelectedLegendSeriesChange}
+            onHoveredLegendSeriesChange={this.handleHoveredLegendSeriesChange}
+          />
         )}
         {this.renderHoverTooltip()}
       </GraphContainer>
