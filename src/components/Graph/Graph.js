@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import styled from 'styled-components';
 import {
   debounce,
@@ -20,6 +19,7 @@ import { line, stack, area } from 'd3-shape';
 import { timeUnits, numericUnits } from './units';
 import { largePalette } from './color-palettes';
 
+import DeploymentAnnotations from './_DeploymentAnnotations';
 import GraphLegend from './_GraphLegend';
 import GraphTooltip from './_GraphTooltip';
 
@@ -106,6 +106,7 @@ const SeriesLineChart = styled.path.attrs({
   fill: 'none',
 })`
   opacity: ${props => (props.faded ? 0.1 : 1)};
+  pointer-events: none;
 `;
 
 const SeriesAreaChart = styled.path.attrs({
@@ -116,6 +117,7 @@ const SeriesAreaChart = styled.path.attrs({
   stroke: ({ fill }) => fill,
 })`
   opacity: ${props => (props.faded ? 0.05 : 0.75)};
+  pointer-events: none;
 `;
 
 const VerticalLine = styled.line.attrs({
@@ -137,26 +139,6 @@ const HoverCircle = styled.circle.attrs({
   fill: '#fff',
 })`
   pointer-events: none;
-`;
-
-const DeploymentAnnotationShadow = VerticalLine.extend.attrs({
-  stroke: '#fff',
-  strokeWidth: 2,
-  opacity: 0.2,
-})``;
-
-const DeploymentAnnotationLine = VerticalLine.extend.attrs({
-  stroke: '#00d2ff',
-  strokeWidth: 0.5,
-})``;
-
-const DeploymentAnnotationPoint = styled.circle.attrs({
-  r: 3.5,
-  strokeWidth: 2.5,
-  stroke: '#00d2ff',
-  fill: '#fff',
-})`
-  cursor: default;
 `;
 
 class DashboardGraph extends React.PureComponent {
@@ -183,6 +165,9 @@ class DashboardGraph extends React.PureComponent {
 
     this.handleSelectedLegendSeriesChange = this.handleSelectedLegendSeriesChange.bind(this);
     this.handleHoveredLegendSeriesChange = this.handleHoveredLegendSeriesChange.bind(this);
+
+    this.handleDeploymentMouseEnter = this.handleDeploymentMouseEnter.bind(this);
+    this.handleDeploymentMouseLeave = this.handleDeploymentMouseLeave.bind(this);
   }
 
   handleResize() {
@@ -214,14 +199,6 @@ class DashboardGraph extends React.PureComponent {
 
   handleHoveredLegendSeriesChange(hoveredLegendSeriesKey) {
     this.setState({ hoveredLegendSeriesKey });
-  }
-
-  handleDeploymentMouseEnter(deployment) {
-    this.setState({ hoveredDeployment: deployment });
-  }
-
-  handleDeploymentMouseLeave() {
-    this.setState({ hoveredDeployment: null });
   }
 
   handleGraphMouseMove(ev) {
@@ -288,6 +265,14 @@ class DashboardGraph extends React.PureComponent {
       hoverTimestampSec: null,
       hoverPoints: null,
     });
+  }
+
+  handleDeploymentMouseEnter(deployment) {
+    this.setState({ hoveredDeployment: deployment });
+  }
+
+  handleDeploymentMouseLeave() {
+    this.setState({ hoveredDeployment: null });
   }
 
   saveSvgRef(ref) {
@@ -444,11 +429,11 @@ class DashboardGraph extends React.PureComponent {
   }
 
   renderHoverBar() {
+    const { hoverXOffset, hoverPoints, hoveredDeployment } = this.state;
     const { height } = this.getSvgBoundingRect();
-    const { hoverXOffset, hoverPoints } = this.state;
     const valueScale = this.getValueScale();
 
-    if (!hoverPoints) return null;
+    if (!hoverPoints || hoveredDeployment) return null;
 
     // Render focused circle last so that it stands out.
     const sortedHoverPoints = [...hoverPoints].sort(a => (a.focused ? 1 : -1));
@@ -495,9 +480,9 @@ class DashboardGraph extends React.PureComponent {
           <Canvas
             width="100%"
             height="100%"
+            innerRef={this.saveSvgRef}
             onMouseMove={this.handleGraphMouseMove}
             onMouseLeave={this.handleGraphMouseLeave}
-            innerRef={this.saveSvgRef}
           >
             <g className="y-axis-grid">
               {height &&
@@ -544,23 +529,14 @@ class DashboardGraph extends React.PureComponent {
                   )
               ))}
             </g>
-            <g className="deployments">
-              {this.props.deployments.map(d => (
-                <g
-                  key={d.Data}
-                  transform={`translate(${timeScale(moment(d.Stamp).unix())})`}
-                >
-                  <DeploymentAnnotationShadow height={height} />
-                  <DeploymentAnnotationLine height={height} />
-                  <DeploymentAnnotationPoint
-                    cy={height - PADDING}
-                    onMouseMove={() => this.handleDeploymentMouseEnter(d)}
-                    onMouseLeave={() => this.handleDeploymentMouseLeave()}
-                  />
-                </g>
-              ))}
-            </g>
-            {!this.state.hoveredDeployment && this.renderHoverBar()}
+            <DeploymentAnnotations
+              deployments={this.props.deployments}
+              onDeploymentMouseEnter={this.handleDeploymentMouseEnter}
+              onDeploymentMouseLeave={this.handleDeploymentMouseLeave}
+              timeScale={timeScale}
+              height={height}
+            />
+            {this.renderHoverBar()}
           </Canvas>
           <YAxisTicksContainer>
             {height &&
@@ -588,15 +564,25 @@ class DashboardGraph extends React.PureComponent {
             onHoveredLegendSeriesChange={this.handleHoveredLegendSeriesChange}
           />
         )}
-        <GraphTooltip
-          hoverPoints={this.state.hoverPoints}
-          hoverXOffset={this.state.hoverXOffset}
-          hoverYOffset={this.state.hoverYOffset}
-          hoverTimestampSec={this.state.hoverTimestampSec}
-          hoveredDeployment={this.state.hoveredDeployment}
-          graphWidth={this.getSvgBoundingRect().width}
-          valueUnits={this.props.yAxisUnits}
-        />
+        {this.state.hoveredDeployment ? (
+          <GraphTooltip
+            hoveredDeployment={this.state.hoveredDeployment}
+            hoverXOffset={this.state.hoverXOffset}
+            hoverYOffset={this.state.hoverYOffset}
+            hoverTimestampSec={this.state.hoverTimestampSec}
+            graphWidth={this.getSvgBoundingRect().width}
+            valueUnits={this.props.yAxisUnits}
+          />
+        ) : (
+          <GraphTooltip
+            hoverPoints={this.state.hoverPoints}
+            hoverXOffset={this.state.hoverXOffset}
+            hoverYOffset={this.state.hoverYOffset}
+            hoverTimestampSec={this.state.hoverTimestampSec}
+            graphWidth={this.getSvgBoundingRect().width}
+            valueUnits={this.props.yAxisUnits}
+          />
+        )}
       </GraphContainer>
     );
   }
