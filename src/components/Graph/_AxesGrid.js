@@ -12,13 +12,13 @@ const HorizontalLine = AxisLine.extend.attrs({
   x2: props => props.width,
   y1: props => props.offset,
   y2: props => props.offset,
-});
+})``;
 
 const VerticalLine = AxisLine.extend.attrs({
   y2: props => props.height,
   x1: props => props.offset,
   x2: props => props.offset,
-});
+})``;
 
 class AxesGrid extends React.PureComponent {
   render() {

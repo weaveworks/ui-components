@@ -20,6 +20,7 @@ import { timeUnits, numericUnits } from './units';
 
 import AxesGrid from './_AxesGrid';
 import DeploymentAnnotations from './_DeploymentAnnotations';
+import DeploymentTooltip from './_DeploymentTooltip';
 import GraphHoverBar from './_GraphHoverBar';
 import GraphLegend from './_GraphLegend';
 import GraphTooltip from './_GraphTooltip';
@@ -85,13 +86,13 @@ const TickLabel = styled.span`
 `;
 
 const YAxisTickLabel = TickLabel.extend.attrs({
-  style: ({ offset }) => ({ top: offset - 8 }),
+  style: ({ offset }) => ({ top: (offset + PADDING) - 8 }),
 })`
   right: 5px;
 `;
 
 const XAxisTickLabel = TickLabel.extend.attrs({
-  style: ({ offset }) => ({ left: offset }),
+  style: ({ offset }) => ({ left: offset + PADDING }),
 })`
   top: -18px;
 `;
@@ -564,22 +565,20 @@ class DashboardGraph extends React.PureComponent {
           />
         )}
         {this.state.hoveredDeployment ? (
-          <GraphTooltip
-            hoveredDeployment={this.state.hoveredDeployment}
-            hoverXOffset={this.state.hoverXOffset}
-            hoverYOffset={this.state.hoverYOffset}
-            hoverTimestampSec={this.state.hoverTimestampSec}
-            graphWidth={this.getSvgBoundingRect().width}
-            valueUnits={this.props.yAxisUnits}
+          <DeploymentTooltip
+            deployment={this.state.hoveredDeployment}
+            mouseX={this.state.hoverXOffset}
+            mouseY={this.state.hoverYOffset}
+            graphWidth={width}
           />
         ) : (
           <GraphTooltip
-            hoverPoints={this.state.hoverPoints}
-            hoverXOffset={this.state.hoverXOffset}
-            hoverYOffset={this.state.hoverYOffset}
-            hoverTimestampSec={this.state.hoverTimestampSec}
-            graphWidth={this.getSvgBoundingRect().width}
+            datapoints={this.state.hoverPoints}
+            mouseX={this.state.hoverXOffset}
+            mouseY={this.state.hoverYOffset}
+            timestampSec={this.state.hoverTimestampSec}
             valueUnits={this.props.yAxisUnits}
+            graphWidth={width}
           />
         )}
       </GraphContainer>
