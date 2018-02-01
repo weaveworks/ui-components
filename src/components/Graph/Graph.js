@@ -20,6 +20,7 @@ import { timeUnits, numericUnits } from './units';
 import { largePalette } from './color-palettes';
 
 import DeploymentAnnotations from './_DeploymentAnnotations';
+import GraphHoverBar from './_GraphHoverBar';
 import GraphLegend from './_GraphLegend';
 import GraphTooltip from './_GraphTooltip';
 
@@ -117,27 +118,6 @@ const SeriesAreaChart = styled.path.attrs({
   stroke: ({ fill }) => fill,
 })`
   opacity: ${props => (props.faded ? 0.05 : 0.75)};
-  pointer-events: none;
-`;
-
-const VerticalLine = styled.line.attrs({
-  y1: props => props.height - PADDING,
-  y2: PADDING,
-})``;
-
-const HoverLine = VerticalLine.extend.attrs({
-  stroke: '#aaa',
-  strokeWidth: 1,
-})`
-  pointer-events: none;
-`;
-
-const HoverCircle = styled.circle.attrs({
-  opacity: ({ focused }) => (focused ? 1 : 0.5),
-  r: ({ focused }) => (focused ? 4 : 3),
-  strokeWidth: 3,
-  fill: '#fff',
-})`
   pointer-events: none;
 `;
 
@@ -428,31 +408,6 @@ class DashboardGraph extends React.PureComponent {
     );
   }
 
-  renderHoverBar() {
-    const { hoverXOffset, hoverPoints, hoveredDeployment } = this.state;
-    const { height } = this.getSvgBoundingRect();
-    const valueScale = this.getValueScale();
-
-    if (!hoverPoints || hoveredDeployment) return null;
-
-    // Render focused circle last so that it stands out.
-    const sortedHoverPoints = [...hoverPoints].sort(a => (a.focused ? 1 : -1));
-
-    return (
-      <g transform={`translate(${hoverXOffset}, 0)`}>
-        <HoverLine height={height} />
-        {sortedHoverPoints.map(datapoint => (
-          <HoverCircle
-            key={datapoint.key}
-            stroke={datapoint.color}
-            focused={datapoint.focused}
-            cy={valueScale(datapoint.graphValue)}
-          />
-        ))}
-      </g>
-    );
-  }
-
   render() {
     const { startTime, endTime, yAxisUnits } = this.props;
     const { width, height } = this.getSvgBoundingRect();
@@ -536,7 +491,14 @@ class DashboardGraph extends React.PureComponent {
               timeScale={timeScale}
               height={height}
             />
-            {this.renderHoverBar()}
+            {!this.state.hoveredDeployment && (
+              <GraphHoverBar
+                hoverPoints={this.state.hoverPoints}
+                hoverXOffset={this.state.hoverXOffset}
+                valueScale={valueScale}
+                height={height}
+              />
+            )}
           </Canvas>
           <YAxisTicksContainer>
             {height &&
