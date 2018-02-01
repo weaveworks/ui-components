@@ -16,7 +16,7 @@ import {
 import { scaleLinear, scaleQuantize } from 'd3-scale';
 import { line, stack, area } from 'd3-shape';
 
-import { timeUnits, numericUnits } from './units';
+import { units } from './units';
 
 import AxesGrid from './_AxesGrid';
 import DeploymentAnnotations from './_DeploymentAnnotations';
@@ -465,7 +465,7 @@ class DashboardGraph extends React.PureComponent {
   }
 
   render() {
-    const { startTime, endTime, yAxisUnits } = this.props;
+    const { startTime, endTime, metricUnits } = this.props;
     const { width, height } = this.getSvgBoundingRect();
     const { minY, maxY } = this.yAxisSpread();
 
@@ -481,8 +481,8 @@ class DashboardGraph extends React.PureComponent {
       .y0(d => valueScale(this.getDatapointOffset(d)))
       .y1(d => valueScale(this.getDatapointGraphValue(d)));
 
-    const xAxisTicks = timeUnits.getSpread([startTime, endTime], timeScale);
-    const yAxisTicks = yAxisUnits.getSpread([minY, maxY], valueScale);
+    const xAxisTicks = units.seconds.getSpread([startTime, endTime], timeScale);
+    const yAxisTicks = units[metricUnits].getSpread([minY, maxY], valueScale);
 
     return (
       <GraphContainer>
@@ -577,7 +577,7 @@ class DashboardGraph extends React.PureComponent {
             mouseX={this.state.hoverXOffset}
             mouseY={this.state.hoverYOffset}
             timestampSec={this.state.hoverTimestampSec}
-            valueUnits={this.props.yAxisUnits}
+            valueUnits={units[metricUnits]}
             graphWidth={width}
           />
         )}
@@ -588,7 +588,7 @@ class DashboardGraph extends React.PureComponent {
 
 DashboardGraph.defaultProps = {
   colorScheme: 'mixed',
-  yAxisUnits: numericUnits,
+  metricUnits: 'none',
   showStacked: false,
   baseMinValue: 0.0,
   baseMaxValue: 0.012,
