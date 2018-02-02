@@ -1,21 +1,31 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const HOVER_CIRCLE_RADIUS = 4;
 
-const HoverLine = styled.line.attrs({
-  stroke: '#aaa',
-  strokeWidth: 1,
+const HoverLine = styled.div.attrs({
+  style: ({ left, height }) => ({ left, height }),
 })`
+  border-left: 1px solid #aaa;
   pointer-events: none;
+  position: absolute;
+  top: 0;
 `;
 
-const HoverCircle = styled.circle.attrs({
-  opacity: ({ focused }) => (focused ? 1 : 0.5),
-  r: ({ focused }) => (focused ? 4 : 3),
-  strokeWidth: 3,
-  fill: '#fff',
+const HoverCircle = styled.span.attrs({
+  style: ({ top }) => ({ top }),
 })`
+  border: 3px solid ${props => props.color};
+  opacity: ${props => (props.focused ? 1 : 0.5)};
+  margin-left: -${HOVER_CIRCLE_RADIUS}px;
+  margin-top: -${HOVER_CIRCLE_RADIUS}px;
+  width: ${2 * HOVER_CIRCLE_RADIUS}px;
+  height: ${2 * HOVER_CIRCLE_RADIUS}px;
+  box-sizing: border-box;
+  background-color: #fff;
   pointer-events: none;
+  border-radius: 50%;
+  position: absolute;
 `;
 
 class GraphHoverBar extends React.PureComponent {
@@ -27,17 +37,16 @@ class GraphHoverBar extends React.PureComponent {
     const sortedHoverPoints = [...hoverPoints].sort(a => (a.focused ? 1 : -1));
 
     return (
-      <g transform={`translate(${hoverXOffset}, 0)`}>
-        <HoverLine y2={height} />
+      <HoverLine left={hoverXOffset} height={height}>
         {sortedHoverPoints.map(datapoint => (
           <HoverCircle
             key={datapoint.key}
-            stroke={datapoint.color}
+            color={datapoint.color}
             focused={datapoint.focused}
-            cy={valueScale(datapoint.graphValue)}
+            top={valueScale(datapoint.graphValue)}
           />
         ))}
-      </g>
+      </HoverLine>
     );
   }
 }

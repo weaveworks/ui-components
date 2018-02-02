@@ -47,7 +47,7 @@ class Tooltip extends React.PureComponent {
   render() {
     const { x, y, timestamp, graphWidth } = this.props;
     const tooltipWidth = this.getTooltipBoundingRect().width;
-    const clampedX = Math.min(x, graphWidth - tooltipWidth - 15);
+    const clampedX = Math.min(x, graphWidth - tooltipWidth - 10);
 
     return (
       <TooltipContainer x={clampedX} y={y} innerRef={this.saveTooltipRef}>

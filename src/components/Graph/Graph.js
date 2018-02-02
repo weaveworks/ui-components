@@ -25,8 +25,6 @@ import GraphHoverBar from './_GraphHoverBar';
 import GraphLegend from './_GraphLegend';
 import GraphTooltip from './_GraphTooltip';
 
-const PADDING = 5;
-
 function parseGraphValue(value) {
   const val = parseFloat(value);
   if (Number.isNaN(val)) {
@@ -86,15 +84,15 @@ const TickLabel = styled.span`
 `;
 
 const YAxisTickLabel = TickLabel.extend.attrs({
-  style: ({ offset }) => ({ top: (offset + PADDING) - 8 }),
+  style: ({ offset }) => ({ top: offset - 8 }),
 })`
-  right: 5px;
+  right: 8px;
 `;
 
 const XAxisTickLabel = TickLabel.extend.attrs({
-  style: ({ offset }) => ({ left: offset + PADDING }),
+  style: ({ offset }) => ({ left: offset }),
 })`
-  top: -18px;
+  top: -13px;
 `;
 
 const SeriesLineChart = styled.path.attrs({
@@ -307,17 +305,9 @@ class DashboardGraph extends React.PureComponent {
   }
 
   getSvgBoundingRect() {
-    if (!this.svgRef) {
-      return { width: 0, height: 0, top: 0, left: 0 };
-    }
-
-    const boundingRect = this.svgRef.getBoundingClientRect();
-    return {
-      width: boundingRect.width - (2 * PADDING),
-      height: boundingRect.height - (2 * PADDING),
-      left: boundingRect.left + PADDING,
-      top: boundingRect.top + PADDING,
-    };
+    return this.svgRef
+      ? this.svgRef.getBoundingClientRect()
+      : { width: 0, height: 0, top: 0, left: 0 };
   }
 
   processMultiSeries(props) {
@@ -494,49 +484,39 @@ class DashboardGraph extends React.PureComponent {
             onMouseMove={this.handleGraphMouseMove}
             onMouseLeave={this.handleGraphMouseLeave}
           >
-            <g transform={`translate(${PADDING}, ${PADDING})`}>
-              <AxesGrid
-                width={width} height={height}
-                xAxisTicks={xAxisTicks}
-                yAxisTicks={yAxisTicks}
-              />
-              <g className="graph">
-                {this.getVisibleMultiSeries().map(
-                  series => (
-                    this.props.showStacked ? (
-                      <SeriesAreaChart
-                        key={series.key}
-                        faded={this.isFadedSeries(series)}
-                        focused={this.isFocusedSeries(series)}
-                        d={areaFunction(series.datapoints)}
-                        fill={series.color}
-                      />
-                    ) : (
-                      <SeriesLineChart
-                        key={series.key}
-                        faded={this.isFadedSeries(series)}
-                        d={lineFunction(series.datapoints)}
-                        stroke={series.color}
-                      />
-                    )
-                ))}
-              </g>
-              <DeploymentAnnotations
-                deployments={this.props.deployments}
-                onDeploymentMouseEnter={this.handleDeploymentMouseEnter}
-                onDeploymentMouseLeave={this.handleDeploymentMouseLeave}
-                timeScale={timeScale}
-                height={height}
-              />
-              {!this.state.hoveredDeployment && (
-                <GraphHoverBar
-                  hoverPoints={this.state.hoverPoints}
-                  hoverXOffset={this.state.hoverXOffset}
-                  valueScale={valueScale}
-                  height={height}
-                />
-              )}
+            <AxesGrid
+              width={width} height={height}
+              xAxisTicks={xAxisTicks}
+              yAxisTicks={yAxisTicks}
+            />
+            <g className="graph">
+              {this.getVisibleMultiSeries().map(
+                series => (
+                  this.props.showStacked ? (
+                    <SeriesAreaChart
+                      key={series.key}
+                      faded={this.isFadedSeries(series)}
+                      focused={this.isFocusedSeries(series)}
+                      d={areaFunction(series.datapoints)}
+                      fill={series.color}
+                    />
+                  ) : (
+                    <SeriesLineChart
+                      key={series.key}
+                      faded={this.isFadedSeries(series)}
+                      d={lineFunction(series.datapoints)}
+                      stroke={series.color}
+                    />
+                  )
+              ))}
             </g>
+            <DeploymentAnnotations
+              deployments={this.props.deployments}
+              onDeploymentMouseEnter={this.handleDeploymentMouseEnter}
+              onDeploymentMouseLeave={this.handleDeploymentMouseLeave}
+              timeScale={timeScale}
+              height={height}
+            />
           </Canvas>
           <YAxisTicksContainer>
             {height &&
@@ -554,6 +534,14 @@ class DashboardGraph extends React.PureComponent {
                 </XAxisTickLabel>
               ))}
           </XAxisTicksContainer>
+          {!this.state.hoveredDeployment && (
+            <GraphHoverBar
+              hoverPoints={this.state.hoverPoints}
+              hoverXOffset={this.state.hoverXOffset}
+              valueScale={valueScale}
+              height={height}
+            />
+          )}
         </Graph>
         {this.state.multiSeries.length > 1 && (
           <GraphLegend
