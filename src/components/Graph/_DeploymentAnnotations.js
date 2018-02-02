@@ -2,28 +2,44 @@ import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 
-const VerticalLine = styled.line`
-  pointer-events: none;
+const ANNOTATION_CIRCLE_RADIUS = 5;
+
+const DeploymentAnnotation = styled.div.attrs({
+  style: ({ left }) => ({ left })
+})`
+  position: absolute;
+  top: 0;
 `;
 
-const DeploymentAnnotationShadow = VerticalLine.extend.attrs({
-  stroke: '#fff',
-  strokeWidth: 2,
-  opacity: 0.2,
-})``;
-
-const DeploymentAnnotationLine = VerticalLine.extend.attrs({
-  stroke: '#00d2ff',
-  strokeWidth: 0.5,
-})``;
-
-const DeploymentAnnotationPoint = styled.circle.attrs({
-  r: 3.5,
-  strokeWidth: 2.5,
-  stroke: '#00d2ff',
-  fill: '#fff',
+const VerticalLine = styled.div.attrs({
+  style: ({ height }) => ({ height }),
 })`
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+`;
+
+const DeploymentAnnotationShadow = VerticalLine.extend`
+  border-left: 2px solid #fff;
+  opacity: 0.2;
+`;
+
+const DeploymentAnnotationLine = VerticalLine.extend`
+  border-left: 0.5px solid #00d3ff;
+`;
+
+const DeploymentAnnotationPoint = styled.span`
   cursor: default;
+  position: absolute;
+  background-color: #fff;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2.5px solid #00d2ff;
+  width: ${2 * ANNOTATION_CIRCLE_RADIUS}px;
+  height: ${2 * ANNOTATION_CIRCLE_RADIUS}px;
+  margin-left: -${ANNOTATION_CIRCLE_RADIUS}px;
+  margin-top: -${ANNOTATION_CIRCLE_RADIUS}px;
+  top: ${props => props.top}px;
 `;
 
 class DeploymentAnnotations extends React.PureComponent {
@@ -31,22 +47,22 @@ class DeploymentAnnotations extends React.PureComponent {
     const { height, timeScale } = this.props;
 
     return (
-      <g className="deployment-annotations">
+      <div className="deployment-annotations" style={{ position: 'absolute', top: 0 }}>
         {this.props.deployments.map(d => (
-          <g
+          <DeploymentAnnotation
             key={d.Data}
-            transform={`translate(${timeScale(moment(d.Stamp).unix())})`}
+            left={timeScale(moment(d.Stamp).unix())}
           >
-            <DeploymentAnnotationShadow y2={height} />
-            <DeploymentAnnotationLine y2={height} />
+            <DeploymentAnnotationShadow height={height} />
+            <DeploymentAnnotationLine height={height} />
             <DeploymentAnnotationPoint
-              cy={height}
+              top={height}
               onMouseMove={() => this.props.onDeploymentMouseEnter(d)}
               onMouseLeave={() => this.props.onDeploymentMouseLeave()}
             />
-          </g>
+          </DeploymentAnnotation>
         ))}
-      </g>
+      </div>
     );
   }
 }

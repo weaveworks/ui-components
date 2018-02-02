@@ -510,13 +510,6 @@ class DashboardGraph extends React.PureComponent {
                   )
               ))}
             </g>
-            <DeploymentAnnotations
-              deployments={this.props.deployments}
-              onDeploymentMouseEnter={this.handleDeploymentMouseEnter}
-              onDeploymentMouseLeave={this.handleDeploymentMouseLeave}
-              timeScale={timeScale}
-              height={height}
-            />
           </Canvas>
           <YAxisTicksContainer>
             {height &&
@@ -534,6 +527,13 @@ class DashboardGraph extends React.PureComponent {
                 </XAxisTickLabel>
               ))}
           </XAxisTicksContainer>
+          <DeploymentAnnotations
+            deployments={this.props.deployments}
+            onDeploymentMouseEnter={this.handleDeploymentMouseEnter}
+            onDeploymentMouseLeave={this.handleDeploymentMouseLeave}
+            timeScale={timeScale}
+            height={height}
+          />
           {!this.state.hoveredDeployment && (
             <GraphHoverBar
               hoverPoints={this.state.hoverPoints}
