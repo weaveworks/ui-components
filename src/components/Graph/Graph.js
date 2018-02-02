@@ -20,7 +20,6 @@ import { units } from './units';
 
 import AxesGrid from './_AxesGrid';
 import DeploymentAnnotations from './_DeploymentAnnotations';
-import DeploymentTooltip from './_DeploymentTooltip';
 import GraphHoverBar from './_GraphHoverBar';
 import GraphLegend from './_GraphLegend';
 import GraphTooltip from './_GraphTooltip';
@@ -173,7 +172,6 @@ class DashboardGraph extends React.PureComponent {
     this.state = {
       selectedLegendSeriesKey: null,
       hoveredLegendSeriesKey: null,
-      hoveredDeployment: null,
       hoverTimestampSec: null,
       hoverYOffset: null,
       hoverXOffset: null,
@@ -190,9 +188,6 @@ class DashboardGraph extends React.PureComponent {
 
     this.handleSelectedLegendSeriesChange = this.handleSelectedLegendSeriesChange.bind(this);
     this.handleHoveredLegendSeriesChange = this.handleHoveredLegendSeriesChange.bind(this);
-
-    this.handleDeploymentMouseEnter = this.handleDeploymentMouseEnter.bind(this);
-    this.handleDeploymentMouseLeave = this.handleDeploymentMouseLeave.bind(this);
   }
 
   handleResize() {
@@ -290,14 +285,6 @@ class DashboardGraph extends React.PureComponent {
       hoverTimestampSec: null,
       hoverPoints: null,
     });
-  }
-
-  handleDeploymentMouseEnter(deployment) {
-    this.setState({ hoveredDeployment: deployment });
-  }
-
-  handleDeploymentMouseLeave() {
-    this.setState({ hoveredDeployment: null });
   }
 
   saveSvgRef(ref) {
@@ -529,19 +516,16 @@ class DashboardGraph extends React.PureComponent {
           </XAxisTicksContainer>
           <DeploymentAnnotations
             deployments={this.props.deployments}
-            onDeploymentMouseEnter={this.handleDeploymentMouseEnter}
-            onDeploymentMouseLeave={this.handleDeploymentMouseLeave}
             timeScale={timeScale}
+            width={width}
             height={height}
           />
-          {!this.state.hoveredDeployment && (
-            <GraphHoverBar
-              hoverPoints={this.state.hoverPoints}
-              hoverXOffset={this.state.hoverXOffset}
-              valueScale={valueScale}
-              height={height}
-            />
-          )}
+          <GraphHoverBar
+            hoverPoints={this.state.hoverPoints}
+            hoverXOffset={this.state.hoverXOffset}
+            valueScale={valueScale}
+            height={height}
+          />
         </Graph>
         {this.state.multiSeries.length > 1 && (
           <GraphLegend
@@ -552,23 +536,14 @@ class DashboardGraph extends React.PureComponent {
             onHoveredLegendSeriesChange={this.handleHoveredLegendSeriesChange}
           />
         )}
-        {this.state.hoveredDeployment ? (
-          <DeploymentTooltip
-            deployment={this.state.hoveredDeployment}
-            mouseX={this.state.hoverXOffset}
-            mouseY={this.state.hoverYOffset}
-            graphWidth={width}
-          />
-        ) : (
-          <GraphTooltip
-            datapoints={this.state.hoverPoints}
-            mouseX={this.state.hoverXOffset}
-            mouseY={this.state.hoverYOffset}
-            timestampSec={this.state.hoverTimestampSec}
-            valueUnits={units[metricUnits]}
-            graphWidth={width}
-          />
-        )}
+        <GraphTooltip
+          datapoints={this.state.hoverPoints}
+          mouseX={this.state.hoverXOffset}
+          mouseY={this.state.hoverYOffset}
+          timestampSec={this.state.hoverTimestampSec}
+          valueUnits={units[metricUnits]}
+          graphWidth={width}
+        />
       </GraphContainer>
     );
   }

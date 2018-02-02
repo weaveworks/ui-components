@@ -66,7 +66,7 @@ class GraphTooltip extends React.PureComponent {
     const formatValue = valueUnits.formatFor(referenceValue);
 
     return (
-      <Tooltip x={mouseX} y={mouseY} graphWidth={graphWidth} timestamp={timestamp}>
+      <Tooltip x={mouseX} y={mouseY} graphWidth={graphWidth} humanizedTimestamp={timestamp}>
         {datapoints.map(datapoint => (
           <TooltipRow key={datapoint.key} focused={datapoint.focused}>
             <ColorBox small color={datapoint.color} />
