@@ -1,39 +1,77 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { units } from './units';
 
-const AxisLine = styled.line.attrs({
-  stroke: '#ccc',
-  strokeDasharray: [1, 2],
-  strokeWidth: 1,
-})``;
+
+const AxisLine = styled.div`
+  border-style: dashed;
+  border-color: #ddd;
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
 
 const HorizontalLine = AxisLine.extend.attrs({
-  x2: props => props.width,
-  y1: props => props.offset,
-  y2: props => props.offset,
-})``;
+  style: ({ top, width }) => ({ top, width })
+})`
+  border-width: 1px 0 0 0;
+`;
 
 const VerticalLine = AxisLine.extend.attrs({
-  y2: props => props.height,
-  x1: props => props.offset,
-  x2: props => props.offset,
+  style: ({ left, height }) => ({ left, height })
+})`
+  border-width: 0 0 0 1px;
+`;
+
+const TickContainer = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
+
+const TickLabel = styled.span`
+  color: #555;
+  display: block;
+  font-size: 12px;
+  position: absolute;
+  white-space: nowrap;
+`;
+
+const YAxisTickLabel = TickLabel.extend.attrs({
+  style: ({ top }) => ({ top: top - 8, right: 5 }),
+})``;
+
+const XAxisTickLabel = TickLabel.extend.attrs({
+  style: ({ left, top }) => ({ left, top: top + 5 }),
 })``;
 
 class AxesGrid extends React.PureComponent {
   render() {
-    const { width, height, xAxisTicks, yAxisTicks } = this.props;
+    const { width, height, timeScale, yAxisTicks } = this.props;
     if (!width || !height) return null;
 
+    const xAxisTicks = units.seconds.getSpread(timeScale.domain(), timeScale);
+
     return (
-      <g className="axes-grid">
-        {yAxisTicks.map(({ offset, value }) => (
-          <HorizontalLine key={value} width={width} offset={offset} />
+      <div className="axes-grid">
+        {yAxisTicks.map(({ value, offset }) => (
+          <TickContainer key={value}>
+            <HorizontalLine width={width} top={offset} />
+            <YAxisTickLabel top={offset}>
+              {value}
+            </YAxisTickLabel>
+          </TickContainer>
         ))}
-        {xAxisTicks.map(({ offset, value }) => (
-          <VerticalLine key={value} height={height} offset={offset} />
+        {xAxisTicks.map(({ value, offset }) => (
+          <TickContainer key={value}>
+            <VerticalLine height={height} left={offset} />
+            <XAxisTickLabel top={height} left={offset}>
+              {value}
+            </XAxisTickLabel>
+          </TickContainer>
         ))}
-      </g>
+      </div>
     );
   }
 }

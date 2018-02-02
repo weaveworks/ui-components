@@ -46,10 +46,12 @@ const GraphContainer = styled.div`
 const Graph = styled.div`
   position: relative;
   min-height: 170px;
+  margin-bottom: 20px;
 `;
 
 const Canvas = styled.svg`
   cursor: crosshair;
+  position: absolute;
 `;
 
 const AxisLabel = styled.span`
@@ -58,39 +60,6 @@ const AxisLabel = styled.span`
   transform: translate(-60px, 165px) rotate(-90deg);
   transform-origin: left top 0;
   display: inline-block;
-`;
-
-const AxisTicksContainer = styled.div`
-  position: absolute;
-  left: 0;
-`;
-
-const YAxisTicksContainer = AxisTicksContainer.extend`
-  top: 0;
-`;
-
-const XAxisTicksContainer = AxisTicksContainer.extend`
-  bottom: 0;
-`;
-
-const TickLabel = styled.span`
-  color: #555;
-  display: block;
-  font-size: 12px;
-  position: absolute;
-  white-space: nowrap;
-`;
-
-const YAxisTickLabel = TickLabel.extend.attrs({
-  style: ({ offset }) => ({ top: offset - 8 }),
-})`
-  right: 8px;
-`;
-
-const XAxisTickLabel = TickLabel.extend.attrs({
-  style: ({ offset }) => ({ left: offset }),
-})`
-  top: -13px;
 `;
 
 const SeriesLineChart = styled.path.attrs({
@@ -441,7 +410,7 @@ class DashboardGraph extends React.PureComponent {
   }
 
   render() {
-    const { startTime, endTime, metricUnits } = this.props;
+    const { metricUnits } = this.props;
     const { width, height } = this.getSvgBoundingRect();
     const { minY, maxY } = this.yAxisSpread();
 
@@ -457,24 +426,23 @@ class DashboardGraph extends React.PureComponent {
       .y0(d => valueScale(this.getDatapointOffset(d)))
       .y1(d => valueScale(this.getDatapointGraphValue(d)));
 
-    const xAxisTicks = units.seconds.getSpread([startTime, endTime], timeScale);
     const yAxisTicks = units[metricUnits].getSpread([minY, maxY], valueScale);
 
     return (
       <GraphContainer>
         <AxisLabel>{this.props.yAxisLabel}</AxisLabel>
         <Graph>
+          <AxesGrid
+            width={width} height={height}
+            timeScale={timeScale}
+            yAxisTicks={yAxisTicks}
+          />
           <Canvas
             width="100%" height="100%"
             innerRef={this.saveSvgRef}
             onMouseMove={this.handleGraphMouseMove}
             onMouseLeave={this.handleGraphMouseLeave}
           >
-            <AxesGrid
-              width={width} height={height}
-              xAxisTicks={xAxisTicks}
-              yAxisTicks={yAxisTicks}
-            />
             <g className="graph">
               {this.getVisibleMultiSeries().map(
                 series => (
@@ -497,22 +465,6 @@ class DashboardGraph extends React.PureComponent {
               ))}
             </g>
           </Canvas>
-          <YAxisTicksContainer>
-            {height &&
-              yAxisTicks.map(({ value, offset }) => (
-                <YAxisTickLabel key={value} offset={offset}>
-                  {value}
-                </YAxisTickLabel>
-              ))}
-          </YAxisTicksContainer>
-          <XAxisTicksContainer>
-            {width &&
-              xAxisTicks.map(({ value, offset }) => (
-                <XAxisTickLabel key={value} offset={offset}>
-                  {value}
-                </XAxisTickLabel>
-              ))}
-          </XAxisTicksContainer>
           <DeploymentAnnotations
             deployments={this.props.deployments}
             timeScale={timeScale}

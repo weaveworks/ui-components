@@ -1,9 +1,6 @@
 import moment from 'moment';
 import { find, range, flatMap } from 'lodash';
 
-// const MIN_TICKS = 3;
-// const MAX_TICKS = 6;
-
 /* eslint-disable no-restricted-properties */
 function spreadTicksBetween([min, max], { steps, formatFor, scale }) {
   // Tweak the step to show a reasonable number of ticks.
@@ -15,18 +12,6 @@ function spreadTicksBetween([min, max], { steps, formatFor, scale }) {
     value: format(t),
     offset: scale(t),
   }));
-
-  // let p = Math.ceil(min / step) * step;
-  // const format = formatFor(p + step); // this is usually the lowest non-zero value
-  // const result = [];
-  //
-  // for (; p <= max; p += step) {
-  //   result.push({
-  //     value: format(p),
-  //     offset: scale(p),
-  //   });
-  // }
-  // return result;
 }
 
 export const units = {
