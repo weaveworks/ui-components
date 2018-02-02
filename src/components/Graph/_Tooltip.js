@@ -13,7 +13,7 @@ const TooltipContainer = styled.div.attrs({
   padding: 10px 15px;
   color: #555;
   position: absolute;
-  margin-top: 35px;
+  margin-top: 20px;
   margin-left: 10px;
   pointer-events: none;
   min-width: 250px;

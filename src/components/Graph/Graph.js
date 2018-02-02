@@ -20,9 +20,8 @@ import { units } from './units';
 
 import AxesGrid from './_AxesGrid';
 import DeploymentAnnotations from './_DeploymentAnnotations';
-import GraphHoverBar from './_GraphHoverBar';
+import HoverInfo from './_HoverInfo';
 import GraphLegend from './_GraphLegend';
-import GraphTooltip from './_GraphTooltip';
 
 function parseGraphValue(value) {
   const val = parseFloat(value);
@@ -517,14 +516,18 @@ class DashboardGraph extends React.PureComponent {
           <DeploymentAnnotations
             deployments={this.props.deployments}
             timeScale={timeScale}
-            width={width}
             height={height}
+            width={width}
           />
-          <GraphHoverBar
-            hoverPoints={this.state.hoverPoints}
-            hoverXOffset={this.state.hoverXOffset}
+          <HoverInfo
+            datapoints={this.state.hoverPoints}
+            mouseX={this.state.hoverXOffset}
+            mouseY={this.state.hoverYOffset}
+            timestampSec={this.state.hoverTimestampSec}
+            valueUnits={units[metricUnits]}
             valueScale={valueScale}
             height={height}
+            width={width}
           />
         </Graph>
         {this.state.multiSeries.length > 1 && (
@@ -536,14 +539,6 @@ class DashboardGraph extends React.PureComponent {
             onHoveredLegendSeriesChange={this.handleHoveredLegendSeriesChange}
           />
         )}
-        <GraphTooltip
-          datapoints={this.state.hoverPoints}
-          mouseX={this.state.hoverXOffset}
-          mouseY={this.state.hoverYOffset}
-          timestampSec={this.state.hoverTimestampSec}
-          valueUnits={units[metricUnits]}
-          graphWidth={width}
-        />
       </GraphContainer>
     );
   }
