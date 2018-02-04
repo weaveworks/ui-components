@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { units } from './units';
-
 
 const AxisLine = styled.div`
   border-style: dashed;
@@ -48,10 +46,11 @@ const XAxisTickLabel = TickLabel.extend.attrs({
 
 class AxesGrid extends React.PureComponent {
   render() {
-    const { width, height, timeScale, yAxisTicks } = this.props;
+    const { width, height, timeScale, yAxisTicks, timeTicks } = this.props;
     if (!width || !height) return null;
 
-    const xAxisTicks = units.seconds.getSpread(timeScale.domain(), timeScale);
+    const [startTime, endTime] = timeScale.domain();
+    const xAxisTicks = timeTicks.getSpread(startTime, endTime, timeScale);
 
     return (
       <div className="axes-grid">
