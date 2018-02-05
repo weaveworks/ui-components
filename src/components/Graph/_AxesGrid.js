@@ -1,8 +1,12 @@
 import React from 'react';
+import moment from 'moment';
 import styled from 'styled-components';
+import { find, range, flatMap } from 'lodash';
 
 
-const AxisLine = styled.div`
+const AxisLine = styled.div.attrs({
+  style: ({ width = 0, height = 0 }) => ({ width, height }),
+})`
   border-style: dashed;
   border-color: #ddd;
   position: absolute;
@@ -10,22 +14,18 @@ const AxisLine = styled.div`
   top: 0;
 `;
 
-const HorizontalLine = AxisLine.extend.attrs({
-  style: ({ top, width }) => ({ top, width })
-})`
+const HorizontalLine = AxisLine.extend`
   border-width: 1px 0 0 0;
 `;
 
-const VerticalLine = AxisLine.extend.attrs({
-  style: ({ left, height }) => ({ left, height })
-})`
+const VerticalLine = AxisLine.extend`
   border-width: 0 0 0 1px;
 `;
 
-const TickContainer = styled.div`
+const TickContainer = styled.div.attrs({
+  style: ({ left = 0, top = 0 }) => ({ left, top }),
+})`
   position: absolute;
-  left: 0;
-  top: 0;
 `;
 
 const TickLabel = styled.span`
@@ -36,38 +36,85 @@ const TickLabel = styled.span`
   white-space: nowrap;
 `;
 
-const YAxisTickLabel = TickLabel.extend.attrs({
-  style: ({ top }) => ({ top: top - 8, right: 5 }),
-})``;
+const ValueTickLabel = TickLabel.extend`
+  top: -8px;
+  right: 5px;
+`;
 
-const XAxisTickLabel = TickLabel.extend.attrs({
-  style: ({ left, top }) => ({ left, top: top + 5 }),
-})``;
+const TimeTickLabel = TickLabel.extend`
+  top: ${props => props.height + 5}px;
+  left: 0;
+`;
+
+function formatTimeTick(timeSec) {
+  const timestamp = moment(timeSec * 1000).utc();
+
+  // Show month and day at every full day.
+  const startOfDay = timestamp.clone().startOf('day');
+  if (timestamp.diff(startOfDay) === 0) {
+    return timestamp.format('MMM DD');
+  }
+
+  // Show hour and minute at every full minute.
+  const startOfMinute = timestamp.clone().startOf('minute');
+  if (timestamp.diff(startOfMinute) === 0) {
+    return timestamp.format('HH:mm');
+  }
+
+  // Otherwise show only the seconds context.
+  return timestamp.format('ss\'');
+}
+
+function getTimeTicksBetween(startTimeSec, endTimeSec) {
+  // 1s, 2s, 5s, 15s, 30s, 1min, 2min, 5min, 15min, 30min, 1h, 2h, 4h, 8h intervals
+  const stepsSec = [1, 2, 5, 15, 30, 60, 120, 300, 900, 1800, 3600, 7200, 14400, 28800];
+
+  // Tweak the step to show a reasonable number of ticks.
+  const stepSec = find(stepsSec, s => (endTimeSec - startTimeSec) / s < 8);
+
+  // Round up the time ticks to the time ticks step precision.
+  const initialTickSec = Math.ceil(startTimeSec / stepSec) * stepSec;
+  return range(initialTickSec, endTimeSec, stepSec);
+}
+
+function getValueTicks(metricUnits, maxValue) {
+  /* eslint-disable no-restricted-properties */
+  const powersOf10 = range(-6, 15).map(p => Math.pow(10, p));
+  const steps = (metricUnits !== 'bytes')
+    ? flatMap(powersOf10, p => [p, 2 * p, 5 * p])
+    : range(50).map(p => Math.pow(2, p));
+  /* eslint-enable no-restricted-properties */
+
+  const step = find(steps, s => maxValue / s < 5);
+  return range(0, maxValue, step);
+}
 
 class AxesGrid extends React.PureComponent {
   render() {
-    const { width, height, timeScale, yAxisTicks, timeTicks } = this.props;
+    const { width, height, timeScale, metricUnits, valueScale, yAxisMax } = this.props;
     if (!width || !height) return null;
 
-    const [startTime, endTime] = timeScale.domain();
-    const xAxisTicks = timeTicks.getSpread(startTime, endTime, timeScale);
+    const [startTimeSec, endTimeSec] = timeScale.domain();
+    const timeTicks = getTimeTicksBetween(startTimeSec, endTimeSec);
+    const valueTicks = getValueTicks(metricUnits, yAxisMax);
+    const formatValue = this.props.valueFormatter(yAxisMax);
 
     return (
       <div className="axes-grid">
-        {yAxisTicks.map(({ value, offset }) => (
-          <TickContainer key={value}>
-            <HorizontalLine width={width} top={offset} />
-            <YAxisTickLabel top={offset}>
-              {value}
-            </YAxisTickLabel>
+        {valueTicks.map(value => (
+          <TickContainer key={value} top={valueScale(value)}>
+            <HorizontalLine width={width} />
+            <ValueTickLabel>
+              {formatValue(value)}
+            </ValueTickLabel>
           </TickContainer>
         ))}
-        {xAxisTicks.map(({ value, offset }) => (
-          <TickContainer key={value}>
-            <VerticalLine height={height} left={offset} />
-            <XAxisTickLabel top={height} left={offset}>
-              {value}
-            </XAxisTickLabel>
+        {timeTicks.map(timeSec => (
+          <TickContainer key={timeSec} left={timeScale(timeSec)}>
+            <VerticalLine height={height} />
+            <TimeTickLabel height={height}>
+              {formatTimeTick(timeSec)}
+            </TimeTickLabel>
           </TickContainer>
         ))}
       </div>

@@ -83,7 +83,7 @@ class HoverInfo extends React.PureComponent {
     // all tooltip values so we create a formatter for a reference value
     // (1 / 100 of the max value) and use it across all datapoints.
     const referenceValue = (max(map(datapoints, 'value')) || 0) / 100;
-    const formatValue = this.props.valueUnits.formatFor(referenceValue);
+    const formatValue = this.props.valueFormatter(referenceValue);
 
     return (
       <div>

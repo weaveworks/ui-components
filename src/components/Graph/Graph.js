@@ -1,9 +1,8 @@
 import React from 'react';
-import moment from 'moment';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   debounce,
-  min,
   max,
   flatten,
   sortedIndex,
@@ -13,8 +12,6 @@ import {
   first,
   last,
   minBy,
-  find,
-  flatMap,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
 import { line, stack, area } from 'd3-shape';
@@ -40,11 +37,12 @@ function getDatapointAtTimestamp(series, timestampSec) {
   return series.datapoints[index];
 }
 
-const GraphContainer = styled.div`
+const GraphWrapper = styled.div`
   position: relative;
+  margin-left: 45px;
 `;
 
-const Graph = styled.div`
+const GraphContainer = styled.div`
   position: relative;
   min-height: 170px;
   margin-bottom: 20px;
@@ -82,7 +80,7 @@ const SeriesAreaChart = styled.path.attrs({
   pointer-events: none;
 `;
 
-const colorSchemes = {
+const colorThemes = {
   mixed: (index) => {
     const colors = [
       'hsl(209, 44%, 83%)',
@@ -133,144 +131,67 @@ const colorSchemes = {
   },
 };
 
-/* eslint-disable no-restricted-properties */
-function spreadTicksBetween(start, end, { steps, formatFor, scale }) {
-  // Tweak the step to show a reasonable number of ticks.
-  const step = find(steps, s => (end - start) / s < 5);
-  const ti = range(min, max, step);
-  const format = formatFor(step);
+const valueFormatters = {
+  none: (number) => {
+    let baseUnit = 1;
+    let precision = 4;
+    let unitLabel = '';
 
-  return ti.map(t => ({
-    value: format(t),
-    offset: scale(t),
-  }));
-}
+    const bigNumber = [
+      { label: 'T', unit: 1000000000000 },
+      { label: 'G', unit: 1000000000 },
+      { label: 'M', unit: 1000000 },
+      { label: 'k', unit: 1000 },
+    ].find(({ unit }) => number / unit >= 2);
+    const smallNumber = [
+      { base: 1, prec: 0 },
+      { base: 0.1, prec: 1 },
+      { base: 0.01, prec: 2 },
+      { base: 0.001, prec: 3 },
+      { base: 0.0001, prec: 4 },
+    ].find(({ base }) => number / base >= 2);
 
-export const units = {
-  none: {
-    getSteps() {
-      const powersOf10 = range(-4, 15).map(p => Math.pow(10, p));
-      return flatMap(powersOf10, p => [p, 2 * p, 5 * p]);
-    },
-    formatFor(number) {
-      let baseUnit = 1;
-      let precision = 4;
-      let unitLabel = '';
+    if (bigNumber) {
+      baseUnit = bigNumber.unit;
+      unitLabel = bigNumber.label;
+      precision = 0;
+    } else if (smallNumber) {
+      precision = smallNumber.prec;
+    }
 
-      const bigNumber = [
-        { label: 'T', unit: 1000000000000 },
-        { label: 'G', unit: 1000000000 },
-        { label: 'M', unit: 1000000 },
-        { label: 'k', unit: 1000 },
-      ].find(({ unit }) => number / unit >= 2);
-      const smallNumber = [
-        { base: 1, prec: 0 },
-        { base: 0.1, prec: 1 },
-        { base: 0.01, prec: 2 },
-        { base: 0.001, prec: 3 },
-        { base: 0.0001, prec: 4 },
-      ].find(({ base }) => number / base >= 2);
-
-      if (bigNumber) {
-        baseUnit = bigNumber.unit;
-        unitLabel = bigNumber.label;
-        precision = 0;
-      } else if (smallNumber) {
-        precision = smallNumber.prec;
-      }
-
-      return (n) => {
-        if (n === null) return '---';
-        if (n === 0) return '0';
-        return `${(n / baseUnit).toFixed(precision)} ${unitLabel}`;
-      };
-    },
-    getSpread(start, end, scale) {
-      return spreadTicksBetween(start, end, {
-        steps: this.getSteps(),
-        formatFor: this.formatFor,
-        scale,
-      });
-    },
+    return (n) => {
+      if (n === null) return '---';
+      if (n === 0) return '0';
+      return `${(n / baseUnit).toFixed(precision)} ${unitLabel}`;
+    };
   },
 
-  bytes: {
-    getSteps() {
-      return range(50).map(p => Math.pow(2, p));
-    },
-    formatFor(bytes) {
-      const data = [
-        { label: 'TB', unit: 1024 * 1024 * 1024 * 1024 },
-        { label: 'GB', unit: 1024 * 1024 * 1024 },
-        { label: 'MB', unit: 1024 * 1024 },
-        { label: 'kB', unit: 1024 },
-        { label: 'B', unit: 1 },
-      ].find(({ unit }) => bytes / unit >= 2);
+  bytes: (bytes) => {
+    const data = [
+      { label: 'TB', unit: 1024 * 1024 * 1024 * 1024 },
+      { label: 'GB', unit: 1024 * 1024 * 1024 },
+      { label: 'MB', unit: 1024 * 1024 },
+      { label: 'kB', unit: 1024 },
+      { label: 'B', unit: 1 },
+    ].find(({ unit }) => bytes / unit >= 2);
 
-      return (n) => {
-        if (n === null) return '---';
-        if (!data) return '0';
-        return `${Math.round(n / data.unit)} ${data.label}`;
-      };
-    },
-    getSpread(start, end, scale) {
-      return spreadTicksBetween(start, end, {
-        steps: this.getSteps(),
-        formatFor: this.formatFor,
-        scale,
-      });
-    },
+    return (n) => {
+      if (n === null) return '---';
+      if (!data) return '0';
+      return `${Math.round(n / data.unit)} ${data.label}`;
+    };
   },
 
-  percent: {
-    getSteps() {
-      const powersOf10 = range(-6, 4).map(p => Math.pow(10, p));
-      return flatMap(powersOf10, p => [p, 2 * p, 5 * p]);
-    },
-    formatFor() {
-      return (n) => {
-        if (n === null) return '---';
-        if (n === 0) return '0%';
-        return `${Number(n * 100).toFixed(2)}%`;
-      };
-    },
-    getSpread(start, end, scale) {
-      return spreadTicksBetween(start, end, {
-        steps: this.getSteps(),
-        formatFor: this.formatFor,
-        scale,
-      });
-    },
-  },
-
-  seconds: {
-    getSteps() {
-      return [1, 2, 5, 15, 30, 60, 120, 300, 900, 1800, 3600, 7200, 14400, 28800];
-    },
-    format(seconds) {
-      if (seconds === null) return '---';
-
-      const timestamp = moment(seconds * 1000).utc();
-
-      // Show month and day instead of hour and minute at midnight.
-      const startOfDay = timestamp.clone().startOf('day');
-      if (timestamp.diff(startOfDay) === 0) {
-        return timestamp.format('MMM DD');
-      }
-
-      return timestamp.format('HH:mm');
-    },
-    getSpread(start, end, scale) {
-      return spreadTicksBetween(start, end, {
-        steps: this.getSteps(),
-        formatFor: () => this.format,
-        scale,
-      });
-    },
-  }
+  percent: () => (
+    (n) => {
+      if (n === null) return '---';
+      if (n === 0) return '0%';
+      return `${Number(n * 100).toFixed(2)}%`;
+    }
+  ),
 };
 
-class DashboardGraph extends React.PureComponent {
+class Graph extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
 
@@ -405,7 +326,7 @@ class DashboardGraph extends React.PureComponent {
   processMultiSeries(props) {
     // Get the sorted list of names for all the series.
     const multiSeriesNames = props.multiSeries
-      .map(series => props.getLabel(series))
+      .map(series => props.getSeriesName(series))
       .sort();
 
     // This D3 scale takes care of rounding all the datapoints to the nearest discrete timestamp.
@@ -440,7 +361,7 @@ class DashboardGraph extends React.PureComponent {
     const stackedData = stackFunction(valuesForStacking);
 
     // Finally store the multi-series ready to be graphed.
-    const getColor = colorSchemes[props.colorScheme];
+    const getColor = colorThemes[props.colorTheme];
     const multiSeries = multiSeriesNames.map((seriesName, seriesIndex) => ({
       name: seriesName,
       key: `${seriesName}:${seriesIndex}`,
@@ -455,7 +376,7 @@ class DashboardGraph extends React.PureComponent {
     this.setState({ multiSeries });
   }
 
-  yAxisSpread() {
+  yAxisMax() {
     const yPositions = flatten(
       this.getVisibleMultiSeries().map(series =>
         series.datapoints.map(datapoint =>
@@ -463,10 +384,7 @@ class DashboardGraph extends React.PureComponent {
         )
       )
     );
-    return {
-      minY: Math.min(this.props.baseMinValue, min(yPositions)),
-      maxY: Math.max(this.props.baseMaxValue, max(yPositions)),
-    };
+    return max([this.props.valuesMinSpread, ...yPositions]);
   }
 
   isFadedSeries(series) {
@@ -489,20 +407,20 @@ class DashboardGraph extends React.PureComponent {
   }
 
   getTimestampQuantizer(props = this.props) {
-    const { startTime, endTime, stepDuration } = props;
-    // Timestamp values are stepDuration seconds apart and they always end at
-    // endTime. We make startTime a bit smaller to include it in the range in case
-    // (endTime - startTime) is divisible by stepDuration.
+    const { startTimeSec, endTimeSec, stepDurationSec } = props;
+    // Timestamp values are stepDurationSec seconds apart and they always end at
+    // endTimeSec. We make startTimeSec a bit smaller to include it in the range in case
+    // (endTimeSec - startTimeSec) is divisible by stepDurationSec.
     const timestampSecs = range(
-      endTime,
-      startTime - 1e-6,
-      -stepDuration
+      endTimeSec,
+      startTimeSec - 1e-6,
+      -stepDurationSec
     ).sort();
     // scaleQuantize would normally map domain in buckets of uniform lengths. To
     // make it map to the nearest point in timestampSecs instead, we need to extend
-    // the domain by half of stepDuration at each end.
-    const startDomain = first(timestampSecs) - (0.5 * stepDuration);
-    const endDomain = last(timestampSecs) + (0.5 * stepDuration);
+    // the domain by half of stepDurationSec at each end.
+    const startDomain = first(timestampSecs) - (0.5 * stepDurationSec);
+    const endDomain = last(timestampSecs) + (0.5 * stepDurationSec);
     return scaleQuantize()
       .domain([startDomain, endDomain])
       .range(timestampSecs);
@@ -510,17 +428,17 @@ class DashboardGraph extends React.PureComponent {
 
   getTimeScale() {
     const { width } = this.getSvgBoundingRect();
-    const { startTime, endTime } = this.props;
+    const { startTimeSec, endTimeSec } = this.props;
     return scaleLinear()
-      .domain([startTime, endTime])
+      .domain([startTimeSec, endTimeSec])
       .range([0, width]);
   }
 
   getValueScale() {
     const { height } = this.getSvgBoundingRect();
-    const { minY, maxY } = this.yAxisSpread();
+    const maxY = this.yAxisMax();
     return scaleLinear()
-      .domain([minY, maxY])
+      .domain([0, maxY])
       .range([height, 0]);
   }
 
@@ -549,7 +467,9 @@ class DashboardGraph extends React.PureComponent {
   render() {
     const { metricUnits } = this.props;
     const { width, height } = this.getSvgBoundingRect();
-    const { minY, maxY } = this.yAxisSpread();
+    const valueFormatter = valueFormatters[metricUnits];
+    const showLegend = this.state.multiSeries.length > 1;
+    const maxY = this.yAxisMax();
 
     const timeScale = this.getTimeScale();
     const valueScale = this.getValueScale();
@@ -563,17 +483,17 @@ class DashboardGraph extends React.PureComponent {
       .y0(d => valueScale(this.getDatapointOffset(d)))
       .y1(d => valueScale(this.getDatapointGraphValue(d)));
 
-    const yAxisTicks = units[metricUnits].getSpread(minY, maxY, valueScale);
-
     return (
-      <GraphContainer>
+      <GraphWrapper>
         <AxisLabel>{this.props.yAxisLabel}</AxisLabel>
-        <Graph>
+        <GraphContainer>
           <AxesGrid
             width={width} height={height}
-            timeTicks={units.seconds}
             timeScale={timeScale}
-            yAxisTicks={yAxisTicks}
+            valueScale={valueScale}
+            metricUnits={metricUnits}
+            valueFormatter={valueFormatter}
+            yAxisMax={maxY}
           />
           <Canvas
             width="100%" height="100%"
@@ -614,13 +534,13 @@ class DashboardGraph extends React.PureComponent {
             mouseX={this.state.hoverXOffset}
             mouseY={this.state.hoverYOffset}
             timestampSec={this.state.hoverTimestampSec}
-            valueUnits={units[metricUnits]}
+            valueFormatter={valueFormatter}
             valueScale={valueScale}
             height={height}
             width={width}
           />
-        </Graph>
-        {this.state.multiSeries.length > 1 && (
+        </GraphContainer>
+        {showLegend && (
           <GraphLegend
             multiSeries={this.state.multiSeries}
             legendShown={this.props.legendShown}
@@ -629,21 +549,75 @@ class DashboardGraph extends React.PureComponent {
             onHoveredLegendSeriesChange={this.handleHoveredLegendSeriesChange}
           />
         )}
-      </GraphContainer>
+      </GraphWrapper>
     );
   }
 }
 
-DashboardGraph.defaultProps = {
-  colorScheme: 'mixed',
+Graph.propTypes = {
+  /**
+   * List of datapoints to be rendered in the graph
+   */
+  multiSeries: PropTypes.array.isRequired,
+  /**
+   * Granularity in seconds between adjacent datapoints across the time scale
+   */
+  stepDurationSec: PropTypes.number.isRequired,
+  /**
+   * Start timestamp of the rendered chart (unix timestamp)
+   */
+  startTimeSec: PropTypes.number.isRequired,
+  /**
+   * End timestamp of the rendered chart (unix timestamp)
+   */
+  endTimeSec: PropTypes.number.isRequired,
+  /**
+   * Method that builds series name from its metadata
+   */
+  getSeriesName: PropTypes.func.isRequired,
+  /**
+   * Color theme for the graph
+   */
+  colorTheme: PropTypes.oneOf(['mixed', 'blue', 'purple']),
+  /**
+   * Series values format
+   */
+  metricUnits: PropTypes.oneOf(['none', 'bytes', 'percent']),
+  /**
+   * Minimal allowed length of the Y-axis values spread
+   */
+  valuesMinSpread: PropTypes.number,
+  /**
+   * If true, shows the stacked area graph, otherwise show a simple line graph
+   */
+  showStacked: PropTypes.bool,
+  /**
+   * If true, show only data for one series in the tooltip, otherwise show all
+   */
+  simpleTooltip: PropTypes.bool,
+  /**
+   * Making graph legend section collapsable
+   */
+  legendCollapsable: PropTypes.bool,
+  /**
+   * Display legend section initially
+   */
+  legendShown: PropTypes.bool,
+  /**
+   * Optional list of deployment annotations shown over the graph
+   */
+  deployments: PropTypes.array,
+};
+
+Graph.defaultProps = {
+  colorTheme: 'mixed',
   metricUnits: 'none',
+  valuesMinSpread: 0.012,
   showStacked: false,
-  baseMinValue: 0.0,
-  baseMaxValue: 0.012,
   simpleTooltip: false,
   legendCollapsable: false,
   legendShown: true,
   deployments: [],
 };
 
-export default DashboardGraph;
+export default Graph;
