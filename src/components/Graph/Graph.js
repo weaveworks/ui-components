@@ -2,20 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
-  debounce,
   max,
   flatten,
-  sortedIndex,
   range,
   values,
   sortBy,
   first,
   last,
-  minBy,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
-import { line, stack, area } from 'd3-shape';
+import { stack } from 'd3-shape';
 
+import Chart from './_Chart';
 import AxesGrid from './_AxesGrid';
 import DeploymentAnnotations from './_DeploymentAnnotations';
 import HoverInfo from './_HoverInfo';
@@ -31,12 +29,6 @@ function parseGraphValue(value) {
   return val;
 }
 
-function getDatapointAtTimestamp(series, timestampSec) {
-  const timestamps = series.datapoints.map(d => d.timestampSec);
-  const index = sortedIndex(timestamps, timestampSec);
-  return series.datapoints[index];
-}
-
 const GraphWrapper = styled.div`
   position: relative;
   margin-left: 45px;
@@ -48,36 +40,12 @@ const GraphContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const Canvas = styled.svg`
-  cursor: crosshair;
-  position: absolute;
-`;
-
 const AxisLabel = styled.span`
   color: ${props => props.theme.colors.neutral.black};
   font-size: ${props => props.theme.fontSizes.normal};
   transform: translate(-60px, 165px) rotate(-90deg);
   transform-origin: left top 0;
   display: inline-block;
-`;
-
-const SeriesLineChart = styled.path.attrs({
-  strokeWidth: 2,
-  fill: 'none',
-})`
-  opacity: ${props => (props.faded ? 0.1 : 1)};
-  pointer-events: none;
-`;
-
-const SeriesAreaChart = styled.path.attrs({
-  // Use strokeWidth only on focused area graphs to make sure ultra-thin ones
-  // still get visible, but don't use it when multiple series are visible so
-  // that it doesn't look like it's other series' border.
-  strokeWidth: ({ focused }) => (focused ? 1 : 0),
-  stroke: ({ fill }) => fill,
-})`
-  opacity: ${props => (props.faded ? 0.05 : 0.75)};
-  pointer-events: none;
 `;
 
 const colorThemes = {
@@ -196,41 +164,27 @@ class Graph extends React.PureComponent {
     super(props, context);
 
     this.state = {
+      multiSeries: [],
       selectedLegendSeriesKey: null,
       hoveredLegendSeriesKey: null,
       hoverTimestampSec: null,
-      hoverYOffset: null,
-      hoverXOffset: null,
       hoverPoints: null,
-      multiSeries: [],
+      hoverX: null,
+      hoverY: null,
+      chartWidth: 0,
+      chartHeight: 0,
     };
 
-    this.saveSvgRef = this.saveSvgRef.bind(this);
     this.processMultiSeries = this.processMultiSeries.bind(this);
-    this.handleResize = debounce(this.handleResize.bind(this), 200);
-
-    this.handleGraphMouseMove = this.handleGraphMouseMove.bind(this);
-    this.handleGraphMouseLeave = this.handleGraphMouseLeave.bind(this);
 
     this.handleSelectedLegendSeriesChange = this.handleSelectedLegendSeriesChange.bind(this);
     this.handleHoveredLegendSeriesChange = this.handleHoveredLegendSeriesChange.bind(this);
-  }
-
-  handleResize() {
-    this.forceUpdate();
+    this.handleHoverUpdate = this.handleHoverUpdate.bind(this);
+    this.handleChartResize = this.handleChartResize.bind(this);
   }
 
   componentWillMount() {
     this.processMultiSeries(this.props);
-  }
-
-  componentDidMount() {
-    this.handleResize();
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -247,80 +201,12 @@ class Graph extends React.PureComponent {
     this.setState({ hoveredLegendSeriesKey });
   }
 
-  handleGraphMouseMove(ev) {
-    const { left, top } = this.getSvgBoundingRect();
-    const timestampQuantizer = this.getTimestampQuantizer();
-    const valueScale = this.getValueScale();
-    const timeScale = this.getTimeScale();
-    const cursorXOffset = ev.clientX - left;
-    const cursorYOffset = ev.clientY - top;
-
-    const cursorValue = valueScale.invert(cursorYOffset);
-    const cursorTimestampSec = timeScale.invert(cursorXOffset);
-    const hoverTimestampSec = timestampQuantizer(cursorTimestampSec);
-
-    // Build an array of hover points by evaluating the multiseries at the cursor x-coord.
-    let hoverPoints = this.getVisibleMultiSeries().map((series) => {
-      const datapoint = getDatapointAtTimestamp(series, hoverTimestampSec);
-      const graphValue = this.getDatapointGraphValue(datapoint);
-      return {
-        graphValue,
-        value: datapoint.value,
-        key: series.key,
-        name: series.name,
-        color: series.color,
-      };
-    });
-
-    let focusedSeries = {};
-    if (this.props.showStacked) {
-      // If the graph is stacked, focus the closest series above the,
-      // cursor, as that one's area is hovered by the mouse cursor.
-      const isSeriesAbove = s => s.graphValue >= cursorValue;
-      const hoverPointsAboveCursor = hoverPoints.filter(isSeriesAbove);
-      focusedSeries = minBy(hoverPointsAboveCursor, 'graphValue') || {};
-    } else {
-      // Otherwise, in a line graph focus the series with the nearest value.
-      const distanceFromCursor = s => Math.abs(s.graphValue - cursorValue);
-      focusedSeries = minBy(hoverPoints, distanceFromCursor) || {};
-    }
-
-    // Update the hover points with focus data.
-    hoverPoints = hoverPoints.map(s => ({
-      ...s,
-      focused: focusedSeries.key === s.key,
-    }));
-
-    // Simple tooltip will only show the value for the hovered series.
-    if (this.props.simpleTooltip) {
-      hoverPoints = hoverPoints.filter(p => p.focused);
-    }
-
-    this.setState({
-      hoverYOffset: cursorYOffset,
-      hoverXOffset: timeScale(hoverTimestampSec),
-      hoverTimestampSec,
-      hoverPoints,
-    });
+  handleHoverUpdate({ hoverPoints, hoverTimestampSec, hoverX, hoverY }) {
+    this.setState({ hoverPoints, hoverTimestampSec, hoverX, hoverY });
   }
 
-  handleGraphMouseLeave() {
-    this.setState({
-      hoverYOffset: null,
-      hoverXOffset: null,
-      hoverTimestampSec: null,
-      hoverPoints: null,
-    });
-  }
-
-  saveSvgRef(ref) {
-    this.svgRef = ref;
-  }
-
-  getSvgBoundingRect() {
-    return this.svgRef
-      ? this.svgRef.getBoundingClientRect()
-      : { width: 0, height: 0, top: 0, left: 0 };
+  handleChartResize({ chartWidth, chartHeight }) {
+    this.setState({ chartWidth, chartHeight });
   }
 
   processMultiSeries(props) {
@@ -354,9 +240,7 @@ class Graph extends React.PureComponent {
     });
 
     // Stack the graph series in the alphabetical order.
-    const valuesForStacking = sortBy(values(valuesByTimestamp), [
-      'timestampSec',
-    ]);
+    const valuesForStacking = sortBy(values(valuesByTimestamp), ['timestampSec']);
     const stackFunction = stack().keys(multiSeriesNames);
     const stackedData = stackFunction(valuesForStacking);
 
@@ -376,7 +260,7 @@ class Graph extends React.PureComponent {
     this.setState({ multiSeries });
   }
 
-  yAxisMax() {
+  getMaxGraphValue() {
     const yPositions = flatten(
       this.getVisibleMultiSeries().map(series =>
         series.datapoints.map(datapoint =>
@@ -385,25 +269,6 @@ class Graph extends React.PureComponent {
       )
     );
     return max([this.props.valuesMinSpread, ...yPositions]);
-  }
-
-  isFadedSeries(series) {
-    const { hoveredLegendSeriesKey, selectedLegendSeriesKey } = this.state;
-    // Show series as faded if no series is selected and some other series is hovered.
-    return (
-      !selectedLegendSeriesKey &&
-      hoveredLegendSeriesKey &&
-      hoveredLegendSeriesKey !== series.key
-    );
-  }
-
-  isFocusedSeries(series) {
-    const { hoveredLegendSeriesKey, selectedLegendSeriesKey } = this.state;
-    // Show series as faded if no series is selected and some other series is hovered.
-    return (
-      hoveredLegendSeriesKey === series.key ||
-      selectedLegendSeriesKey === series.key
-    );
   }
 
   getTimestampQuantizer(props = this.props) {
@@ -427,19 +292,19 @@ class Graph extends React.PureComponent {
   }
 
   getTimeScale() {
-    const { width } = this.getSvgBoundingRect();
+    const { chartWidth } = this.state;
     const { startTimeSec, endTimeSec } = this.props;
     return scaleLinear()
       .domain([startTimeSec, endTimeSec])
-      .range([0, width]);
+      .range([0, chartWidth]);
   }
 
   getValueScale() {
-    const { height } = this.getSvgBoundingRect();
-    const maxY = this.yAxisMax();
+    const { chartHeight } = this.state;
+    const maxGraphValue = this.getMaxGraphValue();
     return scaleLinear()
-      .domain([0, maxY])
-      .range([height, 0]);
+      .domain([0, maxGraphValue])
+      .range([chartHeight, 0]);
   }
 
   getDatapointGraphValue(datapoint) {
@@ -465,88 +330,70 @@ class Graph extends React.PureComponent {
   }
 
   render() {
-    const { metricUnits } = this.props;
-    const { width, height } = this.getSvgBoundingRect();
-    const valueFormatter = valueFormatters[metricUnits];
-    const showLegend = this.state.multiSeries.length > 1;
-    const maxY = this.yAxisMax();
+    const {
+      yAxisLabel, deployments, metricUnits, showStacked, simpleTooltip,
+      legendShown, legendCollapsable,
+    } = this.props;
+    const {
+      selectedLegendSeriesKey, hoveredLegendSeriesKey, chartWidth, chartHeight,
+      hoverPoints, hoverTimestampSec, hoverX, hoverY, multiSeries,
+    } = this.state;
 
     const timeScale = this.getTimeScale();
     const valueScale = this.getValueScale();
-    const lineFunction = line()
-      .defined(d => d.value !== null)
-      .x(d => timeScale(d.timestampSec))
-      .y(d => valueScale(d.value));
-    const areaFunction = area()
-      .defined(d => d.value !== null)
-      .x(d => timeScale(d.timestampSec))
-      .y0(d => valueScale(this.getDatapointOffset(d)))
-      .y1(d => valueScale(this.getDatapointGraphValue(d)));
+    const maxGraphValue = this.getMaxGraphValue();
+    const visibleMultiSeries = this.getVisibleMultiSeries();
+    const timestampQuantizer = this.getTimestampQuantizer();
+    const formatValue = valueFormatters[metricUnits](maxGraphValue);
 
     return (
       <GraphWrapper>
-        <AxisLabel>{this.props.yAxisLabel}</AxisLabel>
+        <AxisLabel>{yAxisLabel}</AxisLabel>
         <GraphContainer>
           <AxesGrid
-            width={width} height={height}
+            chartWidth={chartWidth}
+            chartHeight={chartHeight}
             timeScale={timeScale}
             valueScale={valueScale}
             metricUnits={metricUnits}
-            valueFormatter={valueFormatter}
-            yAxisMax={maxY}
+            formatValue={formatValue}
           />
-          <Canvas
-            width="100%" height="100%"
-            innerRef={this.saveSvgRef}
-            onMouseMove={this.handleGraphMouseMove}
-            onMouseLeave={this.handleGraphMouseLeave}
-          >
-            {this.getVisibleMultiSeries().map(
-              series => (
-                this.props.showStacked ? (
-                  <SeriesAreaChart
-                    key={series.key}
-                    faded={this.isFadedSeries(series)}
-                    focused={this.isFocusedSeries(series)}
-                    d={areaFunction(series.datapoints)}
-                    fill={series.color}
-                  />
-                ) : (
-                  <SeriesLineChart
-                    key={series.key}
-                    faded={this.isFadedSeries(series)}
-                    d={lineFunction(series.datapoints)}
-                    stroke={series.color}
-                  />
-                )
-            ))}
-          </Canvas>
-          <DeploymentAnnotations
-            deployments={this.props.deployments}
+          <Chart
+            showStacked={showStacked}
             timeScale={timeScale}
-            height={height}
-            width={width}
+            valueScale={valueScale}
+            multiSeries={visibleMultiSeries}
+            timestampQuantizer={timestampQuantizer}
+            selectedLegendSeriesKey={selectedLegendSeriesKey}
+            hoveredLegendSeriesKey={hoveredLegendSeriesKey}
+            onHoverUpdate={this.handleHoverUpdate}
+            onChartResize={this.handleChartResize}
+          />
+          <DeploymentAnnotations
+            deployments={deployments}
+            timeScale={timeScale}
+            chartWidth={chartWidth}
+            chartHeight={chartHeight}
           />
           <HoverInfo
-            datapoints={this.state.hoverPoints}
-            mouseX={this.state.hoverXOffset}
-            mouseY={this.state.hoverYOffset}
-            timestampSec={this.state.hoverTimestampSec}
-            valueFormatter={valueFormatter}
+            mouseX={hoverX}
+            mouseY={hoverY}
+            datapoints={hoverPoints}
+            timestampSec={hoverTimestampSec}
+            simpleTooltip={simpleTooltip}
+            formatValue={formatValue}
             valueScale={valueScale}
-            height={height}
-            width={width}
+            chartWidth={chartWidth}
+            chartHeight={chartHeight}
           />
         </GraphContainer>
-        {showLegend && (
-          <Legend
-            multiSeries={this.state.multiSeries}
-            legendShown={this.props.legendShown}
-            legendCollapsable={this.props.legendCollapsable}
-            onSelectedLegendSeriesChange={this.handleSelectedLegendSeriesChange}
-            onHoveredLegendSeriesChange={this.handleHoveredLegendSeriesChange}
-          />
-        )}
+        <Legend
+          multiSeries={multiSeries}
+          legendShown={legendShown}
+          legendCollapsable={legendCollapsable}
+          onSelectedLegendSeriesChange={this.handleSelectedLegendSeriesChange}
+          onHoveredLegendSeriesChange={this.handleHoveredLegendSeriesChange}
+        />
       </GraphWrapper>
     );
   }

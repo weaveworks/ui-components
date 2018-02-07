@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { max, map } from 'lodash';
 
 import Tooltip from './_Tooltip';
 
@@ -71,24 +70,24 @@ const HoverCircle = styled.span.attrs({
 
 class HoverInfo extends React.PureComponent {
   render() {
-    const { datapoints, mouseX, mouseY, valueScale, width, height } = this.props;
+    const {
+      datapoints, mouseX, mouseY, valueScale, chartWidth, chartHeight, formatValue, simpleTooltip,
+    } = this.props;
     if (!datapoints) return null;
 
+
+    // Simple tooltip will only show the value for the hovered series.
+    const filteredHoverPoints = [...datapoints].filter(p => p.focused || !simpleTooltip);
+
     // Render focused circle last so that it stands out.
-    const sortedHoverPoints = [...datapoints].sort(a => (a.focused ? 1 : -1));
+    const sortedHoverPoints = [...filteredHoverPoints].sort(p => (p.focused ? 1 : -1));
 
     // TODO: Consider changing the timestamp to a more standard format.
     const timestamp = new Date(1000 * this.props.timestampSec).toUTCString();
 
-    // We want to have same formatting (precision, units, etc...) across
-    // all tooltip values so we create a formatter for a reference value
-    // (1 / 100 of the max value) and use it across all datapoints.
-    const referenceValue = (max(map(datapoints, 'value')) || 0) / 100;
-    const formatValue = this.props.valueFormatter(referenceValue);
-
     return (
       <div>
-        <HoverLine left={mouseX} height={height}>
+        <HoverLine left={mouseX} height={chartHeight}>
           {sortedHoverPoints.map(datapoint => (
             <HoverCircle
               key={datapoint.key}
@@ -98,8 +97,8 @@ class HoverInfo extends React.PureComponent {
             />
           ))}
         </HoverLine>
-        <Tooltip x={mouseX} y={mouseY} graphWidth={width} humanizedTimestamp={timestamp}>
-          {datapoints.map(datapoint => (
+        <Tooltip x={mouseX} y={mouseY} graphWidth={chartWidth} humanizedTimestamp={timestamp}>
+          {filteredHoverPoints.map(datapoint => (
             <TooltipRow key={datapoint.key} focused={datapoint.focused}>
               <TooltipRowColor color={datapoint.color} />
               <TooltipRowName>{datapoint.name}</TooltipRowName>
@@ -113,14 +112,15 @@ class HoverInfo extends React.PureComponent {
 }
 
 HoverInfo.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  datapoints: PropTypes.array.isRequired,
+  chartWidth: PropTypes.number.isRequired,
+  chartHeight: PropTypes.number.isRequired,
   valueScale: PropTypes.func.isRequired,
-  valueFormatter: PropTypes.func.isRequired,
-  timestampSec: PropTypes.number.isRequired,
-  mouseX: PropTypes.number.isRequired,
-  mouseY: PropTypes.number.isRequired,
+  formatValue: PropTypes.func.isRequired,
+  simpleTooltip: PropTypes.bool.isRequired,
+  datapoints: PropTypes.array,
+  timestampSec: PropTypes.number,
+  mouseX: PropTypes.number,
+  mouseY: PropTypes.number,
 };
 
 export default HoverInfo;

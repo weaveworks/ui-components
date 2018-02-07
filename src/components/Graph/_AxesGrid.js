@@ -92,19 +92,19 @@ function getValueTicks(metricUnits, maxValue) {
 
 class AxesGrid extends React.PureComponent {
   render() {
-    const { width, height, timeScale, valueScale, metricUnits, yAxisMax } = this.props;
-    if (!width || !height) return null;
+    const { chartWidth, chartHeight, timeScale, valueScale, metricUnits, formatValue } = this.props;
+    if (!chartWidth || !chartHeight) return null;
 
+    const yAxisMax = valueScale.domain()[1];
     const [startTimeSec, endTimeSec] = timeScale.domain();
     const timeTicks = getTimeTicksBetween(startTimeSec, endTimeSec);
     const valueTicks = getValueTicks(metricUnits, yAxisMax);
-    const formatValue = this.props.valueFormatter(yAxisMax);
 
     return (
       <div className="axes-grid">
         {valueTicks.map(value => (
           <TickContainer key={value} top={valueScale(value)}>
-            <HorizontalLine width={width} />
+            <HorizontalLine width={chartWidth} />
             <ValueTickLabel>
               {formatValue(value)}
             </ValueTickLabel>
@@ -112,8 +112,8 @@ class AxesGrid extends React.PureComponent {
         ))}
         {timeTicks.map(timeSec => (
           <TickContainer key={timeSec} left={timeScale(timeSec)}>
-            <VerticalLine height={height} />
-            <TimeTickLabel height={height}>
+            <VerticalLine height={chartHeight} />
+            <TimeTickLabel height={chartHeight}>
               {formatTimeTick(timeSec)}
             </TimeTickLabel>
           </TickContainer>
@@ -124,12 +124,12 @@ class AxesGrid extends React.PureComponent {
 }
 
 AxesGrid.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  chartWidth: PropTypes.number.isRequired,
+  chartHeight: PropTypes.number.isRequired,
   timeScale: PropTypes.func.isRequired,
   valueScale: PropTypes.func.isRequired,
   metricUnits: PropTypes.string.isRequired,
-  yAxisMax: PropTypes.number.isRequired,
+  formatValue: PropTypes.func.isRequired,
 };
 
 export default AxesGrid;

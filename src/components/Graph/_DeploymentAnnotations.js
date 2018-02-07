@@ -98,16 +98,16 @@ class DeploymentAnnotations extends React.PureComponent {
 
   render() {
     const { hoveredDeployment } = this.state;
-    const { width, height } = this.props;
+    const { chartWidth, chartHeight } = this.props;
 
     return (
       <div className="deployment-annotations">
         {this.state.deployments.map(deployment => (
           <DeploymentAnnotation key={deployment.key} left={deployment.position}>
-            <DeploymentAnnotationShadow height={height} />
-            <DeploymentAnnotationLine height={height} />
+            <DeploymentAnnotationShadow height={chartHeight} />
+            <DeploymentAnnotationLine height={chartHeight} />
             <DeploymentAnnotationPoint
-              top={height}
+              top={chartHeight}
               onMouseMove={() => this.handleDeploymentMouseEnter(deployment)}
               onMouseLeave={() => this.handleDeploymentMouseLeave()}
             />
@@ -115,10 +115,10 @@ class DeploymentAnnotations extends React.PureComponent {
         ))}
         {hoveredDeployment && (
           <Tooltip
-            graphWidth={width}
+            graphWidth={chartWidth}
             humanizedTimestamp={hoveredDeployment.humanizedTimestamp}
             x={hoveredDeployment.position}
-            y={height}
+            y={chartHeight}
           >
             <DeploymentInfoLine>
               <strong>{hoveredDeployment.action}</strong>
@@ -136,8 +136,8 @@ class DeploymentAnnotations extends React.PureComponent {
 }
 
 DeploymentAnnotations.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  chartWidth: PropTypes.number.isRequired,
+  chartHeight: PropTypes.number.isRequired,
   timeScale: PropTypes.func.isRequired,
   deployments: PropTypes.array.isRequired,
 };
