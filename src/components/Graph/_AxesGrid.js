@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { find, range, flatMap } from 'lodash';
 
@@ -91,7 +92,7 @@ function getValueTicks(metricUnits, maxValue) {
 
 class AxesGrid extends React.PureComponent {
   render() {
-    const { width, height, timeScale, metricUnits, valueScale, yAxisMax } = this.props;
+    const { width, height, timeScale, valueScale, metricUnits, yAxisMax } = this.props;
     if (!width || !height) return null;
 
     const [startTimeSec, endTimeSec] = timeScale.domain();
@@ -121,5 +122,14 @@ class AxesGrid extends React.PureComponent {
     );
   }
 }
+
+AxesGrid.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  timeScale: PropTypes.func.isRequired,
+  valueScale: PropTypes.func.isRequired,
+  metricUnits: PropTypes.string.isRequired,
+  yAxisMax: PropTypes.number.isRequired,
+};
 
 export default AxesGrid;

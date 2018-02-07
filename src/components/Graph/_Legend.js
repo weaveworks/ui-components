@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Legend = styled.div``;
+
+const LegendContainer = styled.div``;
 
 const LegendItems = styled.div`
   color: ${props => props.theme.colors.neutral.black};
@@ -58,7 +60,7 @@ const ColorBox = styled.span`
   height: 5px;
 `;
 
-class GraphLegend extends React.PureComponent {
+class Legend extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
 
@@ -100,7 +102,7 @@ class GraphLegend extends React.PureComponent {
     const caretIcon = this.state.legendShown ? 'fa-caret-down' : 'fa-caret-right';
 
     return (
-      <Legend>
+      <LegendContainer>
         {this.props.legendCollapsable && (
           <LegendToggle onClick={this.handleLegendToggle}>
             Legend <LegendCaret className={`fa ${caretIcon}`} />
@@ -123,15 +125,23 @@ class GraphLegend extends React.PureComponent {
             ))}
           </LegendItems>
         )}
-      </Legend>
+      </LegendContainer>
     );
   }
 }
 
-GraphLegend.defaultProps = {
+Legend.propTypes = {
+  multiSeries: PropTypes.array.isRequired,
+  onSelectedLegendSeriesChange: PropTypes.func.isRequired,
+  onHoveredLegendSeriesChange: PropTypes.func.isRequired,
+  legendCollapsable: PropTypes.bool.isRequired,
+  legendShown: PropTypes.bool.isRequired,
+};
+
+Legend.defaultProps = {
   multiSeries: [],
   legendCollapsable: false,
   legendShown: true,
 };
 
-export default GraphLegend;
+export default Legend;

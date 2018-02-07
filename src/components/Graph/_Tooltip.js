@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 
@@ -57,5 +58,12 @@ class Tooltip extends React.PureComponent {
     );
   }
 }
+
+Tooltip.propTypes = {
+  graphWidth: PropTypes.number.isRequired,
+  humanizedTimestamp: PropTypes.string.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+};
 
 export default Tooltip;

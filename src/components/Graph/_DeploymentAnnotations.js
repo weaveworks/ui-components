@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Tooltip from './_Tooltip';
@@ -133,5 +134,12 @@ class DeploymentAnnotations extends React.PureComponent {
     );
   }
 }
+
+DeploymentAnnotations.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  timeScale: PropTypes.func.isRequired,
+  deployments: PropTypes.array.isRequired,
+};
 
 export default DeploymentAnnotations;

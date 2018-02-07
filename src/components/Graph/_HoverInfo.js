@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { max, map } from 'lodash';
 
@@ -110,5 +111,16 @@ class HoverInfo extends React.PureComponent {
     );
   }
 }
+
+HoverInfo.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  datapoints: PropTypes.array.isRequired,
+  valueScale: PropTypes.func.isRequired,
+  valueFormatter: PropTypes.func.isRequired,
+  timestampSec: PropTypes.number.isRequired,
+  mouseX: PropTypes.number.isRequired,
+  mouseY: PropTypes.number.isRequired,
+};
 
 export default HoverInfo;

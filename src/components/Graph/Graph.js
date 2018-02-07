@@ -19,7 +19,7 @@ import { line, stack, area } from 'd3-shape';
 import AxesGrid from './_AxesGrid';
 import DeploymentAnnotations from './_DeploymentAnnotations';
 import HoverInfo from './_HoverInfo';
-import GraphLegend from './_GraphLegend';
+import Legend from './_Legend';
 
 function parseGraphValue(value) {
   const val = parseFloat(value);
@@ -501,27 +501,25 @@ class Graph extends React.PureComponent {
             onMouseMove={this.handleGraphMouseMove}
             onMouseLeave={this.handleGraphMouseLeave}
           >
-            <g className="graph">
-              {this.getVisibleMultiSeries().map(
-                series => (
-                  this.props.showStacked ? (
-                    <SeriesAreaChart
-                      key={series.key}
-                      faded={this.isFadedSeries(series)}
-                      focused={this.isFocusedSeries(series)}
-                      d={areaFunction(series.datapoints)}
-                      fill={series.color}
-                    />
-                  ) : (
-                    <SeriesLineChart
-                      key={series.key}
-                      faded={this.isFadedSeries(series)}
-                      d={lineFunction(series.datapoints)}
-                      stroke={series.color}
-                    />
-                  )
-              ))}
-            </g>
+            {this.getVisibleMultiSeries().map(
+              series => (
+                this.props.showStacked ? (
+                  <SeriesAreaChart
+                    key={series.key}
+                    faded={this.isFadedSeries(series)}
+                    focused={this.isFocusedSeries(series)}
+                    d={areaFunction(series.datapoints)}
+                    fill={series.color}
+                  />
+                ) : (
+                  <SeriesLineChart
+                    key={series.key}
+                    faded={this.isFadedSeries(series)}
+                    d={lineFunction(series.datapoints)}
+                    stroke={series.color}
+                  />
+                )
+            ))}
           </Canvas>
           <DeploymentAnnotations
             deployments={this.props.deployments}
@@ -541,7 +539,7 @@ class Graph extends React.PureComponent {
           />
         </GraphContainer>
         {showLegend && (
-          <GraphLegend
+          <Legend
             multiSeries={this.state.multiSeries}
             legendShown={this.props.legendShown}
             legendCollapsable={this.props.legendCollapsable}
