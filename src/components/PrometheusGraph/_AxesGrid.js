@@ -86,19 +86,20 @@ function getValueTicks(metricUnits, maxValue) {
     : range(50).map(p => Math.pow(2, p));
   /* eslint-enable no-restricted-properties */
 
-  const step = find(steps, s => maxValue / s < 5);
+  const step = find(steps, s => maxValue / s < 4);
   return range(0, maxValue, step);
 }
 
 class AxesGrid extends React.PureComponent {
   render() {
-    const { chartWidth, chartHeight, timeScale, valueScale, metricUnits, formatValue } = this.props;
+    const { chartWidth, chartHeight, timeScale, valueScale, metricUnits } = this.props;
     if (!chartWidth || !chartHeight) return null;
 
     const yAxisMax = valueScale.domain()[1];
     const [startTimeSec, endTimeSec] = timeScale.domain();
     const timeTicks = getTimeTicksBetween(startTimeSec, endTimeSec);
     const valueTicks = getValueTicks(metricUnits, yAxisMax);
+    const formatValue = this.props.valueFormatter(yAxisMax);
 
     return (
       <div className="axes-grid">
@@ -128,8 +129,8 @@ AxesGrid.propTypes = {
   chartHeight: PropTypes.number.isRequired,
   timeScale: PropTypes.func.isRequired,
   valueScale: PropTypes.func.isRequired,
+  valueFormatter: PropTypes.func.isRequired,
   metricUnits: PropTypes.string.isRequired,
-  formatValue: PropTypes.func.isRequired,
 };
 
 export default AxesGrid;

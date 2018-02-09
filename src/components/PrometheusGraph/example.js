@@ -3,7 +3,7 @@ import faker from 'faker';
 import moment from 'moment';
 import { range } from 'lodash';
 
-import Graph from '.';
+import PrometheusGraph from '.';
 import { Example, Info } from '../../utils/example';
 
 function generateRandomMultiSeries({ startTime, endTime, stepDuration }, count) {
@@ -37,7 +37,7 @@ export default class GraphExample extends React.Component {
       <div>
         <Example>
           <Info>Simple graph</Info>
-          <Graph
+          <PrometheusGraph
             showStacked
             multiSeries={this.state.multiSeries}
             stepDurationSec={this.state.stepDuration}

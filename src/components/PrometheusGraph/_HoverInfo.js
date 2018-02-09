@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { map, max } from 'lodash';
 
 import Tooltip from './_Tooltip';
 
@@ -71,10 +72,9 @@ const HoverCircle = styled.span.attrs({
 class HoverInfo extends React.PureComponent {
   render() {
     const {
-      datapoints, mouseX, mouseY, valueScale, chartWidth, chartHeight, formatValue, simpleTooltip,
+      datapoints, mouseX, mouseY, valueScale, chartWidth, chartHeight, simpleTooltip,
     } = this.props;
     if (!datapoints) return null;
-
 
     // Simple tooltip will only show the value for the hovered series.
     const filteredHoverPoints = [...datapoints].filter(p => p.focused || !simpleTooltip);
@@ -84,6 +84,12 @@ class HoverInfo extends React.PureComponent {
 
     // TODO: Consider changing the timestamp to a more standard format.
     const timestamp = new Date(1000 * this.props.timestampSec).toUTCString();
+
+    // We want to have same formatting (precision, units, etc...) across
+    // all tooltip values so we create a formatter for a reference value
+    // (1 / 10 of the max value) and use it across all datapoints.
+    const referenceValue = (max(map(datapoints, 'value')) || 0) / 10;
+    const formatValue = this.props.valueFormatter(referenceValue);
 
     return (
       <div>
@@ -115,7 +121,7 @@ HoverInfo.propTypes = {
   chartWidth: PropTypes.number.isRequired,
   chartHeight: PropTypes.number.isRequired,
   valueScale: PropTypes.func.isRequired,
-  formatValue: PropTypes.func.isRequired,
+  valueFormatter: PropTypes.func.isRequired,
   simpleTooltip: PropTypes.bool.isRequired,
   datapoints: PropTypes.array,
   timestampSec: PropTypes.number,

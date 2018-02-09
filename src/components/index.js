@@ -27,4 +27,4 @@ export TimeTravel from './TimeTravel';
 
 export Dropdown from './Dropdown';
 
-export Graph from './Graph';
+export PrometheusGraph from './PrometheusGraph';

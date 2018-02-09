@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import {
   max,
   flatten,
+  flatMap,
   range,
   values,
   sortBy,
@@ -11,6 +12,7 @@ import {
   last,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
+import { format, formatPrefix, precisionPrefix, precisionFixed } from 'd3-format';
 import { stack } from 'd3-shape';
 
 import Chart from './_Chart';
@@ -49,27 +51,6 @@ const AxisLabel = styled.span`
 `;
 
 const colorThemes = {
-  mixed: (index) => {
-    const colors = [
-      'hsl(209, 44%, 83%)',
-      'hsl(98, 55%, 81%)',
-      'hsl(210, 45%, 74%)',
-      'hsl(166, 44%, 65%)',
-      'hsl(230, 34%, 66%)',
-      'hsl(196, 84%, 52%)', // Weaveworks 'blue accent' color, not interpolated because it looked too dark
-      'hsl(240, 20%, 59%)', // Weaveworks 'lavender' color
-      'hsl(197, 74%, 43%)',
-      'hsl(261, 39%, 44%)',
-      'hsl(213, 66%, 40%)',
-      'hsl(261, 68%, 29%)',
-      'hsl(232, 60%, 36%)',
-      'hsl(248, 82%, 11%)', // Weaveworks 'charcoal' color interpolated for 75% opacity
-      'hsl(212, 88%, 27%)',
-    ];
-
-    return colors[index % colors.length];
-  },
-
   blue: (index) => {
     // http://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=9 from d3 without 2 lightest colours
     const colors = [
@@ -83,7 +64,6 @@ const colorThemes = {
     ];
     return colors[index % colors.length];
   },
-
   purple: (index) => {
     // http://colorbrewer2.org/#type=sequential&scheme=BuPu&n=9 without 2 lightest colours
     const colors = [
@@ -97,69 +77,52 @@ const colorThemes = {
     ];
     return colors[index % colors.length];
   },
+  mixed: (index) => {
+    const colors = flatMap(range(7), i => [
+      colorThemes.blue(i),
+      colorThemes.purple(i),
+    ]);
+    return colors[index % colors.length];
+  },
 };
 
 const valueFormatters = {
   none: (number) => {
-    let baseUnit = 1;
-    let precision = 4;
-    let unitLabel = '';
-
-    const bigNumber = [
-      { label: 'T', unit: 1000000000000 },
-      { label: 'G', unit: 1000000000 },
-      { label: 'M', unit: 1000000 },
-      { label: 'k', unit: 1000 },
-    ].find(({ unit }) => number / unit >= 2);
-    const smallNumber = [
-      { base: 1, prec: 0 },
-      { base: 0.1, prec: 1 },
-      { base: 0.01, prec: 2 },
-      { base: 0.001, prec: 3 },
-      { base: 0.0001, prec: 4 },
-    ].find(({ base }) => number / base >= 2);
-
-    if (bigNumber) {
-      baseUnit = bigNumber.unit;
-      unitLabel = bigNumber.label;
-      precision = 0;
-    } else if (smallNumber) {
-      precision = smallNumber.prec;
-    }
-
+    const step = number / 7;
+    const formatNumber = number > 10
+      ? formatPrefix(`.${precisionPrefix(step, number)}`, number)
+      : format(`.${precisionFixed(step)}f`);
     return (n) => {
       if (n === null) return '---';
       if (n === 0) return '0';
-      return `${(n / baseUnit).toFixed(precision)} ${unitLabel}`;
+      return formatNumber(n);
     };
   },
-
-  bytes: (bytes) => {
+  bytes: (maxBytes) => {
     const data = [
       { label: 'TB', unit: 1024 * 1024 * 1024 * 1024 },
       { label: 'GB', unit: 1024 * 1024 * 1024 },
       { label: 'MB', unit: 1024 * 1024 },
       { label: 'kB', unit: 1024 },
       { label: 'B', unit: 1 },
-    ].find(({ unit }) => bytes / unit >= 2);
-
+    ].find(({ unit }) => maxBytes / unit >= 2);
     return (n) => {
       if (n === null) return '---';
       if (!data) return '0';
       return `${Math.round(n / data.unit)} ${data.label}`;
     };
   },
-
-  percent: () => (
-    (n) => {
+  percent: () => {
+    const formatPercent = format('.2%');
+    return (n) => {
       if (n === null) return '---';
       if (n === 0) return '0%';
-      return `${Number(n * 100).toFixed(2)}%`;
-    }
-  ),
+      return formatPercent(n);
+    };
+  },
 };
 
-class Graph extends React.PureComponent {
+class PrometheusGraph extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
 
@@ -341,10 +304,9 @@ class Graph extends React.PureComponent {
 
     const timeScale = this.getTimeScale();
     const valueScale = this.getValueScale();
-    const maxGraphValue = this.getMaxGraphValue();
     const visibleMultiSeries = this.getVisibleMultiSeries();
     const timestampQuantizer = this.getTimestampQuantizer();
-    const formatValue = valueFormatters[metricUnits](maxGraphValue);
+    const valueFormatter = valueFormatters[metricUnits];
 
     return (
       <GraphWrapper>
@@ -355,8 +317,8 @@ class Graph extends React.PureComponent {
             chartHeight={chartHeight}
             timeScale={timeScale}
             valueScale={valueScale}
+            valueFormatter={valueFormatter}
             metricUnits={metricUnits}
-            formatValue={formatValue}
           />
           <Chart
             showStacked={showStacked}
@@ -381,7 +343,7 @@ class Graph extends React.PureComponent {
             datapoints={hoverPoints}
             timestampSec={hoverTimestampSec}
             simpleTooltip={simpleTooltip}
-            formatValue={formatValue}
+            valueFormatter={valueFormatter}
             valueScale={valueScale}
             chartWidth={chartWidth}
             chartHeight={chartHeight}
@@ -399,7 +361,7 @@ class Graph extends React.PureComponent {
   }
 }
 
-Graph.propTypes = {
+PrometheusGraph.propTypes = {
   /**
    * List of datapoints to be rendered in the graph
    */
@@ -454,7 +416,7 @@ Graph.propTypes = {
   deployments: PropTypes.array,
 };
 
-Graph.defaultProps = {
+PrometheusGraph.defaultProps = {
   colorTheme: 'mixed',
   metricUnits: 'none',
   valuesMinSpread: 0.012,
@@ -465,4 +427,4 @@ Graph.defaultProps = {
   deployments: [],
 };
 
-export default Graph;
+export default PrometheusGraph;
