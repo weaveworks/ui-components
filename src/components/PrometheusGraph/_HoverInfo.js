@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import { map, max } from 'lodash';
 
 import Tooltip from './_Tooltip';
+import FocusPoint from './_FocusPoint';
 
-
-const HOVER_CIRCLE_RADIUS = 4;
 
 const TooltipRow = styled.div`
   display: flex;
@@ -53,22 +52,6 @@ const HoverLine = styled.div.attrs({
   top: 0;
 `;
 
-const HoverCircle = styled.span.attrs({
-  style: ({ top }) => ({ top }),
-})`
-  border: 3px solid ${props => props.color};
-  opacity: ${props => (props.focused ? 1 : 0.5)};
-  margin-left: -${HOVER_CIRCLE_RADIUS}px;
-  margin-top: -${HOVER_CIRCLE_RADIUS}px;
-  width: ${2 * HOVER_CIRCLE_RADIUS}px;
-  height: ${2 * HOVER_CIRCLE_RADIUS}px;
-  box-sizing: border-box;
-  background-color: #fff;
-  pointer-events: none;
-  border-radius: 50%;
-  position: absolute;
-`;
-
 class HoverInfo extends React.PureComponent {
   render() {
     const {
@@ -95,10 +78,11 @@ class HoverInfo extends React.PureComponent {
       <div>
         <HoverLine left={mouseX} height={chartHeight}>
           {sortedHoverPoints.map(datapoint => (
-            <HoverCircle
+            <FocusPoint
               key={datapoint.key}
               color={datapoint.color}
-              focused={datapoint.focused}
+              faded={!datapoint.focused}
+              radius={datapoint.focused ? 5 : 4}
               top={valueScale(datapoint.graphValue)}
             />
           ))}

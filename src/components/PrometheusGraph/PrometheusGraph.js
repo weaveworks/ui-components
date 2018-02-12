@@ -231,7 +231,7 @@ class PrometheusGraph extends React.PureComponent {
         )
       )
     );
-    return max([this.props.valuesMinSpread, ...yPositions]);
+    return max([this.props.valuesMinSpread * 1.05, ...yPositions]);
   }
 
   getTimestampQuantizer(props = this.props) {

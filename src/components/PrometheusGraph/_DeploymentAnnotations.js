@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Tooltip from './_Tooltip';
+import FocusPoint from './_FocusPoint';
 
-
-const ANNOTATION_CIRCLE_RADIUS = 5;
 
 const DeploymentInfoLine = styled.span`
   margin-top: 1px;
@@ -39,22 +38,8 @@ const DeploymentAnnotationShadow = VerticalLine.extend`
 `;
 
 const DeploymentAnnotationLine = VerticalLine.extend`
-  border-left: 1px solid #00d3ff;
+  border-left: 1px solid ${props => props.theme.colors.accent.blue};
   opacity: 0.7;
-`;
-
-const DeploymentAnnotationPoint = styled.span`
-  cursor: default;
-  position: absolute;
-  background-color: #fff;
-  box-sizing: border-box;
-  border-radius: 50%;
-  border: 2.5px solid #00d2ff;
-  width: ${2 * ANNOTATION_CIRCLE_RADIUS}px;
-  height: ${2 * ANNOTATION_CIRCLE_RADIUS}px;
-  margin-left: -${ANNOTATION_CIRCLE_RADIUS}px;
-  margin-top: -${ANNOTATION_CIRCLE_RADIUS}px;
-  top: ${props => props.top}px;
 `;
 
 const formattedDeployments = ({ deployments, timeScale }) => (
@@ -106,7 +91,9 @@ class DeploymentAnnotations extends React.PureComponent {
           <DeploymentAnnotation key={deployment.key} left={deployment.position}>
             <DeploymentAnnotationShadow height={chartHeight} />
             <DeploymentAnnotationLine height={chartHeight} />
-            <DeploymentAnnotationPoint
+            <FocusPoint
+              hoverable
+              radius="5"
               top={chartHeight}
               onMouseMove={() => this.handleDeploymentMouseEnter(deployment)}
               onMouseLeave={() => this.handleDeploymentMouseLeave()}
