@@ -122,6 +122,40 @@ const valueFormatters = {
   },
 };
 
+
+/**
+ * Renders a graph based on Prometheus data fed through `multiSeries` prop.
+ * Optionally adds deployment annotations to the graph.
+ *
+ * ```javascript
+ * export default class PrometheusGraphExample extends React.Component {
+ *   constructor() {
+ *     super();
+ *
+ *     this.state = {
+ *       multiSeries: ...,
+ *       startTime: moment('2018-02-05T11:24:14Z').unix(),
+ *       endTime: moment('2018-02-05T11:54:14Z').unix(),
+ *       stepDuration: 9,
+ *     };
+ *   }
+ *
+ *   render() {
+ *     return (
+ *       <PrometheusGraph
+ *         showStacked
+ *         multiSeries={this.state.multiSeriesJobs}
+ *         stepDurationSec={this.state.stepDuration}
+ *         startTimeSec={this.state.startTime}
+ *         endTimeSec={this.state.endTime}
+ *         getSeriesName={({ metric }) => JSON.stringify(metric)}
+ *       />
+ *     );
+ *   }
+ * }
+ * ```
+ *
+ */
 class PrometheusGraph extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
