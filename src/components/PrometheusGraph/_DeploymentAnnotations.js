@@ -64,20 +64,17 @@ class DeploymentAnnotations extends React.PureComponent {
       hoveredDeployment: null,
       deployments: formattedDeployments(props),
     };
-
-    this.handleDeploymentMouseEnter = this.handleDeploymentMouseEnter.bind(this);
-    this.handleDeploymentMouseLeave = this.handleDeploymentMouseLeave.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ deployments: formattedDeployments(nextProps) });
   }
 
-  handleDeploymentMouseEnter(deployment) {
+  handleDeploymentMouseEnter = (deployment) => {
     this.setState({ hoveredDeployment: deployment });
   }
 
-  handleDeploymentMouseLeave() {
+  handleDeploymentMouseLeave = () => {
     this.setState({ hoveredDeployment: null });
   }
 

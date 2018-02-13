@@ -171,13 +171,6 @@ class PrometheusGraph extends React.PureComponent {
       chartWidth: 0,
       chartHeight: 0,
     };
-
-    this.processMultiSeries = this.processMultiSeries.bind(this);
-
-    this.handleSelectedLegendSeriesChange = this.handleSelectedLegendSeriesChange.bind(this);
-    this.handleHoveredLegendSeriesChange = this.handleHoveredLegendSeriesChange.bind(this);
-    this.handleHoverUpdate = this.handleHoverUpdate.bind(this);
-    this.handleChartResize = this.handleChartResize.bind(this);
   }
 
   componentWillMount() {
@@ -190,23 +183,23 @@ class PrometheusGraph extends React.PureComponent {
     }
   }
 
-  handleSelectedLegendSeriesChange(selectedLegendSeriesKey) {
+  handleSelectedLegendSeriesChange = (selectedLegendSeriesKey) => {
     this.setState({ selectedLegendSeriesKey });
   }
 
-  handleHoveredLegendSeriesChange(hoveredLegendSeriesKey) {
+  handleHoveredLegendSeriesChange = (hoveredLegendSeriesKey) => {
     this.setState({ hoveredLegendSeriesKey });
   }
 
-  handleHoverUpdate({ hoverPoints, hoverTimestampSec, hoverX, hoverY }) {
+  handleHoverUpdate = ({ hoverPoints, hoverTimestampSec, hoverX, hoverY }) => {
     this.setState({ hoverPoints, hoverTimestampSec, hoverX, hoverY });
   }
 
-  handleChartResize({ chartWidth, chartHeight }) {
+  handleChartResize = ({ chartWidth, chartHeight }) => {
     this.setState({ chartWidth, chartHeight });
   }
 
-  processMultiSeries(props) {
+  processMultiSeries = (props) => {
     // Get the sorted list of names for all the series.
     const multiSeriesNames = props.multiSeries
       .map(series => props.getSeriesName(series))

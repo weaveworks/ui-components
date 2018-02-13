@@ -38,14 +38,10 @@ class Chart extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
 
-    this.saveSvgRef = this.saveSvgRef.bind(this);
-    this.handleResize = debounce(this.handleResize.bind(this), 200);
-
-    this.handleGraphMouseMove = this.handleGraphMouseMove.bind(this);
-    this.handleGraphMouseLeave = this.handleGraphMouseLeave.bind(this);
+    this.handleResize = debounce(this.handleResize, 200);
   }
 
-  handleResize() {
+  handleResize = () => {
     this.forceUpdate();
   }
 
@@ -63,7 +59,7 @@ class Chart extends React.PureComponent {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  handleGraphMouseMove(ev) {
+  handleGraphMouseMove = (ev) => {
     const { timeScale, valueScale, timestampQuantizer } = this.props;
     const { left, top } = this.getSvgBoundingRect();
     const cursorXOffset = ev.clientX - left;
@@ -113,7 +109,7 @@ class Chart extends React.PureComponent {
     });
   }
 
-  handleGraphMouseLeave() {
+  handleGraphMouseLeave = () => {
     this.props.onHoverUpdate({
       hoverTimestampSec: null,
       hoverPoints: null,
@@ -122,7 +118,7 @@ class Chart extends React.PureComponent {
     });
   }
 
-  saveSvgRef(ref) {
+  saveSvgRef = (ref) => {
     this.svgRef = ref;
   }
 

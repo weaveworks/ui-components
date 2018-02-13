@@ -29,13 +29,7 @@ const Timestamp = styled.div`
 `;
 
 class Tooltip extends React.PureComponent {
-  constructor(props, context) {
-    super(props, context);
-
-    this.saveTooltipRef = this.saveTooltipRef.bind(this);
-  }
-
-  saveTooltipRef(ref) {
+  saveTooltipRef = (ref) => {
     this.tooltipRef = ref;
   }
 

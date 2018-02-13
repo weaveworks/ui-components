@@ -70,11 +70,9 @@ class Legend extends React.PureComponent {
       hoveredLegendSeriesKey: null,
       multiSeries: [],
     };
-
-    this.handleLegendToggle = this.handleLegendToggle.bind(this);
   }
 
-  handleLegendItemClick(series) {
+  handleLegendItemClick = (series) => {
     if (this.state.selectedLegendSeriesKey === series.key) {
       this.setState({ selectedLegendSeriesKey: null });
       this.props.onSelectedLegendSeriesChange(null);
@@ -84,17 +82,17 @@ class Legend extends React.PureComponent {
     }
   }
 
-  handleLegendItemMouseEnter(series) {
+  handleLegendItemMouseEnter = (series) => {
     this.setState({ hoveredLegendSeriesKey: series.key });
     this.props.onHoveredLegendSeriesChange(series.key);
   }
 
-  handleLegendItemMouseLeave() {
+  handleLegendItemMouseLeave = () => {
     this.setState({ hoveredLegendSeriesKey: null });
     this.props.onHoveredLegendSeriesChange(null);
   }
 
-  handleLegendToggle() {
+  handleLegendToggle = () => {
     this.setState({ legendShown: !this.state.legendShown });
   }
 
