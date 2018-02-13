@@ -26,3 +26,5 @@ export Alert from './Alert';
 export TimeTravel from './TimeTravel';
 
 export Dropdown from './Dropdown';
+
+export PrometheusGraph from './PrometheusGraph';
