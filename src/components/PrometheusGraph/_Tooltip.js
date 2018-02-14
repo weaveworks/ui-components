@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -8,11 +9,11 @@ const TooltipContainer = styled.div.attrs({
   // generation every time the tooltip is repositioned.
   style: ({ x, y }) => ({ left: x, top: y }),
 })`
+  color: ${props => props.theme.colors.primary.charcoal};
   background-color: ${props => props.theme.colors.lightgray};
   border: 1px solid ${props => props.theme.colors.neutral.lightgray};
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius};
   padding: 10px 15px;
-  color: #555;
   position: absolute;
   margin-top: 20px;
   margin-left: 10px;
@@ -24,8 +25,9 @@ const TooltipContainer = styled.div.attrs({
 `;
 
 const Timestamp = styled.div`
+  font-family: "Roboto", sans-serif;
   font-size: 13px;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 `;
 
 class Tooltip extends React.PureComponent {
@@ -40,13 +42,13 @@ class Tooltip extends React.PureComponent {
   }
 
   render() {
-    const { x, y, humanizedTimestamp, graphWidth } = this.props;
+    const { x, y, timestamp, graphWidth } = this.props;
     const tooltipWidth = this.getTooltipBoundingRect().width;
     const clampedX = Math.min(x, graphWidth - tooltipWidth - 10);
 
     return (
       <TooltipContainer x={clampedX} y={y} innerRef={this.saveTooltipRef}>
-        <Timestamp>{humanizedTimestamp}</Timestamp>
+        <Timestamp>{moment(timestamp).utc().format()} UTC</Timestamp>
         {this.props.children}
       </TooltipContainer>
     );

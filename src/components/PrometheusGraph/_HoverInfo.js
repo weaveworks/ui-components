@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { map, max } from 'lodash';
@@ -65,8 +66,7 @@ class HoverInfo extends React.PureComponent {
     // Render focused circle last so that it stands out.
     const sortedHoverPoints = [...filteredHoverPoints].sort(p => (p.focused ? 1 : -1));
 
-    // TODO: Consider changing the timestamp to a more standard format.
-    const timestamp = new Date(1000 * this.props.timestampSec).toUTCString();
+    const timestamp = moment.unix(this.props.timestampSec);
 
     // We want to have same formatting (precision, units, etc...) across
     // all tooltip values so we create a formatter for a reference value
@@ -87,7 +87,7 @@ class HoverInfo extends React.PureComponent {
             />
           ))}
         </HoverLine>
-        <Tooltip x={mouseX} y={mouseY} graphWidth={chartWidth} humanizedTimestamp={timestamp}>
+        <Tooltip x={mouseX} y={mouseY} graphWidth={chartWidth} timestamp={timestamp}>
           {filteredHoverPoints.map(datapoint => (
             <TooltipRow key={datapoint.key} focused={datapoint.focused}>
               <TooltipRowColor color={datapoint.color} />
