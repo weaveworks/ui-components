@@ -48,8 +48,7 @@ const formattedDeployments = ({ deployments, timeScale }) => (
     return {
       key: `${Data} --- ${Stamp}`,
       position: timeScale(moment(Stamp).unix()),
-      // TODO: Consider changing the timestamp to a more standard format.
-      humanizedTimestamp: new Date(Stamp).toUTCString(),
+      timestamp: Stamp,
       serviceIDs,
       action,
     };
@@ -100,7 +99,7 @@ class DeploymentAnnotations extends React.PureComponent {
         {hoveredDeployment && (
           <Tooltip
             graphWidth={chartWidth}
-            humanizedTimestamp={hoveredDeployment.humanizedTimestamp}
+            timestamp={hoveredDeployment.timestamp}
             x={hoveredDeployment.position}
             y={chartHeight}
           >
