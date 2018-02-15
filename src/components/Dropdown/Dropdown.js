@@ -25,7 +25,6 @@ const Popover = styled.div`
   margin-top: 4px;
   width: ${WIDTH};
   box-sizing: border-box;
-  padding: 6px 0;
 `;
 
 const Overlay = styled.div`

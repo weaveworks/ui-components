@@ -12,8 +12,18 @@ export default function WeaveCloudLogoExample() {
       </Example>
       <Example>
         <Info>Light Logo</Info>
-        <div style={{backgroundColor: 'black'}}>
+        <div style={{ backgroundColor: 'black' }}>
           <WeaveCloudLogo theme="light" />
+        </div>
+        <br />
+        <Info>Tiny Logo</Info>
+        <div style={{ width: 50 }}>
+          <WeaveCloudLogo theme="dark" tiny />
+        </div>
+        <br />
+        <Info>Tiny Logo, light theme</Info>
+        <div style={{ backgroundColor: 'black', width: 50 }}>
+          <WeaveCloudLogo theme="light" tiny />
         </div>
       </Example>
     </div>
