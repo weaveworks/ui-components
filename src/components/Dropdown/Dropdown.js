@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { map, find } from 'lodash';
+import { map, find, flattenDepth, isArray } from 'lodash';
 
 const WIDTH = '256px';
 const HEIGHT = '36px';
@@ -25,6 +25,7 @@ const Popover = styled.div`
   margin-top: 4px;
   width: ${WIDTH};
   box-sizing: border-box;
+  padding: 6px 0;
 `;
 
 const Overlay = styled.div`
@@ -44,6 +45,11 @@ const ItemWrapper = Item.extend`
   &:hover {
     background-color: #eee;
   }
+`;
+
+const Divider = styled.div`
+  margin: 6px 0;
+  border-bottom: 1px solid ${props => props.theme.colors.neutral.lightgray};
 `;
 
 const SelectedItem = Item.extend`
@@ -87,13 +93,31 @@ const StyledDropdown = component => styled(component)`
  *    value: 'second-thing',
  *    label: 'Second Thing',
  *  },
- *  {
- *    value: 'third-thing',
- *    label: 'Super long thing, this get truncated',
- *  },
  * ];
  *
  * <Dropdown items={items} />
+ * ```
+ *
+ * You  may also add `null` for dividers or provide groups that will be separated
+ * ```javascript
+ *const items = [
+ *  [
+ *    {
+ *      value: 'first-thing',
+ *      label: 'First Thing',
+ *    },
+ *    {
+ *      value: 'second-thing',
+ *      label: 'Second Thing',
+ *    },
+ *  ],
+ *  [
+ *    {
+ *      value: 'another-thing',
+ *      label: 'Another Thing',
+ *    },
+ *  ]
+ * ];
  * ```
  */
 
@@ -125,11 +149,21 @@ class Dropdown extends React.Component {
     this.setState({ isOpen: false });
   }
 
+  divide(items) {
+    if (!items || !isArray(items[0])) {
+      return items;
+    }
+
+    return flattenDepth(items.map(it => [null, it]), 2).slice(1);
+  }
+
   render() {
     const { items, value, className } = this.props;
     const { isOpen } = this.state;
+    const divided = this.divide(items);
     const currentItem =
-      find(items, i => i.value === value) || (items && items[0]);
+      find(divided, i => i && i.value === value) || (divided && divided[0]);
+
 
     return (
       <div className={className} title={currentItem && currentItem.label}>
@@ -142,16 +176,16 @@ class Dropdown extends React.Component {
         {isOpen && (
           <div>
             <Popover>
-              {map(this.props.items, i => (
-                <ItemWrapper
-                  className="dropdown-item"
-                  key={i.value}
-                  onClick={ev => this.handleChange(ev, i.value)}
-                  selected={i.value === value}
-                  title={i.label}
-                >
-                  {i.label}
-                </ItemWrapper>
+              {map(divided, i => (i
+                      ? <ItemWrapper
+                        className="dropdown-item"
+                        key={i.value}
+                        onClick={ev => this.handleChange(ev, i.value)}
+                        selected={i.value === value}
+                        title={i && i.label}>
+                        {i.label}
+                      </ItemWrapper>
+                      : <Divider />
               ))}
             </Popover>
             <Overlay onClick={this.handleBgClick} />
