@@ -142,6 +142,7 @@ a:-webkit-any-link {
 
 .demo-wrap {
   padding: 5px;
+  overflow: auto;
 
   & > div {
     width: 100%;
