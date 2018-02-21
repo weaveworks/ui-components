@@ -48,7 +48,7 @@ const formattedDeployments = ({ deployments, timeScale }) => (
     return {
       key: `${Data} --- ${Stamp}`,
       position: timeScale(moment(Stamp).unix()),
-      timestamp: Stamp,
+      timestamp: moment(Stamp).format(),
       serviceIDs,
       action,
     };
