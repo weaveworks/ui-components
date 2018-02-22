@@ -78,7 +78,7 @@ class Legend extends React.PureComponent {
   handleLegendItemClick = (ev, series) => {
     let { selectedKeys } = this.state;
 
-    if (ev.ctrlKey) {
+    if (ev.ctrlKey || ev.metaKey) {
       // If the Ctrl button is pressed while selecting
       // the legend item, simply toggle its presence.
       selectedKeys = this.seriesSelected(series)
