@@ -6,10 +6,14 @@ import {
   flatten,
   flatMap,
   range,
+  keys,
   values,
   sortBy,
   first,
   last,
+  fromPairs,
+  zipObject,
+  forEach,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
 import { format, formatPrefix, precisionPrefix, precisionFixed } from 'd3-format';
@@ -162,7 +166,7 @@ class PrometheusGraph extends React.PureComponent {
 
     this.state = {
       multiSeries: [],
-      selectedLegendSeriesKey: null,
+      selectedLegendMultiSeriesKeys: [],
       hoveredLegendSeriesKey: null,
       hoverTimestampSec: null,
       hoverPoints: null,
@@ -174,17 +178,18 @@ class PrometheusGraph extends React.PureComponent {
   }
 
   componentWillMount() {
-    this.processMultiSeries(this.props);
+    this.prepareMultiSeries(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.multiSeries !== nextProps.multiSeries) {
-      this.processMultiSeries(nextProps);
+      this.prepareMultiSeries(nextProps);
     }
   }
 
-  handleSelectedLegendSeriesChange = (selectedLegendSeriesKey) => {
-    this.setState({ selectedLegendSeriesKey });
+  handleSelectedLegendMultiSeriesChange = (selectedLegendMultiSeriesKeys) => {
+    this.prepareMultiSeries(this.props, { selectedLegendMultiSeriesKeys });
+    this.setState({ selectedLegendMultiSeriesKeys });
   }
 
   handleHoveredLegendSeriesChange = (hoveredLegendSeriesKey) => {
@@ -199,11 +204,32 @@ class PrometheusGraph extends React.PureComponent {
     this.setState({ chartWidth, chartHeight });
   }
 
-  processMultiSeries = (props) => {
-    // Get the sorted list of names for all the series.
-    const multiSeriesNames = props.multiSeries
-      .map(series => props.getSeriesName(series))
-      .sort();
+  prepareMultiSeries = (props, { selectedLegendMultiSeriesKeys } = this.state) => {
+    const { getSeriesName, colorTheme } = props;
+    const getSeriesColor = colorThemes[colorTheme];
+    const getSeriesKey = (series, index) => (
+      `${getSeriesName(series)}:${index}`
+    );
+
+    // Build a dictionary that references original multi series by keys,
+    // and a sorted list of those keys by which we can later iterate.
+    const getSeriesKeyValuePair = (series, index) => [getSeriesKey(series, index), series];
+    const multiSeriesByKey = fromPairs(props.multiSeries.map(getSeriesKeyValuePair));
+    const multiSeriesKeys = keys(multiSeriesByKey).sort();
+
+    // Calculate the keys of stacked series:
+    //   1. If the graph isn't stacked, then this array should be empty.
+    //   2. If the graph is stacked and some series are selected, only
+    //      those selected ones will be displayed so only stack them.
+    //   3. If the graph is stacked and no series is selected, all the
+    //      series are displayed, so they should all be stacked.
+    let stackedMultiSeriesKeys = [];
+    if (props.showStacked) {
+      stackedMultiSeriesKeys =
+        selectedLegendMultiSeriesKeys.length > 0
+          ? selectedLegendMultiSeriesKeys
+          : multiSeriesKeys;
+    }
 
     // This D3 scale takes care of rounding all the datapoints to the nearest discrete timestamp.
     const timestampQuantizer = this.getTimestampQuantizer(props);
@@ -213,37 +239,38 @@ class PrometheusGraph extends React.PureComponent {
     const valuesByTimestamp = {};
     timestampSecs.forEach((timestampSec) => {
       valuesByTimestamp[timestampSec] = { timestampSec };
-      multiSeriesNames.forEach((seriesName) => {
-        valuesByTimestamp[timestampSec][seriesName] = null;
+      multiSeriesKeys.forEach((seriesKey) => {
+        valuesByTimestamp[timestampSec][seriesKey] = null;
       });
     });
 
     // Go through the datapoints of all the series and fill in
     // their values (in a format that works for D3 stack helpers).
-    props.multiSeries.forEach((series, seriesIndex) => {
-      series.values.forEach((point) => {
+    forEach(multiSeriesByKey, (series, seriesKey) => {
+      forEach(series.values, (point) => {
         const value = parseGraphValue(point[1]);
         const timestampSec = timestampQuantizer(point[0]);
-        const seriesName = multiSeriesNames[seriesIndex];
-        valuesByTimestamp[timestampSec][seriesName] = value;
+        valuesByTimestamp[timestampSec][seriesKey] = value;
       });
     });
 
     // Stack the graph series in the alphabetical order.
+    const stackFunction = stack().keys(stackedMultiSeriesKeys);
     const valuesForStacking = sortBy(values(valuesByTimestamp), ['timestampSec']);
-    const stackFunction = stack().keys(multiSeriesNames);
-    const stackedData = stackFunction(valuesForStacking);
+    const stackedData = zipObject(stackedMultiSeriesKeys, stackFunction(valuesForStacking));
+    const getStackedOffset = (seriesKey, timestampIndex) => (
+      stackedMultiSeriesKeys.includes(seriesKey) ? stackedData[seriesKey][timestampIndex][0] : 0
+    );
 
     // Finally store the multi-series ready to be graphed.
-    const getColor = colorThemes[props.colorTheme];
-    const multiSeries = multiSeriesNames.map((seriesName, seriesIndex) => ({
-      name: seriesName,
-      key: `${seriesName}:${seriesIndex}`,
-      color: getColor(seriesIndex),
+    const multiSeries = multiSeriesKeys.map((seriesKey, seriesIndex) => ({
+      key: seriesKey,
+      color: getSeriesColor(seriesIndex),
+      name: getSeriesName(multiSeriesByKey[seriesKey]),
       datapoints: timestampSecs.map((timestampSec, timestampIndex) => ({
         timestampSec,
-        value: valuesByTimestamp[timestampSec][seriesName],
-        offset: stackedData[seriesIndex][timestampIndex][0],
+        value: valuesByTimestamp[timestampSec][seriesKey],
+        offset: getStackedOffset(seriesKey, timestampIndex),
       })),
     }));
 
@@ -254,7 +281,7 @@ class PrometheusGraph extends React.PureComponent {
     const yPositions = flatten(
       this.getVisibleMultiSeries().map(series =>
         series.datapoints.map(datapoint =>
-          this.getDatapointGraphValue(datapoint)
+          datapoint.offset + datapoint.value
         )
       )
     );
@@ -297,25 +324,14 @@ class PrometheusGraph extends React.PureComponent {
       .range([chartHeight, 0]);
   }
 
-  getDatapointGraphValue(datapoint) {
-    if (!this.props.showStacked) {
-      return datapoint.value;
-    }
-    return this.getDatapointOffset(datapoint) + datapoint.value;
-  }
-
-  getDatapointOffset(datapoint) {
-    return this.state.selectedLegendSeriesKey ? 0 : datapoint.offset;
-  }
-
   getVisibleMultiSeries() {
     // If no series is selected, show all of them.
-    if (!this.state.selectedLegendSeriesKey) {
+    if (this.state.selectedLegendMultiSeriesKeys.length === 0) {
       return this.state.multiSeries;
     }
-    // Otherwise show only the selected series.
+    // Otherwise show only the selected multi series.
     return this.state.multiSeries.filter(
-      series => this.state.selectedLegendSeriesKey === series.key
+      series => this.state.selectedLegendMultiSeriesKeys.includes(series.key)
     );
   }
 
@@ -325,7 +341,7 @@ class PrometheusGraph extends React.PureComponent {
       legendShown, legendCollapsable,
     } = this.props;
     const {
-      selectedLegendSeriesKey, hoveredLegendSeriesKey, chartWidth, chartHeight,
+      selectedLegendMultiSeriesKeys, hoveredLegendSeriesKey, chartWidth, chartHeight,
       hoverPoints, hoverTimestampSec, hoverX, hoverY, multiSeries,
     } = this.state;
 
@@ -353,7 +369,7 @@ class PrometheusGraph extends React.PureComponent {
             valueScale={valueScale}
             multiSeries={visibleMultiSeries}
             timestampQuantizer={timestampQuantizer}
-            selectedLegendSeriesKey={selectedLegendSeriesKey}
+            selectedLegendMultiSeriesKeys={selectedLegendMultiSeriesKeys}
             hoveredLegendSeriesKey={hoveredLegendSeriesKey}
             onHoverUpdate={this.handleHoverUpdate}
             onChartResize={this.handleChartResize}
@@ -377,11 +393,11 @@ class PrometheusGraph extends React.PureComponent {
           />
         </GraphContainer>
         <Legend
+          shown={legendShown}
+          collapsable={legendCollapsable}
+          onSelectedMultiSeriesChange={this.handleSelectedLegendMultiSeriesChange}
+          onHoveredSeriesChange={this.handleHoveredLegendSeriesChange}
           multiSeries={multiSeries}
-          legendShown={legendShown}
-          legendCollapsable={legendCollapsable}
-          onSelectedLegendSeriesChange={this.handleSelectedLegendSeriesChange}
-          onHoveredLegendSeriesChange={this.handleHoveredLegendSeriesChange}
         />
       </GraphWrapper>
     );

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { without } from 'lodash';
 
 
 const LegendContainer = styled.div``;
@@ -20,7 +21,9 @@ const LegendItem = styled.div`
   display: flex;
   font-size: 13px;
   align-items: center;
-  padding: 3px 17px 3px 8px;
+  padding: 2px 16px 2px 7px;
+  margin-right: 2px;
+  margin-bottom: 2px;
   border-radius: 4px;
   max-width: 45%;
 
@@ -65,57 +68,71 @@ class Legend extends React.PureComponent {
     super(props, context);
 
     this.state = {
-      legendShown: props.legendShown,
-      selectedLegendSeriesKey: null,
-      hoveredLegendSeriesKey: null,
+      shown: props.shown,
+      hoveredKey: null,
+      selectedKeys: [],
       multiSeries: [],
     };
   }
 
-  handleLegendItemClick = (series) => {
-    if (this.state.selectedLegendSeriesKey === series.key) {
-      this.setState({ selectedLegendSeriesKey: null });
-      this.props.onSelectedLegendSeriesChange(null);
+  handleLegendItemClick = (ev, series) => {
+    let { selectedKeys } = this.state;
+
+    if (ev.ctrlKey) {
+      // If the Ctrl button is pressed while selecting
+      // the legend item, simply toggle its presence.
+      selectedKeys = this.seriesSelected(series)
+        ? without(selectedKeys, series.key)
+        : [series.key, ...selectedKeys].sort();
     } else {
-      this.setState({ selectedLegendSeriesKey: series.key });
-      this.props.onSelectedLegendSeriesChange(series.key);
+      // If Ctrl button is not pressed, select only the clicked item,
+      // unless it's the only one selected, in which case remove the selection.
+      const onlyThisSelected = this.seriesSelected(series) && selectedKeys.length === 1;
+      selectedKeys = onlyThisSelected ? [] : [series.key];
     }
+
+    this.setState({ selectedKeys });
+    this.props.onSelectedMultiSeriesChange(selectedKeys);
   }
 
   handleLegendItemMouseEnter = (series) => {
-    this.setState({ hoveredLegendSeriesKey: series.key });
-    this.props.onHoveredLegendSeriesChange(series.key);
+    this.setState({ hoveredKey: series.key });
+    this.props.onHoveredSeriesChange(series.key);
   }
 
   handleLegendItemMouseLeave = () => {
-    this.setState({ hoveredLegendSeriesKey: null });
-    this.props.onHoveredLegendSeriesChange(null);
+    this.setState({ hoveredKey: null });
+    this.props.onHoveredSeriesChange(null);
   }
 
   handleLegendToggle = () => {
-    this.setState({ legendShown: !this.state.legendShown });
+    this.setState({ shown: !this.state.shown });
   }
 
+  seriesSelected = series => (
+    this.state.selectedKeys.includes(series.key)
+  )
+
   render() {
-    const caretIcon = this.state.legendShown ? 'fa-caret-down' : 'fa-caret-right';
+    const caretIcon = this.state.shown ? 'fa-caret-down' : 'fa-caret-right';
 
     return (
       <LegendContainer>
-        {this.props.legendCollapsable && (
+        {this.props.collapsable && (
           <LegendToggle onClick={this.handleLegendToggle}>
             Legend <LegendCaret className={`fa ${caretIcon}`} />
           </LegendToggle>
         )}
-        {this.state.legendShown && (
+        {this.state.shown && (
           <LegendItems>
             {this.props.multiSeries.map(series => (
               <LegendItem
                 key={series.key}
                 title={series.name}
-                onClick={() => this.handleLegendItemClick(series)}
+                onClick={ev => this.handleLegendItemClick(ev, series)}
                 onMouseEnter={() => this.handleLegendItemMouseEnter(series)}
                 onMouseLeave={() => this.handleLegendItemMouseLeave()}
-                selected={this.state.selectedLegendSeriesKey === series.key}
+                selected={this.seriesSelected(series)}
               >
                 <ColorBox color={series.color} />
                 <LegendItemName>{series.name}</LegendItemName>
@@ -130,16 +147,16 @@ class Legend extends React.PureComponent {
 
 Legend.propTypes = {
   multiSeries: PropTypes.array.isRequired,
-  onSelectedLegendSeriesChange: PropTypes.func.isRequired,
-  onHoveredLegendSeriesChange: PropTypes.func.isRequired,
-  legendCollapsable: PropTypes.bool.isRequired,
-  legendShown: PropTypes.bool.isRequired,
+  onSelectedMultiSeriesChange: PropTypes.func.isRequired,
+  onHoveredSeriesChange: PropTypes.func.isRequired,
+  collapsable: PropTypes.bool.isRequired,
+  shown: PropTypes.bool.isRequired,
 };
 
 Legend.defaultProps = {
   multiSeries: [],
-  legendCollapsable: false,
-  legendShown: true,
+  collapsable: false,
+  shown: true,
 };
 
 export default Legend;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { debounce, sortedIndex, minBy } from 'lodash';
 import { line, area } from 'd3-shape';
@@ -35,15 +36,9 @@ const SeriesAreaChart = styled.path.attrs({
 `;
 
 class Chart extends React.PureComponent {
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleResize = debounce(this.handleResize, 200);
-  }
-
-  handleResize = () => {
+  handleResize = debounce(() => {
     this.forceUpdate();
-  }
+  }, 200)
 
   componentDidMount() {
     this.handleResize();
@@ -72,9 +67,8 @@ class Chart extends React.PureComponent {
     // Build an array of hover points by evaluating the multiseries at the cursor x-coord.
     let hoverPoints = this.props.multiSeries.map((series) => {
       const datapoint = getDatapointAtTimestamp(series, hoverTimestampSec);
-      const graphValue = this.getDatapointGraphValue(datapoint);
       return {
-        graphValue,
+        graphValue: datapoint.offset + datapoint.value,
         value: datapoint.value,
         key: series.key,
         name: series.name,
@@ -129,33 +123,22 @@ class Chart extends React.PureComponent {
   }
 
   isFadedSeries(series) {
-    const { hoveredLegendSeriesKey, selectedLegendSeriesKey } = this.props;
+    const { hoveredLegendSeriesKey, selectedLegendMultiSeriesKeys } = this.props;
     // Show series as faded if no series is selected and some other series is hovered.
     return (
-      !selectedLegendSeriesKey &&
+      selectedLegendMultiSeriesKeys.length === 0 &&
       hoveredLegendSeriesKey &&
       hoveredLegendSeriesKey !== series.key
     );
   }
 
   isFocusedSeries(series) {
-    const { hoveredLegendSeriesKey, selectedLegendSeriesKey } = this.props;
-    // Show series as faded if no series is selected and some other series is hovered.
+    const { hoveredLegendSeriesKey, selectedLegendMultiSeriesKeys } = this.props;
+    // Show series as focused if it's selected or hovered.
     return (
       hoveredLegendSeriesKey === series.key ||
-      selectedLegendSeriesKey === series.key
+      selectedLegendMultiSeriesKeys.includes(series.key)
     );
-  }
-
-  getDatapointGraphValue(datapoint) {
-    if (!this.props.showStacked) {
-      return datapoint.value;
-    }
-    return this.getDatapointOffset(datapoint) + datapoint.value;
-  }
-
-  getDatapointOffset(datapoint) {
-    return this.props.selectedLegendSeriesKey ? 0 : datapoint.offset;
   }
 
   render() {
@@ -168,8 +151,8 @@ class Chart extends React.PureComponent {
     const areaFunction = area()
       .defined(d => d.value !== null)
       .x(d => timeScale(d.timestampSec))
-      .y0(d => valueScale(this.getDatapointOffset(d)))
-      .y1(d => valueScale(this.getDatapointGraphValue(d)));
+      .y1(d => valueScale(d.offset + d.value))
+      .y0(d => valueScale(d.offset));
 
     return (
       <Canvas
@@ -201,5 +184,17 @@ class Chart extends React.PureComponent {
     );
   }
 }
+
+Chart.propTypes = {
+  multiSeries: PropTypes.array.isRequired,
+  showStacked: PropTypes.bool.isRequired,
+  timeScale: PropTypes.func.isRequired,
+  valueScale: PropTypes.func.isRequired,
+  timestampQuantizer: PropTypes.func.isRequired,
+  selectedLegendMultiSeriesKeys: PropTypes.array.isRequired,
+  hoveredLegendSeriesKey: PropTypes.string,
+  onHoverUpdate: PropTypes.func.isRequired,
+  onChartResize: PropTypes.func.isRequired,
+};
 
 export default Chart;

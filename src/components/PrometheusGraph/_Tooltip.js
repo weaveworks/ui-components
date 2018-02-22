@@ -57,7 +57,7 @@ class Tooltip extends React.PureComponent {
 
 Tooltip.propTypes = {
   graphWidth: PropTypes.number.isRequired,
-  humanizedTimestamp: PropTypes.string.isRequired,
+  timestamp: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
 };

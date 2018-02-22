@@ -66,7 +66,7 @@ class HoverInfo extends React.PureComponent {
     // Render focused circle last so that it stands out.
     const sortedHoverPoints = [...filteredHoverPoints].sort(p => (p.focused ? 1 : -1));
 
-    const timestamp = moment.unix(this.props.timestampSec);
+    const timestamp = moment.unix(this.props.timestampSec).format();
 
     // We want to have same formatting (precision, units, etc...) across
     // all tooltip values so we create a formatter for a reference value
