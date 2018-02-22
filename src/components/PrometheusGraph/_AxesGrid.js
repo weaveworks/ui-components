@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { find, range, flatMap } from 'lodash';
 
 
+const AxesGridContainer = styled.div``;
+
 const AxisLine = styled.div.attrs({
   style: ({ width = 0, height = 0 }) => ({ width, height }),
 })`
@@ -92,8 +94,8 @@ function getValueTicks(metricUnits, maxValue) {
 
 class AxesGrid extends React.PureComponent {
   render() {
-    const { chartWidth, chartHeight, timeScale, valueScale, metricUnits } = this.props;
-    if (!chartWidth || !chartHeight) return null;
+    const { chartWidth, chartHeight, timeScale, valueScale, metricUnits, hasData } = this.props;
+    if (!chartWidth || !chartHeight || !hasData) return null;
 
     const yAxisMax = valueScale.domain()[1];
     const [startTimeSec, endTimeSec] = timeScale.domain();
@@ -102,7 +104,7 @@ class AxesGrid extends React.PureComponent {
     const formatValue = this.props.valueFormatter(yAxisMax);
 
     return (
-      <div className="axes-grid">
+      <AxesGridContainer>
         {valueTicks.map(value => (
           <TickContainer key={value} top={valueScale(value)}>
             <HorizontalLine width={chartWidth} />
@@ -119,12 +121,13 @@ class AxesGrid extends React.PureComponent {
             </TimeTickLabel>
           </TickContainer>
         ))}
-      </div>
+      </AxesGridContainer>
     );
   }
 }
 
 AxesGrid.propTypes = {
+  hasData: PropTypes.bool.isRequired,
   chartWidth: PropTypes.number.isRequired,
   chartHeight: PropTypes.number.isRequired,
   timeScale: PropTypes.func.isRequired,

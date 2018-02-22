@@ -35,11 +35,25 @@ export default class PrometheusGraphExample extends React.Component {
       startTime: moment('2018-02-05T11:24:14Z').unix(),
       endTime: moment('2018-02-05T11:54:14Z').unix(),
       stepDuration: 9,
+      loading: true,
     };
 
     this.state.multiSeriesJobs = generateRandomMultiSeries(this.state, 'job', 7);
     this.state.multiSeriesServices = generateRandomMultiSeries(this.state, 'namespace', 4);
     this.state.deployments = generateDeployments(this.state, 6);
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState({ loading: false });
+      setTimeout(() => {
+        this.setState({ loading: true });
+      }, 2500);
+    }, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   render() {
@@ -63,6 +77,16 @@ export default class PrometheusGraphExample extends React.Component {
             startTimeSec={this.state.startTime}
             endTimeSec={this.state.endTime}
             deployments={this.state.deployments}
+            getSeriesName={({ metric }) => metric.namespace}
+          />
+          <Info>Reloading graph</Info>
+          <PrometheusGraph
+            showStacked
+            loading={this.state.loading}
+            multiSeries={this.state.multiSeriesServices}
+            stepDurationSec={this.state.stepDuration}
+            startTimeSec={this.state.startTime}
+            endTimeSec={this.state.endTime}
             getSeriesName={({ metric }) => metric.namespace}
           />
         </Example>
