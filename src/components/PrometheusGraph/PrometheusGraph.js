@@ -21,6 +21,7 @@ import { stack } from 'd3-shape';
 
 import Chart from './_Chart';
 import AxesGrid from './_AxesGrid';
+import LoadingOverlay from './_LoadingOverlay';
 import DeploymentAnnotations from './_DeploymentAnnotations';
 import HoverInfo from './_HoverInfo';
 import Legend from './_Legend';
@@ -37,18 +38,20 @@ function parseGraphValue(value) {
 
 const GraphWrapper = styled.div`
   position: relative;
-  margin-left: 45px;
+  padding-left: 45px;
 `;
 
 const GraphContainer = styled.div`
   position: relative;
   min-height: 170px;
   margin-bottom: 20px;
+  opacity: ${props => (props.loading ? 0.35 : 1)};
 `;
 
 const AxisLabel = styled.span`
   color: ${props => props.theme.colors.neutral.black};
   font-size: ${props => props.theme.fontSizes.normal};
+  opacity: ${props => (props.loading ? 0.35 : 1)};
   transform: translate(-60px, 165px) rotate(-90deg);
   transform-origin: left top 0;
   display: inline-block;
@@ -338,7 +341,7 @@ class PrometheusGraph extends React.PureComponent {
   render() {
     const {
       yAxisLabel, deployments, metricUnits, showStacked, simpleTooltip,
-      legendShown, legendCollapsable,
+      legendShown, legendCollapsable, loading,
     } = this.props;
     const {
       selectedLegendMultiSeriesKeys, hoveredLegendSeriesKey, chartWidth, chartHeight,
@@ -350,12 +353,14 @@ class PrometheusGraph extends React.PureComponent {
     const visibleMultiSeries = this.getVisibleMultiSeries();
     const timestampQuantizer = this.getTimestampQuantizer();
     const valueFormatter = valueFormatters[metricUnits];
+    const hasData = multiSeries && multiSeries.length > 0;
 
     return (
       <GraphWrapper>
-        <AxisLabel>{yAxisLabel}</AxisLabel>
-        <GraphContainer>
+        <AxisLabel loading={loading}>{yAxisLabel}</AxisLabel>
+        <GraphContainer loading={loading}>
           <AxesGrid
+            hasData={hasData}
             chartWidth={chartWidth}
             chartHeight={chartHeight}
             timeScale={timeScale}
@@ -393,11 +398,15 @@ class PrometheusGraph extends React.PureComponent {
           />
         </GraphContainer>
         <Legend
+          loading={loading}
           shown={legendShown}
           collapsable={legendCollapsable}
           onSelectedMultiSeriesChange={this.handleSelectedLegendMultiSeriesChange}
           onHoveredSeriesChange={this.handleHoveredLegendSeriesChange}
           multiSeries={multiSeries}
+        />
+        <LoadingOverlay
+          loading={loading}
         />
       </GraphWrapper>
     );
@@ -446,6 +455,10 @@ PrometheusGraph.propTypes = {
    */
   simpleTooltip: PropTypes.bool,
   /**
+   * If true, shows a loading overlay on top of the graph
+   */
+  loading: PropTypes.bool,
+  /**
    * Making graph legend section collapsable
    */
   legendCollapsable: PropTypes.bool,
@@ -467,6 +480,7 @@ PrometheusGraph.defaultProps = {
   simpleTooltip: false,
   legendCollapsable: false,
   legendShown: true,
+  loading: false,
   deployments: [],
 };
 

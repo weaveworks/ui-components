@@ -42,7 +42,7 @@ const DeploymentAnnotationLine = VerticalLine.extend`
   opacity: 0.7;
 `;
 
-const formattedDeployments = ({ deployments, timeScale }) => (
+const formattedDeployments = ({ deployments, timeScale, chartWidth }) => (
   deployments.map(({ Data, Stamp }) => {
     const [action, ...serviceIDs] = Data.split(', ');
     return {
@@ -52,7 +52,10 @@ const formattedDeployments = ({ deployments, timeScale }) => (
       serviceIDs,
       action,
     };
-  })
+  }).filter(({ position }) => (
+    // Filter out all the deployments that fall out of the chart.
+    chartWidth >= position && position >= 0
+  ))
 );
 
 class DeploymentAnnotations extends React.PureComponent {
@@ -79,7 +82,10 @@ class DeploymentAnnotations extends React.PureComponent {
 
   render() {
     const { hoveredDeployment } = this.state;
-    const { chartWidth, chartHeight } = this.props;
+    const { chartWidth, chartHeight, timeScale } = this.props;
+
+    const [startTimeSec, endTimeSec] = timeScale.domain();
+    if (!startTimeSec || !endTimeSec) return null;
 
     return (
       <div className="deployment-annotations">

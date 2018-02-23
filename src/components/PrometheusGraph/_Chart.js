@@ -38,7 +38,7 @@ const SeriesAreaChart = styled.path.attrs({
 class Chart extends React.PureComponent {
   handleResize = debounce(() => {
     this.forceUpdate();
-  }, 200)
+  }, 50)
 
   componentDidMount() {
     this.handleResize();
