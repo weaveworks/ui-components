@@ -176,16 +176,16 @@ class Dropdown extends React.Component {
         {isOpen && (
           <div>
             <Popover>
-              {map(divided, i => (i
+              {map(divided, (item, index) => (item
                       ? <ItemWrapper
                         className="dropdown-item"
-                        key={i.value}
-                        onClick={ev => this.handleChange(ev, i.value)}
-                        selected={i.value === value}
-                        title={i && i.label}>
-                        {i.label}
+                        key={item.value}
+                        onClick={ev => this.handleChange(ev, item.value)}
+                        selected={item.value === value}
+                        title={item && item.label}>
+                        {item.label}
                       </ItemWrapper>
-                      : <Divider />
+                      : <Divider key={index} />
               ))}
             </Popover>
             <Overlay onClick={this.handleBgClick} />
@@ -196,16 +196,19 @@ class Dropdown extends React.Component {
   }
 }
 
+const itemPropType = PropTypes.shape({
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  label: PropTypes.string
+});
+
 Dropdown.propTypes = {
   /**
-   * Array of items that will be selectable. `value` should be an internal value,
+   * Array of items (or groups of items) that will be selectable.
+   * `value` should be an internal value,
    * `label` is what will be displayed to the user.
    */
   items: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      label: PropTypes.string
-    })
+    PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType])
   ).isRequired,
   /**
    * The value of the currently selected item. This much match a value in the `items` prop.
