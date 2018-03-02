@@ -14,6 +14,10 @@ import {
   fromPairs,
   zipObject,
   forEach,
+  omit,
+  size,
+  has,
+  get,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
 import { format, formatPrefix, precisionPrefix, precisionFixed } from 'd3-format';
@@ -34,6 +38,34 @@ function parseGraphValue(value) {
     return null;
   }
   return val;
+}
+
+function asJSONString(hash) {
+  return JSON.stringify(hash, null, 1);
+}
+
+function getDefaultSeriesName(series) {
+  const metricKeysCount = size(series.metric);
+
+  // Return the query string if the series has no metrics.
+  if (metricKeysCount === 0) {
+    return series.query;
+  }
+
+  // Return the value if only a single one is present.
+  if (metricKeysCount === 1) {
+    return first(values(series.metric));
+  }
+
+  // If __name__ key is present, pull its value in front of the JSON.
+  if (has(series.metric, '__name__')) {
+    const name = get(series.metric, '__name__');
+    const metricWithoutName = omit(series.metric, ['__name__']);
+    return `${name}${asJSONString(metricWithoutName)}`;
+  }
+
+  // Otherwise, return a stringified JSON of metrics.
+  return asJSONString(series.metric);
 }
 
 const GraphWrapper = styled.div`
@@ -433,7 +465,7 @@ PrometheusGraph.propTypes = {
   /**
    * Method that builds series name from its metadata
    */
-  getSeriesName: PropTypes.func.isRequired,
+  getSeriesName: PropTypes.func,
   /**
    * Color theme for the graph
    */
@@ -473,6 +505,7 @@ PrometheusGraph.propTypes = {
 };
 
 PrometheusGraph.defaultProps = {
+  getSeriesName: getDefaultSeriesName,
   colorTheme: 'mixed',
   metricUnits: 'none',
   valuesMinSpread: 0.012,
