@@ -25,6 +25,7 @@ import { stack } from 'd3-shape';
 
 import Chart from './_Chart';
 import AxesGrid from './_AxesGrid';
+import ErrorOverlay from './_ErrorOverlay';
 import LoadingOverlay from './_LoadingOverlay';
 import DeploymentAnnotations from './_DeploymentAnnotations';
 import HoverInfo from './_HoverInfo';
@@ -373,7 +374,7 @@ class PrometheusGraph extends React.PureComponent {
   render() {
     const {
       yAxisLabel, deployments, metricUnits, showStacked, simpleTooltip,
-      legendShown, legendCollapsable, loading,
+      legendShown, legendCollapsable, loading, error,
     } = this.props;
     const {
       selectedLegendMultiSeriesKeys, hoveredLegendSeriesKey, chartWidth, chartHeight,
@@ -437,6 +438,11 @@ class PrometheusGraph extends React.PureComponent {
           onHoveredSeriesChange={this.handleHoveredLegendSeriesChange}
           multiSeries={multiSeries}
         />
+        <ErrorOverlay
+          hasData={hasData}
+          loading={loading}
+          error={error}
+        />
         <LoadingOverlay
           loading={loading}
         />
@@ -490,6 +496,10 @@ PrometheusGraph.propTypes = {
    * If true, shows a loading overlay on top of the graph
    */
   loading: PropTypes.bool,
+  /**
+   * If set, shows the error message over the graph
+   */
+  error: PropTypes.string,
   /**
    * Making graph legend section collapsable
    */
