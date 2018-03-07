@@ -77,7 +77,6 @@ export default class PrometheusGraphExample extends React.Component {
             startTimeSec={this.state.startTime}
             endTimeSec={this.state.endTime}
             deployments={this.state.deployments}
-            getSeriesName={({ metric }) => metric.namespace}
           />
           <Info>Reloading graph</Info>
           <PrometheusGraph
@@ -87,7 +86,27 @@ export default class PrometheusGraphExample extends React.Component {
             stepDurationSec={this.state.stepDuration}
             startTimeSec={this.state.startTime}
             endTimeSec={this.state.endTime}
-            getSeriesName={({ metric }) => metric.namespace}
+            deployments={this.state.deployments}
+          />
+          <Info>Error with no data</Info>
+          <PrometheusGraph
+            showStacked
+            multiSeries={[]}
+            error="No datapoints found. Maybe the metric does not exist?"
+            loading={this.state.loading}
+            stepDurationSec={this.state.stepDuration}
+            startTimeSec={this.state.startTime}
+            endTimeSec={this.state.endTime}
+          />
+          <Info>Error with data</Info>
+          <PrometheusGraph
+            showStacked
+            multiSeries={this.state.multiSeriesServices}
+            error="Hmm... something with the metrics looks wrong"
+            loading={this.state.loading}
+            stepDurationSec={this.state.stepDuration}
+            startTimeSec={this.state.startTime}
+            endTimeSec={this.state.endTime}
           />
         </Example>
       </div>
