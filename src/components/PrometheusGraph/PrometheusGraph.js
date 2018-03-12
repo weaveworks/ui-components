@@ -127,7 +127,7 @@ const colorThemes = {
 };
 
 const valueFormatters = {
-  none: (number) => {
+  numeric: (number) => {
     const step = number / 7;
     const formatNumber = number > 10
       ? formatPrefix(`.${precisionPrefix(step, number)}`, number)
@@ -136,6 +136,22 @@ const valueFormatters = {
       if (n === null) return '---';
       if (n === 0) return '0';
       return formatNumber(n);
+    };
+  },
+  seconds: (maxSeconds) => {
+    const data = [
+      { label: 'w', unit: 7 * 24 * 60 * 60 },
+      { label: 'd', unit: 24 * 60 * 60 },
+      { label: 'h', unit: 60 * 60},
+      { label: 'm', unit: 60 },
+      { label: 's', unit: 1 },
+      { label: 'ms', unit: 1 / 1000 },
+      { label: 'µs', unit: 1 / 1000 / 1000 },
+    ].find(({ unit }) => maxSeconds / unit >= 2);
+    return (n) => {
+      if (n === null) return '---';
+      if (!data) return '0';
+      return `${Math.round(n / data.unit)} ${data.label}`;
     };
   },
   bytes: (maxBytes) => {
@@ -479,7 +495,7 @@ PrometheusGraph.propTypes = {
   /**
    * Series values format
    */
-  metricUnits: PropTypes.oneOf(['none', 'bytes', 'percent']),
+  metricUnits: PropTypes.oneOf(['numeric', 'seconds', 'bytes', 'percent']),
   /**
    * Minimal allowed length of the Y-axis values spread
    */
@@ -517,7 +533,7 @@ PrometheusGraph.propTypes = {
 PrometheusGraph.defaultProps = {
   getSeriesName: getDefaultSeriesName,
   colorTheme: 'mixed',
-  metricUnits: 'none',
+  metricUnits: 'numeric',
   valuesMinSpread: 0.012,
   showStacked: false,
   simpleTooltip: false,
