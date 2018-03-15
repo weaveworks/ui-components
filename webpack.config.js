@@ -43,7 +43,7 @@ const loaders = [
   {
     test: /\.js?$/,
     exclude: /node_modules|vendor/,
-    loaders: ['react-hot-loader/webpack', 'babel-loader']
+    loaders: ['react-hot-loader/webpack', 'babel-loader', 'stylelint-custom-processor-loader']
   }
 ];
 
