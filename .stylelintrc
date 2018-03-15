@@ -12,7 +12,7 @@
     "no-empty-source": null,
     "no-duplicate-selectors": null,
     "property-no-vendor-prefix": [true, {
-      "ignoreProperties": ["tab-size", "hyphens"],
+      "ignoreProperties": ["tab-size", "hyphens", "animation", "transform"],
     }],
     "selector-type-no-unknown": null,
     "value-no-vendor-prefix": [true, {

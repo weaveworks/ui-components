@@ -3,6 +3,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ResizeAware from 'react-resize-aware';
+import { transparentize } from 'polished';
 import { debounce } from 'lodash';
 import { drag } from 'd3-drag';
 import { event as d3Event, select } from 'd3-selection';
@@ -66,7 +67,7 @@ const FullyPannableCanvas = styled.svg`
 `;
 
 const TimelineContainer = FullyPannableCanvas.extend`
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: ${props => transparentize(0.15, props.theme.colors.white)};
   box-shadow: inset 0 0 7px ${props => props.theme.colors.gray};
   pointer-events: all;
 `;

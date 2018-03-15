@@ -11,7 +11,7 @@ const AxisLine = styled.div.attrs({
   style: ({ width = 0, height = 0 }) => ({ width, height }),
 })`
   border-style: dashed;
-  border-color: #ddd;
+  border-color: ${props => props.theme.colors.alto};
   position: absolute;
   left: 0;
   top: 0;
@@ -32,7 +32,7 @@ const TickContainer = styled.div.attrs({
 `;
 
 const TickLabel = styled.span`
-  color: #555;
+  color: ${props => props.theme.colors.dimGray};
   display: block;
   font-size: 12px;
   position: absolute;

@@ -1,32 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
+import { transparentize } from 'polished';
+
+import theme from '../../theme';
+
+const charcoal100 = theme.colors.primary.charcoal;
+const charcoal70 = transparentize(0.3, charcoal100);
+const charcoal50 = transparentize(0.5, charcoal100);
+const charcoal20 = transparentize(0.8, charcoal100);
 
 const dotSpinnerAnimation = keyframes`
   0%,
   100% {
-    box-shadow: 0em -2.6em 0em 0em #32324b, 1.8em -1.8em 0 0em rgba(50,50,75, 0.2), 2.5em 0em 0 0em rgba(50,50,75, 0.2), 1.75em 1.75em 0 0em rgba(50,50,75, 0.2), 0em 2.5em 0 0em rgba(50,50,75, 0.2), -1.8em 1.8em 0 0em rgba(50,50,75, 0.2), -2.6em 0em 0 0em rgba(50,50,75, 0.5), -1.8em -1.8em 0 0em rgba(50,50,75, 0.7);
+    box-shadow: 0em -2.6em 0em 0em ${charcoal100}, 1.8em -1.8em 0 0em ${charcoal20}, 2.5em 0em 0 0em ${charcoal20}, 1.75em 1.75em 0 0em ${charcoal20}, 0em 2.5em 0 0em ${charcoal20}, -1.8em 1.8em 0 0em ${charcoal20}, -2.6em 0em 0 0em ${charcoal50}, -1.8em -1.8em 0 0em ${charcoal70};
   }
   12.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(50,50,75, 0.7), 1.8em -1.8em 0 0em #32324b, 2.5em 0em 0 0em rgba(50,50,75, 0.2), 1.75em 1.75em 0 0em rgba(50,50,75, 0.2), 0em 2.5em 0 0em rgba(50,50,75, 0.2), -1.8em 1.8em 0 0em rgba(50,50,75, 0.2), -2.6em 0em 0 0em rgba(50,50,75, 0.2), -1.8em -1.8em 0 0em rgba(50,50,75, 0.5);
+    box-shadow: 0em -2.6em 0em 0em ${charcoal70}, 1.8em -1.8em 0 0em ${charcoal100}, 2.5em 0em 0 0em ${charcoal20}, 1.75em 1.75em 0 0em ${charcoal20}, 0em 2.5em 0 0em ${charcoal20}, -1.8em 1.8em 0 0em ${charcoal20}, -2.6em 0em 0 0em ${charcoal20}, -1.8em -1.8em 0 0em ${charcoal50};
   }
   25% {
-    box-shadow: 0em -2.6em 0em 0em rgba(50,50,75, 0.5), 1.8em -1.8em 0 0em rgba(50,50,75, 0.7), 2.5em 0em 0 0em #32324b, 1.75em 1.75em 0 0em rgba(50,50,75, 0.2), 0em 2.5em 0 0em rgba(50,50,75, 0.2), -1.8em 1.8em 0 0em rgba(50,50,75, 0.2), -2.6em 0em 0 0em rgba(50,50,75, 0.2), -1.8em -1.8em 0 0em rgba(50,50,75, 0.2);
+    box-shadow: 0em -2.6em 0em 0em ${charcoal50}, 1.8em -1.8em 0 0em ${charcoal70}, 2.5em 0em 0 0em ${charcoal100}, 1.75em 1.75em 0 0em ${charcoal20}, 0em 2.5em 0 0em ${charcoal20}, -1.8em 1.8em 0 0em ${charcoal20}, -2.6em 0em 0 0em ${charcoal20}, -1.8em -1.8em 0 0em ${charcoal20};
   }
   37.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(50,50,75, 0.2), 1.8em -1.8em 0 0em rgba(50,50,75, 0.5), 2.5em 0em 0 0em rgba(50,50,75, 0.7), 1.75em 1.75em 0 0em #32324b, 0em 2.5em 0 0em rgba(50,50,75, 0.2), -1.8em 1.8em 0 0em rgba(50,50,75, 0.2), -2.6em 0em 0 0em rgba(50,50,75, 0.2), -1.8em -1.8em 0 0em rgba(50,50,75, 0.2);
+    box-shadow: 0em -2.6em 0em 0em ${charcoal20}, 1.8em -1.8em 0 0em ${charcoal50}, 2.5em 0em 0 0em ${charcoal70}, 1.75em 1.75em 0 0em ${charcoal100}, 0em 2.5em 0 0em ${charcoal20}, -1.8em 1.8em 0 0em ${charcoal20}, -2.6em 0em 0 0em ${charcoal20}, -1.8em -1.8em 0 0em ${charcoal20};
   }
   50% {
-    box-shadow: 0em -2.6em 0em 0em rgba(50,50,75, 0.2), 1.8em -1.8em 0 0em rgba(50,50,75, 0.2), 2.5em 0em 0 0em rgba(50,50,75, 0.5), 1.75em 1.75em 0 0em rgba(50,50,75, 0.7), 0em 2.5em 0 0em #32324b, -1.8em 1.8em 0 0em rgba(50,50,75, 0.2), -2.6em 0em 0 0em rgba(50,50,75, 0.2), -1.8em -1.8em 0 0em rgba(50,50,75, 0.2);
+    box-shadow: 0em -2.6em 0em 0em ${charcoal20}, 1.8em -1.8em 0 0em ${charcoal20}, 2.5em 0em 0 0em ${charcoal50}, 1.75em 1.75em 0 0em ${charcoal70}, 0em 2.5em 0 0em ${charcoal100}, -1.8em 1.8em 0 0em ${charcoal20}, -2.6em 0em 0 0em ${charcoal20}, -1.8em -1.8em 0 0em ${charcoal20};
   }
   62.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(50,50,75, 0.2), 1.8em -1.8em 0 0em rgba(50,50,75, 0.2), 2.5em 0em 0 0em rgba(50,50,75, 0.2), 1.75em 1.75em 0 0em rgba(50,50,75, 0.5), 0em 2.5em 0 0em rgba(50,50,75, 0.7), -1.8em 1.8em 0 0em #32324b, -2.6em 0em 0 0em rgba(50,50,75, 0.2), -1.8em -1.8em 0 0em rgba(50,50,75, 0.2);
+    box-shadow: 0em -2.6em 0em 0em ${charcoal20}, 1.8em -1.8em 0 0em ${charcoal20}, 2.5em 0em 0 0em ${charcoal20}, 1.75em 1.75em 0 0em ${charcoal50}, 0em 2.5em 0 0em ${charcoal70}, -1.8em 1.8em 0 0em ${charcoal100}, -2.6em 0em 0 0em ${charcoal20}, -1.8em -1.8em 0 0em ${charcoal20};
   }
   75% {
-    box-shadow: 0em -2.6em 0em 0em rgba(50,50,75, 0.2), 1.8em -1.8em 0 0em rgba(50,50,75, 0.2), 2.5em 0em 0 0em rgba(50,50,75, 0.2), 1.75em 1.75em 0 0em rgba(50,50,75, 0.2), 0em 2.5em 0 0em rgba(50,50,75, 0.5), -1.8em 1.8em 0 0em rgba(50,50,75, 0.7), -2.6em 0em 0 0em #32324b, -1.8em -1.8em 0 0em rgba(50,50,75, 0.2);
+    box-shadow: 0em -2.6em 0em 0em ${charcoal20}, 1.8em -1.8em 0 0em ${charcoal20}, 2.5em 0em 0 0em ${charcoal20}, 1.75em 1.75em 0 0em ${charcoal20}, 0em 2.5em 0 0em ${charcoal50}, -1.8em 1.8em 0 0em ${charcoal70}, -2.6em 0em 0 0em ${charcoal100}, -1.8em -1.8em 0 0em ${charcoal20};
   }
   87.5% {
-    box-shadow: 0em -2.6em 0em 0em rgba(50,50,75, 0.2), 1.8em -1.8em 0 0em rgba(50,50,75, 0.2), 2.5em 0em 0 0em rgba(50,50,75, 0.2), 1.75em 1.75em 0 0em rgba(50,50,75, 0.2), 0em 2.5em 0 0em rgba(50,50,75, 0.2), -1.8em 1.8em 0 0em rgba(50,50,75, 0.5), -2.6em 0em 0 0em rgba(50,50,75, 0.7), -1.8em -1.8em 0 0em #32324b;
+    box-shadow: 0em -2.6em 0em 0em ${charcoal20}, 1.8em -1.8em 0 0em ${charcoal20}, 2.5em 0em 0 0em ${charcoal20}, 1.75em 1.75em 0 0em ${charcoal20}, 0em 2.5em 0 0em ${charcoal20}, -1.8em 1.8em 0 0em ${charcoal50}, -2.6em 0em 0 0em ${charcoal70}, -1.8em -1.8em 0 0em ${charcoal100};
   }
 `;
 

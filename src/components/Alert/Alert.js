@@ -22,6 +22,7 @@ const StyledAlert = styled.div`
     &:hover {
       text-decoration: none;
     }
+  }
 `;
 
 const CloseIcon = styled.i`

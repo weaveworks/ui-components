@@ -15,7 +15,7 @@ const PanButton = styled.button`
   outline: 0;
   border: 0;
 
-  // Remove outline on Firefox
+  /* Remove outline on Firefox */
   &::-moz-focus-inner { border: 0; }
   &:focus { outline: none; }
 
