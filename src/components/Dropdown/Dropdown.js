@@ -43,7 +43,7 @@ const ItemWrapper = Item.extend`
   min-height: ${HEIGHT};
 
   &:hover {
-    background-color: #eee;
+    background-color: ${props => props.theme.colors.gallery};
   }
 `;
 

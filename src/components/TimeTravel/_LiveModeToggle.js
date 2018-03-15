@@ -18,7 +18,7 @@ const ToggleButton = styled.button`
   outline: 0;
   cursor: pointer;
 
-  // Remove outline on Firefox
+  /* Remove outline on Firefox */
   &::-moz-focus-inner { border: 0; }
   &:focus { outline: none; }
 

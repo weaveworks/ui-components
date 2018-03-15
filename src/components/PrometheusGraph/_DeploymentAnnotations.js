@@ -32,7 +32,7 @@ const VerticalLine = styled.div.attrs({
 `;
 
 const DeploymentAnnotationShadow = VerticalLine.extend`
-  border-left: 3px solid #fff;
+  border-left: 3px solid ${props => props.theme.colors.white};
   margin-left: -1px;
   opacity: 0.2;
 `;

@@ -5,7 +5,7 @@ export const Example = styled.div`
 `;
 
 export const Info = styled.h4`
-  color: #666;
+  color: ${props => props.theme.colors.dimGray};
   font-size: 18px;
   margin-bottom: 13px;
 `;
