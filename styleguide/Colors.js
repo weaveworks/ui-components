@@ -1,15 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
-import { map } from 'lodash';
+import { map, pickBy, isString } from 'lodash';
 
-import Grid, { GridRow as Row, GridColumn as Column } from '../src/components/Grid';
 import Text from '../src/components/Text';
 import theme from '../src/theme';
 
+const Row = styled.div`
+  margin-bottom: 40px;
+`;
+
+const Sample = styled.div`
+  display: inline-block;
+  margin-right: 20px;
+`;
+
 const Swatch = styled.div`
-  width: 75px;
-  height: 75px;
-  border-radius: 2px;
+  width: 110px;
+  height: 110px;
+  border-radius: ${props => props.theme.borderRadius};
   background-color: ${props => props.color};
 `;
 
@@ -20,15 +28,15 @@ const Label = styled.p`
 
 const curly = start => (start ? '{' : '}');
 
-const swatches = collection => map(collection, (c, name) => (
-  <Column key={c}>
+const swatches = collection => map(pickBy(collection, isString), (c, name) => (
+  <Sample key={c}>
     <Swatch color={c} />
     <Label>{name}</Label>
-  </Column>
+  </Sample>
 ));
 
 const Colors = () => (
-  <Grid>
+  <div>
     <Row>
       <p>
         These colors can be accessed via the styled-components theme:
@@ -59,7 +67,15 @@ const Colors = () => (
     <Row>
       {swatches(theme.colors.neutral)}
     </Row>
-  </Grid>
+    <Text large>Legacy Colors</Text>
+    <Row>
+      {swatches(theme.colors)}
+    </Row>
+    <Text large>PromQL Colors</Text>
+    <Row>
+      {swatches(theme.colors.promQL)}
+    </Row>
+  </div>
 );
 
 export default Colors;

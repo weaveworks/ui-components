@@ -78,7 +78,6 @@ const colors = {
   whisper: '#fdfdfe',
   whiteLilac: '#f0f0fa',
   whiteSmoke: '#fafafc',
-  wildSand: '#f5f4f4',
   winterHazel: '#d2d296',
   promQL: {
     /**
