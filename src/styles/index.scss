@@ -1,5 +1,9 @@
-@import "settings";
 @import "mixins";
 @import "colors";
-@import "constants";
 @import "components";
+
+// TODO: This one is dangerous since it gets inherited
+// into service-ui & scope, try to get rid of it.
+.disabled {
+  display: none;
+}
