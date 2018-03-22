@@ -1,4 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const GridWrapper = styled.div`
+  max-width: 100%;
+`;
 
 /**
  * A grid for building layouts.
@@ -31,6 +36,6 @@ import React from 'react';
  */
 export default function Grid({children}) {
   return (
-    <div className="weave-grid">{children}</div>
+    <GridWrapper className="weave-grid">{children}</GridWrapper>
   );
 }
