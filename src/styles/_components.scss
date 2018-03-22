@@ -1,34 +1,3 @@
-.weave-table {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-collapse: collapse;
-  border-left-color: $color-gray;
-  border-right-color: $color-gray;
-  border-top-color: $color-gray;
-
-  &-header {
-    box-shadow: 0 4px 2px -2px rgba(0,0,0,.16);
-    border-bottom: 1px solid $color-gray;
-
-    th {
-      @include font-size(small);
-      font-weight: normal;
-      color: $color-lavender;
-      text-transform: uppercase;
-    }
-  }
-  &-row {
-    @include font-size(medium);
-    color: $color-gunpowder;
-    &:nth-child(odd) {
-      background-color: $color-athens;
-    }
-    td {
-      padding: 3px 4px;
-    }
-  }
-}
-
 .weave-panel {
   @include material-shadow;
   &-header {
@@ -137,10 +106,6 @@
       margin-right: 10px;
     }
   }
-
-  &-content {
-    // padding: 20px;
-  }
 }
 
 
@@ -164,97 +129,5 @@
   .weave-list-item-subtext {
     opacity: 0.5;
     font-size: 13px;
-  }
-}
-
-
-/* LogoProgress */
-.weave-logo-progress {
-  display: block;
-  border-radius: 150px;
-  width: 150px;
-  height: 150px;
-  overflow: hidden;
-
-  .st0{fill:#32324B;}
-  .st1{fill:#00D2FF;}
-  .st2{fill:#FF4B19;}
-
-
-  .a, .e{
-    -webkit-animation: diagonal-stripes 1.25s ease-in-out 0s infinite both;
-  }
-
-  .c{
-    -webkit-animation: diagonal-stripes 1.25s ease-in-out 0.1s infinite both;
-  }
-
- .b{
-    -webkit-animation: diagonal-stripes 1.25s ease-in-out 0.15s infinite both;
-  }
-
-
-  .f {
-   -webkit-animation: vertical-stripes 1.25s ease-in-out 0.15s infinite both;
-  }
-
-  .d {
-   -webkit-animation: vertical-stripes 1.25s ease-in-out 0.25s infinite both;
-  }
-}
-
-@-webkit-keyframes diagonal-stripes {
-  0% {
-    opacity: 1;
-  }
-  20% {
-    -webkit-transform: translateX(0px) translateY(0px);
-    opacity: 1;
-  }
-  48% {
-    -webkit-transform: translateX(150px) translateY(-150px);
-    opacity: 1;
-  }
-  50% {
-      opacity: 0;
-  }
-  59% {
-    -webkit-transform: translateX(-150px) translateY(150px);
-      opacity: 0;
-  }
-  60% {
-    opacity: 0.7;
-  }
-  100% {
-    -webkit-transform: translateX(0px) translateY(0px); opacity: 1;
-  }
-}
-
-
-@-webkit-keyframes vertical-stripes {
-  0% {
-    opacity: 1;
-  }
-  20% {
-    -webkit-transform: translateY(0px);
-    opacity: 1;
-  }
-  48% {
-    -webkit-transform: translateY(150px);
-    opacity: 1;
-  }
-  50% {
-      opacity: 0;
-  }
-  59% {
-    -webkit-transform: translateY(-150px);
-      opacity: 0;
-  }
-  60% {
-    opacity: 0.7;
-  }
-  100% {
-    -webkit-transform: translateY(0px);
-    opacity: 1;
   }
 }
