@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "ci": "yarn lint && yarn test",
-    "lint": "eslint src docs && stylelint src",
+    "lint": "eslint src docs styleguide && stylelint src",
     "test": "jest",
     "build": "yarn build:theme && yarn build:utils && yarn build:constants && yarn build:components && yarn build:index",
     "build:theme": "babel src/theme --out-dir lib/theme --ignore *.test.js",

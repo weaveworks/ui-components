@@ -39,11 +39,19 @@ const NewColorFormRow = Row.extend`
 
 const curly = start => (start ? '{' : '}');
 
+const maybeParseColor = (v) => {
+  try {
+    return parseToHsl(v);
+  } catch (e) {
+    return undefined;
+  }
+};
+
 const diffColors = (a, b) => {
   const ca = maybeParseColor(a);
   const cb = maybeParseColor(b);
   if (!ca || !cb) {
-    return;
+    return undefined;
   }
   return `Diff from ${TEST_COLOR_NAME}: hsl(${round(
     ca.hue - cb.hue,
@@ -69,19 +77,13 @@ const swatches = (collection, testColor) =>
     )
   );
 
-const maybeParseColor = v => {
-  try {
-    return parseToHsl(v);
-  } catch (e) {}
-};
-
 class Colors extends React.Component {
   constructor() {
     super();
     this.state = { newColor: '' };
   }
 
-  handleChange = ev => {
+  handleChange = (ev) => {
     this.setState({ newColor: ev.target.value });
   };
 
