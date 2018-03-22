@@ -2,26 +2,26 @@
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-collapse: collapse;
-  border-left-color: $gray;
-  border-right-color: $gray;
-  border-top-color: $gray;
+  border-left-color: $color-gray;
+  border-right-color: $color-gray;
+  border-top-color: $color-gray;
 
   &-header {
     box-shadow: 0 4px 2px -2px rgba(0,0,0,.16);
-    border-bottom: 1px solid $gray;
+    border-bottom: 1px solid $color-gray;
 
     th {
       @include font-size(small);
       font-weight: normal;
-      color: $lavender;
+      color: $color-lavender;
       text-transform: uppercase;
     }
   }
   &-row {
     @include font-size(medium);
-    color: $gunpowder;
+    color: $color-gunpowder;
     &:nth-child(odd) {
-      background-color: $athens;
+      background-color: $color-athens;
     }
     td {
       padding: 3px 4px;
@@ -34,8 +34,8 @@
   &-header {
     height: 50px;
     padding-left: 20px;
-    background-color: $athens;
-    color: $gunpowder;
+    background-color: $color-athens;
+    color: $color-gunpowder;
     &:first-child {
       line-height: 50px;
     }
@@ -51,7 +51,7 @@
 }
 
 .weave-menu {
-  color: $lavender;
+  color: $color-lavender;
   text-align: left;
   &-item, &-sub-item {
     &:hover {
@@ -75,8 +75,8 @@
   }
 
   .menu-item-active {
-    color: $sand;
-    background-color: $lavender;
+    color: $color-sand;
+    background-color: $color-lavender;
   }
 }
 
@@ -100,8 +100,8 @@
 
   &-window {
     @include material-shadow(heavy);
-    background-color: $white;
-    color: $gunpowder;
+    background-color: $color-white;
+    color: $color-gunpowder;
     margin: 0 auto;
     max-width: $dialog-max-width;
     padding: 20px;
@@ -111,7 +111,7 @@
   }
 
   &-overlay {
-    background-color: $black;
+    background-color: $color-black;
     opacity: 0;
     position: absolute;
     z-index: 2;
@@ -144,8 +144,8 @@
 }
 
 .weave-matched-text {
-  background-color: rgba($weave-blue, 0.3);
-  border: 1px solid $weave-blue;
+  background-color: rgba($color-weaveblue, 0.3);
+  border: 1px solid $color-weaveblue;
 }
 
 
