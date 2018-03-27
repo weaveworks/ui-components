@@ -1,4 +1,5 @@
 import { darken } from 'polished';
+import { isString, kebabCase, forEach } from 'lodash';
 
 const neutral = {
   black: '#1a1a1a',
@@ -112,6 +113,43 @@ const colors = {
     disabled: neutral.gray,
   },
   neutral,
+  // Used by PrometheusGraph component
+  graphThemes: {
+    blue: [
+      '#c7e9b4',
+      '#7ecdbb',
+      '#1eb5eb',
+      '#1d91bf',
+      '#235fa9',
+      '#253393',
+      '#084181',
+    ],
+    purple: [
+      '#c1d4e7',
+      '#9fbddb',
+      '#8d95c6',
+      '#8282ab',
+      '#89429e',
+      '#800f7a',
+      '#0b0533',
+    ],
+    mixed: [
+      '#c7e9b4',
+      '#c1d4e7',
+      '#7ecdbb',
+      '#9fbddb',
+      '#1eb5eb',
+      '#8d95c6',
+      '#1d91bf',
+      '#8282ab',
+      '#235fa9',
+      '#89429e',
+      '#253393',
+      '#800f7a',
+      '#084181',
+      '#0b0533',
+    ],
+  },
 };
 
 const weave = {
@@ -195,3 +233,26 @@ const weave = {
 };
 
 export default weave;
+
+// Flattens and collects all theme colors, names them
+// as Scss vars and returns them as query string
+export function themeColorsAsScss() {
+  const ignoreKeys = ['graphThemes'];
+  const themeColors = [];
+
+  forEach(weave.colors, (value, name) => {
+    const colorPrefix = `$color-${kebabCase(name)}`;
+    if (ignoreKeys.includes(name)) return;
+
+    if (isString(value)) {
+      themeColors.push(`${colorPrefix}: ${value}`);
+    } else {
+      forEach(value, (innerValue, subname) => {
+        if (ignoreKeys.includes(subname)) return;
+        themeColors.push(`${colorPrefix}-${kebabCase(subname)}: ${innerValue}`);
+      });
+    }
+  });
+
+  return `${themeColors.join('; ')};`;
+}
