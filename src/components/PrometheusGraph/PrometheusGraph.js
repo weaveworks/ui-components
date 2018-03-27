@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import {
   max,
   flatten,
-  flatMap,
   range,
   keys,
   values,

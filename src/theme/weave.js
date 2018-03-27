@@ -1,4 +1,5 @@
 import { darken } from 'polished';
+import { isString, kebabCase, forEach } from 'lodash';
 
 const neutral = {
   black: '#1a1a1a',
@@ -232,3 +233,26 @@ const weave = {
 };
 
 export default weave;
+
+// Flattens and collects all theme colors, names them
+// as Scss vars and returns them as query string
+export function themeColorsAsScss() {
+  const ignoreKeys = ['graphThemes'];
+  const themeColors = [];
+
+  forEach(weave.colors, (value, name) => {
+    const colorPrefix = `$color-${kebabCase(name)}`;
+    if (ignoreKeys.includes(name)) return;
+
+    if (isString(value)) {
+      themeColors.push(`${colorPrefix}: ${value}`);
+    } else {
+      forEach(value, (innerValue, subname) => {
+        if (ignoreKeys.includes(subname)) return;
+        themeColors.push(`${colorPrefix}-${kebabCase(subname)}: ${innerValue}`);
+      });
+    }
+  });
+
+  return `${themeColors.join('; ')};`;
+}

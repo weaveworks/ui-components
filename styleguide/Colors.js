@@ -142,7 +142,7 @@ class Colors extends React.Component {
         <Text large>PrometheusGraph Themes</Text>
         <h4>Blue</h4>
         <Row>{this.renderSwatches(theme.colors.graphThemes.blue)}</Row>
-        <h4>Green</h4>
+        <h4>Purple</h4>
         <Row>{this.renderSwatches(theme.colors.graphThemes.purple)}</Row>
         <h4>Mixed</h4>
         <Row>{this.renderSwatches(theme.colors.graphThemes.mixed)}</Row>
