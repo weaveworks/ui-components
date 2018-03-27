@@ -23,6 +23,8 @@ import { scaleLinear, scaleQuantize } from 'd3-scale';
 import { format, formatPrefix, precisionPrefix, precisionFixed } from 'd3-format';
 import { stack } from 'd3-shape';
 
+import theme from '../../theme';
+
 import Chart from './_Chart';
 import AxesGrid from './_AxesGrid';
 import ErrorOverlay from './_ErrorOverlay';
@@ -69,6 +71,13 @@ function getDefaultSeriesName(series) {
   return asJSONString(series.metric);
 }
 
+function getColorTheme(colorTheme) {
+  return (index) => {
+    const colors = theme.colors.graphThemes[colorTheme];
+    return colors[index % colors.length];
+  };
+}
+
 const GraphWrapper = styled.div`
   position: relative;
   padding-left: 45px;
@@ -89,42 +98,6 @@ const AxisLabel = styled.span`
   transform-origin: left top 0;
   display: inline-block;
 `;
-
-const colorThemes = {
-  blue: (index) => {
-    // http://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=9 from d3 without 2 lightest colours
-    const colors = [
-      'hsl(98, 55%, 81%)',
-      'hsl(166, 44%, 65%)',
-      'hsl(196, 84%, 52%)', // Weaveworks 'blue accent' color, not interpolated because it looked too dark
-      'hsl(197, 74%, 43%)',
-      'hsl(213, 66%, 40%)',
-      'hsl(232, 60%, 36%)',
-      'hsl(212, 88%, 27%)',
-    ];
-    return colors[index % colors.length];
-  },
-  purple: (index) => {
-    // http://colorbrewer2.org/#type=sequential&scheme=BuPu&n=9 without 2 lightest colours
-    const colors = [
-      'hsl(209, 44%, 83%)',
-      'hsl(210, 45%, 74%)',
-      'hsl(230, 34%, 66%)',
-      'hsl(240, 20%, 59%)', // Weaveworks 'lavender' color
-      'hsl(286, 41%, 44%)',
-      'hsl(303, 79%, 28%)',
-      'hsl(248, 82%, 11%)', // Weaveworks 'charcoal' color interpolated for 75% opacity
-    ];
-    return colors[index % colors.length];
-  },
-  mixed: (index) => {
-    const colors = flatMap(range(7), i => [
-      colorThemes.blue(i),
-      colorThemes.purple(i),
-    ]);
-    return colors[index % colors.length];
-  },
-};
 
 const valueFormatters = {
   numeric: (number) => {
@@ -258,7 +231,7 @@ class PrometheusGraph extends React.PureComponent {
 
   prepareMultiSeries = (props, { selectedLegendMultiSeriesKeys } = this.state) => {
     const { getSeriesName, colorTheme } = props;
-    const getSeriesColor = colorThemes[colorTheme];
+    const getSeriesColor = getColorTheme(colorTheme);
     const getSeriesKey = (series, index) => (
       `${getSeriesName(series)}:${index}`
     );

@@ -112,6 +112,43 @@ const colors = {
     disabled: neutral.gray,
   },
   neutral,
+  // Used by PrometheusGraph component
+  graphThemes: {
+    blue: [
+      '#c7e9b4',
+      '#7ecdbb',
+      '#1eb5eb',
+      '#1d91bf',
+      '#235fa9',
+      '#253393',
+      '#084181',
+    ],
+    purple: [
+      '#c1d4e7',
+      '#9fbddb',
+      '#8d95c6',
+      '#8282ab',
+      '#89429e',
+      '#800f7a',
+      '#0b0533',
+    ],
+    mixed: [
+      '#c7e9b4',
+      '#c1d4e7',
+      '#7ecdbb',
+      '#9fbddb',
+      '#1eb5eb',
+      '#8d95c6',
+      '#1d91bf',
+      '#8282ab',
+      '#235fa9',
+      '#89429e',
+      '#253393',
+      '#800f7a',
+      '#084181',
+      '#0b0533',
+    ],
+  },
 };
 
 const weave = {

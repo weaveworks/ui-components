@@ -72,7 +72,9 @@ const swatches = (collection, testColor) =>
     ([name, c]) => (
       <Sample key={c} title={testColor && diffColors(c, testColor)}>
         <Swatch color={c} />
-        <Label em={name === TEST_COLOR_NAME}>{name}</Label>
+        <Label em={name === TEST_COLOR_NAME}>
+          {isNaN(parseFloat(name)) && name}
+        </Label>
       </Sample>
     )
   );
@@ -95,7 +97,7 @@ class Colors extends React.Component {
           [TEST_COLOR_NAME]: this.state.newColor,
         }),
       },
-      this.state.newColor
+      this.state.newColor,
     );
   }
 
@@ -137,6 +139,13 @@ class Colors extends React.Component {
         <Row>{this.renderSwatches(theme.colors)}</Row>
         <Text large>PromQL Colors</Text>
         <Row>{this.renderSwatches(theme.colors.promQL)}</Row>
+        <Text large>PrometheusGraph Themes</Text>
+        <h4>Blue</h4>
+        <Row>{this.renderSwatches(theme.colors.graphThemes.blue)}</Row>
+        <h4>Green</h4>
+        <Row>{this.renderSwatches(theme.colors.graphThemes.purple)}</Row>
+        <h4>Mixed</h4>
+        <Row>{this.renderSwatches(theme.colors.graphThemes.mixed)}</Row>
       </div>
     );
   }
