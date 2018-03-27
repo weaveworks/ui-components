@@ -12,7 +12,6 @@ const colors = {
   // legacy
   athens: '#e2e2ec',
   black: '#000',
-  danger: '#ff0000',
   gray: '#aaaaaa',
   gunpowder: '#3c3c5b',
   lavender: '#8383ac',
@@ -33,7 +32,6 @@ const colors = {
   athensGray: '#eeeef4',
   athensGrayDark: '#e9e9f1',
   blueHaze: '#c0c0d5',
-  burntSiena: '#ef5350',
   cerulean: '#00a8cc',
   chamois: '#eee1ba',
   chetwodeBlue: '#8f8fd7',
@@ -45,7 +43,6 @@ const colors = {
   dustyGray: '#969696',
   eastBay: '#4a5d87',
   fern: '#66bb6a',
-  flamingo: '#f15d2a',
   fog: '#ddddff',
   gallery: '#eee',
   hokeyPokey: '#d69e30',
@@ -62,20 +59,15 @@ const colors = {
   mulledWine: '#46466a',
   mystic: '#dae4ea',
   olivine: '#a0be7e',
-  punch: '#dd4b39',
-  redBerry: '#8b0000',
   sail: '#b3d4fc',
-  salmon: '#ff7c7c',
   scooter: '#2db5ca',
   scooterLight: '#39cbde',
   silver: '#ccc',
   snuff: '#dadaea',
   solidGray: '#808080',
-  thunderbird: '#b71c1c',
   titanWhite: '#eeeeff',
   tundora: '#444',
   veniceBlue: '#065f7d',
-  wellRead: '#ad3131',
   whisper: '#fdfdfe',
   whiteLilac: '#f0f0fa',
   whiteSmoke: '#fafafc',
@@ -94,6 +86,8 @@ const colors = {
     function: '#dc322f',
     deleted: '#9a050f',
     tag: '#00009f',
+    // Dropdown colors,
+    salmon: '#ff7c7c',
   },
   // use these for new stuff!
   primary: {
@@ -150,6 +144,12 @@ const colors = {
       '#0b0533',
     ],
   },
+  // Third-party specific colors - not to be used in the theme!
+  thirdParty: {
+    // Google single-click login
+    wellRead: '#ad3131',
+    punch: '#dd4b39',
+  },
 };
 
 const weave = {
@@ -191,9 +191,9 @@ const weave = {
       },
       danger: {
         color: colors.white,
-        background: colors.danger,
+        background: colors.status.error,
         hoverColor: colors.white,
-        hoverBackground: darken(0.15, colors.danger),
+        hoverBackground: darken(0.15, colors.status.error),
       },
       disabled: {
         color: colors.gray,
