@@ -27,7 +27,6 @@ const LegendItem = styled.div`
   margin-right: 2px;
   margin-bottom: 2px;
   border-radius: 4px;
-  max-width: 45%;
 
   &:hover {
     background-color: ${props => props.theme.colors.athens};
@@ -42,6 +41,7 @@ const LegendItemName = styled.span`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  max-width: 36ch;
 `;
 
 const LegendToggle = styled.span`
