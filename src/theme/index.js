@@ -1,1 +1,1 @@
-export default from './weave';
+export { default, themeColorsAsScss } from './weave';
