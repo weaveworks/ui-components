@@ -14,33 +14,3 @@
     padding: 20px;
   }
 }
-
-.weave-menu {
-  color: $color-lavender;
-  text-align: left;
-  &-item, &-sub-item {
-    &:hover {
-      @include hover-background;
-      cursor: pointer;
-    }
-  }
-
-  &-item {
-    display: block;
-    min-height: 40px;
-    line-height: 40px;
-    padding-left: 20px;
-  }
-
-  &-sub-item {
-    @include font-size(medium);
-    padding-left: 40px;
-    line-height: 30px;
-    min-height: 30px;
-  }
-
-  .menu-item-active {
-    color: $color-sand;
-    background-color: $color-lavender;
-  }
-}

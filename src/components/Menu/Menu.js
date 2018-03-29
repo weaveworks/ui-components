@@ -1,4 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const MenuWrapper = styled.div`
+  color: ${props => props.theme.colors.lavender};
+  text-align: left;
+`;
 
 /**
  * A menu component that can be used for navigation.
@@ -24,6 +30,6 @@ import React from 'react';
  */
 export default function Menu({children}) {
   return (
-    <div className="weave-menu">{children}</div>
+    <MenuWrapper className="weave-menu">{children}</MenuWrapper>
   );
 }
