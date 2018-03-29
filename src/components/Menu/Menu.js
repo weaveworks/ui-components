@@ -17,11 +17,11 @@ const MenuWrapper = styled.div`
  *       <MenuItem onClick={clickHandler.bind(this, 'onClick')} text="Item 2" />
  *       <MenuItem
  *         onClick={clickHandler.bind(this, 'onClick')}
- *         className="weave-menu-sub-item" text="Sub Item 1"
+ *         isSubItem text="Sub Item 1"
  *       />
  *       <MenuItem
  *         onClick={clickHandler.bind(this, 'onClick')}
- *         className="weave-menu-sub-item" text="Sub Item 2"
+ *         isSubItem text="Sub Item 2"
  *       />
  *     </Menu>
  *   );

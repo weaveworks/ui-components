@@ -7,6 +7,26 @@ import { transparentize } from 'polished';
 import Dialog from '../../src/components/Dialog';
 import { renderMarkdown } from './utils';
 
+
+const Panel = styled.div`
+  box-shadow: ${props => props.theme.boxShadow.light};
+`;
+
+const PanelHeader = styled.div`
+  height: 50px;
+  padding-left: 20px;
+  background-color: ${props => props.theme.colors.athens};
+  color: ${props => props.theme.colors.gunpowder};
+
+  &:first-child {
+    line-height: 50px;
+  }
+`;
+
+const PanelBody = styled.div`
+  padding: 20px;
+`;
+
 const Table = styled.table`
   border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -135,11 +155,11 @@ export default class Example extends React.Component {
         </div>
         {!this.props.isSubComponent &&
           <div className="content-section">
-            <div className="weave-panel">
-              <div className="weave-panel-header">
+            <Panel>
+              <PanelHeader>
                 <h3>Example</h3>
-              </div>
-              <div className="weave-panel-body">
+              </PanelHeader>
+              <PanelBody>
                 <div className="component-demo">
                   <div className="demo-wrap">
                     {this.props.example
@@ -147,8 +167,8 @@ export default class Example extends React.Component {
                       : <this.props.element {...this.props.element.props} {...newProps} />}
                   </div>
                 </div>
-              </div>
-            </div>
+              </PanelBody>
+            </Panel>
           </div>
         }
         <Dialog
