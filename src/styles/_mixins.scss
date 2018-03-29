@@ -29,25 +29,9 @@
   @include transition(opacity, .2s, ease-in);
 }
 
-@mixin clearfix {
-  &:after {
-    display: table;
-    clear: both;
-    content: '';
-  }
-}
-
-@mixin selected($color: $color-lavender) {
-  box-shadow: 0px 0px 2px 2px $color;
-}
-
 @mixin placeholder {
   &::-webkit-input-placeholder {@content}
   &:-moz-placeholder           {@content}
   &::-moz-placeholder          {@content}
   &:-ms-input-placeholder      {@content}
-}
-
-.weave-shadow {
-  @include material-shadow;
 }

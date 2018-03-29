@@ -1,5 +1,8 @@
 @import "mixins";
-@import "colors";
+
+.weave-shadow {
+  @include material-shadow;
+}
 
 // TODO: This one is dangerous since it gets inherited
 // into service-ui & scope, try to get rid of it.
