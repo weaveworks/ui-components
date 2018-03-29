@@ -1,7 +1,69 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import Button from '../Button';
+
+const Wrapper = styled.div`
+  transition: opacity .2s ease;
+  position: fixed;
+  padding-top: 30vh;
+  opacity: 0;
+  height: 100%;
+  left: -100%;
+  top: 0;
+  width: 100%;
+
+  &.active {
+    left: 0;
+    opacity: 1;
+  }
+`;
+
+const Overlay = styled.div`
+  background-color: ${props => props.theme.colors.black};
+  opacity: 0;
+  position: absolute;
+  z-index: 2;
+  height: 100%;
+  left: -100%;
+  top: 0;
+  width: 100%;
+
+  & {
+    opacity: 0.5;
+    left: 0;
+  }
+`;
+
+const Window = styled.div`
+  box-shadow: ${props => props.theme.boxShadow.light};
+  background-color: ${props => props.theme.colors.white};
+  color: ${props => props.theme.colors.gunpowder};
+  margin: 0 auto;
+  max-width: 768px;
+  padding: 20px;
+  width: 75%;
+  z-index: 30;
+  position: relative;
+`;
+
+const ButtonClose = styled.div`
+  text-align: right;
+
+  & > span:hover {
+    cursor: pointer;
+  }
+`;
+
+const Actions = styled.div`
+  text-align: right;
+  min-height: 36px;
+
+  button:first-child {
+    margin-right: 10px;
+  }
+`;
 
 /**
  * A dialog window
@@ -42,32 +104,27 @@ import Button from '../Button';
  * }
  * ```
  */
-
 class Dialog extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleActionClick = this.handleActionClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-  }
-  handleActionClick(text) {
+  handleActionClick = (text) => {
     this.props.onActionClick(text);
-  }
-  handleClose() {
+  };
+
+  handleClose = () => {
     this.props.onClose();
-  }
+  };
+
   render() {
     const { children, active, actions, overlay } = this.props;
     return (
-      <div className={active ? 'weave-dialog active' : 'weave-dialog'}>
-        <div className="weave-dialog-window">
-          <div className="weave-dialog-close">
+      <Wrapper className={active ? 'weave-dialog active' : 'weave-dialog'}>
+        <Window className="weave-dialog-window">
+          <ButtonClose className="weave-dialog-close">
             <span onClick={this.handleClose} className="fa fa-close" />
-          </div>
+          </ButtonClose>
           <div className="weave-dialog-content">
             {children}
           </div>
-          <div className="weave-dialog-actions">
+          <Actions className="weave-dialog-actions">
             {actions && actions.map((Action, i) => {
               if (React.isValidElement(Action)) {
                 return React.cloneElement(Action, { key: i });
@@ -76,12 +133,13 @@ class Dialog extends React.Component {
                 <Button key={i} onClick={() => this.handleActionClick(Action)} text={Action} />
               );
             })}
-          </div>
-        </div>
-        <div
+          </Actions>
+        </Window>
+        {overlay && <Overlay
           onClick={this.handleClose}
-          className={overlay ? 'weave-dialog-overlay overlay-active' : 'disabled'} />
-      </div>
+          className="weave-dialog-overlay"
+        />}
+      </Wrapper>
     );
   }
 }

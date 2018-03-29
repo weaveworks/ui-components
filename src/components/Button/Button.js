@@ -38,21 +38,14 @@ const StyledButton = styled('button')`
  *  <Button onClick={alert} text="Submit" />
  * ```
  */
-
 class Button extends React.PureComponent {
-  constructor(props, context) {
-    super(props, context);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
+  handleClick = (e) => {
     const { onClick, disabled, text } = this.props;
 
     if (onClick && !disabled) {
       onClick(e, text);
     }
-  }
+  };
 
   render() {
     const {

@@ -8,7 +8,7 @@ const Container = styled.div`
   padding: 12px 16px;
 
   ${props => props.active && `
-    background-color: ${props.colors.gallery};
+    background-color: ${props.theme.colors.gallery};
   `};
 `;
 

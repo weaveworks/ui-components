@@ -54,3 +54,7 @@
   &::-moz-placeholder          {@content}
   &:-ms-input-placeholder      {@content}
 }
+
+.weave-shadow {
+  @include material-shadow;
+}
