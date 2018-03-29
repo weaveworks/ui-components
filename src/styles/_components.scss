@@ -107,27 +107,3 @@
     }
   }
 }
-
-
-.weave-list-item {
-  display: flex;
-  position: relative;
-  padding: 12px 16px;
-
-  &-active {
-    background-color: #eee;
-  }
-  .weave-list-item-content {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .weave-list-item-lefticon {
-    margin-right: 12px;
-  }
-
-  .weave-list-item-subtext {
-    opacity: 0.5;
-    font-size: 13px;
-  }
-}
