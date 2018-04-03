@@ -30,7 +30,7 @@ class ComponentsPage extends React.Component {
         <MenuItem
           active={isActivePage(module.toLowerCase())}
           key={module}
-          className={isDefault ? 'weave-menu-item' : 'weave-menu-sub-item'}
+          isSubItem={!isDefault}
           onClick={this.navigate}
           text={module}
         />

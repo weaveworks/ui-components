@@ -1,4 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const MenuWrapper = styled.div`
+  color: ${props => props.theme.colors.lavender};
+  text-align: left;
+`;
 
 /**
  * A menu component that can be used for navigation.
@@ -11,11 +17,11 @@ import React from 'react';
  *       <MenuItem onClick={clickHandler.bind(this, 'onClick')} text="Item 2" />
  *       <MenuItem
  *         onClick={clickHandler.bind(this, 'onClick')}
- *         className="weave-menu-sub-item" text="Sub Item 1"
+ *         isSubItem text="Sub Item 1"
  *       />
  *       <MenuItem
  *         onClick={clickHandler.bind(this, 'onClick')}
- *         className="weave-menu-sub-item" text="Sub Item 2"
+ *         isSubItem text="Sub Item 2"
  *       />
  *     </Menu>
  *   );
@@ -24,6 +30,6 @@ import React from 'react';
  */
 export default function Menu({children}) {
   return (
-    <div className="weave-menu">{children}</div>
+    <MenuWrapper className="weave-menu">{children}</MenuWrapper>
   );
 }

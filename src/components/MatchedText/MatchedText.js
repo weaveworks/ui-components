@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { transparentize } from 'polished';
 
 const TRUNCATE_CONTEXT = 6;
 const TRUNCATE_ELLIPSIS = '…';
@@ -72,6 +74,12 @@ function truncateChunks(chunks, text, maxLength) {
   return chunks;
 }
 
+const MatchedTextWrapper = styled.span`
+  background-color: ${props => transparentize(0.7, props.theme.colors.weaveblue)};
+  border: 1px solid ${props => props.theme.colors.weaveblue};
+
+  ${props => props.noBorder && 'border: none;'};
+`;
 
 /**
  * Renders a block of text with matched sections highlighted
@@ -86,7 +94,7 @@ function truncateChunks(chunks, text, maxLength) {
 class MatchedText extends React.Component {
 
   render() {
-    const { match, text, truncate, maxLength } = this.props;
+    const { match, text, truncate, maxLength, noBorder } = this.props;
 
     const showFullValue = !truncate || (match && (match.start + match.length) > truncate);
     const displayText = showFullValue ? text : text.slice(0, truncate);
@@ -102,9 +110,9 @@ class MatchedText extends React.Component {
         {truncateChunks(chunks, displayText, maxLength).map((chunk, index) => {
           if (chunk.match) {
             return (
-              <span className="weave-matched-text" key={index}>
+              <MatchedTextWrapper key={index} noBorder={noBorder}>
                 {chunk.text}
-              </span>
+              </MatchedTextWrapper>
             );
           }
           return chunk.text;
@@ -119,7 +127,7 @@ MatchedText.propTypes = {
   /**
    * The base text to display
    */
-  text: PropTypes.string,
+  text: PropTypes.string.isRequired,
   /**
    * {start: 3, length: 2} describes the area to highlight
    */
@@ -127,7 +135,14 @@ MatchedText.propTypes = {
     start: PropTypes.number,
     length: PropTypes.number
   }),
+  /**
+   * The base text to display
+   */
+  noBorder: PropTypes.bool,
 };
 
+MatchedText.defaultProps = {
+  noBorder: false,
+};
 
 export default MatchedText;

@@ -1,10 +1,65 @@
 /* eslint-disable react/no-danger */
 import React from 'react';
-import _ from 'lodash';
+import styled from 'styled-components';
+import { map, reduce } from 'lodash';
+import { transparentize } from 'polished';
 
 import Dialog from '../../src/components/Dialog';
 import { renderMarkdown } from './utils';
 
+
+const Panel = styled.div`
+  box-shadow: ${props => props.theme.boxShadow.light};
+`;
+
+const PanelHeader = styled.div`
+  height: 50px;
+  padding-left: 20px;
+  background-color: ${props => props.theme.colors.athens};
+  color: ${props => props.theme.colors.gunpowder};
+
+  &:first-child {
+    line-height: 50px;
+  }
+`;
+
+const PanelBody = styled.div`
+  padding: 20px;
+`;
+
+const Table = styled.table`
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-collapse: collapse;
+  border-left-color: ${props => props.theme.colors.gray};
+  border-right-color: ${props => props.theme.colors.gray};
+  border-top-color: ${props => props.theme.colors.gray};
+`;
+
+const TableHeader = styled.tr`
+  box-shadow: 0 4px 2px -2px ${props => transparentize(0.84, props.theme.colors.black)};
+  border-bottom: 1px solid ${props => props.theme.colors.gray};
+
+  th {
+    color: ${props => props.theme.colors.lavender};
+    font-size: 12px;
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+`;
+
+const TableRow = styled.tr`
+  color: ${props => props.theme.colors.gunpowder};
+  font-size: 14px;
+
+  &:nth-child(odd) {
+    background-color: ${props => props.theme.colors.athens};
+  }
+
+  td {
+    padding: 3px 4px;
+  }
+`;
 
 function getReadableValueType(type) {
   if (!type) return '';
@@ -31,7 +86,7 @@ export default class Example extends React.Component {
     this.setState({
       dialogActive: true,
       callbackName: propName,
-      demoOutput: _.map(args, (arg) => {
+      demoOutput: map(args, (arg) => {
         if (arg && arg.persist) {
           // Synthetic mouse events throw warnings unless you persist them.
           arg.persist();
@@ -41,7 +96,7 @@ export default class Example extends React.Component {
     });
   }
   instrumentElementProps(props) {
-    return _.reduce(props, (result, value, prop) => {
+    return reduce(props, (result, value, prop) => {
       if (value.type && value.type.name === 'func') {
         // Intercept any callbacks and inject the special `handleAction` method.
         // This allows a user to see what args get returned by interacting with the
@@ -53,28 +108,28 @@ export default class Example extends React.Component {
   }
   renderPropTable(props) {
     return (
-      <table className="weave-table">
+      <Table>
         <tbody>
-          <tr className="weave-table-header">
+          <TableHeader>
             <th>Prop Name</th>
             <th>Required</th>
             <th>Type</th>
             <th>Description</th>
             <th>Default</th>
-          </tr>
+          </TableHeader>
           {
-            _.map(props, (value, name) => (
-              <tr className="weave-table-row" key={name}>
+            map(props, (value, name) => (
+              <TableRow key={name}>
                 <td>{name}</td>
                 <td>{value.required && value.required.toString()}</td>
                 <td>{getReadableValueType(value.type)}</td>
                 <td>{value.description}</td>
                 <td>{value.defaultValue ? value.defaultValue.value : ''}</td>
-              </tr>
+              </TableRow>
             ))
           }
         </tbody>
-      </table>
+      </Table>
     );
   }
   closeDialog() {
@@ -100,11 +155,11 @@ export default class Example extends React.Component {
         </div>
         {!this.props.isSubComponent &&
           <div className="content-section">
-            <div className="weave-panel">
-              <div className="weave-panel-header">
+            <Panel>
+              <PanelHeader>
                 <h3>Example</h3>
-              </div>
-              <div className="weave-panel-body">
+              </PanelHeader>
+              <PanelBody>
                 <div className="component-demo">
                   <div className="demo-wrap">
                     {this.props.example
@@ -112,8 +167,8 @@ export default class Example extends React.Component {
                       : <this.props.element {...this.props.element.props} {...newProps} />}
                   </div>
                 </div>
-              </div>
-            </div>
+              </PanelBody>
+            </Panel>
           </div>
         }
         <Dialog
@@ -123,7 +178,7 @@ export default class Example extends React.Component {
           overlay
         >
           <div className="callback-name">{`"${this.state.callbackName}" called with:`}</div>
-          {_.map(this.state.demoOutput, (o, i) => (
+          {map(this.state.demoOutput, (o, i) => (
             <div key={o}>args[{i.toString()}]: {JSON.stringify(o)}</div>
           ))}
         </Dialog>

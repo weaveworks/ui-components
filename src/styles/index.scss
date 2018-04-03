@@ -1,6 +1,11 @@
-@import "settings";
 @import "mixins";
-@import "constants";
-@import "grid";
-@import "hopup";
-@import "components";
+
+.weave-shadow {
+  @include material-shadow;
+}
+
+// TODO: This one is dangerous since it gets inherited
+// into service-ui & scope, try to get rid of it.
+.disabled {
+  display: none;
+}

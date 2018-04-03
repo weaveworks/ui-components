@@ -25,27 +25,8 @@
   transition: $args;
 }
 
-@mixin hover-background {
-  @include transition(color, .3s, ease);
-  cursor: pointer;
-  color: $gunpowder;
-  background-color: $lightgray;
-}
-
 @mixin-fade-in-out {
   @include transition(opacity, .2s, ease-in);
-}
-
-@mixin clearfix {
-  &:after {
-    display: table;
-    clear: both;
-    content: '';
-  }
-}
-
-@mixin selected($color: $lavender) {
-  box-shadow: 0px 0px 2px 2px $color;
 }
 
 @mixin placeholder {
