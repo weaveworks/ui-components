@@ -32,7 +32,6 @@ const colors = {
   athensGrayDark: '#e9e9f1',
   blueHaze: '#c0c0d5',
   cerulean: '#00a8cc',
-  chamois: '#eee1ba',
   chetwodeBlue: '#8f8fd7',
   comet: '#5b5b88',
   cometDark: '#5a5a7b',
@@ -43,10 +42,8 @@ const colors = {
   eastBay: '#4a5d87',
   fog: '#ddddff',
   gallery: '#eee',
-  hokeyPokey: '#d69e30',
   kimberly: '#7d7da8',
   kimberlyDark: '#656597',
-  lemonChiffon: '#ffffc8',
   linkWater: '#d7ecf5',
   logan: '#b1b1cb',
   mercury: '#e8e8e8',
@@ -67,7 +64,6 @@ const colors = {
   whisper: '#fdfdfe',
   whiteLilac: '#f0f0fa',
   whiteSmoke: '#fafafc',
-  winterHazel: '#d2d296',
   promQL: {
     /**
      * GHColors theme by Avi Aryan (http://aviaryan.in)
@@ -100,7 +96,7 @@ const colors = {
     error: '#c7254e', // red
     warning: '#d4ab27', // amber
     info: '#049cd7', // blue
-    disabled: neutral.gray,
+    disabled: '#9a9a9a',
   },
   neutral,
   // Used by PrometheusGraph component
@@ -223,8 +219,8 @@ const weave = {
         color: colors.white,
         background: colors.status.error,
         borderColor: darken(0.15, colors.status.error),
-      }
-    }
+      },
+    },
   },
 };
 
