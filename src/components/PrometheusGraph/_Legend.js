@@ -130,14 +130,14 @@ class Legend extends React.PureComponent {
             {this.props.multiSeries.map(series => (
               <LegendItem
                 key={series.key}
-                title={series.name}
+                title={series.hoverName}
                 onClick={ev => this.handleLegendItemClick(ev, series)}
                 onMouseEnter={() => this.handleLegendItemMouseEnter(series)}
                 onMouseLeave={() => this.handleLegendItemMouseLeave()}
                 selected={this.seriesSelected(series)}
               >
                 <ColorBox color={series.color} />
-                <LegendItemName>{series.name}</LegendItemName>
+                <LegendItemName>{series.legendName}</LegendItemName>
               </LegendItem>
             ))}
           </LegendItems>

@@ -51,7 +51,7 @@ function asJSONString(hash) {
   return JSON.stringify(hash, null, 1);
 }
 
-function getDefaultSeriesName(series, multiSeries = []) {
+function getDefaultSeriesName(series, multiSeries, forLegend = false) {
   // Extract metric name in a separate variable.
   const metricName = get(series.metric, '__name__') || '';
   let metricHash = omit(series.metric, ['__name__']);
@@ -70,7 +70,7 @@ function getDefaultSeriesName(series, multiSeries = []) {
 
   // If multi-series context is given and more than one series is present in
   // the graph, filter out all the metric keys that appear in every series.
-  if (size(multiSeries) > 1) {
+  if (forLegend && size(multiSeries) > 1) {
     const repeatedKeys = filter(keys(metricHash), metricKey => (
       every(multiSeries, s => s.metric[metricKey] === metricHash[metricKey])
     ));
@@ -241,8 +241,10 @@ class PrometheusGraph extends React.PureComponent {
   }
 
   prepareMultiSeries = (props, { selectedLegendMultiSeriesKeys } = this.state) => {
-    const { getSeriesName, colorTheme } = props;
-    const getSeriesColor = getColorTheme(colorTheme);
+    const getSeriesColor = getColorTheme(props.colorTheme);
+    const getSeriesName = (series, forLegend) => (
+      props.getSeriesName(series, props.multiSeries, forLegend)
+    );
     const getSeriesKey = (series, index) => (
       `${getSeriesName(series)}:${index}`
     );
@@ -302,7 +304,8 @@ class PrometheusGraph extends React.PureComponent {
     const multiSeries = multiSeriesKeys.map((seriesKey, seriesIndex) => ({
       key: seriesKey,
       color: getSeriesColor(seriesIndex),
-      name: getSeriesName(multiSeriesByKey[seriesKey], props.multiSeries),
+      hoverName: getSeriesName(multiSeriesByKey[seriesKey]),
+      legendName: getSeriesName(multiSeriesByKey[seriesKey], true),
       datapoints: timestampSecs.map((timestampSec, timestampIndex) => ({
         timestampSec,
         value: valuesByTimestamp[timestampSec][seriesKey],
@@ -469,7 +472,9 @@ PrometheusGraph.propTypes = {
    */
   endTimeSec: PropTypes.number.isRequired,
   /**
-   * Method that builds series name from its metadata
+   * Method that builds series name from its metadata. First argument should be the series
+   * itself, second argument multiSeries context and third argument options hash with only
+   *
    */
   getSeriesName: PropTypes.func,
   /**
