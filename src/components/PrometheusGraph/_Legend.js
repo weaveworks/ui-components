@@ -9,7 +9,7 @@ const LegendContainer = styled.div`
 `;
 
 const LegendItems = styled.div`
-  color: ${props => props.theme.colors.neutral.black};
+  color: ${props => props.theme.colors.black};
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
@@ -45,7 +45,7 @@ const LegendItemName = styled.span`
 `;
 
 const LegendToggle = styled.span`
-  color: ${props => props.theme.colors.lavender};
+  color: ${props => props.theme.colors.primary.lavender};
   cursor: pointer;
   display: block;
   padding: 5px;

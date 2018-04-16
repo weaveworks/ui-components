@@ -18,7 +18,7 @@ const Item = styled.div`
 const Popover = styled.div`
   position: absolute;
   background-color: ${props => props.theme.colors.white};
-  border: 1px solid ${props => props.theme.colors.neutral.lightgray};
+  border: 1px solid ${props => props.theme.colors.silverDark};
   border-radius: ${props => props.theme.borderRadius};
   z-index: 3;
   box-shadow: ${props => props.theme.boxShadow.light};
@@ -49,13 +49,13 @@ const ItemWrapper = Item.extend`
 
 const Divider = styled.div`
   margin: 6px 0;
-  border-bottom: 1px solid ${props => props.theme.colors.neutral.lightgray};
+  border-bottom: 1px solid ${props => props.theme.colors.silverDark};
 `;
 
 const SelectedItem = Item.extend`
   border-radius: ${props => props.theme.borderRadius};
-  background-color: ${props => props.theme.colors.neutral.white};
-  border: 1px solid ${props => props.theme.colors.neutral.gray};
+  background-color: ${props => props.theme.colors.white};
+  border: 1px solid ${props => props.theme.colors.dustyGray};
   display: flex;
 
   ${Item} {

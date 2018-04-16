@@ -133,9 +133,7 @@ class Colors extends React.Component {
         <Row>{this.renderSwatches(theme.colors.accent)}</Row>
         <Text large>Status Colors</Text>
         <Row>{this.renderSwatches(theme.colors.status)}</Row>
-        <Text large>Neutral Colors</Text>
-        <Row>{this.renderSwatches(theme.colors.neutral)}</Row>
-        <Text large>Legacy Colors</Text>
+        <Text large>Uncategorized Colors</Text>
         <Row>{this.renderSwatches(theme.colors)}</Row>
         <Text large>PromQL Colors</Text>
         <Row>{this.renderSwatches(theme.colors.promQL)}</Row>

@@ -41,7 +41,7 @@ const TableHeader = styled.tr`
   border-bottom: 1px solid ${props => props.theme.colors.gray};
 
   th {
-    color: ${props => props.theme.colors.lavender};
+    color: ${props => props.theme.colors.primary.lavender};
     font-size: 12px;
     font-weight: normal;
     text-transform: uppercase;

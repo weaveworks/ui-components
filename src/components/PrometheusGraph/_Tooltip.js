@@ -11,7 +11,7 @@ const TooltipContainer = styled.div.attrs({
 })`
   color: ${props => props.theme.colors.primary.charcoal};
   background-color: ${props => props.theme.colors.lightgray};
-  border: 1px solid ${props => props.theme.colors.neutral.lightgray};
+  border: 1px solid ${props => props.theme.colors.silverDark};
   border-radius: ${props => props.theme.borderRadius};
   padding: 10px 15px;
   position: absolute;

@@ -21,7 +21,7 @@ const ErrorText = styled.span`
   opacity: 0.75;
 
   ${props => props.hasData && `
-    background-color: ${props.theme.colors.neutral.white};
+    background-color: ${props.theme.colors.white};
   `}
 `;
 

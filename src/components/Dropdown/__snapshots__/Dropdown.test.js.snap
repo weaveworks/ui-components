@@ -17,7 +17,7 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
   cursor: pointer;
   border-radius: 4px;
   background-color: #fff;
-  border: 1px solid #9a9a9a;
+  border: 1px solid #969696;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
