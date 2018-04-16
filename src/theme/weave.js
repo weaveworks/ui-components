@@ -18,7 +18,7 @@ const colors = {
   lightgray: '#f8f8f8',
   sand: '#f5f4f4',
   stratos: '#001755',
-  turquoise: '#00bcd4',
+  turquoise: '#037aa9',
   white: '#fff',
   // more legacy
   alabaster: '#fcfcfc',
@@ -173,13 +173,13 @@ const weave = {
         color: colors.white,
         background: colors.turquoise,
         hoverColor: colors.white,
-        hoverBackground: darken(0.15, colors.turquoise),
+        hoverBackground: darken(0.05, colors.turquoise),
       },
       danger: {
         color: colors.white,
         background: colors.status.error,
         hoverColor: colors.white,
-        hoverBackground: darken(0.15, colors.status.error),
+        hoverBackground: darken(0.05, colors.status.error),
       },
       disabled: {
         color: colors.gray,

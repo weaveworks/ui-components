@@ -55,7 +55,7 @@ exports[`<Button /> snapshots renders danger 1`] = `
 .c0:hover {
   -webkit-transition: color .3s ease;
   transition: color .3s ease;
-  background: #861935;
+  background: #b12146;
   color: #fff;
 }
 
@@ -144,7 +144,7 @@ exports[`<Button /> snapshots renders primary 1`] = `
   border: 0;
   outline: none;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
-  background: #00bcd4;
+  background: #037aa9;
   color: #fff;
   font-size: 0.875em;
   text-transform: uppercase;
@@ -154,7 +154,7 @@ exports[`<Button /> snapshots renders primary 1`] = `
 .c0:hover {
   -webkit-transition: color .3s ease;
   transition: color .3s ease;
-  background: #007888;
+  background: #036890;
   color: #fff;
 }
 
