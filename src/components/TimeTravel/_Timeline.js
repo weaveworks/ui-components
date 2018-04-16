@@ -12,6 +12,7 @@ import { Motion } from 'react-motion';
 import { strongSpring } from '../../utils/animation';
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
 import { zoomFactor } from '../../utils/zooming';
+import theme from '../../theme';
 
 import TimelinePeriodLabels from './_TimelinePeriodLabels';
 import TimelineRange from './_TimelineRange';
@@ -81,13 +82,14 @@ class Timeline extends React.PureComponent {
       height: 0,
       isPanning: false,
       hasPanned: false,
+      isAnimated: false,
     };
 
     this.handleZoom = this.handleZoom.bind(this);
     this.handlePanStart = this.handlePanStart.bind(this);
     this.handlePanEnd = this.handlePanEnd.bind(this);
     this.handlePan = this.handlePan.bind(this);
-    this.handleResize = debounce(this.handleResize.bind(this), 200);
+    this.handleResize = debounce(this.handleResize.bind(this), 2);
 
     this.saveSvgRef = this.saveSvgRef.bind(this);
   }
@@ -99,6 +101,11 @@ class Timeline extends React.PureComponent {
       .on('end', this.handlePanEnd)
       .on('drag', this.handlePan);
     this.svg.call(this.drag);
+
+    const { width, height } = this.svgRef.getBoundingClientRect();
+    setTimeout(() => {
+      this.setState({ width, height });
+    }, 0);
   }
 
   handlePanStart() {
@@ -133,6 +140,7 @@ class Timeline extends React.PureComponent {
 
   saveSvgRef(ref) {
     this.svgRef = ref;
+    // console.log('time state blu', ref.getBoundingClientRect());
   }
 
   renderAxis(transform) {
@@ -140,6 +148,9 @@ class Timeline extends React.PureComponent {
     const { focusedTimestamp, rangeMs } = transform;
     const startTimestamp = moment(focusedTimestamp).subtract(rangeMs).format();
     const timeScale = getTimeScale(transform);
+
+    if (!width || !height) return null;
+    // console.log('timeline render', focusedTimestamp, rangeMs, width);
 
     return (
       <g className="axis">
@@ -150,17 +161,17 @@ class Timeline extends React.PureComponent {
         />
 
         <TimelineRange
-          color="#aaa" width={width} height={height}
+          color={theme.colors.gray} width={width} height={height}
           endAt={this.props.earliestTimestamp}
           timeScale={timeScale}
         />
         <TimelineRange
-          color="#aaa" width={width} height={height}
+          color={theme.colors.gray} width={width} height={height}
           startAt={this.props.timestampNow}
           timeScale={timeScale}
         />
         {this.props.inspectingInterval && <TimelineRange
-          color="#00d2ff" width={width} height={height}
+          color={theme.colors.accent.blue} width={width} height={height}
           startAt={startTimestamp} endAt={focusedTimestamp}
           timeScale={timeScale}
         />}
@@ -185,6 +196,7 @@ class Timeline extends React.PureComponent {
   render() {
     const { isPanning, width } = this.state;
     const { focusedTimestamp, durationMsPerPixel, rangeMs } = this.props;
+    // console.log('timeline render', this.state, this.props);
 
     return (
       <TimelineWrapper>
@@ -199,18 +211,26 @@ class Timeline extends React.PureComponent {
           >
             <g className="timeline-container" transform={`translate(${width / 2}, 0)`}>
               <title>Scroll to zoom, drag to pan</title>
-              <Motion
-                style={{
-                  focusedTimestampMs: strongSpring(moment(focusedTimestamp).valueOf()),
-                  durationMsPerPixel: strongSpring(durationMsPerPixel),
-                  rangeMs: strongSpring(rangeMs),
-                }}>
-                {interpolated => this.renderAxis({
-                  focusedTimestamp: formattedTimestamp(interpolated.focusedTimestampMs),
-                  durationMsPerPixel: interpolated.durationMsPerPixel,
-                  rangeMs: interpolated.rangeMs,
-                })}
-              </Motion>
+              {this.state.isAnimated ? (
+                <Motion
+                  style={{
+                    focusedTimestampMs: strongSpring(moment(focusedTimestamp).valueOf()),
+                    durationMsPerPixel: strongSpring(durationMsPerPixel),
+                    rangeMs: strongSpring(rangeMs),
+                  }}>
+                  {interpolated => this.renderAxis({
+                    focusedTimestamp: formattedTimestamp(interpolated.focusedTimestampMs),
+                    durationMsPerPixel: interpolated.durationMsPerPixel,
+                    rangeMs: interpolated.rangeMs,
+                  })}
+                </Motion>
+              ) : (
+                this.renderAxis({
+                  focusedTimestamp,
+                  durationMsPerPixel,
+                  rangeMs,
+                })
+              )}
             </g>
           </TimelineContainer>
         </ResizeAware>
