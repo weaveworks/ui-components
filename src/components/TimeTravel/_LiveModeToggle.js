@@ -10,7 +10,7 @@ const LiveModeToggleWrapper = styled.div`
 const ToggleButton = styled.button`
   border: 0;
   background-color: transparent;
-  border-right: 1px solid ${props => props.theme.colors.neutral.lightgray};
+  border-right: 1px solid ${props => props.theme.colors.silverDark};
   color: ${props => props.theme.colors.primary.charcoal};
   font-size: 14px;
   padding: 2px 8px;
@@ -23,7 +23,7 @@ const ToggleButton = styled.button`
   &:focus { outline: none; }
 
   ${props => props.pressed && `
-    box-shadow: inset 1px 1px 6px ${props.theme.colors.neutral.lightgray};
+    box-shadow: inset 1px 1px 6px ${props.theme.colors.silverDark};
     color: ${props.theme.colors.gray};
     opacity: 0.75;
   `}

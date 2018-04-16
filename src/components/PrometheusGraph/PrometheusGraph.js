@@ -90,7 +90,7 @@ const GraphContainer = styled.div`
 `;
 
 const AxisLabel = styled.span`
-  color: ${props => props.theme.colors.neutral.black};
+  color: ${props => props.theme.colors.black};
   font-size: ${props => props.theme.fontSizes.normal};
   opacity: ${props => (props.loading ? 0.35 : 1)};
   transform: translate(-60px, 165px) rotate(-90deg);

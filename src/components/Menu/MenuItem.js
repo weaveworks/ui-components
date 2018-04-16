@@ -25,7 +25,7 @@ const Item = styled.div`
 
   ${props => props.active && `
     color: ${props.theme.colors.sand};
-    background-color: ${props.theme.colors.lavender};
+    background-color: ${props.theme.colors.primary.lavender};
   `};
 `;
 

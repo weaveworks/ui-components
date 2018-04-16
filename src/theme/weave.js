@@ -1,33 +1,17 @@
 import { darken } from 'polished';
 import { isString, kebabCase, forEach } from 'lodash';
 
-const neutral = {
-  black: '#1a1a1a',
-  gray: '#9a9a9a',
-  lightgray: '#c1c1c1',
-  white: '#fff',
-};
-
 const colors = {
-  // legacy
-  athens: '#e2e2ec',
-  black: '#000',
-  gray: '#aaaaaa',
-  gunpowder: '#3c3c5b',
-  lavender: '#8383ac',
-  lightgray: '#f8f8f8',
-  sand: '#f5f4f4',
-  stratos: '#001755',
-  turquoise: '#037aa9',
-  white: '#fff',
-  // more legacy
+  // uncategorized colors
   alabaster: '#fcfcfc',
   aliceBlue: '#f0f8ff',
   alto: '#ddd',
   amethystSmoke: '#9292b7',
   armadillo: '#393a34',
+  athens: '#e2e2ec',
   athensGray: '#eeeef4',
   athensGrayDark: '#e9e9f1',
+  black: '#1a1a1a',
   blueHaze: '#c0c0d5',
   chetwodeBlue: '#8f8fd7',
   comet: '#5b5b88',
@@ -39,8 +23,11 @@ const colors = {
   eastBay: '#4a5d87',
   fog: '#ddddff',
   gallery: '#eee',
+  gray: '#aaaaaa',
+  gunpowder: '#3c3c5b',
   kimberly: '#7d7da8',
   kimberlyDark: '#656597',
+  lightgray: '#f8f8f8',
   linkWater: '#d7ecf5',
   logan: '#b1b1cb',
   mercury: '#e8e8e8',
@@ -49,13 +36,18 @@ const colors = {
   mulledWine: '#46466a',
   mystic: '#dae4ea',
   olivine: '#a0be7e',
+  sand: '#f5f4f4',
   silver: '#ccc',
+  silverDark: '#c1c1c1',
   snuff: '#dadaea',
   solidGray: '#808080',
+  stratos: '#001755',
   titanWhite: '#eeeeff',
   tundora: '#444',
+  turquoise: '#037aa9',
   veniceBlue: '#065f7d',
   whisper: '#fdfdfe',
+  white: '#fff',
   whiteLilac: '#f0f0fa',
   whiteSmoke: '#fafafc',
   promQL: {
@@ -92,7 +84,6 @@ const colors = {
     info: '#049cd7', // blue
     disabled: '#9a9a9a',
   },
-  neutral,
   // Used by PrometheusGraph component
   graphThemes: {
     blue: [
@@ -141,7 +132,7 @@ const colors = {
 const weave = {
   colors,
 
-  textColor: colors.neutral.black,
+  textColor: colors.black,
 
   fontSizes: {
     normal: '0.875em',
@@ -155,7 +146,7 @@ const weave = {
     none: 'none',
     light: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
     heavy: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
-    selected: `0px 0px 2px 2px ${colors.lavender}`,
+    selected: `0px 0px 2px 2px ${colors.primary.lavender}`,
   },
 
   borderRadius: '4px',
