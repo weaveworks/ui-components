@@ -5,7 +5,7 @@ exports[`<Alert /> snapshots renders default 1`] = `
   background: #f8f8f8;
   border-radius: 4px;
   border: 2px solid #aaaaaa;
-  color: #000;
+  color: #1a1a1a;
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
@@ -15,7 +15,7 @@ exports[`<Alert /> snapshots renders default 1`] = `
 }
 
 .c0 a {
-  color: #000;
+  color: #1a1a1a;
   text-decoration: underline;
 }
 
