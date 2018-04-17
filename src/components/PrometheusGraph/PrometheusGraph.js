@@ -15,7 +15,9 @@ import {
   forEach,
   omit,
   size,
-  has,
+  isEmpty,
+  filter,
+  every,
   get,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
@@ -43,31 +45,41 @@ function parseGraphValue(value) {
 }
 
 function asJSONString(hash) {
+  // Return empty string instead of empty hash.
+  if (isEmpty(hash)) return '';
+
   return JSON.stringify(hash, null, 1);
 }
 
-function getDefaultSeriesName(series) {
-  const metricKeysCount = size(series.metric);
+function getDefaultSeriesName(series, multiSeries, forLegend = false) {
+  // Extract metric name in a separate variable.
+  const metricName = get(series.metric, '__name__') || '';
+  let metricHash = omit(series.metric, ['__name__']);
 
-  // Return the query string if the series has no metrics.
-  if (metricKeysCount === 0) {
-    return series.query;
+  // Handle some special cases if metric name is not present.
+  if (!metricName) {
+    // Return the query string if the series has no metrics.
+    if (isEmpty(metricHash)) {
+      return series.query;
+    }
+    // Return the value if only a single one is present.
+    if (size(metricHash) === 1) {
+      return first(values(metricHash));
+    }
   }
 
-  // Return the value if only a single one is present.
-  if (metricKeysCount === 1) {
-    return first(values(series.metric));
+  // If multi-series context is given and more than one series is present in
+  // the graph, filter out all the metric keys that appear in every series.
+  if (forLegend && size(multiSeries) > 1) {
+    const repeatedKeys = filter(keys(metricHash), metricKey => (
+      every(multiSeries, s => s.metric[metricKey] === metricHash[metricKey])
+    ));
+    metricHash = omit(metricHash, repeatedKeys);
   }
 
-  // If __name__ key is present, pull its value in front of the JSON.
-  if (has(series.metric, '__name__')) {
-    const name = get(series.metric, '__name__');
-    const metricWithoutName = omit(series.metric, ['__name__']);
-    return `${name}${asJSONString(metricWithoutName)}`;
-  }
-
-  // Otherwise, return a stringified JSON of metrics.
-  return asJSONString(series.metric);
+  // Then return a stringified JSON of metrics
+  // (with metric name in front if it exists).
+  return `${metricName}${asJSONString(metricHash)}`;
 }
 
 function getColorTheme(colorTheme) {
@@ -229,8 +241,10 @@ class PrometheusGraph extends React.PureComponent {
   }
 
   prepareMultiSeries = (props, { selectedLegendMultiSeriesKeys } = this.state) => {
-    const { getSeriesName, colorTheme } = props;
-    const getSeriesColor = getColorTheme(colorTheme);
+    const getSeriesColor = getColorTheme(props.colorTheme);
+    const getSeriesName = (series, forLegend) => (
+      props.getSeriesName(series, props.multiSeries, forLegend)
+    );
     const getSeriesKey = (series, index) => (
       `${getSeriesName(series)}:${index}`
     );
@@ -290,7 +304,8 @@ class PrometheusGraph extends React.PureComponent {
     const multiSeries = multiSeriesKeys.map((seriesKey, seriesIndex) => ({
       key: seriesKey,
       color: getSeriesColor(seriesIndex),
-      name: getSeriesName(multiSeriesByKey[seriesKey]),
+      hoverName: getSeriesName(multiSeriesByKey[seriesKey]),
+      legendName: getSeriesName(multiSeriesByKey[seriesKey], true),
       datapoints: timestampSecs.map((timestampSec, timestampIndex) => ({
         timestampSec,
         value: valuesByTimestamp[timestampSec][seriesKey],
@@ -457,7 +472,9 @@ PrometheusGraph.propTypes = {
    */
   endTimeSec: PropTypes.number.isRequired,
   /**
-   * Method that builds series name from its metadata
+   * Method that builds series name from its metadata. First argument should be the series
+   * itself, second argument multiSeries context and third argument options hash with only
+   *
    */
   getSeriesName: PropTypes.func,
   /**

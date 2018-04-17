@@ -71,7 +71,7 @@ class Chart extends React.PureComponent {
         graphValue: datapoint.offset + datapoint.value,
         value: datapoint.value,
         key: series.key,
-        name: series.name,
+        hoverName: series.hoverName,
         color: series.color,
       };
     });

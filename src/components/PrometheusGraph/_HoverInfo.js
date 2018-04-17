@@ -91,7 +91,7 @@ class HoverInfo extends React.PureComponent {
           {filteredHoverPoints.map(datapoint => (
             <TooltipRow key={datapoint.key} focused={datapoint.focused}>
               <TooltipRowColor color={datapoint.color} />
-              <TooltipRowName>{datapoint.name}</TooltipRowName>
+              <TooltipRowName>{datapoint.hoverName}</TooltipRowName>
               <TooltipRowValue>{formatValue(datapoint.value)}</TooltipRowValue>
             </TooltipRow>
           ))}

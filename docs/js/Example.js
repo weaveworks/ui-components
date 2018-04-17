@@ -67,6 +67,17 @@ function getReadableValueType(type) {
   return type.name;
 }
 
+function getDefaultValue(defaultValue) {
+  if (!defaultValue) return '';
+
+  // If default value is a function, show only its name.
+  if (defaultValue.value.indexOf('function') === 0) {
+    return defaultValue.value.split('(')[0];
+  }
+
+  return defaultValue.value;
+}
+
 export default class Example extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -106,6 +117,11 @@ export default class Example extends React.Component {
       return result;
     }, {});
   }
+  closeDialog() {
+    this.setState({
+      dialogActive: false
+    });
+  }
   renderPropTable(props) {
     return (
       <Table>
@@ -124,18 +140,15 @@ export default class Example extends React.Component {
                 <td>{value.required && value.required.toString()}</td>
                 <td>{getReadableValueType(value.type)}</td>
                 <td>{value.description}</td>
-                <td>{value.defaultValue ? value.defaultValue.value : ''}</td>
+                <td style={{'white-space': 'nowrap'}}>
+                  {getDefaultValue(value.defaultValue)}
+                </td>
               </TableRow>
             ))
           }
         </tbody>
       </Table>
     );
-  }
-  closeDialog() {
-    this.setState({
-      dialogActive: false
-    });
   }
   render() {
     const { description, props } = this.props.doc;
