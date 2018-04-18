@@ -20,6 +20,7 @@
     "docs:copy-images": "cp -R src/images dist",
     "docs:s3": "aws --profile default-mfa s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
     "docs:publish": "yarn docs:build && yarn docs:copy-images && yarn docs:s3",
+    "docs:analyze": "ANALYZE_BUNDLE=true yarn docs:build",
     "start": "node bin/dev-server"
   },
   "jest": {
@@ -112,6 +113,7 @@
     "superagent": "^3.6.0",
     "url-loader": "^0.5.7",
     "webpack": "1.13.3",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-server": "1.16.2"
   }
 }
