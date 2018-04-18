@@ -17,7 +17,7 @@ const GridWrapper = styled.div`
  * export default function MyGrid() {
  *  return (
  *   <Grid>
- *      <Row>
+ *      <GridRow>
  *        <GridColumn span={4}>
  *          <p>First Col</p>
  *          Lorem ipsum dolor ....
@@ -26,7 +26,7 @@ const GridWrapper = styled.div`
  *          <p>Second Col</p>
  *          Lorem ipsum dolor ...
  *        </GridColumn>
- *     </Row>
+ *     </GridRow>
  *   </Grid>
  * )}
  * ```
