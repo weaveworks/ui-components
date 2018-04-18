@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 let externals;
 let entry = {
@@ -24,7 +25,13 @@ let plugins = [
     chunks: ['app'],
     template: 'docs/index.html',
     filename: 'index.html'
-  })
+  }),
+  new BundleAnalyzerPlugin({
+    analyzerMode: process.env.ANALYZE_BUNDLE ? 'server' : 'disabled',
+    analyzerHost: '127.0.0.1',
+    analyzerPort: 8888,
+    openAnalyzer: true,
+  }),
 ];
 
 const loaders = [
