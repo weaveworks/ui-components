@@ -144,7 +144,8 @@ class TimeTravel extends React.Component {
     this.state = {
       timestampNow: formattedTimestamp(),
       focusedTimestamp: formattedTimestamp(props.timestamp),
-      durationMsPerPixel: initialDurationMsPerTimelinePx(props.earliestTimestamp),
+      durationMsPerPixel: props.durationMsPerPixel
+        || initialDurationMsPerTimelinePx(props.earliestTimestamp),
       showingLive: props.showingLive,
       rangeMs: props.rangeMs,
       timelineWidthPx: null,
@@ -160,7 +161,7 @@ class TimeTravel extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLiveModeToggle = this.handleLiveModeToggle.bind(this);
 
-    this.delayedReportZoom = debounce(this.reportZoom.bind(this), 5000);
+    this.delayedOnChangeZoom = debounce(this.onChangeZoom.bind(this), 500);
     this.delayedOnChangeTimestamp = debounce(this.props.onChangeTimestamp.bind(this), 500);
 
     this.setFocusedTimestamp = this.setFocusedTimestamp.bind(this);
@@ -253,9 +254,10 @@ class TimeTravel extends React.Component {
   }
 
   handleTimelineZoom(duration) {
+    //  Order of callbacks is important.
     const durationMsPerPixel = this.clampedDuration(duration);
     this.setState({ durationMsPerPixel });
-    this.delayedReportZoom();
+    this.delayedOnChangeZoom(durationMsPerPixel);
   }
 
   handleTimelinePan(timestamp) {
@@ -277,9 +279,9 @@ class TimeTravel extends React.Component {
 
   handleTimelineResize(timelineWidthPx) {
     // If this is the initial resize, adjust the zoom level to the current selected range.
-    if (!this.state.timelineWidthPx) {
-      this.adjustZoomToRange(this.state.rangeMs, timelineWidthPx);
-    }
+    // if (!this.state.timelineWidthPx && !) {
+    //   this.adjustZoomToRange(this.state.rangeMs, timelineWidthPx);
+    // }
     this.setState({ timelineWidthPx });
   }
 
@@ -322,11 +324,11 @@ class TimeTravel extends React.Component {
     this.setState({ durationMsPerPixel });
   }
 
-  reportZoom() {
+  onChangeZoom(durationMsPerPixel) {
     const periods = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
-    const momentDuration = moment.duration(this.state.durationMsPerPixel * MAX_TICK_SPACING_PX);
+    const momentDuration = moment.duration(durationMsPerPixel * MAX_TICK_SPACING_PX);
     const zoomedPeriod = find(periods, period => Math.floor(momentDuration.get(period)) && period);
-    this.props.onTimelineZoom(zoomedPeriod);
+    this.props.onTimelineZoom({ durationMsPerPixel, zoomedPeriod });
   }
 
   render() {
