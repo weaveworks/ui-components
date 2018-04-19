@@ -1,5 +1,8 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended"
+  ],
   "parser": "babel-eslint",
   "env": {
     "browser": true,
@@ -7,13 +10,31 @@
     "node": true
   },
   "rules": {
-    "one-var" : 0,
-    "one-var-declaration-per-line": 0,
-    "func-names": 0,
-    "class-methods-use-this": 0,
+    "comma-dangle": 0,
+    "global-require": 0,
+    "no-debugger": 1,
+    "no-param-reassign": 0,
+    "no-restricted-properties": 0,
+    "object-curly-spacing": ["error", "always"],
+
+    // TODO: Resolve later
+    "prefer-promise-reject-errors": 0,
+    "react/no-unused-state": 0,
+    "react/no-array-index-key": 0,
+
+    // import
+    "import/no-unresolved": "error",
+    "import/named": "error",
+    "import/default": "error",
+    "import/export": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "parent", "sibling", "index"],
+        "newlines-between": "always"
+      }
+    ],
     "import/prefer-default-export": 0,
-    "import/no-named-as-default" : 0,
-    "import/no-webpack-loader-syntax": 0,
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -22,6 +43,18 @@
         "peerDependencies": true
       }
     ],
+
+    // jsx-a11y
+    "jsx-a11y/href-no-hash": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/iframe-has-title": 0,
+    "jsx-a11y/label-has-for": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
+
+    // react
+    "react/jsx-closing-bracket-location": 0,
     "react/jsx-filename-extension": [
       2,
       {
@@ -31,15 +64,10 @@
         ]
       }
     ],
-    "comma-dangle": 0,
-    "no-param-reassign": 0,
-    "object-curly-spacing": 0,
-    "react/jsx-closing-bracket-location": 0,
+    "react/jsx-no-target-blank": 0,
+    "react/jsx-indent": 0,
     "react/prefer-stateless-function": 0,
-    "react/sort-comp": 0,
     "react/prop-types": 0,
-    "react/forbid-prop-types": 0,
-    "react/no-unused-prop-types": 0,
-    "jsx-a11y/no-static-element-interactions" : 0
+    "react/sort-comp": 0
   }
 }
