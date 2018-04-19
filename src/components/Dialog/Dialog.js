@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   left: -100%;
   top: 0;
   width: 100%;
+  z-index: ${props => props.theme.layers.modal};
 
   &.active {
     left: 0;
@@ -22,7 +23,6 @@ const Wrapper = styled.div`
 
 const Overlay = styled.div`
   background-color: ${props => props.theme.colors.black};
-  z-index: ${props => props.theme.layers.modal};
   opacity: 0;
   position: absolute;
   height: 100%;
@@ -40,7 +40,6 @@ const Window = styled.div`
   box-shadow: ${props => props.theme.boxShadow.light};
   background-color: ${props => props.theme.colors.white};
   color: ${props => props.theme.colors.gunpowder};
-  z-index: ${props => props.theme.layers.modal};
   margin: 0 auto;
   max-width: 768px;
   padding: 20px;
