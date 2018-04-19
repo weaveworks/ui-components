@@ -26,22 +26,38 @@ export default class AlertExample extends React.Component {
           <Alert visible={this.state.default} onClose={onClose('default')}>
             Default: This is a default alert. It is just giving you some info.
           </Alert>
-          <Alert type="info" visible={this.state.info} onClose={onClose('info')}>
+          <Alert
+            type="info"
+            visible={this.state.info}
+            onClose={onClose('info')}
+          >
             Info: Please pay attention to this.
           </Alert>
         </Example>
         <Example>
-          <Alert type="success" visible={this.state.success} onClose={onClose('success')}>
+          <Alert
+            type="success"
+            visible={this.state.success}
+            onClose={onClose('success')}
+          >
             Success: Great job! Wow! Much success!
           </Alert>
         </Example>
         <Example>
-          <Alert type="warning" visible={this.state.warning} onClose={onClose('warning')}>
+          <Alert
+            type="warning"
+            visible={this.state.warning}
+            onClose={onClose('warning')}
+          >
             Warning: Hmm, this is not good, but it is not terrible.
           </Alert>
         </Example>
         <Example>
-          <Alert type="error" visible={this.state.error} onClose={onClose('error')}>
+          <Alert
+            type="error"
+            visible={this.state.error}
+            onClose={onClose('error')}
+          >
             Error: Wow you really screwed this up...
           </Alert>
         </Example>

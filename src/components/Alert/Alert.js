@@ -53,7 +53,13 @@ function Alert(props) {
   return (
     <StyledAlert {...props}>
       {children}
-      {onClose && <CloseIcon visible={visible} onClick={onClose} className="fa fa-remove" />}
+      {onClose && (
+        <CloseIcon
+          visible={visible}
+          onClick={onClose}
+          className="fa fa-remove"
+        />
+      )}
     </StyledAlert>
   );
 }
@@ -78,6 +84,5 @@ Alert.defaultProps = {
   type: 'default',
   visible: true,
 };
-
 
 export default Alert;

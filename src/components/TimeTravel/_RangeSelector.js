@@ -3,7 +3,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-
 const HEIGHT_PX = 27;
 
 const RangeSelectorWrapper = styled.div`
@@ -14,7 +13,7 @@ const RangeSelectorWrapper = styled.div`
 const SelectedRangeWrapper = styled.div`
   background-color: transparent;
   cursor: pointer;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   padding: 3px 8px;
   display: flex;
@@ -65,9 +64,11 @@ const RangeOption = styled.div`
     background-color: ${props => props.theme.colors.lightgray};
   }
 
-  ${props => props.selected && `
+  ${props =>
+    props.selected &&
+    `
     color: ${props.theme.colors.accent.blue};
-  `}
+  `};
 `;
 
 const rangeOptions = [
@@ -108,14 +109,20 @@ class RangeSelector extends React.Component {
     const { rangeMs } = this.props;
     const { isOpen } = this.state;
 
-    const selectedRangeIndex = rangeOptions.findIndex(r => r.valueMs === rangeMs);
-    const selectedRangeLabel = rangeOptions.find(r => r.valueMs === rangeMs).label;
-    const anchorEl = this.containerRef && this.containerRef.getBoundingClientRect();
-    const menuStyle = anchorEl ? {
-      top: anchorEl.top - (selectedRangeIndex * HEIGHT_PX) - 1,
-      left: anchorEl.right - anchorEl.width,
-      minWidth: anchorEl.width + 1,
-    } : {};
+    const selectedRangeIndex = rangeOptions.findIndex(
+      r => r.valueMs === rangeMs
+    );
+    const selectedRangeLabel = rangeOptions.find(r => r.valueMs === rangeMs)
+      .label;
+    const anchorEl =
+      this.containerRef && this.containerRef.getBoundingClientRect();
+    const menuStyle = anchorEl
+      ? {
+          top: anchorEl.top - selectedRangeIndex * HEIGHT_PX - 1,
+          left: anchorEl.right - anchorEl.width,
+          minWidth: anchorEl.width + 1,
+        }
+      : {};
 
     return (
       <RangeSelectorWrapper innerRef={this.saveNodeRef}>
@@ -126,19 +133,21 @@ class RangeSelector extends React.Component {
             <span className="fa fa-caret-down" />
           </CaretIconsContainer>
         </SelectedRangeWrapper>
-        {isOpen && <RangeOptionsListWrapper onClick={this.handleBackgroundClick}>
-          <RangeOptionsList style={menuStyle}>
-            {rangeOptions.map(({ valueMs, label }) => (
-              <RangeOption
-                key={valueMs}
-                selected={valueMs === rangeMs}
-                onClick={() => this.props.onChange(valueMs)}
-              >
-                {label}
-              </RangeOption>
-            ))}
-          </RangeOptionsList>
-        </RangeOptionsListWrapper>}
+        {isOpen && (
+          <RangeOptionsListWrapper onClick={this.handleBackgroundClick}>
+            <RangeOptionsList style={menuStyle}>
+              {rangeOptions.map(({ valueMs, label }) => (
+                <RangeOption
+                  key={valueMs}
+                  selected={valueMs === rangeMs}
+                  onClick={() => this.props.onChange(valueMs)}
+                >
+                  {label}
+                </RangeOption>
+              ))}
+            </RangeOptionsList>
+          </RangeOptionsListWrapper>
+        )}
       </RangeSelectorWrapper>
     );
   }

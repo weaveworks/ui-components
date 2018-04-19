@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const GridColumnWrapper = styled.div`
-  width: ${props => (props.span / 0.12)}%;
+  width: ${props => props.span / 0.12}%;
   display: block;
-  margin: .5em;
+  margin: 0.5em;
   float: left;
 
   /* clearfix */
@@ -21,7 +21,7 @@ const GridColumnWrapper = styled.div`
  *
  * See also [Grid](/components/Grid)
  */
-const GridColumn = ({children, span}) => (
+const GridColumn = ({ children, span }) => (
   <GridColumnWrapper className="weave-grid-column" span={span}>
     {children}
   </GridColumnWrapper>
@@ -31,7 +31,7 @@ GridColumn.propTypes = {
   /**
    * The desired col-span; maximum of 12 columns
    */
-  span: PropTypes.number
+  span: PropTypes.number,
 };
 
 export default GridColumn;

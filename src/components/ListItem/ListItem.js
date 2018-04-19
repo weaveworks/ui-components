@@ -7,7 +7,9 @@ const Container = styled.div`
   position: relative;
   padding: 12px 16px;
 
-  ${props => props.active && `
+  ${props =>
+    props.active &&
+    `
     background-color: ${props.theme.colors.gallery};
   `};
 `;
@@ -51,7 +53,7 @@ const Subtext = styled.span`
  * ```
  */
 class ListItem extends React.Component {
-  handleClick = (ev) => {
+  handleClick = ev => {
     ev.preventDefault();
     const { onClick, value } = this.props;
     if (onClick) {
@@ -60,11 +62,24 @@ class ListItem extends React.Component {
   };
 
   render() {
-    const { active, text, subText, onClick, children, style, leftIcon } = this.props;
+    const {
+      active,
+      text,
+      subText,
+      onClick,
+      children,
+      style,
+      leftIcon,
+    } = this.props;
     const BaseTag = onClick ? Link : Container;
     const props = onClick && { href: '#' };
     return (
-      <BaseTag style={style} active={active} onClick={this.handleClick} {...props}>
+      <BaseTag
+        style={style}
+        active={active}
+        onClick={this.handleClick}
+        {...props}
+      >
         {leftIcon && <Icon>{leftIcon}</Icon>}
         <Content>
           {text && <div>{text}</div>}
@@ -76,7 +91,6 @@ class ListItem extends React.Component {
   }
 }
 
-
 ListItem.propTypes = {
   active: PropTypes.bool,
   text: PropTypes.any,
@@ -86,6 +100,5 @@ ListItem.propTypes = {
   value: PropTypes.any,
   leftIcon: PropTypes.any,
 };
-
 
 export default ListItem;

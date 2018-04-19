@@ -39,7 +39,7 @@ const NewColorFormRow = Row.extend`
 
 const curly = start => (start ? '{' : '}');
 
-const maybeParseColor = (v) => {
+const maybeParseColor = v => {
   try {
     return parseToHsl(v);
   } catch (e) {
@@ -85,7 +85,7 @@ class Colors extends React.Component {
     this.state = { newColor: '' };
   }
 
-  handleChange = (ev) => {
+  handleChange = ev => {
     this.setState({ newColor: ev.target.value });
   };
 
@@ -97,7 +97,7 @@ class Colors extends React.Component {
           [TEST_COLOR_NAME]: this.state.newColor,
         }),
       },
-      this.state.newColor,
+      this.state.newColor
     );
   }
 

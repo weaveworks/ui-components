@@ -7,11 +7,21 @@ export default function ButtonExample({ clickHandler }) {
   const onClick = (ev, text) => clickHandler('onClick', text);
   return (
     <div>
-      <Example><Button onClick={onClick} text="Submit" /></Example>
-      <Example><Button disabled onClick={onClick} text="Disabled" /></Example>
-      <Example><Button primary onClick={onClick} text="Primary" /></Example>
-      <Example><Button selected onClick={onClick} text="Selected" /></Example>
-      <Example><Button danger onClick={onClick} text="Danger" /></Example>
+      <Example>
+        <Button onClick={onClick} text="Submit" />
+      </Example>
+      <Example>
+        <Button disabled onClick={onClick} text="Disabled" />
+      </Example>
+      <Example>
+        <Button primary onClick={onClick} text="Primary" />
+      </Example>
+      <Example>
+        <Button selected onClick={onClick} text="Selected" />
+      </Example>
+      <Example>
+        <Button danger onClick={onClick} text="Danger" />
+      </Example>
     </div>
   );
 }

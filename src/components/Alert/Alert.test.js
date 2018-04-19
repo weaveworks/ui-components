@@ -30,7 +30,10 @@ describe('<Alert />', () => {
   it('closes when the "x" is clicked', () => {
     const spy = jest.fn();
     const alert = mount(withTheme(<Alert onClose={spy}>My alert</Alert>));
-    alert.find('.fa-remove').first().simulate('click');
+    alert
+      .find('.fa-remove')
+      .first()
+      .simulate('click');
     expect(spy.mock.calls.length).toEqual(1);
   });
 });

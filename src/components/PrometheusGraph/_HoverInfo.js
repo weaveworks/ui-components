@@ -7,14 +7,15 @@ import { map, max } from 'lodash';
 import Tooltip from './_Tooltip';
 import FocusPoint from './_FocusPoint';
 
-
 const TooltipRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
 
-  ${props => props.focused && `
+  ${props =>
+    props.focused &&
+    `
     font-weight: bold;
     font-size: 13px;
   `};
@@ -56,15 +57,25 @@ const HoverLine = styled.div.attrs({
 class HoverInfo extends React.PureComponent {
   render() {
     const {
-      datapoints, mouseX, mouseY, valueScale, chartWidth, chartHeight, simpleTooltip,
+      datapoints,
+      mouseX,
+      mouseY,
+      valueScale,
+      chartWidth,
+      chartHeight,
+      simpleTooltip,
     } = this.props;
     if (!datapoints) return null;
 
     // Simple tooltip will only show the value for the hovered series.
-    const filteredHoverPoints = [...datapoints].filter(p => p.focused || !simpleTooltip);
+    const filteredHoverPoints = [...datapoints].filter(
+      p => p.focused || !simpleTooltip
+    );
 
     // Render focused circle last so that it stands out.
-    const sortedHoverPoints = [...filteredHoverPoints].sort(p => (p.focused ? 1 : -1));
+    const sortedHoverPoints = [...filteredHoverPoints].sort(
+      p => (p.focused ? 1 : -1)
+    );
 
     const timestamp = moment.unix(this.props.timestampSec).format();
 
@@ -87,7 +98,12 @@ class HoverInfo extends React.PureComponent {
             />
           ))}
         </HoverLine>
-        <Tooltip x={mouseX} y={mouseY} graphWidth={chartWidth} timestamp={timestamp}>
+        <Tooltip
+          x={mouseX}
+          y={mouseY}
+          graphWidth={chartWidth}
+          timestamp={timestamp}
+        >
           {filteredHoverPoints.map(datapoint => (
             <TooltipRow key={datapoint.key} focused={datapoint.focused}>
               <TooltipRowColor color={datapoint.color} />

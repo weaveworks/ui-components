@@ -16,7 +16,6 @@ export MatchedText from './MatchedText';
 export CircularProgress from './CircularProgress';
 export LogoProgress from './LogoProgress';
 
-
 export Input from './Input';
 
 export Text from './Text';

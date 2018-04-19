@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { find, range, flatMap } from 'lodash';
 
-
 const AxesGridContainer = styled.div``;
 
 const AxisLine = styled.div.attrs({
@@ -65,12 +64,27 @@ function formatTimeTick(timeSec) {
   }
 
   // Otherwise show only the seconds context.
-  return timestamp.format('ss\'');
+  return timestamp.format("ss'");
 }
 
 function getTimeTicksBetween(startTimeSec, endTimeSec) {
   // 1s, 2s, 5s, 15s, 30s, 1min, 2min, 5min, 15min, 30min, 1h, 2h, 4h, 8h intervals
-  const stepsSec = [1, 2, 5, 15, 30, 60, 120, 300, 900, 1800, 3600, 7200, 14400, 28800];
+  const stepsSec = [
+    1,
+    2,
+    5,
+    15,
+    30,
+    60,
+    120,
+    300,
+    900,
+    1800,
+    3600,
+    7200,
+    14400,
+    28800,
+  ];
 
   // Tweak the step to show a reasonable number of ticks.
   const stepSec = find(stepsSec, s => (endTimeSec - startTimeSec) / s < 8);
@@ -83,9 +97,10 @@ function getTimeTicksBetween(startTimeSec, endTimeSec) {
 function getValueTicks(metricUnits, maxValue) {
   /* eslint-disable no-restricted-properties */
   const powersOf10 = range(-6, 15).map(p => Math.pow(10, p));
-  const steps = (metricUnits !== 'bytes')
-    ? flatMap(powersOf10, p => [p, 2 * p, 5 * p])
-    : range(50).map(p => Math.pow(2, p));
+  const steps =
+    metricUnits !== 'bytes'
+      ? flatMap(powersOf10, p => [p, 2 * p, 5 * p])
+      : range(50).map(p => Math.pow(2, p));
   /* eslint-enable no-restricted-properties */
 
   const step = find(steps, s => maxValue / s < 4);
@@ -94,7 +109,14 @@ function getValueTicks(metricUnits, maxValue) {
 
 class AxesGrid extends React.PureComponent {
   render() {
-    const { chartWidth, chartHeight, timeScale, valueScale, metricUnits, hasData } = this.props;
+    const {
+      chartWidth,
+      chartHeight,
+      timeScale,
+      valueScale,
+      metricUnits,
+      hasData,
+    } = this.props;
     if (!chartWidth || !chartHeight || !hasData) return null;
 
     const yAxisMax = valueScale.domain()[1];
@@ -108,9 +130,7 @@ class AxesGrid extends React.PureComponent {
         {valueTicks.map(value => (
           <TickContainer key={value} top={valueScale(value)}>
             <HorizontalLine width={chartWidth} />
-            <ValueTickLabel>
-              {formatValue(value)}
-            </ValueTickLabel>
+            <ValueTickLabel>{formatValue(value)}</ValueTickLabel>
           </TickContainer>
         ))}
         {timeTicks.map(timeSec => (

@@ -3,7 +3,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-
 const TimestampInputWrapper = styled.div`
   font-size: 13px;
   align-items: baseline;
@@ -15,7 +14,7 @@ const TimestampInputWrapper = styled.div`
 
 const TimestampInputContainer = styled.input`
   background-color: transparent;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin-right: 3px;
   text-align: center;
   font-size: 1rem;
@@ -58,7 +57,8 @@ class TimestampInput extends React.PureComponent {
           value={this.state.timestamp}
           onChange={this.handleChange}
           disabled={this.props.disabled}
-        /> UTC
+        />{' '}
+        UTC
       </TimestampInputWrapper>
     );
   }

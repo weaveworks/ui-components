@@ -6,12 +6,17 @@ import { compact, range, times } from 'lodash';
 import PrometheusGraph from '.';
 import { Example, Info } from '../../utils/example';
 
-function generateRandomMultiSeries({ startTime, endTime, stepDuration }, key, count) {
+function generateRandomMultiSeries(
+  { startTime, endTime, stepDuration },
+  key,
+  count
+) {
   return times(count, () => ({
     metric: { [key]: faker.lorem.slug() },
-    values: range(startTime, endTime + 1e-6, stepDuration).map(time => (
-      [time, faker.random.number({ min: 10, max: 20 })]
-    )),
+    values: range(startTime, endTime + 1e-6, stepDuration).map(time => [
+      time,
+      faker.random.number({ min: 10, max: 20 }),
+    ]),
   }));
 }
 
@@ -38,8 +43,16 @@ export default class PrometheusGraphExample extends React.Component {
       loading: true,
     };
 
-    this.state.multiSeriesJobs = generateRandomMultiSeries(this.state, 'job', 7);
-    this.state.multiSeriesServices = generateRandomMultiSeries(this.state, 'namespace', 4);
+    this.state.multiSeriesJobs = generateRandomMultiSeries(
+      this.state,
+      'job',
+      7
+    );
+    this.state.multiSeriesServices = generateRandomMultiSeries(
+      this.state,
+      'namespace',
+      4
+    );
     this.state.deployments = generateDeployments(this.state, 6);
   }
 

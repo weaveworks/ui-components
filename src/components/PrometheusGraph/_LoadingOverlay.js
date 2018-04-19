@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import CircularProgress from '../CircularProgress';
 
-
 const LoadingContainer = styled.div`
   position: absolute;
   top: 0;

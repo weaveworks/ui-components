@@ -5,7 +5,6 @@ import CircularProgress from '.';
 import { Example, Info } from '../../utils/example';
 
 export default class Name extends React.Component {
-
   render() {
     return (
       <div>

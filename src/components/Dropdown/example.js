@@ -70,15 +70,27 @@ export default class DropdownExample extends React.Component {
       <div>
         <Example>
           <Info>Default dropdown</Info>
-          <Dropdown items={items} value={this.state.selected} onChange={onChange} />
+          <Dropdown
+            items={items}
+            value={this.state.selected}
+            onChange={onChange}
+          />
         </Example>
         <Example>
           <Info>Grouped items (passed as subarrays)</Info>
-          <Dropdown items={groups} value={this.state.selected} onChange={onChange} />
+          <Dropdown
+            items={groups}
+            value={this.state.selected}
+            onChange={onChange}
+          />
         </Example>
         <Example>
           <Info>Grouped items (with null as dividers)</Info>
-          <Dropdown items={divided} value={this.state.selected} onChange={onChange} />
+          <Dropdown
+            items={divided}
+            value={this.state.selected}
+            onChange={onChange}
+          />
         </Example>
       </div>
     );

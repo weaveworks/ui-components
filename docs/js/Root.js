@@ -8,9 +8,21 @@ const onS3 = window.location.href.indexOf('s3') !== -1;
 
 // webpack will make separate bundles for each of these contexts. They each get used to render
 // components and their docs dynamically.
-const componentCtx = require.context('../../src/components', true, /^((?!test|index|example|_).)*$/);
-const exampleCtx = require.context('../../src/components', true, /example\.js$/);
-const docCtx = require.context('!!react-docs!../../src/components', true, /^((?!test|index|example).)*$/);
+const componentCtx = require.context(
+  '../../src/components',
+  true,
+  /^((?!test|index|example|_).)*$/
+);
+const exampleCtx = require.context(
+  '../../src/components',
+  true,
+  /example\.js$/
+);
+const docCtx = require.context(
+  '!!react-docs!../../src/components',
+  true,
+  /^((?!test|index|example).)*$/
+);
 const styleGuideCtx = require.context('../../styleguide', true, /\.js$/);
 
 const routes = getRoutes(componentCtx, exampleCtx, docCtx, styleGuideCtx);
@@ -20,7 +32,7 @@ class Root extends React.Component {
     return {
       router: this.props.router,
       components: componentCtx,
-      styles: styleGuideCtx
+      styles: styleGuideCtx,
     };
   }
   render() {
@@ -33,7 +45,7 @@ class Root extends React.Component {
 Root.childContextTypes = {
   router: PropTypes.object,
   components: PropTypes.func,
-  styles: PropTypes.func
+  styles: PropTypes.func,
 };
 
 export default Root;

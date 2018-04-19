@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-
 const LiveModeToggleWrapper = styled.div`
   display: flex;
 `;
@@ -19,14 +18,20 @@ const ToggleButton = styled.button`
   cursor: pointer;
 
   /* Remove outline on Firefox */
-  &::-moz-focus-inner { border: 0; }
-  &:focus { outline: none; }
+  &::-moz-focus-inner {
+    border: 0;
+  }
+  &:focus {
+    outline: none;
+  }
 
-  ${props => props.pressed && `
+  ${props =>
+    props.pressed &&
+    `
     box-shadow: inset 1px 1px 6px ${props.theme.colors.silverDark};
     color: ${props.theme.colors.gray};
     opacity: 0.75;
-  `}
+  `};
 `;
 
 class LiveModeToggle extends React.PureComponent {
@@ -56,10 +61,16 @@ class LiveModeToggle extends React.PureComponent {
   render() {
     return (
       <LiveModeToggleWrapper>
-        <ToggleButton onClick={this.handleToggle} pressed={this.state.showingLive}>
+        <ToggleButton
+          onClick={this.handleToggle}
+          pressed={this.state.showingLive}
+        >
           <span className="fa fa-play" />
         </ToggleButton>
-        <ToggleButton onClick={this.handleToggle} pressed={!this.state.showingLive}>
+        <ToggleButton
+          onClick={this.handleToggle}
+          pressed={!this.state.showingLive}
+        >
           <span className="fa fa-pause" />
         </ToggleButton>
       </LiveModeToggleWrapper>

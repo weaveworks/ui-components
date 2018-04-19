@@ -44,7 +44,8 @@ const ValidationMessage = styled.span`
   font-size: 14px;
   padding-left: 8px;
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
-  color: ${props => (props.valid ? 'inherit' : props.theme.colors.status.error)};
+  color: ${props =>
+    props.valid ? 'inherit' : props.theme.colors.status.error};
 `;
 
 /**
@@ -97,7 +98,7 @@ class Input extends React.Component {
       'className',
       'autoSelectText',
       'focus',
-      'textarea'
+      'textarea',
     ]);
 
     return (
@@ -106,9 +107,9 @@ class Input extends React.Component {
         <InputWrapper>
           {React.createElement(textarea ? 'textarea' : 'input', {
             ...inputProps,
-            ref: (elem) => {
+            ref: elem => {
               this.input = elem;
-            }
+            },
           })}
           <Icon visible={!valid} className="fa fa-times-circle" />
         </InputWrapper>
@@ -141,11 +142,11 @@ Input.propTypes = {
   /**
    * Use a `textarea` element instead of an `input` element
    */
-  textarea: PropTypes.bool
+  textarea: PropTypes.bool,
 };
 
 Input.defaultProps = {
-  valid: true
+  valid: true,
 };
 
 export default StyledInput(Input);

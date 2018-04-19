@@ -17,14 +17,14 @@ function chunkText(text, { start, length }) {
     const chunks = [];
     // text chunk before match
     if (start > 0) {
-      chunks.push({text: text.substr(0, start)});
+      chunks.push({ text: text.substr(0, start) });
     }
     // matching chunk
-    chunks.push({match: true, text: text.substr(start, length)});
+    chunks.push({ match: true, text: text.substr(start, length) });
     // text after match
     const remaining = start + length;
     if (remaining < text.length) {
-      chunks.push({text: text.substr(remaining)});
+      chunks.push({ text: text.substr(remaining) });
     }
     return chunks;
   }
@@ -39,7 +39,13 @@ function chunkText(text, { start, length }) {
  * `[{text: "...cation is a "}, {text: "useful...or not"}, {text: "tool..."}]`
  */
 function truncateChunks(chunks, text, maxLength) {
-  if (chunks && chunks.length === 3 && maxLength && text && text.length > maxLength) {
+  if (
+    chunks &&
+    chunks.length === 3 &&
+    maxLength &&
+    text &&
+    text.length > maxLength
+  ) {
     const res = chunks.map(c => Object.assign({}, c));
     let needToCut = text.length - maxLength;
     // trucate end
@@ -54,8 +60,9 @@ function truncateChunks(chunks, text, maxLength) {
       const start = res[0];
       if (start.text.length > TRUNCATE_CONTEXT) {
         needToCut -= start.text.length - TRUNCATE_CONTEXT;
-        start.text = `${TRUNCATE_ELLIPSIS}`
-          + `${start.text.substr(start.text.length - TRUNCATE_CONTEXT)}`;
+        start.text =
+          `${TRUNCATE_ELLIPSIS}` +
+          `${start.text.substr(start.text.length - TRUNCATE_CONTEXT)}`;
       }
     }
 
@@ -63,9 +70,10 @@ function truncateChunks(chunks, text, maxLength) {
       // truncate match
       const middle = res[1];
       if (middle.text.length > 2 * TRUNCATE_CONTEXT) {
-        middle.text = `${middle.text.substr(0, TRUNCATE_CONTEXT)}`
-          + `${TRUNCATE_ELLIPSIS}`
-          + `${middle.text.substr(middle.text.length - TRUNCATE_CONTEXT)}`;
+        middle.text =
+          `${middle.text.substr(0, TRUNCATE_CONTEXT)}` +
+          `${TRUNCATE_ELLIPSIS}` +
+          `${middle.text.substr(middle.text.length - TRUNCATE_CONTEXT)}`;
       }
     }
 
@@ -75,7 +83,8 @@ function truncateChunks(chunks, text, maxLength) {
 }
 
 const MatchedTextWrapper = styled.span`
-  background-color: ${props => transparentize(0.7, props.theme.colors.accent.blue)};
+  background-color: ${props =>
+    transparentize(0.7, props.theme.colors.accent.blue)};
   border: 1px solid ${props => props.theme.colors.accent.blue};
 
   ${props => props.noBorder && 'border: none;'};
@@ -92,11 +101,11 @@ const MatchedTextWrapper = styled.span`
  *
  */
 class MatchedText extends React.Component {
-
   render() {
     const { match, text, truncate, maxLength, noBorder } = this.props;
 
-    const showFullValue = !truncate || (match && (match.start + match.length) > truncate);
+    const showFullValue =
+      !truncate || (match && match.start + match.length > truncate);
     const displayText = showFullValue ? text : text.slice(0, truncate);
 
     if (!match) {
@@ -122,7 +131,6 @@ class MatchedText extends React.Component {
   }
 }
 
-
 MatchedText.propTypes = {
   /**
    * The base text to display
@@ -133,7 +141,7 @@ MatchedText.propTypes = {
    */
   match: PropTypes.shape({
     start: PropTypes.number,
-    length: PropTypes.number
+    length: PropTypes.number,
   }),
   /**
    * The base text to display
