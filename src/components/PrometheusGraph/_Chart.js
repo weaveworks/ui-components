@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { debounce, sortedIndex, minBy } from 'lodash';
 import { line, area } from 'd3-shape';
 
-
 function getDatapointAtTimestamp(series, timestampSec) {
   const timestamps = series.datapoints.map(d => d.timestampSec);
   const index = sortedIndex(timestamps, timestampSec);
@@ -38,7 +37,7 @@ const SeriesAreaChart = styled.path.attrs({
 class Chart extends React.PureComponent {
   handleResize = debounce(() => {
     this.forceUpdate();
-  }, 50)
+  }, 50);
 
   componentDidMount() {
     this.handleResize();
@@ -54,7 +53,7 @@ class Chart extends React.PureComponent {
     window.removeEventListener('resize', this.handleResize);
   }
 
-  handleGraphMouseMove = (ev) => {
+  handleGraphMouseMove = ev => {
     const { timeScale, valueScale, timestampQuantizer } = this.props;
     const { left, top } = this.getSvgBoundingRect();
     const cursorXOffset = ev.clientX - left;
@@ -65,7 +64,7 @@ class Chart extends React.PureComponent {
     const hoverTimestampSec = timestampQuantizer(cursorTimestampSec);
 
     // Build an array of hover points by evaluating the multiseries at the cursor x-coord.
-    let hoverPoints = this.props.multiSeries.map((series) => {
+    let hoverPoints = this.props.multiSeries.map(series => {
       const datapoint = getDatapointAtTimestamp(series, hoverTimestampSec);
       return {
         graphValue: datapoint.offset + datapoint.value,
@@ -101,7 +100,7 @@ class Chart extends React.PureComponent {
       hoverTimestampSec,
       hoverPoints,
     });
-  }
+  };
 
   handleGraphMouseLeave = () => {
     this.props.onHoverUpdate({
@@ -110,11 +109,11 @@ class Chart extends React.PureComponent {
       hoverX: null,
       hoverY: null,
     });
-  }
+  };
 
-  saveSvgRef = (ref) => {
+  saveSvgRef = ref => {
     this.svgRef = ref;
-  }
+  };
 
   getSvgBoundingRect() {
     return this.svgRef
@@ -123,7 +122,10 @@ class Chart extends React.PureComponent {
   }
 
   isFadedSeries(series) {
-    const { hoveredLegendSeriesKey, selectedLegendMultiSeriesKeys } = this.props;
+    const {
+      hoveredLegendSeriesKey,
+      selectedLegendMultiSeriesKeys,
+    } = this.props;
     // Show series as faded if no series is selected and some other series is hovered.
     return (
       selectedLegendMultiSeriesKeys.length === 0 &&
@@ -133,7 +135,10 @@ class Chart extends React.PureComponent {
   }
 
   isFocusedSeries(series) {
-    const { hoveredLegendSeriesKey, selectedLegendMultiSeriesKeys } = this.props;
+    const {
+      hoveredLegendSeriesKey,
+      selectedLegendMultiSeriesKeys,
+    } = this.props;
     // Show series as focused if it's selected or hovered.
     return (
       hoveredLegendSeriesKey === series.key ||
@@ -156,13 +161,14 @@ class Chart extends React.PureComponent {
 
     return (
       <Canvas
-        width="100%" height="100%"
+        width="100%"
+        height="100%"
         innerRef={this.saveSvgRef}
         onMouseMove={this.handleGraphMouseMove}
         onMouseLeave={this.handleGraphMouseLeave}
       >
         {multiSeries.map(
-          series => (
+          series =>
             this.props.showStacked ? (
               <SeriesAreaChart
                 key={series.key}
@@ -179,7 +185,7 @@ class Chart extends React.PureComponent {
                 stroke={series.color}
               />
             )
-        ))}
+        )}
       </Canvas>
     );
   }

@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
-
 const TimelineRange = ({ color, timeScale, startAt, endAt, width, height }) => {
   const endShift = endAt ? timeScale(moment(endAt)) : width;
   let startShift = startAt ? timeScale(moment(startAt)) : -width;
@@ -15,9 +14,11 @@ const TimelineRange = ({ color, timeScale, startAt, endAt, width, height }) => {
 
   return (
     <rect
-      fill={color} fillOpacity={0.15}
+      fill={color}
+      fillOpacity={0.15}
       transform={`translate(${startShift}, 0)`}
-      width={length} height={height}
+      width={length}
+      height={height}
     />
   );
 };

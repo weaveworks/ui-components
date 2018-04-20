@@ -34,8 +34,6 @@ const GridWrapper = styled.div`
  * See also:
  * [GridColumn](/components/gridcolumn)
  */
-export default function Grid({children}) {
-  return (
-    <GridWrapper className="weave-grid">{children}</GridWrapper>
-  );
+export default function Grid({ children }) {
+  return <GridWrapper className="weave-grid">{children}</GridWrapper>;
 }

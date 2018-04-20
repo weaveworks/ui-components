@@ -71,9 +71,9 @@ function getDefaultSeriesName(series, multiSeries, forLegend = false) {
   // If multi-series context is given and more than one series is present in
   // the graph, filter out all the metric keys that appear in every series.
   if (forLegend && size(multiSeries) > 1) {
-    const repeatedKeys = filter(keys(metricHash), metricKey => (
+    const repeatedKeys = filter(keys(metricHash), metricKey =>
       every(multiSeries, s => s.metric[metricKey] === metricHash[metricKey])
-    ));
+    );
     metricHash = omit(metricHash, repeatedKeys);
   }
 
@@ -83,7 +83,7 @@ function getDefaultSeriesName(series, multiSeries, forLegend = false) {
 }
 
 function getColorTheme(colorTheme) {
-  return (index) => {
+  return index => {
     const colors = theme.colors.graphThemes[colorTheme];
     return colors[index % colors.length];
   };
@@ -111,34 +111,35 @@ const AxisLabel = styled.span`
 `;
 
 const valueFormatters = {
-  numeric: (number) => {
+  numeric: number => {
     const step = number / 7;
-    const formatNumber = number > 10
-      ? formatPrefix(`.${precisionPrefix(step, number)}`, number)
-      : format(`.${precisionFixed(step)}f`);
-    return (n) => {
+    const formatNumber =
+      number > 10
+        ? formatPrefix(`.${precisionPrefix(step, number)}`, number)
+        : format(`.${precisionFixed(step)}f`);
+    return n => {
       if (n === null) return '---';
       if (n === 0) return '0';
       return formatNumber(n);
     };
   },
-  seconds: (maxSeconds) => {
+  seconds: maxSeconds => {
     const data = [
       { label: 'w', unit: 7 * 24 * 60 * 60 },
       { label: 'd', unit: 24 * 60 * 60 },
-      { label: 'h', unit: 60 * 60},
+      { label: 'h', unit: 60 * 60 },
       { label: 'm', unit: 60 },
       { label: 's', unit: 1 },
       { label: 'ms', unit: 1 / 1000 },
       { label: 'µs', unit: 1 / 1000 / 1000 },
     ].find(({ unit }) => maxSeconds / unit >= 2);
-    return (n) => {
+    return n => {
       if (n === null) return '---';
       if (!data) return '0';
       return `${Math.round(n / data.unit)} ${data.label}`;
     };
   },
-  bytes: (maxBytes) => {
+  bytes: maxBytes => {
     const data = [
       { label: 'TB', unit: 1024 * 1024 * 1024 * 1024 },
       { label: 'GB', unit: 1024 * 1024 * 1024 },
@@ -146,7 +147,7 @@ const valueFormatters = {
       { label: 'kB', unit: 1024 },
       { label: 'B', unit: 1 },
     ].find(({ unit }) => maxBytes / unit >= 2);
-    return (n) => {
+    return n => {
       if (n === null) return '---';
       if (!data) return '0';
       return `${Math.round(n / data.unit)} ${data.label}`;
@@ -154,14 +155,13 @@ const valueFormatters = {
   },
   percent: () => {
     const formatPercent = format('.2%');
-    return (n) => {
+    return n => {
       if (n === null) return '---';
       if (n === 0) return '0%';
       return formatPercent(n);
     };
   },
 };
-
 
 /**
  * Renders a graph based on Prometheus data fed through `multiSeries` prop.
@@ -223,31 +223,28 @@ class PrometheusGraph extends React.PureComponent {
     }
   }
 
-  handleSelectedLegendMultiSeriesChange = (selectedLegendMultiSeriesKeys) => {
+  handleSelectedLegendMultiSeriesChange = selectedLegendMultiSeriesKeys => {
     this.prepareMultiSeries(this.props, { selectedLegendMultiSeriesKeys });
     this.setState({ selectedLegendMultiSeriesKeys });
-  }
+  };
 
-  handleHoveredLegendSeriesChange = (hoveredLegendSeriesKey) => {
+  handleHoveredLegendSeriesChange = hoveredLegendSeriesKey => {
     this.setState({ hoveredLegendSeriesKey });
-  }
+  };
 
   handleHoverUpdate = ({ hoverPoints, hoverTimestampSec, hoverX, hoverY }) => {
     this.setState({ hoverPoints, hoverTimestampSec, hoverX, hoverY });
-  }
+  };
 
   handleChartResize = ({ chartWidth, chartHeight }) => {
     this.setState({ chartWidth, chartHeight });
-  }
+  };
 
   prepareMultiSeries = (props, { selectedLegendMultiSeriesKeys } = this.state) => {
     const getSeriesColor = getColorTheme(props.colorTheme);
-    const getSeriesName = (series, forLegend) => (
-      props.getSeriesName(series, props.multiSeries, forLegend)
-    );
-    const getSeriesKey = (series, index) => (
-      `${getSeriesName(series)}:${index}`
-    );
+    const getSeriesName = (series, forLegend) =>
+      props.getSeriesName(series, props.multiSeries, forLegend);
+    const getSeriesKey = (series, index) => `${getSeriesName(series)}:${index}`;
 
     // Build a dictionary that references original multi series by keys,
     // and a sorted list of those keys by which we can later iterate.
@@ -264,9 +261,7 @@ class PrometheusGraph extends React.PureComponent {
     let stackedMultiSeriesKeys = [];
     if (props.showStacked) {
       stackedMultiSeriesKeys =
-        selectedLegendMultiSeriesKeys.length > 0
-          ? selectedLegendMultiSeriesKeys
-          : multiSeriesKeys;
+        selectedLegendMultiSeriesKeys.length > 0 ? selectedLegendMultiSeriesKeys : multiSeriesKeys;
     }
 
     // This D3 scale takes care of rounding all the datapoints to the nearest discrete timestamp.
@@ -275,9 +270,9 @@ class PrometheusGraph extends React.PureComponent {
 
     // Initialize all the graph values to null, as if the graph was empty.
     const valuesByTimestamp = {};
-    timestampSecs.forEach((timestampSec) => {
+    timestampSecs.forEach(timestampSec => {
       valuesByTimestamp[timestampSec] = { timestampSec };
-      multiSeriesKeys.forEach((seriesKey) => {
+      multiSeriesKeys.forEach(seriesKey => {
         valuesByTimestamp[timestampSec][seriesKey] = null;
       });
     });
@@ -285,7 +280,7 @@ class PrometheusGraph extends React.PureComponent {
     // Go through the datapoints of all the series and fill in
     // their values (in a format that works for D3 stack helpers).
     forEach(multiSeriesByKey, (series, seriesKey) => {
-      forEach(series.values, (point) => {
+      forEach(series.values, point => {
         const value = parseGraphValue(point[1]);
         const timestampSec = timestampQuantizer(point[0]);
         valuesByTimestamp[timestampSec][seriesKey] = value;
@@ -296,9 +291,8 @@ class PrometheusGraph extends React.PureComponent {
     const stackFunction = stack().keys(stackedMultiSeriesKeys);
     const valuesForStacking = sortBy(values(valuesByTimestamp), ['timestampSec']);
     const stackedData = zipObject(stackedMultiSeriesKeys, stackFunction(valuesForStacking));
-    const getStackedOffset = (seriesKey, timestampIndex) => (
-      stackedMultiSeriesKeys.includes(seriesKey) ? stackedData[seriesKey][timestampIndex][0] : 0
-    );
+    const getStackedOffset = (seriesKey, timestampIndex) =>
+      stackedMultiSeriesKeys.includes(seriesKey) ? stackedData[seriesKey][timestampIndex][0] : 0;
 
     // Finally store the multi-series ready to be graphed.
     const multiSeries = multiSeriesKeys.map((seriesKey, seriesIndex) => ({
@@ -314,14 +308,12 @@ class PrometheusGraph extends React.PureComponent {
     }));
 
     this.setState({ multiSeries });
-  }
+  };
 
   getMaxGraphValue() {
     const yPositions = flatten(
       this.getVisibleMultiSeries().map(series =>
-        series.datapoints.map(datapoint =>
-          datapoint.offset + datapoint.value
-        )
+        series.datapoints.map(datapoint => datapoint.offset + datapoint.value)
       )
     );
     return max([this.props.valuesMinSpread * 1.05, ...yPositions]);
@@ -332,16 +324,12 @@ class PrometheusGraph extends React.PureComponent {
     // Timestamp values are stepDurationSec seconds apart and they always end at
     // endTimeSec. We make startTimeSec a bit smaller to include it in the range in case
     // (endTimeSec - startTimeSec) is divisible by stepDurationSec.
-    const timestampSecs = range(
-      endTimeSec,
-      startTimeSec - 1e-6,
-      -stepDurationSec
-    ).sort();
+    const timestampSecs = range(endTimeSec, startTimeSec - 1e-6, -stepDurationSec).sort();
     // scaleQuantize would normally map domain in buckets of uniform lengths. To
     // make it map to the nearest point in timestampSecs instead, we need to extend
     // the domain by half of stepDurationSec at each end.
-    const startDomain = first(timestampSecs) - (0.5 * stepDurationSec);
-    const endDomain = last(timestampSecs) + (0.5 * stepDurationSec);
+    const startDomain = (first(timestampSecs) - 0.5) * stepDurationSec;
+    const endDomain = (last(timestampSecs) + 0.5) * stepDurationSec;
     return scaleQuantize()
       .domain([startDomain, endDomain])
       .range(timestampSecs);
@@ -369,19 +357,33 @@ class PrometheusGraph extends React.PureComponent {
       return this.state.multiSeries;
     }
     // Otherwise show only the selected multi series.
-    return this.state.multiSeries.filter(
-      series => this.state.selectedLegendMultiSeriesKeys.includes(series.key)
+    return this.state.multiSeries.filter(series =>
+      this.state.selectedLegendMultiSeriesKeys.includes(series.key)
     );
   }
 
   render() {
     const {
-      yAxisLabel, deployments, metricUnits, showStacked, simpleTooltip,
-      legendShown, legendCollapsable, loading, error,
+      yAxisLabel,
+      deployments,
+      metricUnits,
+      showStacked,
+      simpleTooltip,
+      legendShown,
+      legendCollapsable,
+      loading,
+      error,
     } = this.props;
     const {
-      selectedLegendMultiSeriesKeys, hoveredLegendSeriesKey, chartWidth, chartHeight,
-      hoverPoints, hoverTimestampSec, hoverX, hoverY, multiSeries,
+      selectedLegendMultiSeriesKeys,
+      hoveredLegendSeriesKey,
+      chartWidth,
+      chartHeight,
+      hoverPoints,
+      hoverTimestampSec,
+      hoverX,
+      hoverY,
+      multiSeries,
     } = this.state;
 
     const timeScale = this.getTimeScale();
@@ -441,14 +443,8 @@ class PrometheusGraph extends React.PureComponent {
           onHoveredSeriesChange={this.handleHoveredLegendSeriesChange}
           multiSeries={multiSeries}
         />
-        <ErrorOverlay
-          hasData={hasData}
-          loading={loading}
-          error={error}
-        />
-        <LoadingOverlay
-          loading={loading}
-        />
+        <ErrorOverlay hasData={hasData} loading={loading} error={error} />
+        <LoadingOverlay loading={loading} />
       </GraphWrapper>
     );
   }

@@ -10,20 +10,24 @@ const Item = styled.div`
   padding-left: 20px;
 
   &:hover {
-    transition: color, .3s, ease;
+    transition: color, 0.3s, ease;
     color: ${props => !props.active && props.theme.colors.gunpowder};
     background-color: ${props => !props.active && props.theme.colors.lightgray};
     cursor: pointer;
   }
 
-  ${props => props.isSubItem && `
+  ${props =>
+    props.isSubItem &&
+    `
     font-size: 14px;
     padding-left: 40px;
     line-height: 30px;
     min-height: 30px;
   `};
 
-  ${props => props.active && `
+  ${props =>
+    props.active &&
+    `
     color: ${props.theme.colors.sand};
     background-color: ${props.theme.colors.primary.lavender};
   `};
@@ -44,9 +48,16 @@ class MenuItem extends React.Component {
   render() {
     const { text, children, className, active, isSubItem } = this.props;
     // Use the className the users gives, or fall back to 'weave-menu-item'.
-    const cl = classnames(className || 'weave-menu-item', {'menu-item-active': active});
+    const cl = classnames(className || 'weave-menu-item', {
+      'menu-item-active': active,
+    });
     return (
-      <Item onClick={this.handleClick} className={cl} active={active} isSubItem={isSubItem}>
+      <Item
+        onClick={this.handleClick}
+        className={cl}
+        active={active}
+        isSubItem={isSubItem}
+      >
         <div className="menu-text">{text}</div>
         {children}
       </Item>

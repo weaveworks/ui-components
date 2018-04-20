@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Button from '../Button';
 
 const Wrapper = styled.div`
-  transition: opacity .2s ease;
+  transition: opacity 0.2s ease;
   position: fixed;
   padding-top: 30vh;
   opacity: 0;
@@ -105,7 +105,7 @@ const Actions = styled.div`
  * ```
  */
 class Dialog extends React.Component {
-  handleActionClick = (text) => {
+  handleActionClick = text => {
     this.props.onActionClick(text);
   };
 
@@ -121,24 +121,29 @@ class Dialog extends React.Component {
           <ButtonClose className="weave-dialog-close">
             <span onClick={this.handleClose} className="fa fa-close" />
           </ButtonClose>
-          <div className="weave-dialog-content">
-            {children}
-          </div>
+          <div className="weave-dialog-content">{children}</div>
           <Actions className="weave-dialog-actions">
-            {actions && actions.map((Action, i) => {
-              if (React.isValidElement(Action)) {
-                return React.cloneElement(Action, { key: i });
-              }
-              return (
-                <Button key={i} onClick={() => this.handleActionClick(Action)} text={Action} />
-              );
-            })}
+            {actions &&
+              actions.map((Action, i) => {
+                if (React.isValidElement(Action)) {
+                  return React.cloneElement(Action, { key: i });
+                }
+                return (
+                  <Button
+                    key={i}
+                    onClick={() => this.handleActionClick(Action)}
+                    text={Action}
+                  />
+                );
+              })}
           </Actions>
         </Window>
-        {overlay && <Overlay
-          onClick={this.handleClose}
-          className="weave-dialog-overlay"
-        />}
+        {overlay && (
+          <Overlay
+            onClick={this.handleClose}
+            className="weave-dialog-overlay"
+          />
+        )}
       </Wrapper>
     );
   }
@@ -168,11 +173,11 @@ Dialog.propTypes = {
   /**
    * Toggles a modal overlay. If set to true, the overlay will appear,
    */
-  overlay: PropTypes.bool
+  overlay: PropTypes.bool,
 };
 
 Dialog.defaultProps = {
-  overlay: true
+  overlay: true,
 };
 
 export default Dialog;

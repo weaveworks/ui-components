@@ -9,23 +9,33 @@ import Button from './Button';
 describe('<Button />', () => {
   describe('snapshots', () => {
     it('renders default', () => {
-      const tree = renderer.create(withTheme(<Button text="Submit" />)).toJSON();
+      const tree = renderer
+        .create(withTheme(<Button text="Submit" />))
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders disabled', () => {
-      const tree = renderer.create(withTheme(<Button disabled text="Disabled" />)).toJSON();
+      const tree = renderer
+        .create(withTheme(<Button disabled text="Disabled" />))
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders primary', () => {
-      const tree = renderer.create(withTheme(<Button primary text="Primary" />)).toJSON();
+      const tree = renderer
+        .create(withTheme(<Button primary text="Primary" />))
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders selected', () => {
-      const tree = renderer.create(withTheme(<Button selected text="Selected" />)).toJSON();
+      const tree = renderer
+        .create(withTheme(<Button selected text="Selected" />))
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders danger', () => {
-      const tree = renderer.create(withTheme(<Button danger text="Danger" />)).toJSON();
+      const tree = renderer
+        .create(withTheme(<Button danger text="Danger" />))
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
   });
@@ -38,7 +48,9 @@ describe('<Button />', () => {
   });
   it('does not run the onClick callback when disabled', () => {
     const spy = jest.fn();
-    const button = shallow(<Button onClick={spy} text="MyCustomText" disabled />);
+    const button = shallow(
+      <Button onClick={spy} text="MyCustomText" disabled />
+    );
     button.simulate('click');
     expect(spy.mock.calls.length).toEqual(0);
   });
@@ -48,7 +60,9 @@ describe('<Button />', () => {
     button.simulate('click');
   });
   it('accepts a style prop', () => {
-    const tree = renderer.create(withTheme(<Button style={{ color: 'blue' }} />)).toJSON();
+    const tree = renderer
+      .create(withTheme(<Button style={{ color: 'blue' }} />))
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

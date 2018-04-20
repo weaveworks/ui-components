@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { without } from 'lodash';
 
-
 const LegendContainer = styled.div`
   opacity: ${props => (props.loading ? 0.35 : 1)};
 `;
@@ -32,7 +31,9 @@ const LegendItem = styled.div`
     background-color: ${props => props.theme.colors.athens};
   }
 
-  ${props => props.selected && `
+  ${props =>
+    props.selected &&
+    `
     background-color: ${props.theme.colors.athens};
   `};
 `;
@@ -89,31 +90,30 @@ class Legend extends React.PureComponent {
     } else {
       // If Ctrl button is not pressed, select only the clicked item,
       // unless it's the only one selected, in which case remove the selection.
-      const onlyThisSelected = this.seriesSelected(series) && selectedKeys.length === 1;
+      const onlyThisSelected =
+        this.seriesSelected(series) && selectedKeys.length === 1;
       selectedKeys = onlyThisSelected ? [] : [series.key];
     }
 
     this.setState({ selectedKeys });
     this.props.onSelectedMultiSeriesChange(selectedKeys);
-  }
+  };
 
-  handleLegendItemMouseEnter = (series) => {
+  handleLegendItemMouseEnter = series => {
     this.setState({ hoveredKey: series.key });
     this.props.onHoveredSeriesChange(series.key);
-  }
+  };
 
   handleLegendItemMouseLeave = () => {
     this.setState({ hoveredKey: null });
     this.props.onHoveredSeriesChange(null);
-  }
+  };
 
   handleLegendToggle = () => {
     this.setState({ shown: !this.state.shown });
-  }
+  };
 
-  seriesSelected = series => (
-    this.state.selectedKeys.includes(series.key)
-  )
+  seriesSelected = series => this.state.selectedKeys.includes(series.key);
 
   render() {
     const caretIcon = this.state.shown ? 'fa-caret-down' : 'fa-caret-right';

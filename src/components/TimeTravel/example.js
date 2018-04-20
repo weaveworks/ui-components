@@ -4,7 +4,6 @@ import moment from 'moment';
 import TimeTravel from '.';
 import { Example, Info } from '../../utils/example';
 
-
 export default class TimeTravelExample extends React.Component {
   constructor() {
     super();

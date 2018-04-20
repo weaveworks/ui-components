@@ -28,8 +28,6 @@ const MenuWrapper = styled.div`
  * }
  * ```
  */
-export default function Menu({children}) {
-  return (
-    <MenuWrapper className="weave-menu">{children}</MenuWrapper>
-  );
+export default function Menu({ children }) {
+  return <MenuWrapper className="weave-menu">{children}</MenuWrapper>;
 }

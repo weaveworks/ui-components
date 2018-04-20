@@ -1,4 +1,3 @@
-
 module.exports = class WeaveworksPartialImport {
   constructor() {
     return undefined;

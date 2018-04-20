@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 const DeploymentAnnotationPoint = styled.span.attrs({
   style: ({ top }) => ({ top }),
 })`
@@ -12,16 +11,16 @@ const DeploymentAnnotationPoint = styled.span.attrs({
   position: absolute;
   cursor: default;
 
-  ${props => !props.hoverable && `
+  ${props =>
+    !props.hoverable &&
+    `
     pointer-events: none;
-  `}
-
-  ${props => `
+  `} ${props => `
     margin-left: ${-props.radius}px;
     margin-top: ${-props.radius}px;
     width: ${2 * props.radius}px;
     height: ${2 * props.radius}px;
-  `}
+  `};
 `;
 
 export default DeploymentAnnotationPoint;

@@ -15,8 +15,8 @@ const GridRowWrapper = styled.div`
 `;
 
 /**
-* A row element that will flex children and align them to the left, center or right.
-*/
+ * A row element that will flex children and align them to the left, center or right.
+ */
 const GridRow = ({ alignContent, children }) => (
   <GridRowWrapper className="weave-grid-row" align={alignContent}>
     {children}
@@ -26,8 +26,8 @@ const GridRow = ({ alignContent, children }) => (
 GridRow.propTypes = {
   /**
    * The direction in which to justify content. Should be 'left', 'center', or 'right';
-  */
-  alignContent: PropTypes.string
+   */
+  alignContent: PropTypes.string,
 };
 
 export default GridRow;

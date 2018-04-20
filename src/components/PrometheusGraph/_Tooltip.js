@@ -3,7 +3,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-
 const TooltipContainer = styled.div.attrs({
   // Using attrs prevents extensive styled components
   // generation every time the tooltip is repositioned.
@@ -25,15 +24,15 @@ const TooltipContainer = styled.div.attrs({
 `;
 
 const Timestamp = styled.div`
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 13px;
   margin-bottom: 8px;
 `;
 
 class Tooltip extends React.PureComponent {
-  saveTooltipRef = (ref) => {
+  saveTooltipRef = ref => {
     this.tooltipRef = ref;
-  }
+  };
 
   getTooltipBoundingRect() {
     return this.tooltipRef
@@ -48,7 +47,12 @@ class Tooltip extends React.PureComponent {
 
     return (
       <TooltipContainer x={clampedX} y={y} innerRef={this.saveTooltipRef}>
-        <Timestamp>{moment(timestamp).utc().format()} UTC</Timestamp>
+        <Timestamp>
+          {moment(timestamp)
+            .utc()
+            .format()}{' '}
+          UTC
+        </Timestamp>
         {this.props.children}
       </TooltipContainer>
     );

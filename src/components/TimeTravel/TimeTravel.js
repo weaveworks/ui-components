@@ -13,7 +13,6 @@ import LiveModeToggle from './_LiveModeToggle';
 import TimestampInput from './_TimestampInput';
 import RangeSelector from './_RangeSelector';
 
-
 const TimeTravelContainer = styled.div`
   position: relative;
   z-index: 1;
@@ -136,7 +135,7 @@ function initialDurationMsPerTimelinePx(earliestTimestamp) {
  *  }
  * ```
  *
-*/
+ */
 class TimeTravel extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -184,7 +183,9 @@ class TimeTravel extends React.Component {
     if (nextProps.hasLiveMode && nextProps.showingLive) {
       this.setState({ focusedTimestamp: this.state.timestampNow });
     } else {
-      this.setState({ focusedTimestamp: formattedTimestamp(nextProps.timestamp) });
+      this.setState({
+        focusedTimestamp: formattedTimestamp(nextProps.timestamp),
+      });
     }
     // Update live mode only if live mode toggle is enabled.
     if (nextProps.hasLiveMode) {
@@ -362,19 +363,20 @@ class TimeTravel extends React.Component {
         </TimelineBar>
         <TimeControlsWrapper>
           <TimeControlsContainer>
-            {this.props.hasLiveMode && <LiveModeToggle
-              showingLive={this.state.showingLive}
-              onToggle={this.handleLiveModeToggle}
-            />}
+            {this.props.hasLiveMode && (
+              <LiveModeToggle
+                showingLive={this.state.showingLive}
+                onToggle={this.handleLiveModeToggle}
+              />
+            )}
             <TimestampInput
               timestamp={this.state.focusedTimestamp}
               onChangeTimestamp={this.handleInputChange}
               disabled={this.props.hasLiveMode && this.state.showingLive}
             />
-            {this.props.hasRangeSelector && <RangeSelector
-              rangeMs={this.state.rangeMs}
-              onChange={this.handleRangeChange}
-            />}
+            {this.props.hasRangeSelector && (
+              <RangeSelector rangeMs={this.state.rangeMs} onChange={this.handleRangeChange} />
+            )}
           </TimeControlsContainer>
         </TimeControlsWrapper>
       </TimeTravelContainer>

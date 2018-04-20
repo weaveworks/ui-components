@@ -14,13 +14,17 @@ export const lookupValue = (props, lookup, _default) => {
   const matches = intersection(keys(props), keys(lookup));
 
   if (matches.length > 1) {
-    throw new Error(`You have specified conflicting props: ${JSON.stringify(matches)}`);
+    throw new Error(
+      `You have specified conflicting props: ${JSON.stringify(matches)}`
+    );
   }
 
   return lookup[first(matches)] || _default;
 };
 
-export const withTheme = component => <ThemeProvider theme={theme}>{component}</ThemeProvider>;
+export const withTheme = component => (
+  <ThemeProvider theme={theme}>{component}</ThemeProvider>
+);
 
 // Shorthand for gettings values from the theme.
 // `variationKey` is a string matching the prop to use to lookup `field`.

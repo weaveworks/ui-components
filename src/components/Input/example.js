@@ -3,7 +3,6 @@ import React from 'react';
 import { Example, Info } from '../../utils/example';
 import Input from '.';
 
-
 const onChange = () => null;
 
 export default function InputExample() {
@@ -11,7 +10,11 @@ export default function InputExample() {
     <div>
       <Example>
         <Info>Plain inputs</Info>
-        <Input label="Username" placeholder="your name here" onChange={onChange} />
+        <Input
+          label="Username"
+          placeholder="your name here"
+          onChange={onChange}
+        />
         <Input label="Email" value="ron@hogwarts.edu" onChange={onChange} />
       </Example>
       <Example>

@@ -1,4 +1,3 @@
-
 module.exports = class LocalModuleProxy {
   constructor(opts) {
     this.opts = opts;

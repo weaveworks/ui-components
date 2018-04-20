@@ -12,7 +12,7 @@ marked.setOptions({
   smartypants: false,
   highlight(code) {
     return highlightAuto(code).value;
-  }
+  },
 });
 
 export function renderMarkdown(string) {
@@ -21,9 +21,10 @@ export function renderMarkdown(string) {
 
 export function isActivePage(item) {
   // If hosted on s3, we use hash instead of browser history
-  const path = window.location.hostname === 'localhost'
-    ? window.location.pathname
-    : window.location.hash;
+  const path =
+    window.location.hostname === 'localhost'
+      ? window.location.pathname
+      : window.location.hash;
 
   const [, p, page] = path.split('/');
 

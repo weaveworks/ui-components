@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-
 const PanButton = styled.button`
   background-color: transparent;
   color: ${props => props.theme.colors.primary.lavender};
@@ -16,8 +15,12 @@ const PanButton = styled.button`
   border: 0;
 
   /* Remove outline on Firefox */
-  &::-moz-focus-inner { border: 0; }
-  &:focus { outline: none; }
+  &::-moz-focus-inner {
+    border: 0;
+  }
+  &:focus {
+    outline: none;
+  }
 
   &:hover {
     color: ${props => props.theme.colors.primary.charcoal};

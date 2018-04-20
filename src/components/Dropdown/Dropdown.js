@@ -39,7 +39,8 @@ const Overlay = styled.div`
 
 const ItemWrapper = Item.extend`
   line-height: ${HEIGHT};
-  color: ${props => (props.selected ? props.theme.colors.accent.blue : props.theme.textColor)};
+  color: ${props =>
+    props.selected ? props.theme.colors.accent.blue : props.theme.textColor};
   min-height: ${HEIGHT};
 
   &:hover {
@@ -126,7 +127,7 @@ class Dropdown extends React.Component {
     super(props, context);
 
     this.state = {
-      isOpen: false
+      isOpen: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -164,7 +165,6 @@ class Dropdown extends React.Component {
     const currentItem =
       find(divided, i => i && i.value === value) || (divided && divided[0]);
 
-
     return (
       <div className={className} title={currentItem && currentItem.label}>
         <SelectedItem onClick={this.handleClick}>
@@ -176,17 +176,23 @@ class Dropdown extends React.Component {
         {isOpen && (
           <div>
             <Popover>
-              {map(divided, (item, index) => (item
-                      ? <ItemWrapper
-                        className="dropdown-item"
-                        key={item.value}
-                        onClick={ev => this.handleChange(ev, item.value)}
-                        selected={item.value === value}
-                        title={item && item.label}>
-                        {item.label}
-                      </ItemWrapper>
-                      : <Divider key={index} />
-              ))}
+              {map(
+                divided,
+                (item, index) =>
+                  item ? (
+                    <ItemWrapper
+                      className="dropdown-item"
+                      key={item.value}
+                      onClick={ev => this.handleChange(ev, item.value)}
+                      selected={item.value === value}
+                      title={item && item.label}
+                    >
+                      {item.label}
+                    </ItemWrapper>
+                  ) : (
+                    <Divider key={index} />
+                  )
+              )}
             </Popover>
             <Overlay onClick={this.handleBgClick} />
           </div>
@@ -198,7 +204,7 @@ class Dropdown extends React.Component {
 
 const itemPropType = PropTypes.shape({
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  label: PropTypes.string
+  label: PropTypes.string,
 });
 
 Dropdown.propTypes = {
@@ -218,7 +224,7 @@ Dropdown.propTypes = {
   /**
    * A handler function that will run when a value is selected.
    */
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 };
 
 export default StyledDropdown(Dropdown);

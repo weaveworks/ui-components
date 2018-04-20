@@ -5,7 +5,7 @@ const DOM_DELTA_LINE = 1;
 function wheelDelta(ev) {
   // Only Firefox seems to use the line unit (which we assume to
   // be 25px), otherwise the delta is already measured in pixels.
-  const unitInPixels = (ev.deltaMode === DOM_DELTA_LINE ? 25 : 1);
+  const unitInPixels = ev.deltaMode === DOM_DELTA_LINE ? 25 : 1;
   return -ev.deltaY * unitInPixels * ZOOM_SENSITIVITY;
 }
 

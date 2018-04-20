@@ -6,7 +6,9 @@ new WebpackDevServer(webpack(config), {
   hot: true,
   noInfo: false,
   historyApiFallback: true,
-  stats: 'errors-only'
-}).listen(8080, '0.0.0.0', (err) => {
-  if (err) { throw err; }
+  stats: 'errors-only',
+}).listen(8080, '0.0.0.0', err => {
+  if (err) {
+    throw err;
+  }
 });

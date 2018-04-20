@@ -13,38 +13,30 @@ export default class Intro extends React.PureComponent {
     };
   }
   componentDidMount() {
-    request('https://quotes.rest/qod')
-      .end((err, { status, body }) => {
-        if (status !== 429) {
-          this.setState(() => ({
-            quote: first(body.contents.quotes),
-          }));
-        }
-      });
+    request('https://quotes.rest/qod').end((err, { status, body }) => {
+      if (status !== 429) {
+        this.setState(() => ({
+          quote: first(body.contents.quotes),
+        }));
+      }
+    });
   }
   render() {
     return (
       <div>
         <p>
-          <Text large>
-            Welcome to the Weave Cloud Style Guide™!
-          </Text>
-
+          <Text large>Welcome to the Weave Cloud Style Guide™!</Text>
         </p>
-        {this.state.quote &&
+        {this.state.quote && (
           <div>
             <p>
-              <Text>
-                {this.state.quote.quote}
-              </Text>
+              <Text>{this.state.quote.quote}</Text>
             </p>
             <p>
-              <Text italic>
-                - {this.state.quote.author}
-              </Text>
+              <Text italic>- {this.state.quote.author}</Text>
             </p>
           </div>
-        }
+        )}
       </div>
     );
   }

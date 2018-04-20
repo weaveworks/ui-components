@@ -11,7 +11,10 @@ const StyledButton = styled('button')`
   padding: 0 12px;
   border: 0;
   outline: none;
-  box-shadow: ${props => (props.styled.selected ? props.theme.boxShadow.selected : props.theme.boxShadow.light)};
+  box-shadow: ${props =>
+    props.styled.selected
+      ? props.theme.boxShadow.selected
+      : props.theme.boxShadow.light};
 
   /* Color */
   background: ${fromAtoms('Button', 'styled.type', 'background')};
@@ -26,7 +29,7 @@ const StyledButton = styled('button')`
 
   /* Pseudo-selectors */
   &:hover {
-    transition: color .3s ease;
+    transition: color 0.3s ease;
     background: ${fromAtoms('Button', 'styled.type', 'hoverBackground')};
     color: ${fromAtoms('Button', 'styled.type', 'hoverColor')};
   }
@@ -39,7 +42,7 @@ const StyledButton = styled('button')`
  * ```
  */
 class Button extends React.PureComponent {
-  handleClick = (e) => {
+  handleClick = e => {
     const { onClick, disabled, text } = this.props;
 
     if (onClick && !disabled) {
@@ -67,7 +70,11 @@ class Button extends React.PureComponent {
         type={type}
         styled={{
           selected,
-          type: (disabled && 'disabled') || (primary && 'primary') || (danger && 'danger') || 'default',
+          type:
+            (disabled && 'disabled') ||
+            (primary && 'primary') ||
+            (danger && 'danger') ||
+            'default',
         }}
         style={style}
         className={className}
@@ -80,17 +87,17 @@ class Button extends React.PureComponent {
 
 Button.propTypes = {
   /**
- * Callback that will be run when the button is clicked.
- */
+   * Callback that will be run when the button is clicked.
+   */
   onClick: PropTypes.func,
   /**
- * Text that will be used as the button label.
- * If this props is provided, it will be passed back to the `onClick` handler
- */
+   * Text that will be used as the button label.
+   * If this props is provided, it will be passed back to the `onClick` handler
+   */
   text: PropTypes.string,
   /**
- * Disable the button.
- */
+   * Disable the button.
+   */
   disabled: PropTypes.bool,
   /**
    * Render the button in turquoise (useful for CTAs)

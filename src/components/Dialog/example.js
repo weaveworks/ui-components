@@ -10,7 +10,7 @@ export default class DialogExample extends React.Component {
     super(props, context);
     this.state = {
       normalButtonActive: false,
-      otherButtonActive: false
+      otherButtonActive: false,
     };
     this.handleDialogActivate = this.handleDialogActivate.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -21,24 +21,36 @@ export default class DialogExample extends React.Component {
       this.props.clickHandler('onActionClick', args);
     }
     this.setState({
-      [key]: !this.state[key]
+      [key]: !this.state[key],
     });
   }
   handleClose() {
     this.setState({
       normalButtonActive: false,
-      otherButtonActive: false
+      otherButtonActive: false,
     });
   }
   render() {
     const Action1 = () => (
-      <Button onClick={this.handleDialogActivate.bind(this, 'other', 'Action 1 Payload')}>
+      <Button
+        onClick={this.handleDialogActivate.bind(
+          this,
+          'other',
+          'Action 1 Payload'
+        )}
+      >
         Action 1
       </Button>
     );
 
     const Action2 = () => (
-      <Button onClick={this.handleDialogActivate.bind(this, 'other', 'Action 2 Payload')}>
+      <Button
+        onClick={this.handleDialogActivate.bind(
+          this,
+          'other',
+          'Action 2 Payload'
+        )}
+      >
         Action 2
       </Button>
     );
@@ -52,20 +64,26 @@ export default class DialogExample extends React.Component {
             onClose={this.handleClose}
             onActionClick={this.handleClose}
             overlay
-        >
+          >
             <p>Here is some content that I would like to display</p>
           </Dialog>
-          <Button onClick={this.handleDialogActivate.bind(this, 'normal')} text="Dialog" />
+          <Button
+            onClick={this.handleDialogActivate.bind(this, 'normal')}
+            text="Dialog"
+          />
         </Example>
         <Example>
           <Info>Dialog with pre-created actions</Info>
-          <Button onClick={this.handleDialogActivate.bind(this, 'other')} text="Custom Actions" />
+          <Button
+            onClick={this.handleDialogActivate.bind(this, 'other')}
+            text="Custom Actions"
+          />
           <Dialog
             active={this.state.otherButtonActive}
             actions={[<Action1 />, <Action2 />]}
             onClose={this.handleClose}
             overlay
-        >
+          >
             <p>This one has custom actions</p>
           </Dialog>
         </Example>

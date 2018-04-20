@@ -130,7 +130,8 @@ const weave = {
     xl: '2.827em',
   },
 
-  fontFamily: '\'proxima-nova\', sans-serif, \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+  fontFamily:
+    "'proxima-nova', sans-serif, 'Helvetica Neue', Helvetica, Arial, sans-serif",
 
   boxShadow: {
     none: 'none',

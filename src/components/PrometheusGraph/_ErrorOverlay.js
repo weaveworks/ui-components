@@ -20,9 +20,11 @@ const ErrorText = styled.span`
   padding: 5px 10px;
   opacity: 0.75;
 
-  ${props => props.hasData && `
+  ${props =>
+    props.hasData &&
+    `
     background-color: ${props.theme.colors.white};
-  `}
+  `};
 `;
 
 class ErrorOverlay extends React.PureComponent {
@@ -32,9 +34,7 @@ class ErrorOverlay extends React.PureComponent {
 
     return (
       <ErrorContainer loading={loading}>
-        <ErrorText hasData={hasData}>
-          {error}
-        </ErrorText>
+        <ErrorText hasData={hasData}>{error}</ErrorText>
       </ErrorContainer>
     );
   }

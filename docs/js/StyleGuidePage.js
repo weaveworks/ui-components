@@ -5,7 +5,11 @@ import PropTypes from 'prop-types';
 import { isActivePage } from './utils';
 
 import { Menu, MenuItem } from '../../src/components/Menu';
-import {Grid, GridColumn as Column, GridRow as Row } from '../../src/components/Grid';
+import {
+  Grid,
+  GridColumn as Column,
+  GridRow as Row,
+} from '../../src/components/Grid';
 
 class StyleGuidePage extends React.Component {
   constructor(props, context) {
@@ -18,8 +22,11 @@ class StyleGuidePage extends React.Component {
   }
 
   render() {
-    const items = this.context.styles.keys().map((page) => {
-      const pageName = page.split('/').pop().replace('.js', '');
+    const items = this.context.styles.keys().map(page => {
+      const pageName = page
+        .split('/')
+        .pop()
+        .replace('.js', '');
       return (
         <MenuItem
           active={isActivePage(pageName)}
@@ -44,7 +51,9 @@ class StyleGuidePage extends React.Component {
               </div>
             </Column>
             <Column span={10}>
-              <div className="style-guide-page-body markdown-body">{this.props.children}</div>
+              <div className="style-guide-page-body markdown-body">
+                {this.props.children}
+              </div>
             </Column>
           </Row>
         </Grid>
@@ -55,7 +64,7 @@ class StyleGuidePage extends React.Component {
 
 StyleGuidePage.contextTypes = {
   router: PropTypes.object.isRequired,
-  styles: PropTypes.func.isRequired
+  styles: PropTypes.func.isRequired,
 };
 
 export default StyleGuidePage;

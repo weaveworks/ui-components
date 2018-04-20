@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import Tooltip from './_Tooltip';
 import FocusPoint from './_FocusPoint';
 
-
 const DeploymentInfoLine = styled.span`
   margin-top: 1px;
   display: block;
@@ -17,7 +16,7 @@ const DeploymentInfoLine = styled.span`
 `;
 
 const DeploymentAnnotation = styled.div.attrs({
-  style: ({ left }) => ({ left })
+  style: ({ left }) => ({ left }),
 })`
   position: absolute;
   top: 0;
@@ -42,21 +41,23 @@ const DeploymentAnnotationLine = VerticalLine.extend`
   opacity: 0.7;
 `;
 
-const formattedDeployments = ({ deployments, timeScale, chartWidth }) => (
-  deployments.map(({ Data, Stamp }) => {
-    const [action, ...serviceIDs] = Data.split(', ');
-    return {
-      key: `${Data} --- ${Stamp}`,
-      position: timeScale(moment(Stamp).unix()),
-      timestamp: moment(Stamp).format(),
-      serviceIDs,
-      action,
-    };
-  }).filter(({ position }) => (
-    // Filter out all the deployments that fall out of the chart.
-    chartWidth >= position && position >= 0
-  ))
-);
+const formattedDeployments = ({ deployments, timeScale, chartWidth }) =>
+  deployments
+    .map(({ Data, Stamp }) => {
+      const [action, ...serviceIDs] = Data.split(', ');
+      return {
+        key: `${Data} --- ${Stamp}`,
+        position: timeScale(moment(Stamp).unix()),
+        timestamp: moment(Stamp).format(),
+        serviceIDs,
+        action,
+      };
+    })
+    .filter(
+      ({ position }) =>
+        // Filter out all the deployments that fall out of the chart.
+        chartWidth >= position && position >= 0
+    );
 
 class DeploymentAnnotations extends React.PureComponent {
   constructor(props) {
@@ -72,13 +73,13 @@ class DeploymentAnnotations extends React.PureComponent {
     this.setState({ deployments: formattedDeployments(nextProps) });
   }
 
-  handleDeploymentMouseEnter = (deployment) => {
+  handleDeploymentMouseEnter = deployment => {
     this.setState({ hoveredDeployment: deployment });
-  }
+  };
 
   handleDeploymentMouseLeave = () => {
     this.setState({ hoveredDeployment: null });
-  }
+  };
 
   render() {
     const { hoveredDeployment } = this.state;

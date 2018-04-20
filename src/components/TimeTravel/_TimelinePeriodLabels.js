@@ -47,16 +47,20 @@ function linearGradientValue(x, [a, b]) {
 class TimelinePeriodLabels extends React.PureComponent {
   findOptimalDurationFit(period, { durationMsPerPixel }) {
     const minimalDurationMs = durationMsPerPixel * 1.1 * MIN_TICK_SPACING_PX;
-    return find(TICK_SETTINGS_PER_PERIOD[period].periodIntervals, (
+    return find(
+      TICK_SETTINGS_PER_PERIOD[period].periodIntervals,
       p => moment.duration(p, period).asMilliseconds() >= minimalDurationMs
-    ));
+    );
   }
 
   getTicksForPeriod(period, timelineTransform) {
     // First find the optimal duration between the ticks - if no satisfactory
     // duration could be found, don't render any ticks for the given period.
     const { parentPeriod } = TICK_SETTINGS_PER_PERIOD[period];
-    const periodInterval = this.findOptimalDurationFit(period, timelineTransform);
+    const periodInterval = this.findOptimalDurationFit(
+      period,
+      timelineTransform
+    );
     if (!periodInterval) return [];
 
     // Get the boundary values for the displayed part of the timeline.
@@ -68,7 +72,9 @@ class TimelinePeriodLabels extends React.PureComponent {
     // Start counting the timestamps from the most recent timestamp that is not shown
     // on screen. The values are always rounded up to the timestamps of the next bigger
     // period (e.g. for days it would be months, for months it would be years).
-    let momentTimestamp = moment(momentStart).utc().startOf(parentPeriod || period);
+    let momentTimestamp = moment(momentStart)
+      .utc()
+      .startOf(parentPeriod || period);
     while (momentTimestamp.isBefore(momentStart)) {
       momentTimestamp = moment(momentTimestamp).add(periodInterval, period);
     }
@@ -76,11 +82,13 @@ class TimelinePeriodLabels extends React.PureComponent {
 
     // Make that hidden timestamp the first one in the list, but position
     // it inside the visible range with a prepended arrow to the past.
-    const ticks = [{
-      timestamp: formattedTimestamp(momentTimestamp),
-      position: -halfWidth,
-      isBehind: true,
-    }];
+    const ticks = [
+      {
+        timestamp: formattedTimestamp(momentTimestamp),
+        position: -halfWidth,
+        isBehind: true,
+      },
+    ];
 
     // Continue adding ticks till the end of the visible range.
     do {
@@ -90,8 +98,13 @@ class TimelinePeriodLabels extends React.PureComponent {
       // days and months, but in theory it could happen whenever bigger periods are not
       // divisible by the duration we are using as a step between the ticks.
       let newTimestamp = moment(momentTimestamp).add(periodInterval, period);
-      if (parentPeriod && newTimestamp.get(parentPeriod) !== momentTimestamp.get(parentPeriod)) {
-        newTimestamp = moment(newTimestamp).utc().startOf(parentPeriod);
+      if (
+        parentPeriod &&
+        newTimestamp.get(parentPeriod) !== momentTimestamp.get(parentPeriod)
+      ) {
+        newTimestamp = moment(newTimestamp)
+          .utc()
+          .startOf(parentPeriod);
       }
       momentTimestamp = newTimestamp;
 
@@ -114,19 +127,26 @@ class TimelinePeriodLabels extends React.PureComponent {
     let shift = 1;
     if (parentPeriod) {
       const durationMultiplier = 1 / MAX_TICK_SPACING_PX;
-      const parentInterval = TICK_SETTINGS_PER_PERIOD[parentPeriod].periodIntervals[0];
-      const parentIntervalMs = moment.duration(parentInterval, parentPeriod).asMilliseconds();
+      const parentInterval =
+        TICK_SETTINGS_PER_PERIOD[parentPeriod].periodIntervals[0];
+      const parentIntervalMs = moment
+        .duration(parentInterval, parentPeriod)
+        .asMilliseconds();
       const fadedInDurationMs = parentIntervalMs * durationMultiplier;
       const fadedOutDurationMs = fadedInDurationMs * FADE_OUT_FACTOR;
 
-      const transitionFactor = Math.log(fadedOutDurationMs) - Math.log(durationMsPerPixel);
-      const transitionLength = Math.log(fadedOutDurationMs) - Math.log(fadedInDurationMs);
+      const transitionFactor =
+        Math.log(fadedOutDurationMs) - Math.log(durationMsPerPixel);
+      const transitionLength =
+        Math.log(fadedOutDurationMs) - Math.log(fadedInDurationMs);
 
       shift = clamp(transitionFactor / transitionLength, 0, 1);
     }
 
     if (childPeriod) {
-      shift += this.getVerticalShiftForPeriod(childPeriod, { durationMsPerPixel });
+      shift += this.getVerticalShiftForPeriod(childPeriod, {
+        durationMsPerPixel,
+      });
     }
 
     return shift;
@@ -134,7 +154,8 @@ class TimelinePeriodLabels extends React.PureComponent {
 
   isOutsideOfClickableRange(timestamp) {
     const { clickableStartAt, clickableEndAt } = this.props;
-    const beforeClickableStartAt = clickableStartAt && clickableStartAt > timestamp;
+    const beforeClickableStartAt =
+      clickableStartAt && clickableStartAt > timestamp;
     const afterClickableEndtAt = clickableEndAt && clickableEndAt < timestamp;
     return beforeClickableStartAt || afterClickableEndtAt;
   }
@@ -144,15 +165,17 @@ class TimelinePeriodLabels extends React.PureComponent {
     const periodFormat = TICK_SETTINGS_PER_PERIOD[period].format;
     const ticks = this.getTicksForPeriod(period, this.props);
 
-    const ticksRow = MAX_TICK_ROWS - this.getVerticalShiftForPeriod(period, this.props);
+    const ticksRow =
+      MAX_TICK_ROWS - this.getVerticalShiftForPeriod(period, this.props);
     const transform = `translate(0, ${ticksRow * TICKS_ROW_SPACING})`;
 
     // Ticks quickly fade in from the bottom and then slowly start
     // fading out towards the top until they are pushed out of canvas.
     const focusedRow = MAX_TICK_ROWS - 1;
-    const opacity = ticksRow > focusedRow ?
-      linearGradientValue(ticksRow, [MAX_TICK_ROWS, focusedRow]) :
-      linearGradientValue(ticksRow, [-2, focusedRow]);
+    const opacity =
+      ticksRow > focusedRow
+        ? linearGradientValue(ticksRow, [MAX_TICK_ROWS, focusedRow])
+        : linearGradientValue(ticksRow, [-2, focusedRow]);
     const isBarelyVisible = opacity < 0.4;
 
     return (
@@ -164,7 +187,9 @@ class TimelinePeriodLabels extends React.PureComponent {
             position={position}
             isBehind={isBehind}
             periodFormat={periodFormat}
-            disabled={isBarelyVisible || this.isOutsideOfClickableRange(timestamp)}
+            disabled={
+              isBarelyVisible || this.isOutsideOfClickableRange(timestamp)
+            }
             onClick={this.props.onClick}
           />
         ))}

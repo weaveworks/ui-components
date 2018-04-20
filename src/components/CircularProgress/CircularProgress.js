@@ -48,12 +48,14 @@ const DotSpinner = styled.div`
   -ms-transform: translateZ(0);
   transform: translateZ(0);
 
-  ${props => props.scale && `
+  ${props =>
+    props.scale &&
+    `
     margin: ${15 * props.scale}px;
     font-size: ${5 * props.scale}px;
     width: ${5 * props.scale}px;
     height: ${5 * props.scale}px;
-  `}
+  `};
 `;
 
 const ProgressContainer = styled.div`
@@ -64,14 +66,17 @@ const ProgressWrapper = styled.div`
   width: ${props => props.size}px;
   height: ${props => props.size}px;
 
-  ${props => props.inline && `
+  ${props =>
+    props.inline &&
+    `
     display: inline-block;
     vertical-align: middle;
-  `}
-  ${props => props.center && `
+  `} ${props =>
+    props.center &&
+    `
     margin-left: auto;
     margin-right: auto;
-  `}
+  `};
 `;
 
 /**
@@ -91,7 +96,7 @@ const ProgressWrapper = styled.div`
  */
 const CircularProgress = props => (
   <ProgressWrapper {...props}>
-    <ProgressContainer >
+    <ProgressContainer>
       <DotSpinner scale={props.size / 35} />
     </ProgressContainer>
   </ProgressWrapper>

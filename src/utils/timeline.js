@@ -1,10 +1,12 @@
 import moment from 'moment';
 import { scaleUtc } from 'd3-scale';
 
-
 export function formattedTimestamp(timestamp) {
   const momentTimestamp = timestamp ? moment(timestamp) : moment();
-  return momentTimestamp.startOf('second').utc().format();
+  return momentTimestamp
+    .startOf('second')
+    .utc()
+    .format();
 }
 
 export function getTimeScale({ focusedTimestamp, durationMsPerPixel }) {
