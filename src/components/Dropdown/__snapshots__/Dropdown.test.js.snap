@@ -1,5 +1,73 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
+.c3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.c1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #969696;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c1 .c2 {
+  padding: 0;
+}
+
+.c1 div:last-child {
+  margin-left: auto;
+}
+
+.c4 {
+  padding-left: 1em;
+  float: right;
+  line-height: 36px !important;
+}
+
+.c0 {
+  height: 36px;
+  line-height: 36px;
+  position: relative;
+  padding: 8px;
+  width: 256px;
+}
+
+<div
+  className="c0"
+  title="Select an item"
+>
+  <div
+    className="c1"
+    onClick={[Function]}
+  >
+    <div
+      className="c2 c3"
+    >
+      Select an item
+    </div>
+    <div>
+      <span
+        className="fa fa-caret-down c4"
+      />
+    </div>
+  </div>
+</div>
+`;
+
 exports[`<Dropdown /> snapshots renders default 1`] = `
 .c3 {
   overflow: hidden;

@@ -39,8 +39,7 @@ const Overlay = styled.div`
 
 const ItemWrapper = Item.extend`
   line-height: ${HEIGHT};
-  color: ${props =>
-    props.selected ? props.theme.colors.accent.blue : props.theme.textColor};
+  color: ${props => (props.selected ? props.theme.colors.accent.blue : props.theme.textColor)};
   min-height: ${HEIGHT};
 
   &:hover {
@@ -159,11 +158,13 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    const { items, value, className } = this.props;
+    const { items, value, className, placeholder } = this.props;
     const { isOpen } = this.state;
     const divided = this.divide(items);
+    // If nothing is selected, use the placeholder, else use the first item.
     const currentItem =
-      find(divided, i => i && i.value === value) || (divided && divided[0]);
+      find(divided, i => i && i.value === value) ||
+      (placeholder ? { label: placeholder, value: null } : divided && divided[0]);
 
     return (
       <div className={className} title={currentItem && currentItem.label}>
@@ -213,9 +214,8 @@ Dropdown.propTypes = {
    * `value` should be an internal value,
    * `label` is what will be displayed to the user.
    */
-  items: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType])
-  ).isRequired,
+  items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType]))
+    .isRequired,
   /**
    * The value of the currently selected item. This much match a value in the `items` prop.
    * If no value is provided, the first elements's value will be used.
@@ -225,6 +225,10 @@ Dropdown.propTypes = {
    * A handler function that will run when a value is selected.
    */
   onChange: PropTypes.func,
+  /**
+   * The initial text that will be display before a user selects an item.
+   */
+  placeholder: PropTypes.string,
 };
 
 export default StyledDropdown(Dropdown);

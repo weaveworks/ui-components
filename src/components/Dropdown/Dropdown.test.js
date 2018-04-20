@@ -23,8 +23,12 @@ describe('<Dropdown />', () => {
 
   describe('snapshots', () => {
     it('renders default', () => {
+      const tree = renderer.create(withTheme(<Dropdown items={items} />)).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('renders a placeholder', () => {
       const tree = renderer
-        .create(withTheme(<Dropdown items={items} />))
+        .create(withTheme(<Dropdown placeholder="Select an item" items={items} />))
         .toJSON();
       expect(tree).toMatchSnapshot();
     });
