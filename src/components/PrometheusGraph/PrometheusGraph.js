@@ -21,12 +21,7 @@ import {
   get,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
-import {
-  format,
-  formatPrefix,
-  precisionPrefix,
-  precisionFixed,
-} from 'd3-format';
+import { format, formatPrefix, precisionPrefix, precisionFixed } from 'd3-format';
 import { stack } from 'd3-shape';
 
 import theme from '../../theme';
@@ -245,10 +240,7 @@ class PrometheusGraph extends React.PureComponent {
     this.setState({ chartWidth, chartHeight });
   };
 
-  prepareMultiSeries = (
-    props,
-    { selectedLegendMultiSeriesKeys } = this.state
-  ) => {
+  prepareMultiSeries = (props, { selectedLegendMultiSeriesKeys } = this.state) => {
     const getSeriesColor = getColorTheme(props.colorTheme);
     const getSeriesName = (series, forLegend) =>
       props.getSeriesName(series, props.multiSeries, forLegend);
@@ -256,13 +248,8 @@ class PrometheusGraph extends React.PureComponent {
 
     // Build a dictionary that references original multi series by keys,
     // and a sorted list of those keys by which we can later iterate.
-    const getSeriesKeyValuePair = (series, index) => [
-      getSeriesKey(series, index),
-      series,
-    ];
-    const multiSeriesByKey = fromPairs(
-      props.multiSeries.map(getSeriesKeyValuePair)
-    );
+    const getSeriesKeyValuePair = (series, index) => [getSeriesKey(series, index), series];
+    const multiSeriesByKey = fromPairs(props.multiSeries.map(getSeriesKeyValuePair));
     const multiSeriesKeys = keys(multiSeriesByKey).sort();
 
     // Calculate the keys of stacked series:
@@ -274,9 +261,7 @@ class PrometheusGraph extends React.PureComponent {
     let stackedMultiSeriesKeys = [];
     if (props.showStacked) {
       stackedMultiSeriesKeys =
-        selectedLegendMultiSeriesKeys.length > 0
-          ? selectedLegendMultiSeriesKeys
-          : multiSeriesKeys;
+        selectedLegendMultiSeriesKeys.length > 0 ? selectedLegendMultiSeriesKeys : multiSeriesKeys;
     }
 
     // This D3 scale takes care of rounding all the datapoints to the nearest discrete timestamp.
@@ -304,17 +289,10 @@ class PrometheusGraph extends React.PureComponent {
 
     // Stack the graph series in the alphabetical order.
     const stackFunction = stack().keys(stackedMultiSeriesKeys);
-    const valuesForStacking = sortBy(values(valuesByTimestamp), [
-      'timestampSec',
-    ]);
-    const stackedData = zipObject(
-      stackedMultiSeriesKeys,
-      stackFunction(valuesForStacking)
-    );
+    const valuesForStacking = sortBy(values(valuesByTimestamp), ['timestampSec']);
+    const stackedData = zipObject(stackedMultiSeriesKeys, stackFunction(valuesForStacking));
     const getStackedOffset = (seriesKey, timestampIndex) =>
-      stackedMultiSeriesKeys.includes(seriesKey)
-        ? stackedData[seriesKey][timestampIndex][0]
-        : 0;
+      stackedMultiSeriesKeys.includes(seriesKey) ? stackedData[seriesKey][timestampIndex][0] : 0;
 
     // Finally store the multi-series ready to be graphed.
     const multiSeries = multiSeriesKeys.map((seriesKey, seriesIndex) => ({
@@ -346,16 +324,12 @@ class PrometheusGraph extends React.PureComponent {
     // Timestamp values are stepDurationSec seconds apart and they always end at
     // endTimeSec. We make startTimeSec a bit smaller to include it in the range in case
     // (endTimeSec - startTimeSec) is divisible by stepDurationSec.
-    const timestampSecs = range(
-      endTimeSec,
-      startTimeSec - 1e-6,
-      -stepDurationSec
-    ).sort();
+    const timestampSecs = range(endTimeSec, startTimeSec - 1e-6, -stepDurationSec).sort();
     // scaleQuantize would normally map domain in buckets of uniform lengths. To
     // make it map to the nearest point in timestampSecs instead, we need to extend
     // the domain by half of stepDurationSec at each end.
-    const startDomain = first(timestampSecs) - 0.5 * stepDurationSec;
-    const endDomain = last(timestampSecs) + 0.5 * stepDurationSec;
+    const startDomain = (first(timestampSecs) - 0.5) * stepDurationSec;
+    const endDomain = (last(timestampSecs) + 0.5) * stepDurationSec;
     return scaleQuantize()
       .domain([startDomain, endDomain])
       .range(timestampSecs);
@@ -465,9 +439,7 @@ class PrometheusGraph extends React.PureComponent {
           loading={loading}
           shown={legendShown}
           collapsable={legendCollapsable}
-          onSelectedMultiSeriesChange={
-            this.handleSelectedLegendMultiSeriesChange
-          }
+          onSelectedMultiSeriesChange={this.handleSelectedLegendMultiSeriesChange}
           onHoveredSeriesChange={this.handleHoveredLegendSeriesChange}
           multiSeries={multiSeries}
         />
