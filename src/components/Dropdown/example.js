@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { Example, Info } from '../../utils/example';
+import { Grid, GridRow as Row, GridColumn as Column } from '../Grid';
+
 import Dropdown from '.';
 
 const items = [
@@ -57,42 +59,51 @@ export default class DropdownExample extends React.Component {
   constructor() {
     super();
     this.state = {
-      selected: items[0].value,
+      selected: null,
     };
   }
 
-  render() {
-    const onChange = (ev, value) => {
-      this.setState(() => ({ selected: value }));
-    };
+  handleChange = (ev, value) => {
+    this.setState(() => ({ selected: value }));
+  };
 
+  render() {
     return (
-      <div>
-        <Example>
-          <Info>Default dropdown</Info>
-          <Dropdown
-            items={items}
-            value={this.state.selected}
-            onChange={onChange}
-          />
-        </Example>
-        <Example>
-          <Info>Grouped items (passed as subarrays)</Info>
-          <Dropdown
-            items={groups}
-            value={this.state.selected}
-            onChange={onChange}
-          />
-        </Example>
-        <Example>
-          <Info>Grouped items (with null as dividers)</Info>
-          <Dropdown
-            items={divided}
-            value={this.state.selected}
-            onChange={onChange}
-          />
-        </Example>
-      </div>
+      <Grid>
+        <Row>
+          <Column span={6}>
+            <Example>
+              <Info>Default dropdown</Info>
+              <Dropdown items={items} value={this.state.selected} onChange={this.handleChange} />
+            </Example>
+          </Column>
+          <Column span={6}>
+            <Example>
+              <Info>Grouped items (passed as subarrays)</Info>
+              <Dropdown items={groups} value={this.state.selected} onChange={this.handleChange} />
+            </Example>
+          </Column>
+        </Row>
+        <Row>
+          <Column span={6}>
+            <Example>
+              <Info>Grouped items (with null as dividers)</Info>
+              <Dropdown items={divided} value={this.state.selected} onChange={this.handleChange} />
+            </Example>
+          </Column>
+          <Column span={6}>
+            <Example>
+              <Info>With placeholder</Info>
+              <Dropdown
+                items={items}
+                placeholder="Select an item"
+                value={this.state.selected}
+                onChange={this.handleChange}
+              />
+            </Example>
+          </Column>
+        </Row>
+      </Grid>
     );
   }
 }
