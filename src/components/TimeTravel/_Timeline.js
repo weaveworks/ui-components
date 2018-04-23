@@ -21,6 +21,8 @@ const TIMELINE_HEIGHT = '55px';
 const TimelineWrapper = styled.div`
   width: 100%;
   height: ${TIMELINE_HEIGHT};
+  overflow: hidden;
+  position: relative;
 
   &:before,
   &:after {

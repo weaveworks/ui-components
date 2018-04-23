@@ -13,10 +13,8 @@ const TimelineRange = ({ color, timeScale, startAt, endAt, width, height }) => {
   startShift = endShift - length;
 
   return (
-    <rect
-      fill={color}
-      fillOpacity={0.15}
-      transform={`translate(${startShift}, 0)`}
+    <div
+      style={{ position: 'absolute', left: startShift, opacity: 0.15, background: color, width: length, height }}
       width={length}
       height={height}
     />
