@@ -3,6 +3,8 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import theme from '../../theme';
+
 const TimelineLabelContainer = styled.button`
   background-color: transparent;
   color: ${props => props.theme.colors.primary.lavender};
@@ -54,20 +56,18 @@ class TimelineLabel extends React.Component {
     } = this.props;
 
     return (
-      <g transform={`translate(${position}, 0)`}>
-        {!isBehind && <line y2="75" stroke="#ddd" strokeWidth="1" />}
+      <span style={{ position: 'absolute', left: position }} >
+        {!isBehind && <line y2="75" stroke={theme.colors.alto} strokeWidth="1" />}
         {!disabled && <title>Jump to {timestamp}</title>}
-        <foreignObject width="100" height="20" style={{ lineHeight: '20px' }}>
-          <TimelineLabelContainer
-            onClick={this.handleClick}
-            disabled={disabled}
-          >
-            {moment(timestamp)
-              .utc()
-              .format(periodFormat)}
-          </TimelineLabelContainer>
-        </foreignObject>
-      </g>
+        <TimelineLabelContainer
+          onClick={this.handleClick}
+          disabled={disabled}
+        >
+          {moment(timestamp)
+            .utc()
+            .format(periodFormat)}
+        </TimelineLabelContainer>
+      </span>
     );
   }
 }
