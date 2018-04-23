@@ -328,8 +328,8 @@ class PrometheusGraph extends React.PureComponent {
     // scaleQuantize would normally map domain in buckets of uniform lengths. To
     // make it map to the nearest point in timestampSecs instead, we need to extend
     // the domain by half of stepDurationSec at each end.
-    const startDomain = (first(timestampSecs) - 0.5) * stepDurationSec;
-    const endDomain = (last(timestampSecs) + 0.5) * stepDurationSec;
+    const startDomain = first(timestampSecs) - (0.5 * stepDurationSec);
+    const endDomain = last(timestampSecs) + (0.5 * stepDurationSec);
     return scaleQuantize()
       .domain([startDomain, endDomain])
       .range(timestampSecs);
