@@ -22,7 +22,6 @@ const StyledButton = styled('button')`
 
   /* Text */
   font-size: ${props => props.theme.fontSizes.normal};
-  text-transform: uppercase;
 
   /* Other */
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
