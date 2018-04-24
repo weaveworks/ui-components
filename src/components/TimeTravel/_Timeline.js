@@ -3,7 +3,6 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { transparentize } from 'polished';
-import { debounce } from 'lodash';
 import { drag } from 'd3-drag';
 import { event as d3Event, select } from 'd3-selection';
 import { Motion } from 'react-motion';
@@ -19,10 +18,8 @@ import TimelineRange from './_TimelineRange';
 const TIMELINE_HEIGHT = '55px';
 
 const TimelineWrapper = styled.div`
-  width: 100%;
   height: ${TIMELINE_HEIGHT};
-  overflow: hidden;
-  position: relative;
+  width: 100%;
 
   &:before,
   &:after {
@@ -38,6 +35,7 @@ const TimelineWrapper = styled.div`
     border-bottom: 0;
     margin-left: -1px;
     width: 3px;
+    z-index: 1;
   }
 
   &:before {
@@ -74,6 +72,26 @@ const TimelineContainer = FullyPannableCanvas.extend`
   background-color: ${props => transparentize(0.15, props.theme.colors.white)};
   box-shadow: inset 0 0 7px ${props => props.theme.colors.gray};
   pointer-events: all;
+  position: relative;
+  overflow: hidden;
+`;
+
+const CenteredContent = styled.div`
+  position: absolute;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+`;
+
+const AxisContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+`;
+
+const TicksContainer = styled.div`
+  position: absolute;
+  top: 1px;
 `;
 
 class Timeline extends React.PureComponent {
@@ -81,19 +99,9 @@ class Timeline extends React.PureComponent {
     super(props);
 
     this.state = {
-      width: 0,
-      height: 0,
       isPanning: false,
       hasPanned: false,
     };
-
-    this.handleZoom = this.handleZoom.bind(this);
-    this.handlePanStart = this.handlePanStart.bind(this);
-    this.handlePanEnd = this.handlePanEnd.bind(this);
-    this.handlePan = this.handlePan.bind(this);
-    this.handleResize = debounce(this.handleResize.bind(this), 200);
-
-    this.saveSvgRef = this.saveSvgRef.bind(this);
   }
 
   componentDidMount() {
@@ -105,42 +113,35 @@ class Timeline extends React.PureComponent {
     this.svg.call(this.drag);
   }
 
-  handlePanStart() {
+  handlePanStart = () => {
     this.setState({ isPanning: true });
-  }
+  };
 
-  handlePanEnd() {
+  handlePanEnd = () => {
     if (this.state.hasPanned) {
       this.props.onRelease();
     }
     this.setState({ isPanning: false, hasPanned: false });
-  }
+  };
 
-  handlePan() {
+  handlePan = () => {
     const timeScale = getTimeScale(this.props);
     const momentTimestamp = timeScale.invert(-d3Event.dx);
     this.props.onPan(momentTimestamp);
     this.setState({ hasPanned: true });
-  }
+  };
 
-  handleZoom(ev) {
+  handleZoom = ev => {
     const { durationMsPerPixel } = this.props;
     this.props.onZoom(durationMsPerPixel / zoomFactor(ev));
     ev.preventDefault();
-  }
+  };
 
-  handleResize({ width, height }) {
-    // Update the timeline dimension information.
-    this.setState({ width, height });
-    this.props.onResize(width);
-  }
-
-  saveSvgRef(ref) {
+  saveSvgRef = ref => {
     this.svgRef = ref;
-  }
+  };
 
   renderAxis(transform) {
-    const { width, height } = this.state;
     const { focusedTimestamp, rangeMs } = transform;
     const startTimestamp = moment(focusedTimestamp)
       .subtract(rangeMs)
@@ -148,59 +149,43 @@ class Timeline extends React.PureComponent {
     const timeScale = getTimeScale(transform);
 
     return (
-      <div className="axis">
-        <div
-          className="tooltip-container"
-          transform={`translate(${-width / 2}, 0)`}
-          width={width}
-          height={height}
-          fillOpacity={0}
-        />
-
+      <AxisContainer>
         <TimelineRange
           color={theme.colors.gray}
-          width={width}
-          height={height}
           endAt={this.props.earliestTimestamp}
           timeScale={timeScale}
         />
         <TimelineRange
           color={theme.colors.gray}
-          width={width}
-          height={height}
           startAt={this.props.timestampNow}
           timeScale={timeScale}
         />
         {this.props.inspectingInterval && (
           <TimelineRange
             color={theme.colors.accent.blue}
-            width={width}
-            height={height}
             startAt={startTimestamp}
             endAt={focusedTimestamp}
             timeScale={timeScale}
           />
         )}
-
-        <div className="ticks" transform="translate(0, 1)">
+        <TicksContainer>
           {['year', 'month', 'day', 'minute'].map(period => (
             <TimelinePeriodLabels
               key={period}
               period={period}
-              width={width}
               onClick={this.props.onJump}
               clickableStartAt={this.props.earliestTimestamp}
               clickableEndAt={this.props.timestampNow}
               {...transform}
             />
           ))}
-        </div>
-      </div>
+        </TicksContainer>
+      </AxisContainer>
     );
   }
 
   render() {
-    const { isPanning, width } = this.state;
+    const { isPanning } = this.state;
     const { focusedTimestamp, durationMsPerPixel, rangeMs } = this.props;
 
     return (
@@ -209,12 +194,9 @@ class Timeline extends React.PureComponent {
           panning={isPanning}
           innerRef={this.saveSvgRef}
           onWheel={this.handleZoom}
+          title="Scroll to zoom, drag to pan"
         >
-          <div
-            className="timeline-container"
-            style={{ position: 'absolute', left: width / 2 }}
-          >
-            <title>Scroll to zoom, drag to pan</title>
+          <CenteredContent>
             <Motion
               style={{
                 focusedTimestampMs: strongSpring(
@@ -234,7 +216,7 @@ class Timeline extends React.PureComponent {
                 })
               }
             </Motion>
-          </div>
+          </CenteredContent>
         </TimelineContainer>
       </TimelineWrapper>
     );
@@ -252,7 +234,6 @@ Timeline.propTypes = {
   onZoom: PropTypes.func.isRequired,
   onPan: PropTypes.func.isRequired,
   onRelease: PropTypes.func.isRequired,
-  onResize: PropTypes.func.isRequired,
 };
 
 export default Timeline;

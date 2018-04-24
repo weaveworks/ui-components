@@ -143,24 +143,30 @@ class TimeTravel extends React.Component {
     this.state = {
       timestampNow: formattedTimestamp(),
       focusedTimestamp: formattedTimestamp(props.timestamp),
-      durationMsPerPixel: initialDurationMsPerTimelinePx(props.earliestTimestamp),
+      durationMsPerPixel: initialDurationMsPerTimelinePx(
+        props.earliestTimestamp
+      ),
       showingLive: props.showingLive,
       rangeMs: props.rangeMs,
-      timelineWidthPx: null,
+      timelineWidthPx: 1000,
     };
 
-    this.handleTimelinePanButtonClick = this.handleTimelinePanButtonClick.bind(this);
+    this.handleTimelinePanButtonClick = this.handleTimelinePanButtonClick.bind(
+      this
+    );
     this.handleTimelineJump = this.handleTimelineJump.bind(this);
     this.handleTimelineZoom = this.handleTimelineZoom.bind(this);
     this.handleTimelinePan = this.handleTimelinePan.bind(this);
     this.handleTimelineRelease = this.handleTimelineRelease.bind(this);
-    this.handleTimelineResize = this.handleTimelineResize.bind(this);
     this.handleRangeChange = this.handleRangeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLiveModeToggle = this.handleLiveModeToggle.bind(this);
 
     this.delayedReportZoom = debounce(this.reportZoom.bind(this), 5000);
-    this.delayedOnChangeTimestamp = debounce(this.props.onChangeTimestamp.bind(this), 500);
+    this.delayedOnChangeTimestamp = debounce(
+      this.props.onChangeTimestamp.bind(this),
+      500
+    );
 
     this.setFocusedTimestamp = this.setFocusedTimestamp.bind(this);
   }
@@ -205,21 +211,26 @@ class TimeTravel extends React.Component {
     let timestamp = formattedTimestamp(rawTimestamp);
     const startTimestamp = this.props.earliestTimestamp;
     const endTimestamp = this.state.timestampNow;
-    if (startTimestamp && timestamp < startTimestamp) timestamp = startTimestamp;
+    if (startTimestamp && timestamp < startTimestamp)
+      timestamp = startTimestamp;
     if (endTimestamp && timestamp > endTimestamp) timestamp = endTimestamp;
     return timestamp;
   }
 
   clampedDuration(duration) {
     const minDurationMs = minDurationMsPerTimelinePx();
-    const maxDurationMs = maxDurationMsPerTimelinePx(this.props.earliestTimestamp);
+    const maxDurationMs = maxDurationMsPerTimelinePx(
+      this.props.earliestTimestamp
+    );
     return clamp(duration, minDurationMs, maxDurationMs);
   }
 
   shouldStickySwitchToLiveMode(nextState) {
     const timeScale = getTimeScale({ ...this.state, ...nextState });
     const timestampCloseToNow = timeScale(moment(this.state.timestampNow)) < 10;
-    return timestampCloseToNow && this.props.hasLiveMode && !this.state.showingLive;
+    return (
+      timestampCloseToNow && this.props.hasLiveMode && !this.state.showingLive
+    );
   }
 
   handleRangeChange(rangeMs) {
@@ -276,14 +287,6 @@ class TimeTravel extends React.Component {
     this.props.onTimelinePan();
   }
 
-  handleTimelineResize(timelineWidthPx) {
-    // If this is the initial resize, adjust the zoom level to the current selected range.
-    if (!this.state.timelineWidthPx) {
-      this.adjustZoomToRange(this.state.rangeMs, timelineWidthPx);
-    }
-    this.setState({ timelineWidthPx });
-  }
-
   handleLiveModeToggle(showingLive) {
     if (showingLive) {
       //  Order of callbacks is important.
@@ -324,9 +327,22 @@ class TimeTravel extends React.Component {
   }
 
   reportZoom() {
-    const periods = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
-    const momentDuration = moment.duration(this.state.durationMsPerPixel * MAX_TICK_SPACING_PX);
-    const zoomedPeriod = find(periods, period => Math.floor(momentDuration.get(period)) && period);
+    const periods = [
+      'years',
+      'months',
+      'weeks',
+      'days',
+      'hours',
+      'minutes',
+      'seconds',
+    ];
+    const momentDuration = moment.duration(
+      this.state.durationMsPerPixel * MAX_TICK_SPACING_PX
+    );
+    const zoomedPeriod = find(
+      periods,
+      period => Math.floor(momentDuration.get(period)) && period
+    );
     this.props.onTimelineZoom(zoomedPeriod);
   }
 
@@ -352,7 +368,6 @@ class TimeTravel extends React.Component {
             onZoom={this.handleTimelineZoom}
             onPan={this.handleTimelinePan}
             onRelease={this.handleTimelineRelease}
-            onResize={this.handleTimelineResize}
           />
           <TimelinePanButton
             icon="fa fa-chevron-right"
@@ -375,7 +390,10 @@ class TimeTravel extends React.Component {
               disabled={this.props.hasLiveMode && this.state.showingLive}
             />
             {this.props.hasRangeSelector && (
-              <RangeSelector rangeMs={this.state.rangeMs} onChange={this.handleRangeChange} />
+              <RangeSelector
+                rangeMs={this.state.rangeMs}
+                onChange={this.handleRangeChange}
+              />
             )}
           </TimeControlsContainer>
         </TimeControlsWrapper>
