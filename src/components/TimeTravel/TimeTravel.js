@@ -211,9 +211,12 @@ class TimeTravel extends React.Component {
     let timestamp = formattedTimestamp(rawTimestamp);
     const startTimestamp = this.props.earliestTimestamp;
     const endTimestamp = this.state.timestampNow;
-    if (startTimestamp && timestamp < startTimestamp)
+    if (startTimestamp && timestamp < startTimestamp) {
       timestamp = startTimestamp;
-    if (endTimestamp && timestamp > endTimestamp) timestamp = endTimestamp;
+    }
+    if (endTimestamp && timestamp > endTimestamp) {
+      timestamp = endTimestamp;
+    }
     return timestamp;
   }
 
