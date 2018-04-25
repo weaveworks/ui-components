@@ -142,6 +142,16 @@ const weave = {
 
   borderRadius: '4px',
 
+  layer: {
+    front: 1,
+    toolbar: 2,
+    notification: 3,
+    alert: 4,
+    dropdown: 5,
+    tooltip: 6,
+    modal: 7,
+  },
+
   // component-specific
   atoms: {
     Button: {
@@ -202,9 +212,8 @@ const weave = {
 
 export default weave;
 
-// Flattens and collects all theme colors, names them
-// as Scss vars and returns them as query string
-export function themeColorsAsScss() {
+// Flattens and collects all theme colors as SCSS vars
+function themeColorsAsScss() {
   const ignoreKeys = ['graphThemes'];
   const themeColors = [];
 
@@ -222,5 +231,23 @@ export function themeColorsAsScss() {
     }
   });
 
-  return `${themeColors.join('; ')};`;
+  return themeColors;
+}
+
+// Collects all theme z-index layers as SCSS vars
+function themeLayersAsScss() {
+  const themeLayers = [];
+
+  forEach(weave.layers, (value, name) => {
+    themeLayers.push(`$layer-${kebabCase(name)}: ${value}`);
+  });
+
+  return themeLayers;
+}
+
+export function themeVarsAsScss() {
+  const themeVariables = []
+    .concat(themeColorsAsScss())
+    .concat(themeLayersAsScss());
+  return `${themeVariables.join('; ')};`;
 }
