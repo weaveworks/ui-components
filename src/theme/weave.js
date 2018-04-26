@@ -142,7 +142,7 @@ const weave = {
 
   borderRadius: '4px',
 
-  layer: {
+  layers: {
     front: 1,
     toolbar: 2,
     notification: 3,
