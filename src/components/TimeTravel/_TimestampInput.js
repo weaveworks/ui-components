@@ -32,6 +32,8 @@ class TimestampInput extends React.PureComponent {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,7 +46,16 @@ class TimestampInput extends React.PureComponent {
   handleChange(ev) {
     const timestamp = ev.target.value;
     this.setState({ timestamp });
+  }
 
+  handleKeyDown(ev) {
+    if (ev.keyCode === 13) {
+      this.submit();
+    }
+  }
+
+  submit() {
+    const timestamp = this.state.timestamp;
     if (moment(timestamp).isValid()) {
       this.props.onChangeTimestamp(timestamp);
     }
@@ -56,6 +67,8 @@ class TimestampInput extends React.PureComponent {
         <TimestampInputContainer
           value={this.state.timestamp}
           onChange={this.handleChange}
+          onBlur={this.submit}
+          onKeyDown={this.handleKeyDown}
           disabled={this.props.disabled}
         />{' '}
         UTC
