@@ -27,3 +27,5 @@ export TimeTravel from './TimeTravel';
 export Dropdown from './Dropdown';
 
 export PrometheusGraph from './PrometheusGraph';
+
+export DataTable from './DataTable';
