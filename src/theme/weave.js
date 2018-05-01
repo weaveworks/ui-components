@@ -114,8 +114,8 @@ const colors = {
   // Third-party specific colors - not to be used in the theme!
   thirdParty: {
     // Google single-click login
-    wellRead: '#ad3131',
-    punch: '#dd4b39',
+    cornflowerBlue: '#4285f4',
+    azure: '#3769bb',
   },
 };
 
