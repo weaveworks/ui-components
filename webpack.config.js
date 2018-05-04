@@ -74,6 +74,18 @@ if (process.env.RELEASE) {
       template: 'docs/index.html',
       filename: 'index.html',
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production'),
+      },
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      comments: false,
+      compress: {
+        warnings: false,
+      },
+    }),
   ];
 } else {
   // Normal sass loader. This complains if it runs in the RELEASE job, so only apply it if RELEASE
@@ -86,7 +98,7 @@ if (process.env.RELEASE) {
 
 module.exports = {
   externals,
-  devtool: 'eval-source-map',
+  devtool: process.env.NODE_ENV !== 'production' ? 'eval-source-map' : null,
   resolveLoader: {
     alias: {
       'react-docs': path.join(__dirname, 'src/loaders/react-docs.js'),

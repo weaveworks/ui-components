@@ -16,7 +16,7 @@
     "postversion": "export TAG=$(jq -r '.version' package.json); git add package.json && git commit -m \"v${TAG}\" && git tag \"v${TAG}\" && git push origin --follow-tags",
     "prepublishOnly": "yarn ci && yarn build",
     "postpublish": "yarn docs:publish",
-    "docs:build": "RELEASE=true rm -rf dist && webpack --config webpack.config.js",
+    "docs:build": "export NODE_ENV=production; export RELEASE=true; rm -rf dist && webpack --config webpack.config.js",
     "docs:copy-images": "cp -R src/images dist",
     "docs:s3": "aws --profile default-mfa s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
     "docs:publish": "yarn docs:build && yarn docs:copy-images && yarn docs:s3",
