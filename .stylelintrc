@@ -4,6 +4,7 @@
     "stylelint-config-styled-components",
     "stylelint-config-recommended",
   ],
+  "plugins": ["stylelint-declaration-use-variable"],
   "rules": {
     "block-no-empty": null,
     "color-named": "never",
@@ -18,5 +19,6 @@
     "value-no-vendor-prefix": [true, {
       "ignoreValues": ["grab"],
     }],
+    "sh-waqar/declaration-use-variable": [["z-index"]],
   },
 }
