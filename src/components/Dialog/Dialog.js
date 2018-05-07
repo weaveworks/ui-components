@@ -22,9 +22,9 @@ const Wrapper = styled.div`
 
 const Overlay = styled.div`
   background-color: ${props => props.theme.colors.black};
+  z-index: ${props => props.theme.layers.modal};
   opacity: 0;
   position: absolute;
-  z-index: 2;
   height: 100%;
   left: -100%;
   top: 0;
@@ -40,11 +40,11 @@ const Window = styled.div`
   box-shadow: ${props => props.theme.boxShadow.light};
   background-color: ${props => props.theme.colors.white};
   color: ${props => props.theme.colors.gunpowder};
+  z-index: ${props => props.theme.layers.modal};
   margin: 0 auto;
   max-width: 768px;
   padding: 20px;
   width: 75%;
-  z-index: 30;
   position: relative;
 `;
 
@@ -117,6 +117,12 @@ class Dialog extends React.Component {
     const { children, active, actions, overlay } = this.props;
     return (
       <Wrapper className={active ? 'weave-dialog active' : 'weave-dialog'}>
+        {overlay && (
+          <Overlay
+            onClick={this.handleClose}
+            className="weave-dialog-overlay"
+          />
+        )}
         <Window className="weave-dialog-window">
           <ButtonClose className="weave-dialog-close">
             <span onClick={this.handleClose} className="fa fa-close" />
@@ -138,12 +144,6 @@ class Dialog extends React.Component {
               })}
           </Actions>
         </Window>
-        {overlay && (
-          <Overlay
-            onClick={this.handleClose}
-            className="weave-dialog-overlay"
-          />
-        )}
       </Wrapper>
     );
   }

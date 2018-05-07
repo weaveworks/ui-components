@@ -20,7 +20,7 @@ const Popover = styled.div`
   background-color: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.silverDark};
   border-radius: ${props => props.theme.borderRadius};
-  z-index: 3;
+  z-index: ${props => props.theme.layers.dropdown};
   box-shadow: ${props => props.theme.boxShadow.light};
   margin-top: 4px;
   width: ${WIDTH};
@@ -29,17 +29,18 @@ const Popover = styled.div`
 `;
 
 const Overlay = styled.div`
+  z-index: ${props => props.theme.layers.dropdown};
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 2;
 `;
 
 const ItemWrapper = Item.extend`
   line-height: ${HEIGHT};
-  color: ${props => (props.selected ? props.theme.colors.accent.blue : props.theme.textColor)};
+  color: ${props =>
+    props.selected ? props.theme.colors.accent.blue : props.theme.textColor};
   min-height: ${HEIGHT};
 
   &:hover {
@@ -164,7 +165,9 @@ class Dropdown extends React.Component {
     // If nothing is selected, use the placeholder, else use the first item.
     const currentItem =
       find(divided, i => i && i.value === value) ||
-      (placeholder ? { label: placeholder, value: null } : divided && divided[0]);
+      (placeholder
+        ? { label: placeholder, value: null }
+        : divided && divided[0]);
 
     return (
       <div className={className} title={currentItem && currentItem.label}>
@@ -176,6 +179,7 @@ class Dropdown extends React.Component {
         </SelectedItem>
         {isOpen && (
           <div>
+            <Overlay onClick={this.handleBgClick} />
             <Popover>
               {map(
                 divided,
@@ -195,7 +199,6 @@ class Dropdown extends React.Component {
                   )
               )}
             </Popover>
-            <Overlay onClick={this.handleBgClick} />
           </div>
         )}
       </div>
@@ -214,8 +217,9 @@ Dropdown.propTypes = {
    * `value` should be an internal value,
    * `label` is what will be displayed to the user.
    */
-  items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType]))
-    .isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType])
+  ).isRequired,
   /**
    * The value of the currently selected item. This much match a value in the `items` prop.
    * If no value is provided, the first elements's value will be used.

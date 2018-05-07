@@ -12,6 +12,7 @@ const TooltipContainer = styled.div.attrs({
   background-color: ${props => props.theme.colors.lightgray};
   border: 1px solid ${props => props.theme.colors.silverDark};
   border-radius: ${props => props.theme.borderRadius};
+  z-index: ${props => props.theme.layers.tooltip};
   padding: 10px 15px;
   position: absolute;
   margin-top: 20px;
@@ -20,7 +21,6 @@ const TooltipContainer = styled.div.attrs({
   min-width: 250px;
   max-width: 500px;
   opacity: 0.95;
-  z-index: 5;
 `;
 
 const Timestamp = styled.div`

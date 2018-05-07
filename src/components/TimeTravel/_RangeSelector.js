@@ -26,12 +26,12 @@ const SelectedRange = styled.div`
 `;
 
 const RangeOptionsListWrapper = styled.div`
+  z-index: ${props => props.theme.layers.dropdown};
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 3000;
 `;
 
 const RangeOptionsList = styled.div`
