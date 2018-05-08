@@ -21,7 +21,7 @@ const exampleCtx = require.context(
 const docCtx = require.context(
   '!!react-docs!../../src/components',
   true,
-  /^((?!test|index|example).)*$/
+  /^((?!test|index|example|_).)*$/
 );
 const styleGuideCtx = require.context('../../styleguide', true, /\.js$/);
 
