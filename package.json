@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.4.64",
+  "version": "0.4.65",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,10 @@
     "prettify": "prettier --write '**/*.{js,jsx}'"
   },
   "jest": {
-    "setupFiles": ["./test-shim.js", "./test-setup.js"]
+    "setupFiles": [
+      "./test-shim.js",
+      "./test-setup.js"
+    ]
   },
   "repository": {
     "type": "git",
