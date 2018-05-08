@@ -11,7 +11,6 @@ const colors = {
   athensGray: '#eeeef4',
   black: '#1a1a1a',
   blueHaze: '#c0c0d5',
-  chetwodeBlue: '#8f8fd7',
   comet: '#5b5b88',
   cometDark: '#5a5a7b',
   darkGray: '#888',
