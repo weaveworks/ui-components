@@ -15,7 +15,7 @@ const Icon = styled.i`
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
   display: inline-block;
   margin-left: 4px;
-  font-size: 21px;
+  font-size: ${props => props.theme.fontSizes.huge};
   color: ${props => props.theme.colors.status.error};
 `;
 
@@ -41,7 +41,7 @@ const StyledInput = component => styled(component)`
 `;
 
 const ValidationMessage = styled.span`
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.normal};
   padding-left: 8px;
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
   color: ${props =>

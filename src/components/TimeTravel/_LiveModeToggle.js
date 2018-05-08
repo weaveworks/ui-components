@@ -11,7 +11,7 @@ const ToggleButton = styled.button`
   background-color: transparent;
   border-right: 1px solid ${props => props.theme.colors.silverDark};
   color: ${props => props.theme.colors.primary.charcoal};
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.normal};
   padding: 2px 8px;
   pointer-events: all;
   outline: 0;

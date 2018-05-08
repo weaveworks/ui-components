@@ -124,9 +124,15 @@ const weave = {
   textColor: colors.black,
 
   fontSizes: {
-    normal: '0.875em',
-    large: '2em',
-    xl: '2.827em',
+    tiny: '11px',
+    small: '12.5px',
+    normal: '14px',
+    large: '16px',
+    huge: '19px',
+    enormous: '24px',
+    gigantic: '34px',
+    massive: '48px',
+    superMassive: '200px',
   },
 
   fontFamily:
@@ -244,9 +250,21 @@ function themeLayersAsScss() {
   return themeLayers;
 }
 
+// Collects all theme font sizes as SCSS vars.
+function themeFontSizesAsScss() {
+  const themeFontSizes = [];
+
+  forEach(weave.fontSizes, (value, name) => {
+    themeFontSizes.push(`$font-size-${kebabCase(name)}: ${value}`);
+  });
+
+  return themeFontSizes;
+}
+
 export function themeVarsAsScss() {
   const themeVariables = []
     .concat(themeColorsAsScss())
-    .concat(themeLayersAsScss());
+    .concat(themeLayersAsScss())
+    .concat(themeFontSizesAsScss());
   return `${themeVariables.join('; ')};`;
 }

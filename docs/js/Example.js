@@ -41,7 +41,7 @@ const TableHeader = styled.tr`
 
   th {
     color: ${props => props.theme.colors.primary.lavender};
-    font-size: 12px;
+    font-size: ${props => props.theme.fontSizes.small};
     font-weight: normal;
     text-transform: uppercase;
   }
@@ -49,7 +49,7 @@ const TableHeader = styled.tr`
 
 const TableRow = styled.tr`
   color: ${props => props.theme.colors.gunpowder};
-  font-size: 14px;
+  font-size: ${props => props.theme.fontSizes.normal};
 
   &:nth-child(odd) {
     background-color: ${props => props.theme.colors.athens};

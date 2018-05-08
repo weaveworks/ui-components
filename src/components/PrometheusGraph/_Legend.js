@@ -20,7 +20,7 @@ const LegendItems = styled.div`
 const LegendItem = styled.div`
   cursor: pointer;
   display: flex;
-  font-size: 13px;
+  font-size: ${props => props.theme.fontSizes.small};
   align-items: center;
   padding: 2px 16px 2px 7px;
   margin-right: 2px;
@@ -50,7 +50,7 @@ const LegendToggle = styled.span`
   cursor: pointer;
   display: block;
   padding: 5px;
-  font-size: 15px;
+  font-size: ${props => props.theme.fontSizes.large};
   width: fit-content;
 `;
 

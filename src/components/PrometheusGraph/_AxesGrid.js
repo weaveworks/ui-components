@@ -32,8 +32,8 @@ const TickContainer = styled.div.attrs({
 
 const TickLabel = styled.span`
   color: ${props => props.theme.colors.dimGray};
+  font-size: ${props => props.theme.colors.tiny};
   display: block;
-  font-size: 12px;
   position: absolute;
   white-space: nowrap;
 `;

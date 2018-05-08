@@ -9,7 +9,7 @@ import FocusPoint from './_FocusPoint';
 const DeploymentInfoLine = styled.span`
   margin-top: 1px;
   display: block;
-  font-size: 13px;
+  font-size: ${props => props.theme.fontSizes.small};
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
