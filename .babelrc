@@ -6,7 +6,8 @@
     [
       "styled-components", {
       "displayName": true
-    }]
+    }],
+    "lodash"
   ],
   "presets": ["es2015", "react"]
 }
