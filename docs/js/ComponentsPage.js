@@ -1,6 +1,6 @@
 import React from 'react';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
+import { values, flatMap, includes, reduce } from 'lodash';
 
 import { isActivePage } from './utils';
 
@@ -28,8 +28,8 @@ class ComponentsPage extends React.Component {
     // => { Grid: {name: 'Grid', subModules: ['Column']}, Button: {...}, ...}
     const links = this.context.components
       .keys()
-      .filter(n => !_.includes(n, '.js'));
-    const tree = _.reduce(
+      .filter(n => !includes(n, '.js'));
+    const tree = reduce(
       links,
       (result, resource) => {
         const [dir, module] = resource.split('/').filter(n => n !== '.');
@@ -66,10 +66,7 @@ class ComponentsPage extends React.Component {
               <div className="nav">
                 <div className="content-section">
                   <Menu>
-                    {_(tree)
-                      .map(t => [t.component, t.subModules])
-                      .flatten()
-                      .value()}
+                    {values(flatMap(tree, t => [t.component, t.subModules]))}
                   </Menu>
                 </div>
               </div>
