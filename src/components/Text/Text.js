@@ -2,24 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-// TODO: Support all font sizes here and use 'lookupValue' helper.
-const getFontSize = (props) => {
-  if (props.large) return props.theme.fontSizes.h2;
-  if (props.xl) return props.theme.fontSizes.h1;
-  return props.theme.fontSizes.normal;
-};
+import { lookupValue } from '../../utils/theme';
 
 const StyledText = styled.span`
   font-family: ${props => props.theme.fontFamily};
   color: ${props => props.theme.textColor};
-  font-size: ${props => getFontSize(props)};
+  font-size: ${props => lookupValue(props, props.theme.fontSizes, props.theme.fontSizes.normal)};
   font-weight: ${props => (props.bold ? '600' : '400')};
   text-transform: ${props => (props.capitalize ? 'uppercase' : 'none')};
   font-style: ${props => (props.italic ? 'italic' : 'normal')};
 `;
 
 /**
- * Text! Normal, Large and Extra Large are 0.875em, 2em, and 2.827em respectively.
+ * Text! supports all the sizes from theme.fontSizes.
  * The font is proxima-nova.
  * ```javascript
  * import { Text } from 'weaveworks-ui-components';
@@ -33,17 +28,17 @@ const StyledText = styled.span`
  *
  *       <Text bold>Normal Bold</Text>
  *
- *       <Text large>Large</Text>
+ *       <Text h2>Large</Text>
  *
- *       <Text large italic>Large Italic</Text>
+ *       <Text h2 italic>Large Italic</Text>
  *
- *       <Text large bold>Large Bold</Text>
+ *       <Text h2 bold>Large Bold</Text>
  *
- *       <Text xl>Extra Large</Text>
+ *       <Text h1>Extra Large</Text>
  *
- *       <Text xl italic>Extra Large Italic</Text>
+ *       <Text h1 italic>Extra Large Italic</Text>
  *
- *       <Text xl bold>Extra Large Bold</Text>
+ *       <Text h1 bold>Extra Large Bold</Text>
  *     </div>
  *   );
  * }
@@ -61,18 +56,6 @@ Text.propTypes = {
    * Make the text bold
    */
   bold: PropTypes.bool,
-  /**
-   * Default text size; 14px
-   */
-  normal: PropTypes.bool,
-  /**
-   * Text size will be 32px
-   */
-  large: PropTypes.bool,
-  /**
-   * Text size will be 48px
-   */
-  xl: PropTypes.bool,
 };
 
 export default Text;

@@ -124,16 +124,17 @@ const weave = {
   textColor: colors.black,
 
   fontSizes: {
-    tiny: '12px',
-    small: '13px',
-    normal: '14px',
-    large: '16px',
-    h4: '18px',
-    h3: '24px',
-    h2: '32px',
     h1: '48px',
-    overlayIcon: '250px',
+    h2: '32px',
+    h3: '24px',
+    h4: '18px',
+    large: '16px',
+    normal: '14px',
+    small: '13px',
+    tiny: '12px',
   },
+
+  overlayIconSize: '300px',
 
   fontFamily:
     "'proxima-nova', sans-serif, 'Helvetica Neue', Helvetica, Arial, sans-serif",
@@ -261,10 +262,19 @@ function themeFontSizesAsScss() {
   return themeFontSizes;
 }
 
+// Collects all theme misc vars as SCSS vars.
+function themeMiscVarsAsScss() {
+  return [
+    `$border-radius: ${weave.borderRadius}`,
+    `$overlay-icon-size: ${weave.overlayIconSize}`,
+  ];
+}
+
 export function themeVarsAsScss() {
   const themeVariables = []
     .concat(themeColorsAsScss())
     .concat(themeLayersAsScss())
-    .concat(themeFontSizesAsScss());
+    .concat(themeFontSizesAsScss())
+    .concat(themeMiscVarsAsScss());
   return `${themeVariables.join('; ')};`;
 }

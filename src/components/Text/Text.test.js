@@ -10,20 +10,16 @@ describe('<Text />', () => {
     const tree = renderer.create(<Text theme={theme} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-  it('renderes large', () => {
-    const tree = renderer.create(<Text large theme={theme} />).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-  it('renders bold', () => {
-    const tree = renderer.create(<Text italic theme={theme} />).toJSON();
+  it('renderes bold', () => {
+    const tree = renderer.create(<Text bold theme={theme} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
   it('renders italic', () => {
-    const tree = renderer.create(<Text large theme={theme} />).toJSON();
+    const tree = renderer.create(<Text italic theme={theme} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-  it('renders xl', () => {
-    const tree = renderer.create(<Text xl theme={theme} />).toJSON();
+  it('renders large', () => {
+    const tree = renderer.create(<Text large theme={theme} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
