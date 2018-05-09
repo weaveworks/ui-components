@@ -15,7 +15,7 @@ const Icon = styled.i`
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
   display: inline-block;
   margin-left: 4px;
-  font-size: ${props => props.theme.fontSizes.huge};
+  font-size: ${props => props.theme.fontSizes.h4};
   color: ${props => props.theme.colors.status.error};
 `;
 

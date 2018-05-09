@@ -6,6 +6,6 @@ export const Example = styled.div`
 
 export const Info = styled.h4`
   color: ${props => props.theme.colors.dimGray};
-  font-size: ${props => props.theme.fontSizes.huge};
+  font-size: ${props => props.theme.fontSizes.h4};
   margin-bottom: 13px;
 `;

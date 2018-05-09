@@ -124,15 +124,15 @@ const weave = {
   textColor: colors.black,
 
   fontSizes: {
-    tiny: '11px',
-    small: '12.5px',
+    tiny: '12px',
+    small: '13px',
     normal: '14px',
     large: '16px',
-    huge: '19px',
-    enormous: '24px',
-    gigantic: '34px',
-    massive: '48px',
-    superMassive: '200px',
+    h4: '18px',
+    h3: '24px',
+    h2: '32px',
+    h1: '48px',
+    overlayIcon: '250px',
   },
 
   fontFamily:

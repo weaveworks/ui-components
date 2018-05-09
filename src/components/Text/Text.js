@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 // TODO: Support all font sizes here and use 'lookupValue' helper.
 const getFontSize = (props) => {
-  if (props.large) return props.theme.fontSizes.gigantic;
-  if (props.xl) return props.theme.fontSizes.massive;
+  if (props.large) return props.theme.fontSizes.h2;
+  if (props.xl) return props.theme.fontSizes.h1;
   return props.theme.fontSizes.normal;
 };
 
@@ -66,7 +66,7 @@ Text.propTypes = {
    */
   normal: PropTypes.bool,
   /**
-   * Text size will be 34px
+   * Text size will be 32px
    */
   large: PropTypes.bool,
   /**
