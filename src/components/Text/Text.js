@@ -2,13 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { lookupValue } from '../../utils/theme';
+// TODO: Support all font sizes here and use 'lookupValue' helper.
+const getFontSize = (props) => {
+  if (props.large) return props.theme.fontSizes.gigantic;
+  if (props.xl) return props.theme.fontSizes.massive;
+  return props.theme.fontSizes.normal;
+};
 
 const StyledText = styled.span`
   font-family: ${props => props.theme.fontFamily};
   color: ${props => props.theme.textColor};
-  font-size: ${props =>
-    lookupValue(props, props.theme.fontSizes, props.theme.fontSizes.normal)};
+  font-size: ${props => getFontSize(props)};
   font-weight: ${props => (props.bold ? '600' : '400')};
   text-transform: ${props => (props.capitalize ? 'uppercase' : 'none')};
   font-style: ${props => (props.italic ? 'italic' : 'normal')};
@@ -58,15 +62,15 @@ Text.propTypes = {
    */
   bold: PropTypes.bool,
   /**
-   * Default text size; 0.875em
+   * Default text size; 14px
    */
   normal: PropTypes.bool,
   /**
-   * Text size will be 2em
+   * Text size will be 34px
    */
   large: PropTypes.bool,
   /**
-   * Text size will be 2.827em
+   * Text size will be 48px
    */
   xl: PropTypes.bool,
 };
