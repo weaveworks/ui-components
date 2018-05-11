@@ -149,8 +149,8 @@ const weave = {
   layers: {
     front: 1,
     toolbar: 2,
-    notification: 3,
-    alert: 4,
+    alert: 3,
+    notification: 4,
     dropdown: 5,
     tooltip: 6,
     modal: 7,
