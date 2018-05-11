@@ -49,7 +49,7 @@ exports[`<Text /> renders large 1`] = `
 .c0 {
   font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
   color: #1a1a1a;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 400;
   text-transform: none;
   font-style: normal;

@@ -25,7 +25,7 @@ export default class Intro extends React.PureComponent {
     return (
       <div>
         <p>
-          <Text h2>Welcome to the Weave Cloud Style Guide™!</Text>
+          <Text extraLarge>Welcome to the Weave Cloud Style Guide™!</Text>
         </p>
         {this.state.quote && (
           <div>

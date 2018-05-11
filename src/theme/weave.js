@@ -125,9 +125,8 @@ const weave = {
 
   fontSizes: {
     huge: '48px',
-    xxLarge: '32px',
-    xLarge: '24px',
-    large: '20px',
+    extraLarge: '32px',
+    large: '22px',
     normal: '16px',
     small: '14px',
     tiny: '12px',
