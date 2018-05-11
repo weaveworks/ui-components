@@ -50,7 +50,7 @@ const LegendToggle = styled.span`
   cursor: pointer;
   display: block;
   padding: 5px;
-  font-size: ${props => props.theme.fontSizes.large};
+  font-size: ${props => props.theme.fontSizes.normal};
   width: fit-content;
 `;
 

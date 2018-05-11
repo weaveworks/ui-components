@@ -21,7 +21,7 @@ const StyledButton = styled('button')`
   color: ${fromAtoms('Button', 'styled.type', 'color')};
 
   /* Text */
-  font-size: ${props => props.theme.fontSizes.normal};
+  font-size: ${props => props.theme.fontSizes.small};
 
   /* Other */
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};

@@ -35,7 +35,7 @@ class Fonts extends React.Component {
         {map(theme.fontSizes, (value, name) => (
           <FontRow key={name}>
             <Text {...{[name]: true}}>
-              One Morning, When Gregor Samsa Woke - <i>{name}</i> ({value})
+              theme.fontSizes.{name} ({value})
             </Text>
           </FontRow>
         ))}

@@ -14,7 +14,7 @@ const SelectedRangeWrapper = styled.div`
   background-color: transparent;
   cursor: pointer;
   font-family: 'Roboto', sans-serif;
-  font-size: ${props => props.theme.fontSizes.large};
+  font-size: ${props => props.theme.fontSizes.normal};
   padding: 3px 8px;
   display: flex;
   justify-content: space-between;
@@ -50,7 +50,7 @@ const CaretIconsContainer = styled.span`
   margin-left: 8px;
 
   .fa {
-    font-size: ${props => props.theme.fontSizes.small};
+    font-size: ${props => props.theme.fontSizes.tiny};
     line-height: 7px;
   }
 `;

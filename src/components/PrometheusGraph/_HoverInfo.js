@@ -11,13 +11,12 @@ const TooltipRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: ${props => props.theme.fontSizes.small};
+  font-size: ${props => props.theme.fontSizes.tiny};
 
   ${props =>
     props.focused &&
     `
     font-weight: bold;
-    font-size: ${props.theme.fontSizes.small};
   `};
 `;
 

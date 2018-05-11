@@ -14,7 +14,7 @@ const StyledText = styled.span`
 `;
 
 /**
- * Text! supports all the sizes from theme.fontSizes.
+ * Text! supports all the sizes from _theme.fontSizes_.
  * The font is proxima-nova.
  * ```javascript
  * import { Text } from 'weaveworks-ui-components';
@@ -28,17 +28,17 @@ const StyledText = styled.span`
  *
  *       <Text bold>Normal Bold</Text>
  *
- *       <Text h2>Large</Text>
+ *       <Text large>Large</Text>
  *
- *       <Text h2 italic>Large Italic</Text>
+ *       <Text large italic>Large Italic</Text>
  *
- *       <Text h2 bold>Large Bold</Text>
+ *       <Text large bold>Large Bold</Text>
  *
- *       <Text h1>Extra Large</Text>
+ *       <Text huge>Huge</Text>
  *
- *       <Text h1 italic>Extra Large Italic</Text>
+ *       <Text huge italic>Huge Italic</Text>
  *
- *       <Text h1 bold>Extra Large Bold</Text>
+ *       <Text huge bold>Huge Bold</Text>
  *     </div>
  *   );
  * }

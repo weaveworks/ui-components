@@ -124,13 +124,12 @@ const weave = {
   textColor: colors.black,
 
   fontSizes: {
-    h1: '48px',
-    h2: '32px',
-    h3: '24px',
-    h4: '18px',
-    large: '16px',
-    normal: '14px',
-    small: '13px',
+    huge: '48px',
+    xxLarge: '32px',
+    xLarge: '24px',
+    large: '20px',
+    normal: '16px',
+    small: '14px',
     tiny: '12px',
   },
 

@@ -13,7 +13,7 @@ const TimestampInputWrapper = styled.div`
 `;
 
 const TimestampInputContainer = styled.input`
-  font-size: ${props => props.theme.fontSizes.large};
+  font-size: ${props => props.theme.fontSizes.normal};
   background-color: transparent;
   font-family: 'Roboto', sans-serif;
   margin-right: 3px;
