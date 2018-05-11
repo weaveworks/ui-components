@@ -26,7 +26,7 @@ const Content = styled.div`
 `;
 
 const Subtext = styled.span`
-  font-size: 13px;
+  font-size: ${props => props.theme.fontSizes.small};
   opacity: 0.5;
 `;
 

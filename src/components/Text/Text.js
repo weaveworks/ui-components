@@ -7,15 +7,14 @@ import { lookupValue } from '../../utils/theme';
 const StyledText = styled.span`
   font-family: ${props => props.theme.fontFamily};
   color: ${props => props.theme.textColor};
-  font-size: ${props =>
-    lookupValue(props, props.theme.fontSizes, props.theme.fontSizes.normal)};
+  font-size: ${props => lookupValue(props, props.theme.fontSizes, props.theme.fontSizes.normal)};
   font-weight: ${props => (props.bold ? '600' : '400')};
   text-transform: ${props => (props.capitalize ? 'uppercase' : 'none')};
   font-style: ${props => (props.italic ? 'italic' : 'normal')};
 `;
 
 /**
- * Text! Normal, Large and Extra Large are 0.875em, 2em, and 2.827em respectively.
+ * Text! supports all the sizes from _theme.fontSizes_.
  * The font is proxima-nova.
  * ```javascript
  * import { Text } from 'weaveworks-ui-components';
@@ -35,11 +34,11 @@ const StyledText = styled.span`
  *
  *       <Text large bold>Large Bold</Text>
  *
- *       <Text xl>Extra Large</Text>
+ *       <Text huge>Huge</Text>
  *
- *       <Text xl italic>Extra Large Italic</Text>
+ *       <Text huge italic>Huge Italic</Text>
  *
- *       <Text xl bold>Extra Large Bold</Text>
+ *       <Text huge bold>Huge Bold</Text>
  *     </div>
  *   );
  * }
@@ -57,18 +56,6 @@ Text.propTypes = {
    * Make the text bold
    */
   bold: PropTypes.bool,
-  /**
-   * Default text size; 0.875em
-   */
-  normal: PropTypes.bool,
-  /**
-   * Text size will be 2em
-   */
-  large: PropTypes.bool,
-  /**
-   * Text size will be 2.827em
-   */
-  xl: PropTypes.bool,
 };
 
 export default Text;

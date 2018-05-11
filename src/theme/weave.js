@@ -124,10 +124,15 @@ const weave = {
   textColor: colors.black,
 
   fontSizes: {
-    normal: '0.875em',
-    large: '2em',
-    xl: '2.827em',
+    huge: '48px',
+    extraLarge: '32px',
+    large: '22px',
+    normal: '16px',
+    small: '14px',
+    tiny: '12px',
   },
+
+  overlayIconSize: '300px',
 
   fontFamily:
     "'proxima-nova', sans-serif, 'Helvetica Neue', Helvetica, Arial, sans-serif",
@@ -244,9 +249,30 @@ function themeLayersAsScss() {
   return themeLayers;
 }
 
+// Collects all theme font sizes as SCSS vars.
+function themeFontSizesAsScss() {
+  const themeFontSizes = [];
+
+  forEach(weave.fontSizes, (value, name) => {
+    themeFontSizes.push(`$font-size-${kebabCase(name)}: ${value}`);
+  });
+
+  return themeFontSizes;
+}
+
+// Collects all theme misc vars as SCSS vars.
+function themeMiscVarsAsScss() {
+  return [
+    `$border-radius: ${weave.borderRadius}`,
+    `$overlay-icon-size: ${weave.overlayIconSize}`,
+  ];
+}
+
 export function themeVarsAsScss() {
   const themeVariables = []
     .concat(themeColorsAsScss())
-    .concat(themeLayersAsScss());
+    .concat(themeLayersAsScss())
+    .concat(themeFontSizesAsScss())
+    .concat(themeMiscVarsAsScss());
   return `${themeVariables.join('; ')};`;
 }

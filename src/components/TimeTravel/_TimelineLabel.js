@@ -6,8 +6,8 @@ import styled from 'styled-components';
 const TimelineLabelContainer = styled.button`
   background-color: transparent;
   color: ${props => props.theme.colors.primary.lavender};
+  font-size: ${props => props.theme.fontSizes.small};
   cursor: pointer;
-  font-size: 13px;
   margin-left: 2px;
   padding: 3px;
   outline: 0;

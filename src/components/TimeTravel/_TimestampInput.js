@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const TimestampInputWrapper = styled.div`
-  font-size: 13px;
+  font-size: ${props => props.theme.fontSizes.small};
   align-items: baseline;
   padding: 3px 8px;
   pointer-events: all;
@@ -13,11 +13,11 @@ const TimestampInputWrapper = styled.div`
 `;
 
 const TimestampInputContainer = styled.input`
+  font-size: ${props => props.theme.fontSizes.normal};
   background-color: transparent;
   font-family: 'Roboto', sans-serif;
   margin-right: 3px;
   text-align: center;
-  font-size: 1rem;
   width: 165px;
   border: 0;
   outline: 0;

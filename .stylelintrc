@@ -19,6 +19,6 @@
     "value-no-vendor-prefix": [true, {
       "ignoreValues": ["grab"],
     }],
-    "sh-waqar/declaration-use-variable": [["z-index"]],
+    "sh-waqar/declaration-use-variable": [["font-size", "z-index"]],
   },
 }

@@ -5,8 +5,8 @@ import styled from 'styled-components';
 const PanButton = styled.button`
   background-color: transparent;
   color: ${props => props.theme.colors.primary.lavender};
+  font-size: ${props => props.theme.fontSizes.small};
   cursor: pointer;
-  font-size: 13px;
   pointer-events: all;
   padding: 5px 0;
   margin: 0 5px;

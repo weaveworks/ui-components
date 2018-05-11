@@ -29,16 +29,16 @@ export default function TextExample() {
         </Text>
       </Example>
       <Example>
-        <Text xl>Extra Large</Text>
+        <Text huge>Huge</Text>
       </Example>
       <Example>
-        <Text xl italic>
-          Extra Large Italic
+        <Text huge italic>
+          Huge Italic
         </Text>
       </Example>
       <Example>
-        <Text xl bold>
-          Extra Large Bold
+        <Text huge bold>
+          Huge Bold
         </Text>
       </Example>
       <Example>

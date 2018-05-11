@@ -127,23 +127,25 @@ class Colors extends React.Component {
             onChange={this.handleChange}
           />
         </NewColorFormRow>
-        <Text large>Primary Colors</Text>
+        <Text h2>Primary Colors</Text>
         <Row>{this.renderSwatches(theme.colors.primary)}</Row>
-        <Text large>Accent Colors</Text>
+        <Text h2>Accent Colors</Text>
         <Row>{this.renderSwatches(theme.colors.accent)}</Row>
-        <Text large>Status Colors</Text>
+        <Text h2>Status Colors</Text>
         <Row>{this.renderSwatches(theme.colors.status)}</Row>
-        <Text large>Uncategorized Colors</Text>
+        <Text h2>Uncategorized Colors</Text>
         <Row>{this.renderSwatches(theme.colors)}</Row>
-        <Text large>PromQL Colors</Text>
+        <Text h2>PromQL Colors</Text>
         <Row>{this.renderSwatches(theme.colors.promQL)}</Row>
-        <Text large>PrometheusGraph Themes</Text>
-        <h4>Blue</h4>
-        <Row>{this.renderSwatches(theme.colors.graphThemes.blue)}</Row>
-        <h4>Purple</h4>
-        <Row>{this.renderSwatches(theme.colors.graphThemes.purple)}</Row>
-        <h4>Mixed</h4>
-        <Row>{this.renderSwatches(theme.colors.graphThemes.mixed)}</Row>
+        <Text h2>PrometheusGraph Themes</Text>
+        <div>
+          <Text h3>Blue</Text>
+          <Row>{this.renderSwatches(theme.colors.graphThemes.blue)}</Row>
+          <Text h3>Purple</Text>
+          <Row>{this.renderSwatches(theme.colors.graphThemes.purple)}</Row>
+          <Text h3>Mixed</Text>
+          <Row>{this.renderSwatches(theme.colors.graphThemes.mixed)}</Row>
+        </div>
       </div>
     );
   }
