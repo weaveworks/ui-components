@@ -127,23 +127,23 @@ class Colors extends React.Component {
             onChange={this.handleChange}
           />
         </NewColorFormRow>
-        <Text h2>Primary Colors</Text>
+        <Text extraLarge>Primary Colors</Text>
         <Row>{this.renderSwatches(theme.colors.primary)}</Row>
-        <Text h2>Accent Colors</Text>
+        <Text extraLarge>Accent Colors</Text>
         <Row>{this.renderSwatches(theme.colors.accent)}</Row>
-        <Text h2>Status Colors</Text>
+        <Text extraLarge>Status Colors</Text>
         <Row>{this.renderSwatches(theme.colors.status)}</Row>
-        <Text h2>Uncategorized Colors</Text>
+        <Text extraLarge>Uncategorized Colors</Text>
         <Row>{this.renderSwatches(theme.colors)}</Row>
-        <Text h2>PromQL Colors</Text>
+        <Text extraLarge>PromQL Colors</Text>
         <Row>{this.renderSwatches(theme.colors.promQL)}</Row>
-        <Text h2>PrometheusGraph Themes</Text>
+        <Text extraLarge>PrometheusGraph Themes</Text>
         <div>
-          <Text h3>Blue</Text>
+          <Text large>Blue</Text>
           <Row>{this.renderSwatches(theme.colors.graphThemes.blue)}</Row>
-          <Text h3>Purple</Text>
+          <Text large>Purple</Text>
           <Row>{this.renderSwatches(theme.colors.graphThemes.purple)}</Row>
-          <Text h3>Mixed</Text>
+          <Text large>Mixed</Text>
           <Row>{this.renderSwatches(theme.colors.graphThemes.mixed)}</Row>
         </div>
       </div>
