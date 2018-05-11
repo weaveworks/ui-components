@@ -144,7 +144,11 @@ const weave = {
     selected: `0px 0px 2px 2px ${colors.primary.lavender}`,
   },
 
-  borderRadius: '4px',
+  borderRadius: {
+    none: '0',
+    soft: '4px',
+    round: '50%',
+  },
 
   layers: {
     front: 1,
@@ -260,10 +264,20 @@ function themeFontSizesAsScss() {
   return themeFontSizes;
 }
 
+// Collects all theme border radii as SCSS vars.
+function themeBorderRadiiAsScss() {
+  const themeBorderRadii = [];
+
+  forEach(weave.borderRadius, (value, name) => {
+    themeBorderRadii.push(`$border-radius-${kebabCase(name)}: ${value}`);
+  });
+
+  return themeBorderRadii;
+}
+
 // Collects all theme misc vars as SCSS vars.
 function themeMiscVarsAsScss() {
   return [
-    `$border-radius: ${weave.borderRadius}`,
     `$overlay-icon-size: ${weave.overlayIconSize}`,
   ];
 }
@@ -273,6 +287,7 @@ export function themeVarsAsScss() {
     .concat(themeColorsAsScss())
     .concat(themeLayersAsScss())
     .concat(themeFontSizesAsScss())
+    .concat(themeBorderRadiiAsScss())
     .concat(themeMiscVarsAsScss());
   return `${themeVariables.join('; ')};`;
 }

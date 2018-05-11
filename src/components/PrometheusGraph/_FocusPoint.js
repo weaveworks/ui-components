@@ -7,7 +7,7 @@ const DeploymentAnnotationPoint = styled.span.attrs({
   background-color: ${props => props.theme.colors.white};
   opacity: ${props => (props.faded ? 0.5 : 1)};
   box-sizing: border-box;
-  border-radius: 50%;
+  border-radius: ${props => props.theme.borderRadius.round};
   position: absolute;
   cursor: default;
 

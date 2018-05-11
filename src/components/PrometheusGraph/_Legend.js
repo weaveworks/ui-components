@@ -25,7 +25,7 @@ const LegendItem = styled.div`
   padding: 2px 16px 2px 7px;
   margin-right: 2px;
   margin-bottom: 2px;
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius.soft};
 
   &:hover {
     background-color: ${props => props.theme.colors.athens};
@@ -60,7 +60,6 @@ const LegendCaret = styled.span`
 
 const ColorBox = styled.span`
   background-color: ${props => props.color};
-  border-radius: 1px;
   margin-right: 4px;
   min-width: 13px;
   height: 5px;

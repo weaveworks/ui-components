@@ -36,7 +36,7 @@ const StyledInput = component => styled(component)`
     line-height: 36px;
     box-shadow: none;
     border: 1px solid ${props => props.theme.colors.dustyGray};
-    border-radius: ${props => props.theme.borderRadius};
+    border-radius: ${props => props.theme.borderRadius.soft};
   }
 `;
 

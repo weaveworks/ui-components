@@ -33,7 +33,7 @@ const TimeControlsContainer = styled.div`
   border: 1px solid ${props => props.theme.colors.silverDark};
   box-shadow: 0 0 2px ${props => props.theme.colors.silverDark};
   background-color: ${props => props.theme.colors.white};
-  border-radius: 5px;
+  border-radius: ${props => props.theme.borderRadius.soft};
   display: flex;
 `;
 
