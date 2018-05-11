@@ -19,6 +19,7 @@ import {
   filter,
   every,
   get,
+  reverse,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
 import { format, formatPrefix, precisionPrefix, precisionFixed } from 'd3-format';
@@ -82,9 +83,13 @@ function getDefaultSeriesName(series, multiSeries, forLegend = false) {
   return `${metricName}${asJSONString(metricHash)}`;
 }
 
-function getColorTheme(colorTheme) {
+function getColorTheme({ colorTheme, showStacked }) {
   return index => {
-    const colors = theme.colors.graphThemes[colorTheme];
+    const colors = [...theme.colors.graphThemes[colorTheme]];
+
+    // Reverse the order of colors for line graphs for improved visibility.
+    if (!showStacked) reverse(colors);
+
     return colors[index % colors.length];
   };
 }
@@ -241,7 +246,7 @@ class PrometheusGraph extends React.PureComponent {
   };
 
   prepareMultiSeries = (props, { selectedLegendMultiSeriesKeys } = this.state) => {
-    const getSeriesColor = getColorTheme(props.colorTheme);
+    const getSeriesColor = getColorTheme(props);
     const getSeriesName = (series, forLegend) =>
       props.getSeriesName(series, props.multiSeries, forLegend);
     const getSeriesKey = (series, index) => `${getSeriesName(series)}:${index}`;
