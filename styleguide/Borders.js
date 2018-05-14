@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { map } from 'lodash';
 
+import Text from '../src/components/Text';
 import theme from '../src/theme';
 
 const Row = styled.div`
@@ -28,7 +29,7 @@ class Borders extends React.Component {
     return (
       <div>
         <Row>
-          <p>These border radii can be accessed via the styled-components theme:</p>
+          <Text extraLarge>Border radius</Text>
         </Row>
         <Row>
           <pre>

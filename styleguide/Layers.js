@@ -15,28 +15,26 @@ const FontRow = styled.div`
 
 const curly = start => (start ? '{' : '}');
 
-class Fonts extends React.Component {
+class Layers extends React.Component {
   render() {
     return (
       <div>
         <Row>
-          <Text extraLarge>Font sizes</Text>
+          <Text extraLarge>Layers <i>(z-index)</i></Text>
         </Row>
         <Row>
           <pre>
             const MyButton = styled.button`
             <br />
-            &nbsp; font-size: ${curly(true)}props =&gt;
-            props.theme.fontSizes.large{curly(false)};
+            &nbsp; z-index: ${curly(true)}props =&gt;
+            props.theme.layers.tooltip{curly(false)};
             <br />
             `;
           </pre>
         </Row>
-        {map(theme.fontSizes, (value, name) => (
+        {map(theme.layers, (value, name) => (
           <FontRow key={name}>
-            <Text {...{[name]: true}} style={{ opacity: 0.5 }}>
-              theme.fontSizes.{name} ({value})
-            </Text>
+            <b>{value}</b> - {name}
           </FontRow>
         ))}
       </div>
@@ -44,4 +42,4 @@ class Fonts extends React.Component {
   }
 }
 
-export default Fonts;
+export default Layers;

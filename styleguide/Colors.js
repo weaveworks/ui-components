@@ -12,6 +12,10 @@ const Row = styled.div`
   margin-bottom: 40px;
 `;
 
+const SwatchesBlock = styled.div`
+  margin-top: 10px;
+`;
+
 const Sample = styled.div`
   display: inline-block;
   margin-right: 20px;
@@ -33,7 +37,7 @@ const Label = styled.p`
 const NewColorFormRow = Row.extend`
   position: sticky;
   top: 0;
-  padding: 12px;
+  padding: 12px 0;
   background-color: ${theme.colors.sand};
 `;
 
@@ -90,14 +94,18 @@ class Colors extends React.Component {
   };
 
   renderSwatches(collection) {
-    return swatches(
-      {
-        ...collection,
-        ...(maybeParseColor(this.state.newColor) && {
-          [TEST_COLOR_NAME]: this.state.newColor,
-        }),
-      },
-      this.state.newColor
+    return (
+      <SwatchesBlock>
+        {swatches(
+          {
+            ...collection,
+            ...(maybeParseColor(this.state.newColor) && {
+              [TEST_COLOR_NAME]: this.state.newColor,
+            }),
+          },
+          this.state.newColor
+        )}
+      </SwatchesBlock>
     );
   }
 
@@ -105,7 +113,7 @@ class Colors extends React.Component {
     return (
       <div>
         <Row>
-          <p>These colors can be accessed via the styled-components theme:</p>
+          <Text extraLarge>Colors</Text>
         </Row>
         <Row>
           <pre>
@@ -127,23 +135,23 @@ class Colors extends React.Component {
             onChange={this.handleChange}
           />
         </NewColorFormRow>
-        <Text extraLarge>Primary Colors</Text>
+        <Text large bold>Primary Colors</Text>
         <Row>{this.renderSwatches(theme.colors.primary)}</Row>
-        <Text extraLarge>Accent Colors</Text>
+        <Text large bold>Accent Colors</Text>
         <Row>{this.renderSwatches(theme.colors.accent)}</Row>
-        <Text extraLarge>Status Colors</Text>
+        <Text large bold>Status Colors</Text>
         <Row>{this.renderSwatches(theme.colors.status)}</Row>
-        <Text extraLarge>Uncategorized Colors</Text>
+        <Text large bold>Uncategorized Colors</Text>
         <Row>{this.renderSwatches(theme.colors)}</Row>
-        <Text extraLarge>PromQL Colors</Text>
+        <Text large bold>PromQL Colors</Text>
         <Row>{this.renderSwatches(theme.colors.promQL)}</Row>
-        <Text extraLarge>PrometheusGraph Themes</Text>
+        <Text large bold>PrometheusGraph Themes</Text>
         <div>
-          <Text large>Blue</Text>
+          <Text bold>Blue</Text>
           <Row>{this.renderSwatches(theme.colors.graphThemes.blue)}</Row>
-          <Text large>Purple</Text>
+          <Text bold>Purple</Text>
           <Row>{this.renderSwatches(theme.colors.graphThemes.purple)}</Row>
-          <Text large>Mixed</Text>
+          <Text bold>Mixed</Text>
           <Row>{this.renderSwatches(theme.colors.graphThemes.mixed)}</Row>
         </div>
       </div>
