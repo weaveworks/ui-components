@@ -19,7 +19,7 @@ const Popover = styled.div`
   position: absolute;
   background-color: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.silverDark};
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${props => props.theme.borderRadius.soft};
   z-index: ${props => props.theme.layers.dropdown};
   box-shadow: ${props => props.theme.boxShadow.light};
   margin-top: 4px;
@@ -54,7 +54,7 @@ const Divider = styled.div`
 `;
 
 const SelectedItem = Item.extend`
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${props => props.theme.borderRadius.soft};
   background-color: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.dustyGray};
   display: flex;

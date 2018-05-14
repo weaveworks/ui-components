@@ -16,7 +16,7 @@ const ErrorContainer = styled.div`
 `;
 
 const ErrorText = styled.span`
-  border-radius: ${props => props.theme.borderRadius};
+  border-radius: ${props => props.theme.borderRadius.soft};
   padding: 5px 10px;
   opacity: 0.75;
 

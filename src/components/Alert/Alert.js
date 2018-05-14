@@ -6,7 +6,7 @@ import { fromAtoms } from '../../utils/theme';
 
 const StyledAlert = styled.div`
   background: ${fromAtoms('Alert', 'type', 'background')};
-  border-radius: 4px;
+  border-radius: ${props => props.theme.borderRadius.soft};
   border: 2px solid ${fromAtoms('Alert', 'type', 'borderColor')};
   color: ${fromAtoms('Alert', 'type', 'color')};
   margin: 8px 0 8px 0;
