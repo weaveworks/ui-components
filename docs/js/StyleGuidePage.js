@@ -1,5 +1,5 @@
 import React from 'react';
-import { capitalize } from 'lodash';
+import { capitalize, compact } from 'lodash';
 import PropTypes from 'prop-types';
 
 import { isActivePage } from './utils';
@@ -22,12 +22,12 @@ class StyleGuidePage extends React.Component {
   }
 
   render() {
-    const items = this.context.styles.keys().map(page => {
+    const items = compact(this.context.styles.keys().map(page => {
       const pageName = page
         .split('/')
         .pop()
         .replace('.js', '');
-      return (
+      return pageName === 'Intro' ? null : (
         <MenuItem
           active={isActivePage(pageName)}
           key={page}
@@ -35,7 +35,7 @@ class StyleGuidePage extends React.Component {
           text={capitalize(pageName)}
         />
       );
-    });
+    }));
 
     return (
       <div className="styleguide-page">
@@ -45,7 +45,13 @@ class StyleGuidePage extends React.Component {
               <div className="content-section">
                 <div className="nav">
                   <Menu>
-                    {items.sort(page => (page.props.text === 'Intro' ? -1 : 1))}
+                    <MenuItem
+                      active={isActivePage('intro')}
+                      onClick={this.navigate}
+                      text="Intro"
+                    />
+                    <hr />
+                    {items.sort()}
                   </Menu>
                 </div>
               </div>

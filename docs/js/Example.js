@@ -142,7 +142,7 @@ export default class Example extends React.Component {
               <td>{value.required && value.required.toString()}</td>
               <td>{getReadableValueType(value.type)}</td>
               <td>{value.description}</td>
-              <td style={{ 'white-space': 'nowrap' }}>
+              <td style={{ whiteSpace: 'nowrap' }}>
                 {getDefaultValue(value.defaultValue)}
               </td>
             </TableRow>

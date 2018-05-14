@@ -17,7 +17,7 @@ exports[`<Button /> accepts a style prop 1`] = `
 .c0:hover {
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
-  background: #f8f8f8;
+  background: #f2f2f2;
   color: #3c3c5b;
 }
 
@@ -85,7 +85,7 @@ exports[`<Button /> snapshots renders default 1`] = `
 .c0:hover {
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
-  background: #f8f8f8;
+  background: #f2f2f2;
   color: #3c3c5b;
 }
 
@@ -181,7 +181,7 @@ exports[`<Button /> snapshots renders selected 1`] = `
 .c0:hover {
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
-  background: #f8f8f8;
+  background: #f2f2f2;
   color: #3c3c5b;
 }
 
