@@ -33,7 +33,6 @@ const colors = {
   silver: '#ccc',
   silverDark: '#c1c1c1',
   solidGray: '#808080',
-  stratos: '#001755',
   tundora: '#444',
   turquoise: '#037aa9',
   white: '#fff',
