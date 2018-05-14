@@ -58,7 +58,7 @@ const verticalStripes = keyframes`
 
 const WeaveLogoProgress = styled.div`
   display: block;
-  border-radius: ${props => props.theme.borderRadius.round};
+  border-radius: ${props => props.theme.borderRadius.circle};
   width: 150px;
   height: 150px;
   overflow: hidden;

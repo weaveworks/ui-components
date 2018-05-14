@@ -39,7 +39,7 @@ const dotSpinnerAnimation = keyframes`
 `;
 
 const DotSpinner = styled.div`
-  border-radius: ${props => props.theme.borderRadius.round};
+  border-radius: ${props => props.theme.borderRadius.circle};
   position: relative;
   text-indent: -9999em;
   -webkit-animation: ${dotSpinnerAnimation} 1.1s infinite ease;

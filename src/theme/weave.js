@@ -147,7 +147,7 @@ const weave = {
   borderRadius: {
     none: '0',
     soft: '4px',
-    round: '50%',
+    circle: '50%',
   },
 
   layers: {
