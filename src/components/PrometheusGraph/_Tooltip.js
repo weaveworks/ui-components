@@ -24,7 +24,7 @@ const TooltipContainer = styled.div.attrs({
 `;
 
 const Timestamp = styled.div`
-  font-family: 'Roboto', sans-serif;
+  color: ${props => props.theme.colors.doveGray};
   font-size: ${props => props.theme.fontSizes.small};
   margin-bottom: 8px;
 `;

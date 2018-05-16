@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { lookupValue } from '../../utils/theme';
 
 const StyledText = styled.span`
-  font-family: ${props => props.theme.fontFamily};
+  font-family: ${props => props.theme.fontFamilies.regular};
   color: ${props => props.theme.textColor};
   font-size: ${props => lookupValue(props, props.theme.fontSizes, props.theme.fontSizes.normal)};
   font-weight: ${props => (props.bold ? '600' : '400')};
@@ -14,8 +14,7 @@ const StyledText = styled.span`
 `;
 
 /**
- * Text! supports all the sizes from _theme.fontSizes_.
- * The font is proxima-nova.
+ * Text supports all the sizes from _theme.fontSizes_.
  * ```javascript
  * import { Text } from 'weaveworks-ui-components';
  *

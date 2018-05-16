@@ -1,5 +1,10 @@
 import { kebabCase, forEach } from 'lodash';
 
+export const fontFamilies = {
+  regular: "'proxima-nova', Helvetica, Arial, sans-serif",
+  monospace: "'Roboto Mono', monospace",
+};
+
 export const fontSizes = {
   huge: '48px',
   extraLarge: '32px',
@@ -9,16 +14,17 @@ export const fontSizes = {
   tiny: '12px',
 };
 
-export const fontFamily =
-  "'proxima-nova', sans-serif, 'Helvetica Neue', Helvetica, Arial, sans-serif";
+// Collects all theme font vars as SCSS vars.
+export function themeFontsAsScss() {
+  const themeFonts = [];
 
-// Collects all theme font sizes as SCSS vars.
-export function themeFontSizesAsScss() {
-  const themeFontSizes = [];
-
-  forEach(fontSizes, (value, name) => {
-    themeFontSizes.push(`$font-size-${kebabCase(name)}: ${value}`);
+  forEach(fontFamilies, (value, name) => {
+    themeFonts.push(`$font-family-${kebabCase(name)}: ${value}`);
   });
 
-  return themeFontSizes;
+  forEach(fontSizes, (value, name) => {
+    themeFonts.push(`$font-size-${kebabCase(name)}: ${value}`);
+  });
+
+  return themeFonts;
 }

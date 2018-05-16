@@ -38,7 +38,7 @@ const TooltipRowName = styled.span`
 `;
 
 const TooltipRowValue = styled.span`
-  font-family: 'Roboto', sans-serif;
+  font-family: ${props => props.theme.fontFamilies.monospace};
   margin-left: 20px;
   white-space: nowrap;
 `;

@@ -13,8 +13,6 @@ const RangeSelectorWrapper = styled.div`
 const SelectedRangeWrapper = styled.div`
   background-color: transparent;
   cursor: pointer;
-  font-family: 'Roboto', sans-serif;
-  font-size: ${props => props.theme.fontSizes.normal};
   padding: 3px 8px;
   display: flex;
   justify-content: space-between;
