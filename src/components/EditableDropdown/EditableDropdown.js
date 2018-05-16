@@ -9,7 +9,7 @@ const TextBox = styled.input`
   margin-top: 2px;
   padding: 6px;
   font-size: 14px;
-  width: 88%;
+  width: 240px;
   outline-color: ${props => (props.changed ? 'orange' : 'default')};
   border: none;
   z-index: 10;
@@ -19,15 +19,6 @@ const TextBox = styled.input`
 
   &:focus {
     outline: none; 
-  }
-`;
-
-const WideDropdown = Dropdown.extend`
-  &:focus {
-    outline-color: ${props => (props.changed ? 'orange' : 'default')};
-    outline-offset: -2px;
-    outline-style: auto;
-    outline-width: 5px;
   }
 `;
 
@@ -51,13 +42,13 @@ class EditableDropdown extends React.Component {
     this.dropdown = ref;
   }
 
-  handleChange(ev, value) {
+  handleChange(ev, value, label) {
     if (this.props.onChange) {
-      this.props.onChange(ev, value);
+      this.props.onChange(ev, value, label);
     }
 
     this.setState({
-      currentValue: value,
+      currentValue: label,
     });
   }
 
@@ -72,15 +63,15 @@ class EditableDropdown extends React.Component {
 
   handleInputChange(event) {
     this.setState({
-      currentValue: event.target.value,
+      currentValue: event.target.label,
     });
   }
 
   render () {
     return (
       <div style={{position: "relative"}}>
-        <TextBox type="text" onFocus={this.handleFocus} value={this.state.currentValue} onChange={this.handleInputChange} />
-        <WideDropdown className={this.props.className} innerRef={this.setDropdownRef} onChange={this.handleChange} items={this.props.items}/>
+        <TextBox type="text" onFocus={this.handleFocus} value={this.state.currentValue} onChange={this.handleInputChange} placeholder={this.props.placeholder} />
+        <Dropdown className={this.props.className} innerRef={this.setDropdownRef} onChange={this.handleChange} items={this.props.items}/>
       </div>
     );
   }
@@ -104,8 +95,12 @@ EditableDropdown.propTypes = {
    */
   onChange: PropTypes.func,
   /**
-   * A handler function that will run when a textbox has focus .
+   * A handler function that will run when a textbox has focus.
    */
   onFocus: PropTypes.func,
+  /**
+   * The initial text that will be display before a user selects an item.
+   */
+  placeholder: PropTypes.string,
 }
 export default EditableDropdown;
