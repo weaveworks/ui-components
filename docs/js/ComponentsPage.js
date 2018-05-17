@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { values, flatMap, includes, reduce } from 'lodash';
+import { values, flatMap, includes, reduce, concat } from 'lodash';
 
 import { isActivePage } from './utils';
 
@@ -43,16 +43,18 @@ class ComponentsPage extends React.Component {
             text={module}
           />
         );
-        // Determine the link matches the top level dir. Else, creates an array of subModules.
-        if (isDefault && !result[dir]) {
-          result[dir] = { component: item };
-        } else if (!isDefault && result[dir]) {
-          if (!result[dir].subModules) {
-            result[dir].subModules = [item];
-          } else {
-            result[dir].subModules.push(item);
-          }
+
+        if (!result[dir]) {
+          // Haven't made the directory entry yet.
+          result[dir] = {};
         }
+
+        if (isDefault) {
+          result[dir].component = item;
+        } else {
+          result[dir].subModules = concat(result[dir].subModules || [], item);
+        }
+
         return result;
       },
       {}
