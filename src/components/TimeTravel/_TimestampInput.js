@@ -14,11 +14,11 @@ const TimestampInputWrapper = styled.div`
 
 const TimestampInputContainer = styled.input`
   font-size: ${props => props.theme.fontSizes.normal};
+  font-family: ${props => props.theme.fontFamilies.monospace};
   background-color: transparent;
-  font-family: 'Roboto', sans-serif;
   margin-right: 3px;
-  text-align: center;
-  width: 165px;
+  text-align: left;
+  width: 195px;
   border: 0;
   outline: 0;
 `;

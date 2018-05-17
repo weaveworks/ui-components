@@ -2,7 +2,7 @@
 
 exports[`<Text /> renderes bold 1`] = `
 .c0 {
-  font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: 'proxima-nova',Helvetica,Arial,sans-serif;
   color: #1a1a1a;
   font-size: 16px;
   font-weight: 600;
@@ -17,7 +17,7 @@ exports[`<Text /> renderes bold 1`] = `
 
 exports[`<Text /> renders default 1`] = `
 .c0 {
-  font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: 'proxima-nova',Helvetica,Arial,sans-serif;
   color: #1a1a1a;
   font-size: 16px;
   font-weight: 400;
@@ -32,7 +32,7 @@ exports[`<Text /> renders default 1`] = `
 
 exports[`<Text /> renders italic 1`] = `
 .c0 {
-  font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: 'proxima-nova',Helvetica,Arial,sans-serif;
   color: #1a1a1a;
   font-size: 16px;
   font-weight: 400;
@@ -47,7 +47,7 @@ exports[`<Text /> renders italic 1`] = `
 
 exports[`<Text /> renders large 1`] = `
 .c0 {
-  font-family: 'proxima-nova',sans-serif,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font-family: 'proxima-nova',Helvetica,Arial,sans-serif;
   color: #1a1a1a;
   font-size: 22px;
   font-weight: 400;

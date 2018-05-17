@@ -23,7 +23,9 @@ import '../img/favicon.ico';
   optgroup,
   select,
   textarea {
+    /* stylelint-disable sh-waqar/declaration-use-variable */
     font-family: inherit;
+    /* stylelint-enable sh-waqar/declaration-use-variable */
   }
 `)();
 

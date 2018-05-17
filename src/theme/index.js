@@ -1,5 +1,5 @@
 import { colors, themeColorsAsScss } from './colors';
-import { fontSizes, fontFamily, themeFontSizesAsScss } from './fonts';
+import { fontSizes, fontFamilies, themeFontsAsScss } from './fonts';
 import { borderRadius, themeBorderRadiiAsScss } from './borders';
 import { layers, themeLayersAsScss } from './layers';
 import { overlayIconSize, textColor, themeMiscVarsAsScss } from './misc';
@@ -10,7 +10,7 @@ export function themeVarsAsScss() {
   const themeVariables = []
     .concat(themeColorsAsScss())
     .concat(themeLayersAsScss())
-    .concat(themeFontSizesAsScss())
+    .concat(themeFontsAsScss())
     .concat(themeBorderRadiiAsScss())
     .concat(themeMiscVarsAsScss());
   return `${themeVariables.join('; ')};`;
@@ -30,7 +30,7 @@ const theme = {
   colors,
 
   // Fonts
-  fontFamily,
+  fontFamilies,
   fontSizes,
 
   // z-index layers
