@@ -20,6 +20,7 @@ import {
   every,
   get,
   reverse,
+  indexOf,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
 import { format, formatPrefix, precisionPrefix, precisionFixed } from 'd3-format';
@@ -249,7 +250,21 @@ class PrometheusGraph extends React.PureComponent {
     const getSeriesColor = getColorTheme(props);
     const getSeriesName = (series, forLegend) =>
       props.getSeriesName(series, props.multiSeries, forLegend);
-    const getSeriesKey = (series, index) => `${getSeriesName(series)}:${index}`;
+
+    // The key generating function will make series key equal the series name,
+    // unless this is not the first series with this name, in which case the
+    // index of the series within the legend is attached to the key.
+    const multiSeriesByName = props.multiSeries.map(getSeriesName);
+    const getSeriesKey = (series, index) => {
+      const seriesName = getSeriesName(series);
+      const firstIndex = indexOf(multiSeriesByName, seriesName);
+
+      let seriesKey = seriesName;
+      if (firstIndex !== index) {
+        seriesKey = `${seriesKey}____${index}`;
+      }
+      return seriesKey;
+    };
 
     // Build a dictionary that references original multi series by keys,
     // and a sorted list of those keys by which we can later iterate.
