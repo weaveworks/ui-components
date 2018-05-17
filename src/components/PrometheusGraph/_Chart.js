@@ -122,27 +122,20 @@ class Chart extends React.PureComponent {
   }
 
   isFadedSeries(series) {
-    const {
-      hoveredLegendSeriesKey,
-      selectedLegendMultiSeriesKeys,
-    } = this.props;
+    const { hoveredLegendKey, selectedLegendKeys } = this.props;
     // Show series as faded if no series is selected and some other series is hovered.
     return (
-      selectedLegendMultiSeriesKeys.length === 0 &&
-      hoveredLegendSeriesKey &&
-      hoveredLegendSeriesKey !== series.key
+      selectedLegendKeys.length === 0 &&
+      hoveredLegendKey &&
+      hoveredLegendKey !== series.key
     );
   }
 
   isFocusedSeries(series) {
-    const {
-      hoveredLegendSeriesKey,
-      selectedLegendMultiSeriesKeys,
-    } = this.props;
+    const { hoveredLegendKey, selectedLegendKeys } = this.props;
     // Show series as focused if it's selected or hovered.
     return (
-      hoveredLegendSeriesKey === series.key ||
-      selectedLegendMultiSeriesKeys.includes(series.key)
+      hoveredLegendKey === series.key || selectedLegendKeys.includes(series.key)
     );
   }
 
@@ -197,8 +190,8 @@ Chart.propTypes = {
   timeScale: PropTypes.func.isRequired,
   valueScale: PropTypes.func.isRequired,
   timestampQuantizer: PropTypes.func.isRequired,
-  selectedLegendMultiSeriesKeys: PropTypes.array.isRequired,
-  hoveredLegendSeriesKey: PropTypes.string,
+  selectedLegendKeys: PropTypes.array.isRequired,
+  hoveredLegendKey: PropTypes.string,
   onHoverUpdate: PropTypes.func.isRequired,
   onChartResize: PropTypes.func.isRequired,
 };
