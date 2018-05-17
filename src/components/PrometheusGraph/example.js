@@ -1,10 +1,17 @@
 import React from 'react';
 import faker from 'faker';
 import moment from 'moment';
+import styled from 'styled-components';
 import { compact, range, times } from 'lodash';
 
 import PrometheusGraph from '.';
 import { Example, Info } from '../../utils/example';
+
+const InlineBlock = styled.div`
+  display: inline-block;
+  margin-right: 5%;
+  width: 45%;
+`;
 
 function generateRandomMultiSeries(
   { startTime, endTime, stepDuration },
@@ -13,6 +20,20 @@ function generateRandomMultiSeries(
 ) {
   return times(count, () => ({
     metric: { [key]: faker.lorem.slug() },
+    values: range(startTime, endTime + 1e-6, stepDuration).map(time => [
+      time,
+      faker.random.number({ min: 10, max: 20 }),
+    ]),
+  }));
+}
+
+function generateCorrelatedMultiSeries(
+  { startTime, endTime, stepDuration },
+  key,
+  count
+) {
+  return times(count, index => ({
+    metric: { [key]: ['aaa', 'bbb', 'bbb', 'ccc', 'ddd'][index] },
     values: range(startTime, endTime + 1e-6, stepDuration).map(time => [
       time,
       faker.random.number({ min: 10, max: 20 }),
@@ -37,6 +58,7 @@ export default class PrometheusGraphExample extends React.Component {
     super();
 
     this.state = {
+      selectedCorrelatedKeys: [],
       startTime: moment('2018-02-05T11:24:14Z').unix(),
       endTime: moment('2018-02-05T11:54:14Z').unix(),
       stepDuration: 9,
@@ -53,6 +75,16 @@ export default class PrometheusGraphExample extends React.Component {
       'namespace',
       4
     );
+    this.state.multiSeriesCorrelatedA = generateCorrelatedMultiSeries(
+      this.state,
+      'namespace',
+      5
+    );
+    this.state.multiSeriesCorrelatedB = generateCorrelatedMultiSeries(
+      this.state,
+      'namespace',
+      5
+    );
     this.state.deployments = generateDeployments(this.state, 6);
   }
 
@@ -68,6 +100,10 @@ export default class PrometheusGraphExample extends React.Component {
   componentWillUnmount() {
     clearInterval(this.timer);
   }
+
+  changeLegendSelection = (selectedCorrelatedKeys) => {
+    this.setState({ selectedCorrelatedKeys });
+  };
 
   render() {
     return (
@@ -101,6 +137,31 @@ export default class PrometheusGraphExample extends React.Component {
             endTimeSec={this.state.endTime}
             deployments={this.state.deployments}
           />
+          <Info>Correlated graphs</Info>
+          <InlineBlock>
+            <PrometheusGraph
+              showStacked
+              selectedLegendKeys={this.state.selectedCorrelatedKeys}
+              onChangeLegendSelection={this.changeLegendSelection}
+              multiSeries={this.state.multiSeriesCorrelatedA}
+              stepDurationSec={this.state.stepDuration}
+              startTimeSec={this.state.startTime}
+              endTimeSec={this.state.endTime}
+              deployments={this.state.deployments}
+            />
+          </InlineBlock>
+          <InlineBlock>
+            <PrometheusGraph
+              showStacked
+              selectedLegendKeys={this.state.selectedCorrelatedKeys}
+              onChangeLegendSelection={this.changeLegendSelection}
+              multiSeries={this.state.multiSeriesCorrelatedB}
+              stepDurationSec={this.state.stepDuration}
+              startTimeSec={this.state.startTime}
+              endTimeSec={this.state.endTime}
+              deployments={this.state.deployments}
+            />
+          </InlineBlock>
           <Info>Error with no data</Info>
           <PrometheusGraph
             showStacked
