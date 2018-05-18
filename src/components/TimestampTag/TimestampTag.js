@@ -3,10 +3,14 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+const COMPACT_LOCALE_KEY = 'compact-time-ranges';
+
 // FIXME: move this somewhere else?
 (() => {
-  moment.defineLocale('compact-time-ranges', {
-    parentLocale: 'en',
+  // When you register a new locale moment.js changes the global to
+  // the new entry. So save the current locale and then set it back.
+  const defaultLocale = moment.locale();
+  moment.locale(COMPACT_LOCALE_KEY, {
     relativeTime: {
       future: 'in %s',
       past: '%s ago',
@@ -23,6 +27,7 @@ import styled from 'styled-components';
       yy: '%dy',
     },
   });
+  moment.locale(defaultLocale);
 })();
 
 const Timestamp = styled.span`
@@ -91,7 +96,7 @@ class TimestampTag extends React.Component {
 
   render() {
     const { relative, compact, timestamp, inheritStyles } = this.props;
-    const relativeLocale = compact ? 'compact-time-ranges' : 'en';
+    const relativeLocale = compact ? COMPACT_LOCALE_KEY : moment.locale();
     const momentTimestamp = moment(timestamp).utc();
 
     return (
@@ -100,7 +105,7 @@ class TimestampTag extends React.Component {
         title={
           relative
             ? momentTimestamp.format('dddd, MMMM Do YYYY, HH:mm:ss [UTC]')
-            : momentTimestamp.locale('en').fromNow()
+            : momentTimestamp.fromNow()
         }
       >
         {relative
