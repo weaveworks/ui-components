@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tab Select /> snapshots renders 1`] = `
+.c0 {
+  cursor: pointer;
+  margin-bottom: -1px;
+  margin-right: 5px;
+  padding: 10px 20px;
+  font-size: 22px;
+  outline: 0;
+  background-color: #fff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border: 1px solid #e2e2ec;
+  border-bottom: 1px solid transparent;
+}
+
+.c0 .c1 {
+  color: #32324b;
+  opacity: 1;
+}
+
+.c2 {
+  cursor: pointer;
+  margin-bottom: -1px;
+  margin-right: 5px;
+  padding: 10px 20px;
+  font-size: 22px;
+  outline: 0;
+  background-color: #f8f8f8;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border: 1px solid #e2e2ec;
+}
+
+.c2 .c1 {
+  color: #32324b;
+  opacity: 0.65;
+}
+
+.c3 {
+  padding: 20px;
+  background-color: #fff;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border: 1px solid #e2e2ec;
+}
+
+<div
+  className=""
+>
+  <div
+    className=""
+  >
+    <button
+      className="c0"
+      onClick={[Function]}
+    >
+      <span
+        className="c1 "
+      >
+        A
+      </span>
+    </button>
+    <button
+      className="c2"
+      onClick={[Function]}
+    >
+      <span
+        className="c1 "
+      >
+        B
+      </span>
+    </button>
+    <button
+      className="c2"
+      onClick={[Function]}
+    >
+      <span
+        className="c1 "
+      >
+        C
+      </span>
+    </button>
+  </div>
+  <div
+    className="c3"
+  >
+    <div
+      className=""
+    >
+      Tab A
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Tab Select /> snapshots renders with a selectedTab 1`] = `
+.c2 {
+  cursor: pointer;
+  margin-bottom: -1px;
+  margin-right: 5px;
+  padding: 10px 20px;
+  font-size: 22px;
+  outline: 0;
+  background-color: #fff;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border: 1px solid #e2e2ec;
+  border-bottom: 1px solid transparent;
+}
+
+.c2 .c1 {
+  color: #32324b;
+  opacity: 1;
+}
+
+.c0 {
+  cursor: pointer;
+  margin-bottom: -1px;
+  margin-right: 5px;
+  padding: 10px 20px;
+  font-size: 22px;
+  outline: 0;
+  background-color: #f8f8f8;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border: 1px solid #e2e2ec;
+}
+
+.c0 .c1 {
+  color: #32324b;
+  opacity: 0.65;
+}
+
+.c3 {
+  padding: 20px;
+  background-color: #fff;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border: 1px solid #e2e2ec;
+}
+
+<div
+  className=""
+>
+  <div
+    className=""
+  >
+    <button
+      className="c0"
+      onClick={[Function]}
+    >
+      <span
+        className="c1 "
+      >
+        A
+      </span>
+    </button>
+    <button
+      className="c2"
+      onClick={[Function]}
+    >
+      <span
+        className="c1 "
+      >
+        B
+      </span>
+    </button>
+    <button
+      className="c0"
+      onClick={[Function]}
+    >
+      <span
+        className="c1 "
+      >
+        C
+      </span>
+    </button>
+  </div>
+  <div
+    className="c3"
+  >
+    <div
+      className=""
+    >
+      Tab B
+    </div>
+  </div>
+</div>
+`;

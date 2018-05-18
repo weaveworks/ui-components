@@ -31,3 +31,5 @@ export PrometheusGraph from './PrometheusGraph';
 export DataTable from './DataTable';
 
 export TimestampTag from './TimestampTag';
+
+export TabSelect, { Tab } from './TabSelect';
