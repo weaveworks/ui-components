@@ -71,10 +71,15 @@ class Legend extends React.PureComponent {
 
     this.state = {
       shown: props.shown,
+      selectedKeys: props.selectedKeys,
       hoveredKey: null,
-      selectedKeys: [],
-      multiSeries: [],
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.selectedKeys !== nextProps.selectedKeys) {
+      this.setState({ selectedKeys: nextProps.selectedKeys });
+    }
   }
 
   handleLegendItemClick = (ev, series) => {
@@ -95,17 +100,17 @@ class Legend extends React.PureComponent {
     }
 
     this.setState({ selectedKeys });
-    this.props.onSelectedMultiSeriesChange(selectedKeys);
+    this.props.onSelectedKeysChange(selectedKeys);
   };
 
   handleLegendItemMouseEnter = series => {
     this.setState({ hoveredKey: series.key });
-    this.props.onHoveredSeriesChange(series.key);
+    this.props.onHoveredKeyChange(series.key);
   };
 
   handleLegendItemMouseLeave = () => {
     this.setState({ hoveredKey: null });
-    this.props.onHoveredSeriesChange(null);
+    this.props.onHoveredKeyChange(null);
   };
 
   handleLegendToggle = () => {
@@ -148,8 +153,9 @@ class Legend extends React.PureComponent {
 
 Legend.propTypes = {
   multiSeries: PropTypes.array.isRequired,
-  onSelectedMultiSeriesChange: PropTypes.func.isRequired,
-  onHoveredSeriesChange: PropTypes.func.isRequired,
+  selectedKeys: PropTypes.array.isRequired,
+  onSelectedKeysChange: PropTypes.func.isRequired,
+  onHoveredKeyChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   collapsable: PropTypes.bool.isRequired,
   shown: PropTypes.bool.isRequired,

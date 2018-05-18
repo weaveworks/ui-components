@@ -20,6 +20,8 @@ import {
   every,
   get,
   reverse,
+  indexOf,
+  noop,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
 import { format, formatPrefix, precisionPrefix, precisionFixed } from 'd3-format';
@@ -207,8 +209,8 @@ class PrometheusGraph extends React.PureComponent {
 
     this.state = {
       multiSeries: [],
-      selectedLegendMultiSeriesKeys: [],
-      hoveredLegendSeriesKey: null,
+      selectedLegendKeys: props.selectedLegendKeys,
+      hoveredLegendKey: null,
       hoverTimestampSec: null,
       hoverPoints: null,
       hoverX: null,
@@ -226,15 +228,21 @@ class PrometheusGraph extends React.PureComponent {
     if (this.props.multiSeries !== nextProps.multiSeries) {
       this.prepareMultiSeries(nextProps);
     }
+    if (this.props.selectedLegendKeys !== nextProps.selectedLegendKeys) {
+      const { selectedLegendKeys } = nextProps;
+      this.prepareMultiSeries(nextProps, { selectedLegendKeys });
+      this.setState({ selectedLegendKeys });
+    }
   }
 
-  handleSelectedLegendMultiSeriesChange = selectedLegendMultiSeriesKeys => {
-    this.prepareMultiSeries(this.props, { selectedLegendMultiSeriesKeys });
-    this.setState({ selectedLegendMultiSeriesKeys });
+  handleSelectedLegendKeysChange = selectedLegendKeys => {
+    this.prepareMultiSeries(this.props, { selectedLegendKeys });
+    this.setState({ selectedLegendKeys });
+    this.props.onChangeLegendSelection(selectedLegendKeys);
   };
 
-  handleHoveredLegendSeriesChange = hoveredLegendSeriesKey => {
-    this.setState({ hoveredLegendSeriesKey });
+  handleHoveredLegendKeyChange = hoveredLegendKey => {
+    this.setState({ hoveredLegendKey });
   };
 
   handleHoverUpdate = ({ hoverPoints, hoverTimestampSec, hoverX, hoverY }) => {
@@ -245,11 +253,25 @@ class PrometheusGraph extends React.PureComponent {
     this.setState({ chartWidth, chartHeight });
   };
 
-  prepareMultiSeries = (props, { selectedLegendMultiSeriesKeys } = this.state) => {
+  prepareMultiSeries = (props, { selectedLegendKeys } = this.state) => {
     const getSeriesColor = getColorTheme(props);
     const getSeriesName = (series, forLegend) =>
       props.getSeriesName(series, props.multiSeries, forLegend);
-    const getSeriesKey = (series, index) => `${getSeriesName(series)}:${index}`;
+
+    // The key generating function will make series key equal the series name,
+    // unless this is not the first series with this name, in which case the
+    // index of the series within the legend is attached to the key.
+    const multiSeriesByName = props.multiSeries.map(getSeriesName);
+    const getSeriesKey = (series, index) => {
+      const seriesName = getSeriesName(series);
+      const firstIndex = indexOf(multiSeriesByName, seriesName);
+
+      let seriesKey = seriesName;
+      if (firstIndex !== index) {
+        seriesKey = `${seriesKey}____${index}`;
+      }
+      return seriesKey;
+    };
 
     // Build a dictionary that references original multi series by keys,
     // and a sorted list of those keys by which we can later iterate.
@@ -266,7 +288,7 @@ class PrometheusGraph extends React.PureComponent {
     let stackedMultiSeriesKeys = [];
     if (props.showStacked) {
       stackedMultiSeriesKeys =
-        selectedLegendMultiSeriesKeys.length > 0 ? selectedLegendMultiSeriesKeys : multiSeriesKeys;
+        selectedLegendKeys.length > 0 ? selectedLegendKeys : multiSeriesKeys;
     }
 
     // This D3 scale takes care of rounding all the datapoints to the nearest discrete timestamp.
@@ -358,12 +380,12 @@ class PrometheusGraph extends React.PureComponent {
 
   getVisibleMultiSeries() {
     // If no series is selected, show all of them.
-    if (this.state.selectedLegendMultiSeriesKeys.length === 0) {
+    if (this.state.selectedLegendKeys.length === 0) {
       return this.state.multiSeries;
     }
     // Otherwise show only the selected multi series.
     return this.state.multiSeries.filter(series =>
-      this.state.selectedLegendMultiSeriesKeys.includes(series.key)
+      this.state.selectedLegendKeys.includes(series.key)
     );
   }
 
@@ -380,8 +402,8 @@ class PrometheusGraph extends React.PureComponent {
       error,
     } = this.props;
     const {
-      selectedLegendMultiSeriesKeys,
-      hoveredLegendSeriesKey,
+      selectedLegendKeys,
+      hoveredLegendKey,
       chartWidth,
       chartHeight,
       hoverPoints,
@@ -417,8 +439,8 @@ class PrometheusGraph extends React.PureComponent {
             valueScale={valueScale}
             multiSeries={visibleMultiSeries}
             timestampQuantizer={timestampQuantizer}
-            selectedLegendMultiSeriesKeys={selectedLegendMultiSeriesKeys}
-            hoveredLegendSeriesKey={hoveredLegendSeriesKey}
+            selectedLegendKeys={selectedLegendKeys}
+            hoveredLegendKey={hoveredLegendKey}
             onHoverUpdate={this.handleHoverUpdate}
             onChartResize={this.handleChartResize}
           />
@@ -444,8 +466,9 @@ class PrometheusGraph extends React.PureComponent {
           loading={loading}
           shown={legendShown}
           collapsable={legendCollapsable}
-          onSelectedMultiSeriesChange={this.handleSelectedLegendMultiSeriesChange}
-          onHoveredSeriesChange={this.handleHoveredLegendSeriesChange}
+          selectedKeys={selectedLegendKeys}
+          onSelectedKeysChange={this.handleSelectedLegendKeysChange}
+          onHoveredKeyChange={this.handleHoveredLegendKeyChange}
           multiSeries={multiSeries}
         />
         <ErrorOverlay hasData={hasData} loading={loading} error={error} />
@@ -515,6 +538,14 @@ PrometheusGraph.propTypes = {
    */
   legendShown: PropTypes.bool,
   /**
+   * Initially preselected legend items
+   */
+  selectedLegendKeys: PropTypes.array,
+  /**
+   * Called when legend selection changes
+   */
+  onChangeLegendSelection: PropTypes.func,
+  /**
    * Optional list of deployment annotations shown over the graph
    */
   deployments: PropTypes.array,
@@ -530,6 +561,8 @@ PrometheusGraph.defaultProps = {
   legendCollapsable: false,
   legendShown: true,
   loading: false,
+  onChangeLegendSelection: noop,
+  selectedLegendKeys: [],
   deployments: [],
 };
 
