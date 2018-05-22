@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import AutosizeInput from 'react-input-autosize';
 
 const TimestampInputWrapper = styled.div`
   font-size: ${props => props.theme.fontSizes.small};
@@ -12,15 +13,23 @@ const TimestampInputWrapper = styled.div`
   display: flex;
 `;
 
-const TimestampInputContainer = styled.input`
-  font-size: ${props => props.theme.fontSizes.normal};
-  font-family: ${props => props.theme.fontFamilies.monospace};
-  background-color: transparent;
-  margin-right: 3px;
-  text-align: left;
-  width: 195px;
-  border: 0;
-  outline: 0;
+const TimestampInputContainer = styled(AutosizeInput)`
+  input {
+    font-size: ${props => props.theme.fontSizes.normal};
+    font-family: ${props => props.theme.fontFamilies.monospace};
+    background-color: transparent;
+    margin-right: 3px;
+    text-align: left;
+    min-width: 195px;
+    max-width: 300px;
+    border: 0;
+    outline: 0;
+  }
+
+  /* See https://github.com/JedWatson/react-input-autosize/issues/135 */
+  div {
+    overflow: hidden !important;
+  }
 `;
 
 class TimestampInput extends React.PureComponent {
