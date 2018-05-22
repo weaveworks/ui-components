@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { clamp, find, debounce, noop } from 'lodash';
 
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
-import { MAX_TICK_SPACING_PX } from '../../constants/timeline';
+import { MAX_TICK_SPACING_PX } from './_TimelinePeriodLabels';
 
 import Timeline from './_Timeline';
 import TimelinePanButton from './_TimelinePanButton';
@@ -376,6 +376,7 @@ class TimeTravel extends React.Component {
             earliestTimestamp={this.props.earliestTimestamp}
             durationMsPerPixel={this.state.durationMsPerPixel}
             rangeMs={this.state.rangeMs}
+            deployments={this.props.deployments}
             onJump={this.handleTimelineJump}
             onZoom={this.handleTimelineZoom}
             onPan={this.handleTimelinePan}
@@ -472,6 +473,10 @@ TimeTravel.propTypes = {
    * Optional callback handling range in milliseconds change
    */
   onChangeRange: PropTypes.func,
+  /**
+   * Optional list of deployment annotations shown in the timeline
+   */
+  deployments: PropTypes.array,
 };
 
 TimeTravel.defaultProps = {
@@ -487,6 +492,7 @@ TimeTravel.defaultProps = {
   onTimelineLabelClick: noop,
   onTimelineZoom: noop,
   onTimelinePan: noop,
+  deployments: [],
 };
 
 export default TimeTravel;
