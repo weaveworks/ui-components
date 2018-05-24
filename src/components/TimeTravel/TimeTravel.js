@@ -148,7 +148,7 @@ class TimeTravel extends React.Component {
       ),
       showingLive: props.showingLive,
       rangeMs: props.rangeMs,
-      timelineWidthPx: null,
+      timelineWidthPx: 1000,
     };
 
     this.handleTimelinePanButtonClick = this.handleTimelinePanButtonClick.bind(
@@ -158,7 +158,6 @@ class TimeTravel extends React.Component {
     this.handleTimelineZoom = this.handleTimelineZoom.bind(this);
     this.handleTimelinePan = this.handleTimelinePan.bind(this);
     this.handleTimelineRelease = this.handleTimelineRelease.bind(this);
-    this.handleTimelineResize = this.handleTimelineResize.bind(this);
     this.handleRangeChange = this.handleRangeChange.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLiveModeToggle = this.handleLiveModeToggle.bind(this);
@@ -291,14 +290,6 @@ class TimeTravel extends React.Component {
     this.props.onTimelinePan();
   }
 
-  handleTimelineResize(timelineWidthPx) {
-    // If this is the initial resize, adjust the zoom level to the current selected range.
-    if (!this.state.timelineWidthPx) {
-      this.adjustZoomToRange(this.state.rangeMs, timelineWidthPx);
-    }
-    this.setState({ timelineWidthPx });
-  }
-
   handleLiveModeToggle(showingLive) {
     if (showingLive) {
       //  Order of callbacks is important.
@@ -380,7 +371,6 @@ class TimeTravel extends React.Component {
             onZoom={this.handleTimelineZoom}
             onPan={this.handleTimelinePan}
             onRelease={this.handleTimelineRelease}
-            onResize={this.handleTimelineResize}
           />
           <TimelinePanButton
             icon="fa fa-chevron-right"

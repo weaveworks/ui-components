@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { find, map, last, clamp } from 'lodash';
 
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
@@ -38,6 +39,15 @@ const TICK_SETTINGS_PER_PERIOD = {
   },
 };
 
+const TimelineLabels = styled.div.attrs({
+  style: ({ opacity, row }) => ({
+    top: row * TICKS_ROW_SPACING,
+    opacity,
+  }),
+})`
+  position: absolute;
+`;
+
 // A linear mapping [a, b] -> [0, 1] (maps value x=a into 0 and x=b into 1).
 function linearGradientValue(x, [a, b]) {
   return (x - a) / (b - a);
@@ -64,7 +74,7 @@ class TimelinePeriodLabels extends React.PureComponent {
     if (!periodInterval) return [];
 
     // Get the boundary values for the displayed part of the timeline.
-    const halfWidth = this.props.width / 2;
+    const halfWidth = 1000 / 2;
     const timeScale = getTimeScale(timelineTransform);
     const momentStart = moment(timeScale.invert(-halfWidth)).utc();
     const momentEnd = moment(timeScale.invert(halfWidth)).utc();
@@ -167,7 +177,6 @@ class TimelinePeriodLabels extends React.PureComponent {
 
     const ticksRow =
       MAX_TICK_ROWS - this.getVerticalShiftForPeriod(period, this.props);
-    const transform = `translate(0, ${ticksRow * TICKS_ROW_SPACING})`;
 
     // Ticks quickly fade in from the bottom and then slowly start
     // fading out towards the top until they are pushed out of canvas.
@@ -179,7 +188,7 @@ class TimelinePeriodLabels extends React.PureComponent {
     const isBarelyVisible = opacity < 0.4;
 
     return (
-      <g className={period} transform={transform} style={{ opacity }}>
+      <TimelineLabels className={period} row={ticksRow} opacity={opacity}>
         {map(ticks, ({ timestamp, position, isBehind }) => (
           <TimelineLabel
             key={timestamp}
@@ -187,13 +196,13 @@ class TimelinePeriodLabels extends React.PureComponent {
             position={position}
             isBehind={isBehind}
             periodFormat={periodFormat}
+            onClick={this.props.onClick}
             disabled={
               isBarelyVisible || this.isOutsideOfClickableRange(timestamp)
             }
-            onClick={this.props.onClick}
           />
         ))}
-      </g>
+      </TimelineLabels>
     );
   }
 }
@@ -202,7 +211,6 @@ TimelinePeriodLabels.propTypes = {
   period: PropTypes.string.isRequired,
   focusedTimestamp: PropTypes.string.isRequired,
   durationMsPerPixel: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
   clickableStartAt: PropTypes.string.isRequired,
   clickableEndAt: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,

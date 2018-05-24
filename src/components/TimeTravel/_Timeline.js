@@ -2,13 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import ResizeAware from 'react-resize-aware';
 import { transparentize } from 'polished';
-import { debounce } from 'lodash';
 import { drag } from 'd3-drag';
 import { event as d3Event, select } from 'd3-selection';
 import { Motion } from 'react-motion';
 
+import theme from '../../theme';
 import { strongSpring } from '../../utils/animation';
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
 import { zoomFactor } from '../../utils/zooming';
@@ -19,8 +18,8 @@ import TimelineRange from './_TimelineRange';
 const TIMELINE_HEIGHT = '55px';
 
 const TimelineWrapper = styled.div`
-  width: 100%;
   height: ${TIMELINE_HEIGHT};
+  width: 100%;
 
   &:before,
   &:after {
@@ -36,6 +35,7 @@ const TimelineWrapper = styled.div`
     border-bottom: 0;
     margin-left: -1px;
     width: 3px;
+    z-index: 1;
   }
 
   &:before {
@@ -51,7 +51,7 @@ const TimelineWrapper = styled.div`
 `;
 
 // From https://stackoverflow.com/a/18294634
-const FullyPannableCanvas = styled.svg`
+const FullyPannableCanvas = styled.div`
   width: 100%;
   height: 100%;
   cursor: move;
@@ -72,6 +72,26 @@ const TimelineContainer = FullyPannableCanvas.extend`
   background-color: ${props => transparentize(0.15, props.theme.colors.white)};
   box-shadow: inset 0 0 7px ${props => props.theme.colors.gray};
   pointer-events: all;
+  position: relative;
+  overflow: hidden;
+`;
+
+const CenteredContent = styled.div`
+  position: absolute;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+`;
+
+const AxisContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+`;
+
+const TicksContainer = styled.div`
+  position: absolute;
+  top: 1px;
 `;
 
 class Timeline extends React.PureComponent {
@@ -79,19 +99,9 @@ class Timeline extends React.PureComponent {
     super(props);
 
     this.state = {
-      width: 0,
-      height: 0,
       isPanning: false,
       hasPanned: false,
     };
-
-    this.handleZoom = this.handleZoom.bind(this);
-    this.handlePanStart = this.handlePanStart.bind(this);
-    this.handlePanEnd = this.handlePanEnd.bind(this);
-    this.handlePan = this.handlePan.bind(this);
-    this.handleResize = debounce(this.handleResize.bind(this), 200);
-
-    this.saveSvgRef = this.saveSvgRef.bind(this);
   }
 
   componentDidMount() {
@@ -103,42 +113,35 @@ class Timeline extends React.PureComponent {
     this.svg.call(this.drag);
   }
 
-  handlePanStart() {
+  handlePanStart = () => {
     this.setState({ isPanning: true });
-  }
+  };
 
-  handlePanEnd() {
+  handlePanEnd = () => {
     if (this.state.hasPanned) {
       this.props.onRelease();
     }
     this.setState({ isPanning: false, hasPanned: false });
-  }
+  };
 
-  handlePan() {
+  handlePan = () => {
     const timeScale = getTimeScale(this.props);
     const momentTimestamp = timeScale.invert(-d3Event.dx);
     this.props.onPan(momentTimestamp);
     this.setState({ hasPanned: true });
-  }
+  };
 
-  handleZoom(ev) {
+  handleZoom = ev => {
     const { durationMsPerPixel } = this.props;
     this.props.onZoom(durationMsPerPixel / zoomFactor(ev));
     ev.preventDefault();
-  }
+  };
 
-  handleResize({ width, height }) {
-    // Update the timeline dimension information.
-    this.setState({ width, height });
-    this.props.onResize(width);
-  }
-
-  saveSvgRef(ref) {
+  saveSvgRef = ref => {
     this.svgRef = ref;
-  }
+  };
 
   renderAxis(transform) {
-    const { width, height } = this.state;
     const { focusedTimestamp, rangeMs } = transform;
     const startTimestamp = moment(focusedTimestamp)
       .subtract(rangeMs)
@@ -146,100 +149,75 @@ class Timeline extends React.PureComponent {
     const timeScale = getTimeScale(transform);
 
     return (
-      <g className="axis">
-        <rect
-          className="tooltip-container"
-          transform={`translate(${-width / 2}, 0)`}
-          width={width}
-          height={height}
-          fillOpacity={0}
-        />
-
+      <AxisContainer>
         <TimelineRange
-          color="#aaa"
-          width={width}
-          height={height}
+          color={theme.colors.gray}
           endAt={this.props.earliestTimestamp}
           timeScale={timeScale}
         />
         <TimelineRange
-          color="#aaa"
-          width={width}
-          height={height}
+          color={theme.colors.gray}
           startAt={this.props.timestampNow}
           timeScale={timeScale}
         />
         {this.props.inspectingInterval && (
           <TimelineRange
-            color="#00d2ff"
-            width={width}
-            height={height}
+            color={theme.colors.accent.blue}
             startAt={startTimestamp}
             endAt={focusedTimestamp}
             timeScale={timeScale}
           />
         )}
-
-        <g className="ticks" transform="translate(0, 1)">
+        <TicksContainer>
           {['year', 'month', 'day', 'minute'].map(period => (
             <TimelinePeriodLabels
               key={period}
               period={period}
-              width={width}
               onClick={this.props.onJump}
               clickableStartAt={this.props.earliestTimestamp}
               clickableEndAt={this.props.timestampNow}
               {...transform}
             />
           ))}
-        </g>
-      </g>
+        </TicksContainer>
+      </AxisContainer>
     );
   }
 
   render() {
-    const { isPanning, width } = this.state;
+    const { isPanning } = this.state;
     const { focusedTimestamp, durationMsPerPixel, rangeMs } = this.props;
 
     return (
       <TimelineWrapper>
-        <ResizeAware
-          onlyEvent
-          onResize={this.handleResize}
-          style={{ width: '100%', height: '100%' }}
+        <TimelineContainer
+          panning={isPanning}
+          innerRef={this.saveSvgRef}
+          onWheel={this.handleZoom}
+          title="Scroll to zoom, drag to pan"
         >
-          <TimelineContainer
-            panning={isPanning}
-            innerRef={this.saveSvgRef}
-            onWheel={this.handleZoom}
-          >
-            <g
-              className="timeline-container"
-              transform={`translate(${width / 2}, 0)`}
+          <CenteredContent>
+            <Motion
+              style={{
+                focusedTimestampMs: strongSpring(
+                  moment(focusedTimestamp).valueOf()
+                ),
+                durationMsPerPixel: strongSpring(durationMsPerPixel),
+                rangeMs: strongSpring(rangeMs),
+              }}
             >
-              <title>Scroll to zoom, drag to pan</title>
-              <Motion
-                style={{
-                  focusedTimestampMs: strongSpring(
-                    moment(focusedTimestamp).valueOf()
+              {interpolated =>
+                this.renderAxis({
+                  focusedTimestamp: formattedTimestamp(
+                    interpolated.focusedTimestampMs
                   ),
-                  durationMsPerPixel: strongSpring(durationMsPerPixel),
-                  rangeMs: strongSpring(rangeMs),
-                }}
-              >
-                {interpolated =>
-                  this.renderAxis({
-                    focusedTimestamp: formattedTimestamp(
-                      interpolated.focusedTimestampMs
-                    ),
-                    durationMsPerPixel: interpolated.durationMsPerPixel,
-                    rangeMs: interpolated.rangeMs,
-                  })
-                }
-              </Motion>
-            </g>
-          </TimelineContainer>
-        </ResizeAware>
+                  durationMsPerPixel: interpolated.durationMsPerPixel,
+                  rangeMs: interpolated.rangeMs,
+                })
+              }
+            </Motion>
+          </CenteredContent>
+        </TimelineContainer>
       </TimelineWrapper>
     );
   }
@@ -256,7 +234,6 @@ Timeline.propTypes = {
   onZoom: PropTypes.func.isRequired,
   onPan: PropTypes.func.isRequired,
   onRelease: PropTypes.func.isRequired,
-  onResize: PropTypes.func.isRequired,
 };
 
 export default Timeline;
