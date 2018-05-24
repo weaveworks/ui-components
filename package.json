@@ -1,16 +1,15 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.4.79",
+  "version": "0.4.80",
   "description": "",
   "main": "index.js",
   "scripts": {
     "ci": "yarn lint && yarn test",
     "lint": "eslint src docs styleguide && stylelint src",
     "test": "jest",
-    "build": "yarn build:theme && yarn build:utils && yarn build:constants && yarn build:components && yarn build:index",
+    "build": "yarn build:theme && yarn build:utils && yarn build:components && yarn build:index",
     "build:theme": "babel src/theme --out-dir lib/theme --ignore *.test.js",
     "build:utils": "babel src/utils --out-dir lib/utils --ignore *.test.js",
-    "build:constants": "babel src/constants --out-dir lib/constants --ignore *.test.js",
     "build:components": "babel src/components --out-dir lib/components --ignore *.test.js,example.js",
     "build:index": "babel src/index.js --out-file lib/index.js",
     "postversion": "export TAG=$(jq -r '.version' package.json); git add package.json && git commit -m \"v${TAG}\" && git tag \"v${TAG}\" && git push origin --follow-tags",
