@@ -87,13 +87,8 @@ class Timeline extends React.PureComponent {
       hasPanned: false,
     };
 
-    this.handleZoom = this.handleZoom.bind(this);
-    this.handlePanStart = this.handlePanStart.bind(this);
-    this.handlePanEnd = this.handlePanEnd.bind(this);
-    this.handlePan = this.handlePan.bind(this);
-    this.handleResize = debounce(this.handleResize.bind(this), 200);
-
-    this.saveSvgRef = this.saveSvgRef.bind(this);
+    this.delayedHandleResize = debounce(this.handleResize, 200);
+    this.delayedUpdateVisibleRange = debounce(this.updateVisibleRange, 200);
   }
 
   componentDidMount() {
@@ -105,37 +100,57 @@ class Timeline extends React.PureComponent {
     this.svg.call(this.drag);
   }
 
-  handlePanStart() {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.rangeMs !== nextProps.rangeMs) {
+      this.delayedUpdateVisibleRange();
+    }
+  }
+
+  handlePanStart = () => {
     this.setState({ isPanning: true });
   }
 
-  handlePanEnd() {
+  handlePanEnd = () => {
     if (this.state.hasPanned) {
       this.props.onRelease();
     }
     this.setState({ isPanning: false, hasPanned: false });
+    this.delayedUpdateVisibleRange();
   }
 
-  handlePan() {
+  handlePan = () => {
     const timeScale = getTimeScale(this.props);
     const momentTimestamp = timeScale.invert(-d3Event.dx);
     this.props.onPan(momentTimestamp);
     this.setState({ hasPanned: true });
   }
 
-  handleZoom(ev) {
+  handleZoom = (ev) => {
     const { durationMsPerPixel } = this.props;
     this.props.onZoom(durationMsPerPixel / zoomFactor(ev));
+    this.delayedUpdateVisibleRange();
     ev.preventDefault();
   }
 
-  handleResize({ width, height }) {
+  handleResize = ({ width, height }) => {
     // Update the timeline dimension information.
     this.setState({ width, height });
+    this.delayedUpdateVisibleRange();
     this.props.onResize(width);
   }
 
-  saveSvgRef(ref) {
+  updateVisibleRange = () => {
+    const { width } = this.state;
+    const timeScale = getTimeScale(this.props);
+
+    // Update the visible part of the timeline.
+    this.props.onUpdateVisibleRange({
+      startAt: moment(timeScale.invert(-width / 2)).utc().format(),
+      endAt: moment(timeScale.invert(width / 2)).utc().format(),
+    });
+  }
+
+  saveSvgRef = (ref) => {
     this.svgRef = ref;
   }
 
@@ -180,7 +195,7 @@ class Timeline extends React.PureComponent {
             endAt={focusedTimestamp}
             timeScale={timeScale}
           />
-        )}
+      )}renderAxis
 
         <TimelineDeployments
           width={width}
@@ -192,7 +207,7 @@ class Timeline extends React.PureComponent {
         <g className="ticks" transform="translate(0, 1)">
           {['year', 'month', 'day', 'minute'].map(period => (
             <TimelinePeriodLabels
-              key={period}
+              key={period}renderAxis
               period={period}
               width={width}
               onClick={this.props.onJump}
@@ -214,7 +229,7 @@ class Timeline extends React.PureComponent {
       <TimelineWrapper>
         <ResizeAware
           onlyEvent
-          onResize={this.handleResize}
+          onResize={this.delayedHandleResize}
           style={{ width: '100%', height: '100%' }}
         >
           <TimelineContainer
@@ -262,6 +277,7 @@ Timeline.propTypes = {
   durationMsPerPixel: PropTypes.number.isRequired,
   rangeMs: PropTypes.number.isRequired,
   deployments: PropTypes.array.isRequired,
+  onUpdateVisibleRange: PropTypes.func.isRequired,
   onJump: PropTypes.func.isRequired,
   onZoom: PropTypes.func.isRequired,
   onPan: PropTypes.func.isRequired,

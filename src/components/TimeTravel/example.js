@@ -3,6 +3,7 @@ import faker from 'faker';
 import moment from 'moment';
 import { compact, times } from 'lodash';
 
+import Text from '../Text';
 import TimeTravel from '.';
 import { Example, Info } from '../../utils/example';
 
@@ -28,6 +29,8 @@ export default class TimeTravelExample extends React.Component {
       timestamp3: moment().format(),
       showingLive3: true,
       rangeMs3: 3600000,
+      visibleStartAt: null,
+      visibleEndAt: null,
       deployments: generateDeployments({
         startTime: moment().subtract(1, 'month').unix(),
         endTime: moment().unix(),
@@ -55,6 +58,13 @@ export default class TimeTravelExample extends React.Component {
     this.setState({ rangeMs3 });
   };
 
+  handleUpdateVisibleRange = ({ startAt, endAt }) => {
+    this.setState({
+      visibleStartAt: startAt,
+      visibleEndAt: endAt,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -63,6 +73,7 @@ export default class TimeTravelExample extends React.Component {
           <TimeTravel
             timestamp={this.state.timestamp1}
             onChangeTimestamp={this.handleChangeTimestamp1}
+            onUpdateVisibleRange={this.handleUpdateVisibleRange}
           />
         </Example>
         <Example>
@@ -70,6 +81,7 @@ export default class TimeTravelExample extends React.Component {
           <TimeTravel
             timestamp={this.state.timestamp2}
             onChangeTimestamp={this.handleChangeTimestamp2}
+            onUpdateVisibleRange={this.handleUpdateVisibleRange}
             deployments={this.state.deployments}
           />
         </Example>
@@ -84,8 +96,13 @@ export default class TimeTravelExample extends React.Component {
             hasRangeSelector
             rangeMs={this.state.rangeMs3}
             onChangeRange={this.handleChangeRange3}
+            onUpdateVisibleRange={this.handleUpdateVisibleRange}
           />
         </Example>
+        <hr />
+        <Text small>
+          Visible range: {this.state.visibleStartAt} - {this.state.visibleEndAt}
+        </Text>
       </div>
     );
   }
