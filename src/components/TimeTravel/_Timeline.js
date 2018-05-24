@@ -12,7 +12,9 @@ import { Motion } from 'react-motion';
 import { strongSpring } from '../../utils/animation';
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
 import { zoomFactor } from '../../utils/zooming';
+import theme from '../../theme';
 
+import TimelineDeployments from './_TimelineDeployments';
 import TimelinePeriodLabels from './_TimelinePeriodLabels';
 import TimelineRange from './_TimelineRange';
 
@@ -156,14 +158,14 @@ class Timeline extends React.PureComponent {
         />
 
         <TimelineRange
-          color="#aaa"
+          color={theme.colors.gray}
           width={width}
           height={height}
           endAt={this.props.earliestTimestamp}
           timeScale={timeScale}
         />
         <TimelineRange
-          color="#aaa"
+          color={theme.colors.gray}
           width={width}
           height={height}
           startAt={this.props.timestampNow}
@@ -171,7 +173,7 @@ class Timeline extends React.PureComponent {
         />
         {this.props.inspectingInterval && (
           <TimelineRange
-            color="#00d2ff"
+            color={theme.colors.accent.blue}
             width={width}
             height={height}
             startAt={startTimestamp}
@@ -179,6 +181,13 @@ class Timeline extends React.PureComponent {
             timeScale={timeScale}
           />
         )}
+
+        <TimelineDeployments
+          width={width}
+          height={height}
+          timeScale={timeScale}
+          deployments={this.props.deployments}
+        />
 
         <g className="ticks" transform="translate(0, 1)">
           {['year', 'month', 'day', 'minute'].map(period => (
@@ -252,6 +261,7 @@ Timeline.propTypes = {
   earliestTimestamp: PropTypes.string,
   durationMsPerPixel: PropTypes.number.isRequired,
   rangeMs: PropTypes.number.isRequired,
+  deployments: PropTypes.array.isRequired,
   onJump: PropTypes.func.isRequired,
   onZoom: PropTypes.func.isRequired,
   onPan: PropTypes.func.isRequired,

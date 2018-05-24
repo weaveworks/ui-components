@@ -9,7 +9,7 @@ const TimelineLabelContainer = styled.button`
   font-size: ${props => props.theme.fontSizes.small};
   cursor: pointer;
   margin-left: 2px;
-  padding: 3px;
+  padding: 0 1px;
   outline: 0;
   border: 0;
 
