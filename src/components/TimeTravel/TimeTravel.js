@@ -382,6 +382,7 @@ class TimeTravel extends React.Component {
             onPan={this.handleTimelinePan}
             onRelease={this.handleTimelineRelease}
             onResize={this.handleTimelineResize}
+            onUpdateVisibleRange={this.props.onUpdateVisibleRange}
           />
           <TimelinePanButton
             icon="fa fa-chevron-right"
@@ -477,6 +478,10 @@ TimeTravel.propTypes = {
    * Optional list of deployment annotations shown in the timeline
    */
   deployments: PropTypes.array,
+  /**
+   * Optional callback when visible part of the timeline gets updated
+   */
+  onUpdateVisibleRange: PropTypes.func,
 };
 
 TimeTravel.defaultProps = {
@@ -493,6 +498,7 @@ TimeTravel.defaultProps = {
   onTimelineZoom: noop,
   onTimelinePan: noop,
   deployments: [],
+  onUpdateVisibleRange: noop,
 };
 
 export default TimeTravel;
