@@ -3,6 +3,17 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+const TimelineLabelWrapper = styled.span.attrs({
+  style: ({ position }) => ({ transform: `translateX(${position}px)` })
+})`
+  position: absolute;
+`;
+
+const TimelineLabelLine = styled.span`
+  border-left: 1px solid ${props => props.theme.colors.alto};
+  height: 75px;
+`;
+
 const TimelineLabelContainer = styled.button`
   background-color: transparent;
   color: ${props => props.theme.colors.primary.lavender};
@@ -32,13 +43,7 @@ const TimelineLabelContainer = styled.button`
 `;
 
 class TimelineLabel extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
+  handleClick = () => {
     if (!this.props.disabled) {
       this.props.onClick(this.props.timestamp);
     }
@@ -54,20 +59,18 @@ class TimelineLabel extends React.Component {
     } = this.props;
 
     return (
-      <g transform={`translate(${position}, 0)`}>
-        {!isBehind && <line y2="75" stroke="#ddd" strokeWidth="1" />}
-        {!disabled && <title>Jump to {timestamp}</title>}
-        <foreignObject width="100" height="20" style={{ lineHeight: '20px' }}>
-          <TimelineLabelContainer
-            onClick={this.handleClick}
-            disabled={disabled}
-          >
-            {moment(timestamp)
-              .utc()
-              .format(periodFormat)}
-          </TimelineLabelContainer>
-        </foreignObject>
-      </g>
+      <TimelineLabelWrapper position={position}>
+        {!isBehind && <TimelineLabelLine />}
+        <TimelineLabelContainer
+          onClick={this.handleClick}
+          title={disabled ? '' : `Jump to ${timestamp}`}
+          disabled={disabled}
+        >
+          {moment(timestamp)
+            .utc()
+            .format(periodFormat)}
+        </TimelineLabelContainer>
+      </TimelineLabelWrapper>
     );
   }
 }

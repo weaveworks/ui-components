@@ -1,6 +1,17 @@
 import React from 'react';
 import moment from 'moment';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
+
+const TimelineRangeOverlay = styled.div.attrs({
+  style: ({ position }) => ({ transform: `translateX(${position}px)`})
+})`
+  background-color: ${props => props.color};
+  height: ${props => props.height}px;
+  width: ${props => props.width}px;
+  position: absolute;
+  opacity: 0.15;
+`;
 
 const TimelineRange = ({ color, timeScale, startAt, endAt, width, height }) => {
   const endShift = endAt ? timeScale(moment(endAt)) : width;
@@ -13,13 +24,7 @@ const TimelineRange = ({ color, timeScale, startAt, endAt, width, height }) => {
   startShift = endShift - length;
 
   return (
-    <rect
-      fill={color}
-      fillOpacity={0.15}
-      transform={`translate(${startShift}, 0)`}
-      width={length}
-      height={height}
-    />
+    <TimelineRangeOverlay color={color} position={startShift} width={length} height={height} />
   );
 };
 

@@ -28,6 +28,7 @@ const TimelineWrapper = styled.div`
   &:after {
     border: 1px solid ${props => props.theme.colors.white};
     background-color: ${props => props.theme.colors.accent.orange};
+    z-index: ${props => props.theme.layers.front};
     box-sizing: border-box;
     content: '';
     pointer-events: none;
@@ -53,7 +54,7 @@ const TimelineWrapper = styled.div`
 `;
 
 // From https://stackoverflow.com/a/18294634
-const FullyPannableCanvas = styled.svg`
+const FullyPannableCanvas = styled.div`
   width: 100%;
   height: 100%;
   cursor: move;
@@ -73,7 +74,14 @@ const FullyPannableCanvas = styled.svg`
 const TimelineContainer = FullyPannableCanvas.extend`
   background-color: ${props => transparentize(0.15, props.theme.colors.white)};
   box-shadow: inset 0 0 7px ${props => props.theme.colors.gray};
+  overflow: hidden;
   pointer-events: all;
+  position: relative;
+`;
+
+const TimelineCanvas = styled.div`
+  transform: translateX(${props => props.width / 2}px);
+  position: absolute;
 `;
 
 class Timeline extends React.PureComponent {
@@ -163,15 +171,7 @@ class Timeline extends React.PureComponent {
     const timeScale = getTimeScale(transform);
 
     return (
-      <g className="axis">
-        <rect
-          className="tooltip-container"
-          transform={`translate(${-width / 2}, 0)`}
-          width={width}
-          height={height}
-          fillOpacity={0}
-        />
-
+      <div className="axis">
         <TimelineRange
           color={theme.colors.gray}
           width={width}
@@ -195,7 +195,7 @@ class Timeline extends React.PureComponent {
             endAt={focusedTimestamp}
             timeScale={timeScale}
           />
-      )}renderAxis
+        )}
 
         <TimelineDeployments
           width={width}
@@ -204,7 +204,7 @@ class Timeline extends React.PureComponent {
           deployments={this.props.deployments}
         />
 
-        <g className="ticks" transform="translate(0, 1)">
+        <div className="ticks" transform="translate(0, 1)">
           {['year', 'month', 'day', 'minute'].map(period => (
             <TimelinePeriodLabels
               key={period}renderAxis
@@ -216,8 +216,8 @@ class Timeline extends React.PureComponent {
               {...transform}
             />
           ))}
-        </g>
-      </g>
+        </div>
+      </div>
     );
   }
 
@@ -236,12 +236,9 @@ class Timeline extends React.PureComponent {
             panning={isPanning}
             innerRef={this.saveSvgRef}
             onWheel={this.handleZoom}
+            title="Scroll to zoom, drag to pan"
           >
-            <g
-              className="timeline-container"
-              transform={`translate(${width / 2}, 0)`}
-            >
-              <title>Scroll to zoom, drag to pan</title>
+            <TimelineCanvas width={width}>
               <Motion
                 style={{
                   focusedTimestampMs: strongSpring(
@@ -261,7 +258,7 @@ class Timeline extends React.PureComponent {
                   })
                 }
               </Motion>
-            </g>
+            </TimelineCanvas>
           </TimelineContainer>
         </ResizeAware>
       </TimelineWrapper>
