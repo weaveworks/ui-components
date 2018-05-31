@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { find, map, last, clamp } from 'lodash';
 
@@ -42,6 +43,13 @@ const TICK_SETTINGS_PER_PERIOD = {
 function linearGradientValue(x, [a, b]) {
   return (x - a) / (b - a);
 }
+
+const TimelineLabels = styled.div.attrs({
+  style: ({ y, opacity }) => ({
+    transform: `translateY(${y}px)`,
+    opacity,
+  })
+})``;
 
 // TODO: Tidy up this component.
 class TimelinePeriodLabels extends React.PureComponent {
@@ -167,7 +175,6 @@ class TimelinePeriodLabels extends React.PureComponent {
 
     const ticksRow =
       MAX_TICK_ROWS - this.getVerticalShiftForPeriod(period, this.props);
-    const transform = `translate(0, ${ticksRow * TICKS_ROW_SPACING})`;
 
     // Ticks quickly fade in from the bottom and then slowly start
     // fading out towards the top until they are pushed out of canvas.
@@ -179,7 +186,7 @@ class TimelinePeriodLabels extends React.PureComponent {
     const isBarelyVisible = opacity < 0.4;
 
     return (
-      <g className={period} transform={transform} style={{ opacity }}>
+      <TimelineLabels className={period} opacity={opacity} y={ticksRow * TICKS_ROW_SPACING}>
         {map(ticks, ({ timestamp, position, isBehind }) => (
           <TimelineLabel
             key={timestamp}
@@ -193,7 +200,7 @@ class TimelinePeriodLabels extends React.PureComponent {
             onClick={this.props.onClick}
           />
         ))}
-      </g>
+      </TimelineLabels>
     );
   }
 }

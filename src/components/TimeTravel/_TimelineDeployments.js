@@ -8,30 +8,31 @@ const MAX_VISIBLE_RANGE_SECS = moment.duration(2, 'weeks').asSeconds();
 // TODO: A lot of the code here has been taken/modified from PrometheusGraph code.
 // Abstract the common code.
 
-const DeploymentAnnotation = styled.g.attrs({
-  transform: ({ left }) => `translate(${left}, 0)`,
+const DeploymentAnnotations = styled.div``;
+
+const DeploymentAnnotation = styled.span.attrs({
+  style: ({ x }) => ({ transform: `translateX(${x}px)` }),
 })`
   position: absolute;
   top: 0;
 `;
 
-const VerticalLine = styled.line.attrs({
-  y2: ({ height }) => height,
-  stroke: ({ theme }) => theme.colors.accent.blue,
-  strokeWidth: 1,
-})`
+const VerticalLine = styled.span`
+  border-left: 1px solid ${props => props.theme.colors.accent.blue};
+  height: ${props => props.height}px;
   pointer-events: none;
   position: absolute;
   opacity: 0.5;
 `;
 
-const FocusPoint = styled.circle.attrs({
-  r: ({ radius }) => radius,
-  fill: ({ theme }) => theme.colors.white,
-  transform: ({ height, radius }) => `translate(0, ${height - radius - 2})`,
-  stroke: ({ color, theme }) => color || theme.colors.accent.blue,
-  strokeWidth: 2,
-})`
+const FocusPoint = styled.span`
+  width: ${props => 2 * props.radius}px;
+  height: ${props => 2 * props.radius}px;
+  margin-left: ${props => -props.radius - 2}px;
+  margin-top: ${props => props.height - (2 * props.radius) - 4}px;
+  background-color: ${props => props.theme.colors.white};
+  border: 2px solid ${props => props.theme.colors.accent.blue};
+  border-radius: ${props => props.theme.borderRadius.circle};
   position: absolute;
   cursor: default;
 `;
@@ -78,15 +79,18 @@ class TimelineDeployments extends React.PureComponent {
     if (endTimeSec - startTimeSec > MAX_VISIBLE_RANGE_SECS) return null;
 
     return (
-      <g className="deployment-annotations">
+      <DeploymentAnnotations>
         {this.state.deployments.map(deployment => (
-          <DeploymentAnnotation key={deployment.key} left={deployment.position}>
+          <DeploymentAnnotation
+            key={deployment.key}
+            x={deployment.position}
+            title={deployment.action}
+          >
             <VerticalLine height={height} />
-            <FocusPoint radius="3" height={height} />
-            <title>{deployment.action}</title>
+            <FocusPoint radius="2" height={height} />
           </DeploymentAnnotation>
         ))}
-      </g>
+      </DeploymentAnnotations>
     );
   }
 }
