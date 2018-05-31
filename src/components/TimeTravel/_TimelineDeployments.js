@@ -14,22 +14,23 @@ const DeploymentAnnotation = styled.span.attrs({
   style: ({ x }) => ({ transform: `translateX(${x}px)` }),
 })`
   position: absolute;
+  height: 100%;
   top: 0;
 `;
 
 const VerticalLine = styled.span`
   border-left: 1px solid ${props => props.theme.colors.accent.blue};
-  height: ${props => props.height}px;
   pointer-events: none;
   position: absolute;
   opacity: 0.5;
+  height: 100%;
 `;
 
 const FocusPoint = styled.span`
+  bottom: 0;
+  left: ${props => -props.radius - 2}px;
   width: ${props => 2 * props.radius}px;
   height: ${props => 2 * props.radius}px;
-  margin-left: ${props => -props.radius - 2}px;
-  margin-top: ${props => props.height - (2 * props.radius) - 4}px;
   background-color: ${props => props.theme.colors.white};
   border: 2px solid ${props => props.theme.colors.accent.blue};
   border-radius: ${props => props.theme.borderRadius.circle};
@@ -69,7 +70,7 @@ class TimelineDeployments extends React.PureComponent {
   }
 
   render() {
-    const { height, timeScale } = this.props;
+    const { timeScale } = this.props;
 
     const [startTimeSec, endTimeSec] = timeScale.domain();
     if (!startTimeSec || !endTimeSec) return null;
@@ -86,8 +87,8 @@ class TimelineDeployments extends React.PureComponent {
             x={deployment.position}
             title={deployment.action}
           >
-            <VerticalLine height={height} />
-            <FocusPoint radius="2" height={height} />
+            <VerticalLine />
+            <FocusPoint radius="2" />
           </DeploymentAnnotation>
         ))}
       </DeploymentAnnotations>
@@ -97,7 +98,6 @@ class TimelineDeployments extends React.PureComponent {
 
 TimelineDeployments.propTypes = {
   width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
   timeScale: PropTypes.func.isRequired,
   deployments: PropTypes.array.isRequired,
 };
