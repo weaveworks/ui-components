@@ -43,7 +43,7 @@ const Window = styled.div`
   margin: 0 auto;
   max-width: 768px;
   padding: 20px;
-  width: 75%;
+  width: ${props => props.width};
   z-index: 30;
   position: relative;
 `;
@@ -114,10 +114,10 @@ class Dialog extends React.Component {
   };
 
   render() {
-    const { children, active, actions, overlay } = this.props;
+    const { children, active, actions, overlay, width } = this.props;
     return (
       <Wrapper className={active ? 'weave-dialog active' : 'weave-dialog'}>
-        <Window className="weave-dialog-window">
+        <Window width={width} className="weave-dialog-window">
           <ButtonClose className="weave-dialog-close">
             <span onClick={this.handleClose} className="fa fa-close" />
           </ButtonClose>
@@ -174,10 +174,16 @@ Dialog.propTypes = {
    * Toggles a modal overlay. If set to true, the overlay will appear,
    */
   overlay: PropTypes.bool,
+
+  /**
+   * Width of the dialog content.
+   */
+  width: PropTypes.string
 };
 
 Dialog.defaultProps = {
   overlay: true,
+  width: '75%',
 };
 
 export default Dialog;
