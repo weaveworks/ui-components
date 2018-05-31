@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const TimelineLabelWrapper = styled.span.attrs({
-  style: ({ position }) => ({ transform: `translateX(${position}px)` })
+  style: ({ x }) => ({ transform: `translateX(${x}px)` })
 })`
   position: absolute;
 `;
@@ -59,7 +59,7 @@ class TimelineLabel extends React.Component {
     } = this.props;
 
     return (
-      <TimelineLabelWrapper position={position}>
+      <TimelineLabelWrapper x={position}>
         {!isBehind && <TimelineLabelLine />}
         <TimelineLabelContainer
           onClick={this.handleClick}

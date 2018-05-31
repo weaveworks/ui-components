@@ -4,11 +4,13 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const TimelineRangeOverlay = styled.div.attrs({
-  style: ({ position }) => ({ transform: `translateX(${position}px)`})
+  style: ({ x, width, height }) => ({
+    transform: `translateX(${x}px)`,
+    width,
+    height,
+  })
 })`
   background-color: ${props => props.color};
-  height: ${props => props.height}px;
-  width: ${props => props.width}px;
   position: absolute;
   opacity: 0.15;
 `;
@@ -24,7 +26,7 @@ const TimelineRange = ({ color, timeScale, startAt, endAt, width, height }) => {
   startShift = endShift - length;
 
   return (
-    <TimelineRangeOverlay color={color} position={startShift} width={length} height={height} />
+    <TimelineRangeOverlay color={color} x={startShift} width={length} height={height} />
   );
 };
 

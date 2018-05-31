@@ -84,6 +84,12 @@ const TimelineCanvas = styled.div`
   position: absolute;
 `;
 
+const TimelineAxis = styled.div``;
+
+const TimelinePeriodLabelsWrapper = styled.div`
+  transform: translateY(1px);
+`;
+
 class Timeline extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -171,7 +177,7 @@ class Timeline extends React.PureComponent {
     const timeScale = getTimeScale(transform);
 
     return (
-      <div className="axis">
+      <TimelineAxis>
         <TimelineRange
           color={theme.colors.gray}
           width={width}
@@ -204,7 +210,7 @@ class Timeline extends React.PureComponent {
           deployments={this.props.deployments}
         />
 
-        <div className="ticks" transform="translate(0, 1)">
+        <TimelinePeriodLabelsWrapper>
           {['year', 'month', 'day', 'minute'].map(period => (
             <TimelinePeriodLabels
               key={period}renderAxis
@@ -216,8 +222,8 @@ class Timeline extends React.PureComponent {
               {...transform}
             />
           ))}
-        </div>
-      </div>
+        </TimelinePeriodLabelsWrapper>
+      </TimelineAxis>
     );
   }
 

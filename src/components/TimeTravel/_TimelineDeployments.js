@@ -8,8 +8,10 @@ const MAX_VISIBLE_RANGE_SECS = moment.duration(2, 'weeks').asSeconds();
 // TODO: A lot of the code here has been taken/modified from PrometheusGraph code.
 // Abstract the common code.
 
+const DeploymentAnnotations = styled.div``;
+
 const DeploymentAnnotation = styled.span.attrs({
-  style: ({ left }) => ({ transform: `translateX(${left}px)` }),
+  style: ({ x }) => ({ transform: `translateX(${x}px)` }),
 })`
   position: absolute;
   top: 0;
@@ -77,18 +79,18 @@ class TimelineDeployments extends React.PureComponent {
     if (endTimeSec - startTimeSec > MAX_VISIBLE_RANGE_SECS) return null;
 
     return (
-      <div className="deployment-annotations">
+      <DeploymentAnnotations>
         {this.state.deployments.map(deployment => (
           <DeploymentAnnotation
             key={deployment.key}
-            left={deployment.position}
+            x={deployment.position}
             title={deployment.action}
           >
             <VerticalLine height={height} />
             <FocusPoint radius="2" height={height} />
           </DeploymentAnnotation>
         ))}
-      </div>
+      </DeploymentAnnotations>
     );
   }
 }

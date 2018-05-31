@@ -45,8 +45,8 @@ function linearGradientValue(x, [a, b]) {
 }
 
 const TimelineLabels = styled.div.attrs({
-  style: ({ offset, opacity }) => ({
-    transform: `translateY(${offset}px)`,
+  style: ({ y, opacity }) => ({
+    transform: `translateY(${y}px)`,
     opacity,
   })
 })``;
@@ -186,7 +186,7 @@ class TimelinePeriodLabels extends React.PureComponent {
     const isBarelyVisible = opacity < 0.4;
 
     return (
-      <TimelineLabels className={period} opacity={opacity} offset={ticksRow * TICKS_ROW_SPACING}>
+      <TimelineLabels className={period} opacity={opacity} y={ticksRow * TICKS_ROW_SPACING}>
         {map(ticks, ({ timestamp, position, isBehind }) => (
           <TimelineLabel
             key={timestamp}
