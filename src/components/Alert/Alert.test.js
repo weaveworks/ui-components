@@ -10,6 +10,12 @@ const c = renderer.create;
 
 describe('<Alert />', () => {
   describe('snapshots', () => {
+    it('should not render if visible="false"', () => {
+      const tree = c(
+        withTheme(<Alert visible={false}>Success</Alert>)
+      ).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
     it('renders success', () => {
       const tree = c(withTheme(<Alert type="success">Success</Alert>)).toJSON();
       expect(tree).toMatchSnapshot();

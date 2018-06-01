@@ -11,7 +11,6 @@ const StyledAlert = styled.div`
   color: ${fromAtoms('Alert', 'type', 'color')};
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: ${props => (props.visible ? '1' : '0')};
   padding: 1em;
   transition: opacity 0.2s linear;
 
@@ -28,7 +27,6 @@ const StyledAlert = styled.div`
 const CloseIcon = styled.i`
   float: right;
   cursor: pointer;
-  display: ${props => (props.visible ? 'block' : 'none')};
   margin-left: 1em;
 `;
 
@@ -50,6 +48,10 @@ const CloseIcon = styled.i`
  */
 function Alert(props) {
   const { onClose, children, visible } = props;
+  if (!visible) {
+    return null;
+  }
+
   return (
     <StyledAlert {...props}>
       {children}
