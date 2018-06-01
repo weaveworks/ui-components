@@ -20,13 +20,14 @@ function generateDeployments({ startTime, endTime }, count) {
 }
 
 export default class TimeTravelExample extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       timestamp1: moment().format(),
       timestamp2: moment().format(),
       timestamp3: moment().format(),
+      isLoading2: false,
       showingLive3: true,
       rangeMs3: 3600000,
       visibleStartAt: null,
@@ -43,7 +44,11 @@ export default class TimeTravelExample extends React.Component {
   };
 
   handleChangeTimestamp2 = (timestamp2) => {
-    this.setState({ timestamp2 });
+    this.setState({ timestamp2, isLoading2: true });
+    // Show loading indicator for 5 seconds after every timestamp change..
+    setTimeout(() => {
+      this.setState({ isLoading2: false });
+    }, 5000);
   };
 
   handleChangeTimestamp3 = (timestamp3) => {
@@ -79,6 +84,7 @@ export default class TimeTravelExample extends React.Component {
         <Example>
           <Info>With deployments</Info>
           <TimeTravel
+            isLoading={this.state.isLoading2}
             timestamp={this.state.timestamp2}
             onChangeTimestamp={this.handleChangeTimestamp2}
             onUpdateVisibleRange={this.handleUpdateVisibleRange}

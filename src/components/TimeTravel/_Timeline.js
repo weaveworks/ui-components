@@ -14,6 +14,7 @@ import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
 import { zoomFactor } from '../../utils/zooming';
 import theme from '../../theme';
 
+import TimelineLoader from './_TimelineLoader';
 import TimelineDeployments from './_TimelineDeployments';
 import TimelinePeriodLabels from './_TimelinePeriodLabels';
 import TimelineRange from './_TimelineRange';
@@ -77,17 +78,22 @@ const TimelineContainer = FullyPannableCanvas.extend`
   overflow: hidden;
   pointer-events: all;
   position: relative;
+  height: 100%;
 `;
 
 const TimelineCanvas = styled.div`
   transform: translateX(${props => props.width / 2}px);
   position: absolute;
+  height: 100%;
 `;
 
-const TimelineAxis = styled.div``;
+const TimelineAxis = styled.div`
+  height: 100%;
+`;
 
 const TimelinePeriodLabelsWrapper = styled.div`
   transform: translateY(1px);
+  position: absolute;
 `;
 
 class Timeline extends React.PureComponent {
@@ -96,7 +102,6 @@ class Timeline extends React.PureComponent {
 
     this.state = {
       width: 0,
-      height: 0,
       isPanning: false,
       hasPanned: false,
     };
@@ -146,9 +151,9 @@ class Timeline extends React.PureComponent {
     ev.preventDefault();
   }
 
-  handleResize = ({ width, height }) => {
+  handleResize = ({ width }) => {
     // Update the timeline dimension information.
-    this.setState({ width, height });
+    this.setState({ width });
     this.delayedUpdateVisibleRange();
     this.props.onResize(width);
   }
@@ -169,7 +174,7 @@ class Timeline extends React.PureComponent {
   }
 
   renderAxis(transform) {
-    const { width, height } = this.state;
+    const { width } = this.state;
     const { focusedTimestamp, rangeMs } = transform;
     const startTimestamp = moment(focusedTimestamp)
       .subtract(rangeMs)
@@ -180,40 +185,36 @@ class Timeline extends React.PureComponent {
       <TimelineAxis>
         <TimelineRange
           color={theme.colors.gray}
-          width={width}
-          height={height}
           endAt={this.props.earliestTimestamp}
           timeScale={timeScale}
+          width={width}
         />
         <TimelineRange
           color={theme.colors.gray}
-          width={width}
-          height={height}
           startAt={this.props.timestampNow}
           timeScale={timeScale}
+          width={width}
         />
         {this.props.inspectingInterval && (
           <TimelineRange
             color={theme.colors.accent.blue}
-            width={width}
-            height={height}
             startAt={startTimestamp}
             endAt={focusedTimestamp}
             timeScale={timeScale}
+            width={width}
           />
         )}
 
         <TimelineDeployments
-          width={width}
-          height={height}
-          timeScale={timeScale}
           deployments={this.props.deployments}
+          timeScale={timeScale}
+          width={width}
         />
 
         <TimelinePeriodLabelsWrapper>
           {['year', 'month', 'day', 'minute'].map(period => (
             <TimelinePeriodLabels
-              key={period}renderAxis
+              key={period}
               period={period}
               width={width}
               onClick={this.props.onJump}
@@ -223,6 +224,13 @@ class Timeline extends React.PureComponent {
             />
           ))}
         </TimelinePeriodLabelsWrapper>
+
+        {this.props.isLoading && <TimelineLoader
+          startAt={this.props.earliestTimestamp}
+          endAt={this.props.timestampNow}
+          timeScale={timeScale}
+          width={width}
+        />}
       </TimelineAxis>
     );
   }
@@ -280,6 +288,7 @@ Timeline.propTypes = {
   durationMsPerPixel: PropTypes.number.isRequired,
   rangeMs: PropTypes.number.isRequired,
   deployments: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   onUpdateVisibleRange: PropTypes.func.isRequired,
   onJump: PropTypes.func.isRequired,
   onZoom: PropTypes.func.isRequired,

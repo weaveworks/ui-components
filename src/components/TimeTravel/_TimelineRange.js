@@ -4,20 +4,20 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const TimelineRangeOverlay = styled.div.attrs({
-  style: ({ x, width, height }) => ({
+  style: ({ x, width }) => ({
     transform: `translateX(${x}px)`,
     width,
-    height,
   })
 })`
   background-color: ${props => props.color};
   position: absolute;
   opacity: 0.15;
+  height: 100%;
 `;
 
-const TimelineRange = ({ color, timeScale, startAt, endAt, width, height }) => {
-  const endShift = endAt ? timeScale(moment(endAt)) : width;
-  let startShift = startAt ? timeScale(moment(startAt)) : -width;
+const TimelineRange = ({ color, timeScale, startAt, endAt, width }) => {
+  const endShift = endAt ? Math.min(timeScale(moment(endAt)), width) : width;
+  let startShift = startAt ? Math.max(timeScale(moment(startAt)), -width) : -width;
 
   // If the range interval is very short or we're zoomed out a lot, render the
   // interval as at least 4 pixels wide. Then re-adjust the left end of the
@@ -26,7 +26,7 @@ const TimelineRange = ({ color, timeScale, startAt, endAt, width, height }) => {
   startShift = endShift - length;
 
   return (
-    <TimelineRangeOverlay color={color} x={startShift} width={length} height={height} />
+    <TimelineRangeOverlay color={color} x={startShift} width={length} />
   );
 };
 
@@ -36,7 +36,6 @@ TimelineRange.propTypes = {
   startAt: PropTypes.string,
   endAt: PropTypes.string,
   width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
 };
 
 export default TimelineRange;
