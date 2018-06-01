@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import Text from '../Text';
 import { fromAtoms } from '../../utils/theme';
 
 const StyledAlert = styled.div`
+  display: flex;
   background: ${fromAtoms('Alert', 'type', 'background')};
   border-radius: ${props => props.theme.borderRadius.soft};
   border: 2px solid ${fromAtoms('Alert', 'type', 'borderColor')};
@@ -25,12 +27,26 @@ const StyledAlert = styled.div`
   }
 `;
 
+const Content = styled.div`
+  flex-grow: 1;
+`;
+
+const Title = styled.div`
+  margin-bottom: 0.5em;
+`;
+
+const Icon = styled.i`
+  margin-right: 0.5em;
+`;
+
 const CloseIcon = styled.i`
-  float: right;
   cursor: pointer;
   display: ${props => (props.visible ? 'block' : 'none')};
   margin-left: 1em;
 `;
+
+const normaliseIconName = name =>
+  name.indexOf('fa-') === -1 ? `fa-${name}` : name;
 
 /**
  * An alert to let the user know about an action or state.
@@ -49,10 +65,21 @@ const CloseIcon = styled.i`
  * ```
  */
 function Alert(props) {
-  const { onClose, children, visible } = props;
+  const { children, icon, onClose, title, visible, ...rest } = props;
+
   return (
-    <StyledAlert {...props}>
-      {children}
+    <StyledAlert {...rest}>
+      <Content>
+        {title && (
+          <Title>
+            {icon && <Icon className={`fa ${normaliseIconName(icon)}`} />}
+            <Text normal bold>
+              {title}
+            </Text>
+          </Title>
+        )}
+        {children}
+      </Content>
       {onClose && (
         <CloseIcon
           visible={visible}
@@ -66,10 +93,17 @@ function Alert(props) {
 
 Alert.propTypes = {
   /**
+   * Show an icon for the title
+   */
+  icon: PropTypes.string,
+  /**
+   * Show a title for the alert
+   */
+  title: PropTypes.string,
+  /**
    * Set the color scheme to indicate the nature of the alert.
    */
   type: PropTypes.oneOf(['default', 'info', 'success', 'warning', 'error']),
-
   /**
    * Toggle whether the alert is shown
    */
@@ -81,6 +115,8 @@ Alert.propTypes = {
 };
 
 Alert.defaultProps = {
+  icon: '',
+  title: '',
   type: 'default',
   visible: true,
 };

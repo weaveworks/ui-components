@@ -2,13 +2,17 @@
 
 exports[`<Alert /> snapshots renders default 1`] = `
 .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   background: #f8f8f8;
   border-radius: 4px;
   border: 2px solid #d2d2d2;
   color: #1a1a1a;
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: 1;
+  opacity: 0;
   padding: 1em;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -23,23 +27,39 @@ exports[`<Alert /> snapshots renders default 1`] = `
   text-decoration: none;
 }
 
+.c1 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
 <div
   className="c0"
   type="default"
 >
-  Default
+  <div
+    className="c1"
+  >
+    
+    Default
+  </div>
 </div>
 `;
 
 exports[`<Alert /> snapshots renders error 1`] = `
 .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   background: #c7254e;
   border-radius: 4px;
   border: 2px solid #861935;
   color: #fff;
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: 1;
+  opacity: 0;
   padding: 1em;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -52,25 +72,88 @@ exports[`<Alert /> snapshots renders error 1`] = `
 
 .c0 a:hover {
   text-decoration: none;
+}
+
+.c1 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 <div
   className="c0"
   type="error"
 >
-  Error
+  <div
+    className="c1"
+  >
+    
+    Error
+  </div>
+</div>
+`;
+
+exports[`<Alert /> snapshots renders icon if provided 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: #f8f8f8;
+  border-radius: 4px;
+  border: 2px solid #d2d2d2;
+  color: #1a1a1a;
+  margin: 8px 0 8px 0;
+  min-height: 1em;
+  opacity: 0;
+  padding: 1em;
+  -webkit-transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear;
+}
+
+.c0 a {
+  color: #1a1a1a;
+  text-decoration: underline;
+}
+
+.c0 a:hover {
+  text-decoration: none;
+}
+
+.c1 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+<div
+  className="c0"
+  type="default"
+>
+  <div
+    className="c1"
+  >
+    
+    Default
+  </div>
 </div>
 `;
 
 exports[`<Alert /> snapshots renders success 1`] = `
 .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   background: #38bd93;
   border-radius: 4px;
   border: 2px solid #278265;
   color: #fff;
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: 1;
+  opacity: 0;
   padding: 1em;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -83,25 +166,110 @@ exports[`<Alert /> snapshots renders success 1`] = `
 
 .c0 a:hover {
   text-decoration: none;
+}
+
+.c1 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 <div
   className="c0"
   type="success"
 >
-  Success
+  <div
+    className="c1"
+  >
+    
+    Success
+  </div>
+</div>
+`;
+
+exports[`<Alert /> snapshots renders title if provided 1`] = `
+.c3 {
+  font-family: 'proxima-nova',Helvetica,Arial,sans-serif;
+  color: #1a1a1a;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: none;
+  font-style: normal;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background: #f8f8f8;
+  border-radius: 4px;
+  border: 2px solid #d2d2d2;
+  color: #1a1a1a;
+  margin: 8px 0 8px 0;
+  min-height: 1em;
+  opacity: 0;
+  padding: 1em;
+  -webkit-transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear;
+}
+
+.c0 a {
+  color: #1a1a1a;
+  text-decoration: underline;
+}
+
+.c0 a:hover {
+  text-decoration: none;
+}
+
+.c1 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c2 {
+  margin-bottom: 0.5em;
+}
+
+<div
+  className="c0"
+  type="default"
+>
+  <div
+    className="c1"
+  >
+    <div
+      className="c2"
+    >
+      
+      <span
+        className="c3"
+      >
+        title
+      </span>
+    </div>
+    Default
+  </div>
 </div>
 `;
 
 exports[`<Alert /> snapshots renders warning 1`] = `
 .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   background: #d4ab27;
   border-radius: 4px;
   border: 2px solid #93771b;
   color: #fff;
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: 1;
+  opacity: 0;
   padding: 1em;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -116,10 +284,22 @@ exports[`<Alert /> snapshots renders warning 1`] = `
   text-decoration: none;
 }
 
+.c1 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
 <div
   className="c0"
   type="warning"
 >
-  Warning
+  <div
+    className="c1"
+  >
+    
+    Warning
+  </div>
 </div>
 `;
