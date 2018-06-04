@@ -26,6 +26,14 @@ describe('<Alert />', () => {
       const tree = c(withTheme(<Alert>Default</Alert>)).toJSON();
       expect(tree).toMatchSnapshot();
     });
+    it('renders title if provided', () => {
+      const tree = c(withTheme(<Alert title="title">Default</Alert>)).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('renders icon if provided', () => {
+      const tree = c(withTheme(<Alert icon="warning">Default</Alert>)).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
   });
   it('closes when the "x" is clicked', () => {
     const spy = jest.fn();
