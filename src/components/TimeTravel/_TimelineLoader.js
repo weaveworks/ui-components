@@ -8,13 +8,13 @@ import PropTypes from 'prop-types';
 /* stylelint-disable color-no-hex */
 const blinking = keyframes`
   0% {
-    background-color: #fff;
-  }
-  50% {
     background-color: transparent;
   }
-  100% {
+  50% {
     background-color: #fff;
+  }
+  100% {
+    background-color: transparent;
   }
 `;
 /* stylelint-enable color-no-hex */
@@ -23,7 +23,7 @@ const TimelineLoaderOverlay = styled.div.attrs({
   style: ({ x, width }) => ({
     left: `${x}px`,
     width,
-  })
+  }),
 })`
   animation: ${blinking} 2s linear infinite;
   pointer-events: none;
@@ -34,12 +34,12 @@ const TimelineLoaderOverlay = styled.div.attrs({
 
 const TimelineLoader = ({ timeScale, startAt, endAt, width }) => {
   const endShift = endAt ? Math.min(timeScale(moment(endAt)), width) : width;
-  const startShift = startAt ? Math.max(timeScale(moment(startAt)), -width) : -width;
+  const startShift = startAt
+    ? Math.max(timeScale(moment(startAt)), -width)
+    : -width;
   const length = endShift - startShift;
 
-  return (
-    <TimelineLoaderOverlay x={startShift} width={length} />
-  );
+  return <TimelineLoaderOverlay x={startShift} width={length} />;
 };
 
 TimelineLoader.propTypes = {
