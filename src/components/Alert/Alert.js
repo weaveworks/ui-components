@@ -65,10 +65,10 @@ const normaliseIconName = name =>
  * ```
  */
 function Alert(props) {
-  const { children, icon, onClose, title, visible, ...rest } = props;
+  const { children, icon, onClose, title, visible } = props;
 
   return (
-    <StyledAlert {...rest}>
+    <StyledAlert {...props}>
       <Content>
         {title && (
           <Title>

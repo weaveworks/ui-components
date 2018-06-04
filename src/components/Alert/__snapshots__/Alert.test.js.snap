@@ -12,7 +12,7 @@ exports[`<Alert /> snapshots renders default 1`] = `
   color: #1a1a1a;
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: 0;
+  opacity: 1;
   padding: 1em;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -36,6 +36,8 @@ exports[`<Alert /> snapshots renders default 1`] = `
 
 <div
   className="c0"
+  icon=""
+  title=""
   type="default"
 >
   <div
@@ -59,7 +61,7 @@ exports[`<Alert /> snapshots renders error 1`] = `
   color: #fff;
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: 0;
+  opacity: 1;
   padding: 1em;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -83,6 +85,8 @@ exports[`<Alert /> snapshots renders error 1`] = `
 
 <div
   className="c0"
+  icon=""
+  title=""
   type="error"
 >
   <div
@@ -106,7 +110,7 @@ exports[`<Alert /> snapshots renders icon if provided 1`] = `
   color: #1a1a1a;
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: 0;
+  opacity: 1;
   padding: 1em;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -130,6 +134,8 @@ exports[`<Alert /> snapshots renders icon if provided 1`] = `
 
 <div
   className="c0"
+  icon="warning"
+  title=""
   type="default"
 >
   <div
@@ -153,7 +159,7 @@ exports[`<Alert /> snapshots renders success 1`] = `
   color: #fff;
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: 0;
+  opacity: 1;
   padding: 1em;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -177,6 +183,8 @@ exports[`<Alert /> snapshots renders success 1`] = `
 
 <div
   className="c0"
+  icon=""
+  title=""
   type="success"
 >
   <div
@@ -209,7 +217,7 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
   color: #1a1a1a;
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: 0;
+  opacity: 1;
   padding: 1em;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -237,6 +245,8 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
 
 <div
   className="c0"
+  icon=""
+  title="title"
   type="default"
 >
   <div
@@ -269,7 +279,7 @@ exports[`<Alert /> snapshots renders warning 1`] = `
   color: #fff;
   margin: 8px 0 8px 0;
   min-height: 1em;
-  opacity: 0;
+  opacity: 1;
   padding: 1em;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -293,6 +303,8 @@ exports[`<Alert /> snapshots renders warning 1`] = `
 
 <div
   className="c0"
+  icon=""
+  title=""
   type="warning"
 >
   <div
