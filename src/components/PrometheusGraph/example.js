@@ -171,6 +171,7 @@ export default class PrometheusGraphExample extends React.Component {
             stepDurationSec={this.state.stepDuration}
             startTimeSec={this.state.startTime}
             endTimeSec={this.state.endTime}
+            deployments={this.state.deployments}
           />
           <Info>Error with data</Info>
           <PrometheusGraph
