@@ -444,12 +444,12 @@ class PrometheusGraph extends React.PureComponent {
             onHoverUpdate={this.handleHoverUpdate}
             onChartResize={this.handleChartResize}
           />
-          <DeploymentAnnotations
+          {hasData && <DeploymentAnnotations
             deployments={deployments}
             timeScale={timeScale}
             chartWidth={chartWidth}
             chartHeight={chartHeight}
-          />
+          />}
           <HoverInfo
             mouseX={hoverX}
             mouseY={hoverY}
