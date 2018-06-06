@@ -85,7 +85,7 @@ export default class PrometheusGraphExample extends React.Component {
       'namespace',
       5
     );
-    this.state.deployments = generateDeployments(this.state, 6);
+    this.state.deployments = generateDeployments(this.state, 60);
   }
 
   componentDidMount() {

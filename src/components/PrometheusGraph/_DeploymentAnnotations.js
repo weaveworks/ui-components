@@ -3,42 +3,13 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import TimestampTooltip from '../_TimestampTooltip';
-import FocusPoint from './_FocusPoint';
+import DeploymentAnnotation from '../_DeploymentAnnotation';
 
-const DeploymentInfoLine = styled.span`
-  margin-top: 1px;
-  display: block;
-  font-size: ${props => props.theme.fontSizes.small};
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-`;
-
-const DeploymentAnnotation = styled.div.attrs({
-  style: ({ left }) => ({ left }),
-})`
-  position: absolute;
-  top: 0;
-`;
-
-const VerticalLine = styled.div.attrs({
-  style: ({ height }) => ({ height }),
-})`
+const DeploymentAnnotationsWrapper = styled.div`
   pointer-events: none;
   position: absolute;
-  top: 0;
-`;
-
-const DeploymentAnnotationShadow = VerticalLine.extend`
-  border-left: 3px solid ${props => props.theme.colors.white};
-  margin-left: -1px;
-  opacity: 0.2;
-`;
-
-const DeploymentAnnotationLine = VerticalLine.extend`
-  border-left: 1px solid ${props => props.theme.colors.accent.blue};
-  opacity: 0.7;
+  width: 100%;
+  height: 100%;
 `;
 
 const formattedDeployments = ({ deployments, timeScale, chartWidth }) =>
@@ -64,7 +35,6 @@ class DeploymentAnnotations extends React.PureComponent {
     super(props);
 
     this.state = {
-      hoveredDeployment: null,
       deployments: formattedDeployments(props),
     };
   }
@@ -73,54 +43,24 @@ class DeploymentAnnotations extends React.PureComponent {
     this.setState({ deployments: formattedDeployments(nextProps) });
   }
 
-  handleDeploymentMouseEnter = deployment => {
-    this.setState({ hoveredDeployment: deployment });
-  };
-
-  handleDeploymentMouseLeave = () => {
-    this.setState({ hoveredDeployment: null });
-  };
-
   render() {
-    const { hoveredDeployment } = this.state;
-    const { chartWidth, chartHeight, timeScale } = this.props;
-
-    const [startTimeSec, endTimeSec] = timeScale.domain();
+    const [startTimeSec, endTimeSec] = this.props.timeScale.domain();
     if (!startTimeSec || !endTimeSec) return null;
 
     return (
-      <div className="deployment-annotations">
+      <DeploymentAnnotationsWrapper>
         {this.state.deployments.map(deployment => (
-          <DeploymentAnnotation key={deployment.key} left={deployment.position}>
-            <DeploymentAnnotationShadow height={chartHeight} />
-            <DeploymentAnnotationLine height={chartHeight} />
-            <FocusPoint
-              hoverable
-              radius="5"
-              top={chartHeight}
-              onMouseMove={() => this.handleDeploymentMouseEnter(deployment)}
-              onMouseLeave={() => this.handleDeploymentMouseLeave()}
-            />
-          </DeploymentAnnotation>
+          <DeploymentAnnotation
+            key={deployment.key}
+            x={deployment.position}
+            action={deployment.action}
+            serviceIDs={deployment.serviceIDs}
+            timestamp={deployment.timestamp}
+            containerWidth={this.props.chartWidth}
+            containerHeight={this.props.chartHeight}
+          />
         ))}
-        {hoveredDeployment && (
-          <TimestampTooltip
-            graphWidth={chartWidth}
-            timestamp={hoveredDeployment.timestamp}
-            x={hoveredDeployment.position}
-            y={chartHeight}
-          >
-            <DeploymentInfoLine>
-              <strong>{hoveredDeployment.action}</strong>
-            </DeploymentInfoLine>
-            {hoveredDeployment.serviceIDs.map(serviceId => (
-              <DeploymentInfoLine key={serviceId}>
-                &rarr; {serviceId}
-              </DeploymentInfoLine>
-            ))}
-          </TimestampTooltip>
-        )}
-      </div>
+      </DeploymentAnnotationsWrapper>
     );
   }
 }

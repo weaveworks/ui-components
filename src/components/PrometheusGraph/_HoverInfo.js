@@ -97,9 +97,9 @@ class HoverInfo extends React.PureComponent {
           ))}
         </HoverLine>
         <TimestampTooltip
-          x={mouseX}
-          y={mouseY}
-          graphWidth={chartWidth}
+          offsetX={mouseX}
+          offsetY={mouseY}
+          containerWidth={chartWidth}
           timestamp={timestamp}
         >
           {filteredHoverPoints.map(datapoint => (
