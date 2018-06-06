@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { map, max } from 'lodash';
 
 import TimestampTooltip from '../_TimestampTooltip';
-import FocusPoint from './_FocusPoint';
 
 const TooltipRow = styled.div`
   display: flex;
@@ -50,6 +49,26 @@ const HoverLine = styled.div.attrs({
   pointer-events: none;
   position: absolute;
   top: 0;
+`;
+
+const FocusPoint = styled.span.attrs({
+  style: ({ top }) => ({ top }),
+})`
+  border: 2.5px solid ${props => props.color};
+  border-radius: ${props => props.theme.borderRadius.circle};
+  background-color: ${props => props.theme.colors.white};
+  opacity: ${props => (props.faded ? 0.5 : 1)};
+  box-sizing: border-box;
+  position: absolute;
+  cursor: default;
+  pointer-events: none;
+
+  ${props => `
+    margin-left: ${-props.radius}px;
+    margin-top: ${-props.radius}px;
+    width: ${2 * props.radius}px;
+    height: ${2 * props.radius}px;
+  `};
 `;
 
 class HoverInfo extends React.PureComponent {
