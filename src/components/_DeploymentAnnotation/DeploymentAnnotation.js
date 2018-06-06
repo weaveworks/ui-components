@@ -4,7 +4,10 @@ import styled from 'styled-components';
 
 import TimestampTooltip from '../_TimestampTooltip';
 
-const DeploymentAnnotationWrapper = styled.div`
+const DeploymentAnnotationWrapper = styled.div.attrs({
+  // Override the parent tooltip
+  title: '',
+})`
   position: absolute;
   height: 100%;
 `;

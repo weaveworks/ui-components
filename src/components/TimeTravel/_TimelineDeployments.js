@@ -10,7 +10,10 @@ const MAX_VISIBLE_RANGE_SECS = moment.duration(2, 'weeks').asSeconds();
 // TODO: A lot of the code here has been taken/modified from PrometheusGraph code.
 // Abstract the common code.
 
-const DeploymentAnnotations = styled.div``;
+const DeploymentAnnotations = styled.div`
+  position: absolute;
+  height: 100%;
+`;
 
 const formattedDeployments = ({ deployments, timeScale, width }) =>
   deployments
