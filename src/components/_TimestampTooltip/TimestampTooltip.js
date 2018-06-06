@@ -1,7 +1,8 @@
 import React from 'react';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import TimestampTag from '../TimestampTag';
 
 const TooltipContainer = styled.div.attrs({
   // Using attrs prevents extensive styled components
@@ -23,13 +24,11 @@ const TooltipContainer = styled.div.attrs({
   opacity: 0.95;
 `;
 
-const Timestamp = styled.div`
-  color: ${props => props.theme.colors.doveGray};
-  font-size: ${props => props.theme.fontSizes.small};
+const TimestampWrapper = styled.div`
   margin-bottom: 8px;
 `;
 
-class Tooltip extends React.PureComponent {
+class TimestampTooltip extends React.PureComponent {
   saveTooltipRef = ref => {
     this.tooltipRef = ref;
   };
@@ -47,23 +46,20 @@ class Tooltip extends React.PureComponent {
 
     return (
       <TooltipContainer x={clampedX} y={y} innerRef={this.saveTooltipRef}>
-        <Timestamp>
-          {moment(timestamp)
-            .utc()
-            .format()}{' '}
-          UTC
-        </Timestamp>
+        <TimestampWrapper>
+          <TimestampTag timestamp={timestamp} />
+        </TimestampWrapper>
         {this.props.children}
       </TooltipContainer>
     );
   }
 }
 
-Tooltip.propTypes = {
+TimestampTooltip.propTypes = {
   graphWidth: PropTypes.number.isRequired,
   timestamp: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
 };
 
-export default Tooltip;
+export default TimestampTooltip;

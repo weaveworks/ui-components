@@ -3,7 +3,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Tooltip from './_Tooltip';
+import TimestampTooltip from '../_TimestampTooltip';
 import FocusPoint from './_FocusPoint';
 
 const DeploymentInfoLine = styled.span`
@@ -104,7 +104,7 @@ class DeploymentAnnotations extends React.PureComponent {
           </DeploymentAnnotation>
         ))}
         {hoveredDeployment && (
-          <Tooltip
+          <TimestampTooltip
             graphWidth={chartWidth}
             timestamp={hoveredDeployment.timestamp}
             x={hoveredDeployment.position}
@@ -118,7 +118,7 @@ class DeploymentAnnotations extends React.PureComponent {
                 &rarr; {serviceId}
               </DeploymentInfoLine>
             ))}
-          </Tooltip>
+          </TimestampTooltip>
         )}
       </div>
     );

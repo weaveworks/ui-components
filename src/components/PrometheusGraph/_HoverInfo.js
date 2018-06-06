@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { map, max } from 'lodash';
 
-import Tooltip from './_Tooltip';
+import TimestampTooltip from '../_TimestampTooltip';
 import FocusPoint from './_FocusPoint';
 
 const TooltipRow = styled.div`
@@ -96,7 +96,7 @@ class HoverInfo extends React.PureComponent {
             />
           ))}
         </HoverLine>
-        <Tooltip
+        <TimestampTooltip
           x={mouseX}
           y={mouseY}
           graphWidth={chartWidth}
@@ -109,7 +109,7 @@ class HoverInfo extends React.PureComponent {
               <TooltipRowValue>{formatValue(datapoint.value)}</TooltipRowValue>
             </TooltipRow>
           ))}
-        </Tooltip>
+        </TimestampTooltip>
       </div>
     );
   }
