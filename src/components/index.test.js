@@ -26,9 +26,12 @@ describe('index', () => {
     const componentsDir = './src/components';
     const files = getFiles(componentsDir);
     _.each(files, f => {
-      expect(WeaveComponents[f]).toExist(
-        `${f} module is missing. Did you export it from "src/components/index.js"?`
-      );
+      // Skip private components.
+      if (f[0] !== '_') {
+        expect(WeaveComponents[f]).toExist(
+          `${f} module is missing. Did you export it from "src/components/index.js"?`
+        );
+      }
     });
   });
 });
