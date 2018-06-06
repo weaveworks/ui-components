@@ -29,11 +29,11 @@ const FocusPoint = styled.span`
   cursor: default;
 
   ${props => `
-    margin-left: ${-props.radius}px;
-    margin-top: ${-props.radius}px;
+    margin-left: -${props.radius}px;
+    margin-top: ${props.radius}px;
     width: ${2 * props.radius}px;
     height: ${2 * props.radius}px;
-    bottom: ${-props.radius}px;
+    bottom: -${props.onAxis ? props.radius : 0}px;
   `};
 `;
 
@@ -90,6 +90,7 @@ class DeploymentAnnotations extends React.PureComponent {
           <FocusPoint
             hoverable
             radius="5"
+            onAxis={this.props.onAxis}
             onMouseMove={this.handleMouseEnter}
             onMouseLeave={this.handleMouseLeave}
           />
@@ -123,6 +124,12 @@ DeploymentAnnotations.propTypes = {
   timestamp: PropTypes.string.isRequired,
   containerWidth: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
+  onAxis: PropTypes.bool,
 };
+
+DeploymentAnnotations.defaultProps = {
+  onAxis: false,
+};
+
 
 export default DeploymentAnnotations;

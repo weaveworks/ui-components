@@ -58,6 +58,7 @@ class DeploymentAnnotations extends React.PureComponent {
             timestamp={deployment.timestamp}
             containerWidth={this.props.chartWidth}
             containerHeight={this.props.chartHeight}
+            onAxis
           />
         ))}
       </DeploymentAnnotationsWrapper>
