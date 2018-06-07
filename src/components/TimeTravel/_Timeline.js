@@ -75,7 +75,6 @@ const FullyPannableCanvas = styled.div`
 const TimelineContainer = FullyPannableCanvas.extend`
   background-color: ${props => transparentize(0.15, props.theme.colors.white)};
   box-shadow: inset 0 0 7px ${props => props.theme.colors.gray};
-  /* overflow: hidden; */
   pointer-events: all;
   position: relative;
   height: 100%;
@@ -138,7 +137,7 @@ class Timeline extends React.PureComponent {
 
   handlePanStart = () => {
     this.setState({ isPanning: true });
-  }
+  };
 
   handlePanEnd = () => {
     if (this.state.hasPanned) {
@@ -146,28 +145,28 @@ class Timeline extends React.PureComponent {
     }
     this.setState({ isPanning: false, hasPanned: false });
     this.delayedUpdateVisibleRange();
-  }
+  };
 
   handlePan = () => {
     const timeScale = getTimeScale(this.props);
     const momentTimestamp = timeScale.invert(-d3Event.dx);
     this.props.onPan(momentTimestamp);
     this.setState({ hasPanned: true });
-  }
+  };
 
-  handleZoom = (ev) => {
+  handleZoom = ev => {
     const { durationMsPerPixel } = this.props;
     this.props.onZoom(durationMsPerPixel / zoomFactor(ev));
     this.delayedUpdateVisibleRange();
     ev.preventDefault();
-  }
+  };
 
   handleResize = ({ width }) => {
     // Update the timeline dimension information.
     this.setState({ width });
     this.delayedUpdateVisibleRange();
     this.props.onResize(width);
-  }
+  };
 
   updateVisibleRange = () => {
     const { width } = this.state;
@@ -175,14 +174,18 @@ class Timeline extends React.PureComponent {
 
     // Update the visible part of the timeline.
     this.props.onUpdateVisibleRange({
-      startAt: moment(timeScale.invert(-width / 2)).utc().format(),
-      endAt: moment(timeScale.invert(width / 2)).utc().format(),
+      startAt: moment(timeScale.invert(-width / 2))
+        .utc()
+        .format(),
+      endAt: moment(timeScale.invert(width / 2))
+        .utc()
+        .format(),
     });
-  }
+  };
 
-  saveSvgRef = (ref) => {
+  saveSvgRef = ref => {
     this.svgRef = ref;
-  }
+  };
 
   renderContent(transform) {
     const { width } = this.state;
@@ -239,12 +242,14 @@ class Timeline extends React.PureComponent {
               ))}
             </TimelinePeriodLabelsWrapper>
 
-            {this.props.isLoading && <TimelineLoader
-              startAt={this.props.earliestTimestamp}
-              endAt={this.props.timestampNow}
-              timeScale={timeScale}
-              width={width}
-            />}
+            {this.props.isLoading && (
+              <TimelineLoader
+                startAt={this.props.earliestTimestamp}
+                endAt={this.props.timestampNow}
+                timeScale={timeScale}
+                width={width}
+              />
+            )}
           </CenteredContent>
         </OverflowHidden>
       </TimelineContent>
