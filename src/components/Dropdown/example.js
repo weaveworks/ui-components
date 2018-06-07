@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Example, Info } from '../../utils/example';
 import { Grid, GridRow as Row, GridColumn as Column } from '../Grid';
+import Button from '../Button';
 
 import Dropdown from '.';
 
@@ -55,6 +56,10 @@ const divided = [
   },
 ];
 
+const DropdownButton = ({ onClick }) => (
+  <Button onClick={onClick}>More actions <i className="fa fa-caret-down" /></Button>
+);
+
 export default class DropdownExample extends React.Component {
   constructor() {
     super();
@@ -97,6 +102,19 @@ export default class DropdownExample extends React.Component {
               <Dropdown
                 items={items}
                 placeholder="Select an item"
+                value={this.state.selected}
+                onChange={this.handleChange}
+              />
+            </Example>
+          </Column>
+        </Row>
+        <Row>
+          <Column span={6}>
+            <Example>
+              <Info>With <code>Button</code> component</Info>
+              <Dropdown
+                withComponent={DropdownButton}
+                items={divided}
                 value={this.state.selected}
                 onChange={this.handleChange}
               />
