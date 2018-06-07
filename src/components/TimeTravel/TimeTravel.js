@@ -15,7 +15,6 @@ import RangeSelector from './_RangeSelector';
 
 const TimeTravelContainer = styled.div`
   position: relative;
-  z-index: ${props => props.theme.layers.front};
 `;
 
 const TimelineBar = styled.div`

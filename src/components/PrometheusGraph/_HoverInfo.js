@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { map, max } from 'lodash';
 
-import Tooltip from './_Tooltip';
-import FocusPoint from './_FocusPoint';
+import TimestampTooltip from '../_TimestampTooltip';
 
 const TooltipRow = styled.div`
   display: flex;
@@ -52,6 +51,26 @@ const HoverLine = styled.div.attrs({
   top: 0;
 `;
 
+const FocusPoint = styled.span.attrs({
+  style: ({ top }) => ({ top }),
+})`
+  border: 2.5px solid ${props => props.color};
+  border-radius: ${props => props.theme.borderRadius.circle};
+  background-color: ${props => props.theme.colors.white};
+  opacity: ${props => (props.faded ? 0.5 : 1)};
+  box-sizing: border-box;
+  position: absolute;
+  cursor: default;
+  pointer-events: none;
+
+  ${props => `
+    margin-left: ${-props.radius}px;
+    margin-top: ${-props.radius}px;
+    width: ${2 * props.radius}px;
+    height: ${2 * props.radius}px;
+  `};
+`;
+
 class HoverInfo extends React.PureComponent {
   render() {
     const {
@@ -96,10 +115,10 @@ class HoverInfo extends React.PureComponent {
             />
           ))}
         </HoverLine>
-        <Tooltip
-          x={mouseX}
-          y={mouseY}
-          graphWidth={chartWidth}
+        <TimestampTooltip
+          offsetX={mouseX}
+          offsetY={mouseY}
+          containerWidth={chartWidth}
           timestamp={timestamp}
         >
           {filteredHoverPoints.map(datapoint => (
@@ -109,7 +128,7 @@ class HoverInfo extends React.PureComponent {
               <TooltipRowValue>{formatValue(datapoint.value)}</TooltipRowValue>
             </TooltipRow>
           ))}
-        </Tooltip>
+        </TimestampTooltip>
       </div>
     );
   }

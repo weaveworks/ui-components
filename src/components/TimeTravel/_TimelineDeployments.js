@@ -3,39 +3,16 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import DeploymentAnnotation from '../_DeploymentAnnotation';
+
 const MAX_VISIBLE_RANGE_SECS = moment.duration(2, 'weeks').asSeconds();
 
 // TODO: A lot of the code here has been taken/modified from PrometheusGraph code.
 // Abstract the common code.
 
-const DeploymentAnnotations = styled.div``;
-
-const DeploymentAnnotation = styled.span.attrs({
-  style: ({ x }) => ({ transform: `translateX(${x}px)` }),
-})`
+const DeploymentAnnotations = styled.div`
   position: absolute;
   height: 100%;
-  top: 0;
-`;
-
-const VerticalLine = styled.span`
-  border-left: 1px solid ${props => props.theme.colors.accent.blue};
-  pointer-events: none;
-  position: absolute;
-  opacity: 0.5;
-  height: 100%;
-`;
-
-const FocusPoint = styled.span`
-  bottom: 0;
-  left: ${props => -props.radius - 2}px;
-  width: ${props => 2 * props.radius}px;
-  height: ${props => 2 * props.radius}px;
-  background-color: ${props => props.theme.colors.white};
-  border: 2px solid ${props => props.theme.colors.accent.blue};
-  border-radius: ${props => props.theme.borderRadius.circle};
-  position: absolute;
-  cursor: default;
 `;
 
 const formattedDeployments = ({ deployments, timeScale, width }) =>
@@ -85,11 +62,12 @@ class TimelineDeployments extends React.PureComponent {
           <DeploymentAnnotation
             key={deployment.key}
             x={deployment.position}
-            title={deployment.action}
-          >
-            <VerticalLine />
-            <FocusPoint radius="2" />
-          </DeploymentAnnotation>
+            action={deployment.action}
+            serviceIDs={deployment.serviceIDs}
+            timestamp={deployment.timestamp}
+            containerWidth={this.props.width}
+            containerHeight={55}
+          />
         ))}
       </DeploymentAnnotations>
     );

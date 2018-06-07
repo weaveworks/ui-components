@@ -75,19 +75,29 @@ const FullyPannableCanvas = styled.div`
 const TimelineContainer = FullyPannableCanvas.extend`
   background-color: ${props => transparentize(0.15, props.theme.colors.white)};
   box-shadow: inset 0 0 7px ${props => props.theme.colors.gray};
-  overflow: hidden;
   pointer-events: all;
   position: relative;
   height: 100%;
 `;
 
-const TimelineCanvas = styled.div`
-  transform: translateX(${props => props.width / 2}px);
+const TimelineContent = styled.div`
   position: absolute;
+  width: 100%;
   height: 100%;
 `;
 
-const TimelineAxis = styled.div`
+const OverflowHidden = styled.div`
+  pointer-events: none;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+`;
+
+const CenteredContent = styled.div`
+  left: ${props => props.width / 2}px;
+  pointer-events: none;
+  position: absolute;
   height: 100%;
 `;
 
@@ -127,7 +137,7 @@ class Timeline extends React.PureComponent {
 
   handlePanStart = () => {
     this.setState({ isPanning: true });
-  }
+  };
 
   handlePanEnd = () => {
     if (this.state.hasPanned) {
@@ -135,28 +145,28 @@ class Timeline extends React.PureComponent {
     }
     this.setState({ isPanning: false, hasPanned: false });
     this.delayedUpdateVisibleRange();
-  }
+  };
 
   handlePan = () => {
     const timeScale = getTimeScale(this.props);
     const momentTimestamp = timeScale.invert(-d3Event.dx);
     this.props.onPan(momentTimestamp);
     this.setState({ hasPanned: true });
-  }
+  };
 
-  handleZoom = (ev) => {
+  handleZoom = ev => {
     const { durationMsPerPixel } = this.props;
     this.props.onZoom(durationMsPerPixel / zoomFactor(ev));
     this.delayedUpdateVisibleRange();
     ev.preventDefault();
-  }
+  };
 
   handleResize = ({ width }) => {
     // Update the timeline dimension information.
     this.setState({ width });
     this.delayedUpdateVisibleRange();
     this.props.onResize(width);
-  }
+  };
 
   updateVisibleRange = () => {
     const { width } = this.state;
@@ -164,16 +174,20 @@ class Timeline extends React.PureComponent {
 
     // Update the visible part of the timeline.
     this.props.onUpdateVisibleRange({
-      startAt: moment(timeScale.invert(-width / 2)).utc().format(),
-      endAt: moment(timeScale.invert(width / 2)).utc().format(),
+      startAt: moment(timeScale.invert(-width / 2))
+        .utc()
+        .format(),
+      endAt: moment(timeScale.invert(width / 2))
+        .utc()
+        .format(),
     });
-  }
+  };
 
-  saveSvgRef = (ref) => {
+  saveSvgRef = ref => {
     this.svgRef = ref;
-  }
+  };
 
-  renderAxis(transform) {
+  renderContent(transform) {
     const { width } = this.state;
     const { focusedTimestamp, rangeMs } = transform;
     const startTimestamp = moment(focusedTimestamp)
@@ -182,61 +196,68 @@ class Timeline extends React.PureComponent {
     const timeScale = getTimeScale(transform);
 
     return (
-      <TimelineAxis>
-        <TimelineRange
-          color={theme.colors.gray}
-          endAt={this.props.earliestTimestamp}
-          timeScale={timeScale}
-          width={width}
-        />
-        <TimelineRange
-          color={theme.colors.gray}
-          startAt={this.props.timestampNow}
-          timeScale={timeScale}
-          width={width}
-        />
-        {this.props.inspectingInterval && (
-          <TimelineRange
-            color={theme.colors.accent.blue}
-            startAt={startTimestamp}
-            endAt={focusedTimestamp}
+      <TimelineContent>
+        <CenteredContent width={width}>
+          <TimelineDeployments
+            deployments={this.props.deployments}
             timeScale={timeScale}
             width={width}
           />
-        )}
-
-        <TimelineDeployments
-          deployments={this.props.deployments}
-          timeScale={timeScale}
-          width={width}
-        />
-
-        <TimelinePeriodLabelsWrapper>
-          {['year', 'month', 'day', 'minute'].map(period => (
-            <TimelinePeriodLabels
-              key={period}
-              period={period}
+        </CenteredContent>
+        <OverflowHidden>
+          <CenteredContent width={width}>
+            <TimelineRange
+              color={theme.colors.gray}
+              endAt={this.props.earliestTimestamp}
+              timeScale={timeScale}
               width={width}
-              onClick={this.props.onJump}
-              clickableStartAt={this.props.earliestTimestamp}
-              clickableEndAt={this.props.timestampNow}
-              {...transform}
             />
-          ))}
-        </TimelinePeriodLabelsWrapper>
+            <TimelineRange
+              color={theme.colors.gray}
+              startAt={this.props.timestampNow}
+              timeScale={timeScale}
+              width={width}
+            />
+            {this.props.inspectingInterval && (
+              <TimelineRange
+                color={theme.colors.accent.blue}
+                startAt={startTimestamp}
+                endAt={focusedTimestamp}
+                timeScale={timeScale}
+                width={width}
+              />
+            )}
 
-        {this.props.isLoading && <TimelineLoader
-          startAt={this.props.earliestTimestamp}
-          endAt={this.props.timestampNow}
-          timeScale={timeScale}
-          width={width}
-        />}
-      </TimelineAxis>
+            <TimelinePeriodLabelsWrapper>
+              {['year', 'month', 'day', 'minute'].map(period => (
+                <TimelinePeriodLabels
+                  key={period}
+                  period={period}
+                  width={width}
+                  onClick={this.props.onJump}
+                  clickableStartAt={this.props.earliestTimestamp}
+                  clickableEndAt={this.props.timestampNow}
+                  {...transform}
+                />
+              ))}
+            </TimelinePeriodLabelsWrapper>
+
+            {this.props.isLoading && (
+              <TimelineLoader
+                startAt={this.props.earliestTimestamp}
+                endAt={this.props.timestampNow}
+                timeScale={timeScale}
+                width={width}
+              />
+            )}
+          </CenteredContent>
+        </OverflowHidden>
+      </TimelineContent>
     );
   }
 
   render() {
-    const { isPanning, width } = this.state;
+    const { isPanning } = this.state;
     const { focusedTimestamp, durationMsPerPixel, rangeMs } = this.props;
 
     return (
@@ -252,27 +273,25 @@ class Timeline extends React.PureComponent {
             onWheel={this.handleZoom}
             title="Scroll to zoom, drag to pan"
           >
-            <TimelineCanvas width={width}>
-              <Motion
-                style={{
-                  focusedTimestampMs: strongSpring(
-                    moment(focusedTimestamp).valueOf()
+            <Motion
+              style={{
+                focusedTimestampMs: strongSpring(
+                  moment(focusedTimestamp).valueOf()
+                ),
+                durationMsPerPixel: strongSpring(durationMsPerPixel),
+                rangeMs: strongSpring(rangeMs),
+              }}
+            >
+              {interpolated =>
+                this.renderContent({
+                  focusedTimestamp: formattedTimestamp(
+                    interpolated.focusedTimestampMs
                   ),
-                  durationMsPerPixel: strongSpring(durationMsPerPixel),
-                  rangeMs: strongSpring(rangeMs),
-                }}
-              >
-                {interpolated =>
-                  this.renderAxis({
-                    focusedTimestamp: formattedTimestamp(
-                      interpolated.focusedTimestampMs
-                    ),
-                    durationMsPerPixel: interpolated.durationMsPerPixel,
-                    rangeMs: interpolated.rangeMs,
-                  })
-                }
-              </Motion>
-            </TimelineCanvas>
+                  durationMsPerPixel: interpolated.durationMsPerPixel,
+                  rangeMs: interpolated.rangeMs,
+                })
+              }
+            </Motion>
           </TimelineContainer>
         </ResizeAware>
       </TimelineWrapper>
