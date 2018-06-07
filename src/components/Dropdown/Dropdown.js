@@ -82,6 +82,16 @@ const StyledDropdown = component => styled(component)`
   width: ${WIDTH};
 `;
 
+
+const DefaultToggleView = ({ onClick, selectedLabel }) => (
+  <SelectedItem onClick={onClick}>
+    <Item>{selectedLabel}</Item>
+    <div>
+      <SelectedItemIcon className="fa fa-caret-down" />
+    </div>
+  </SelectedItem>);
+
+
 /**
  * A selectable drop-down menu.
  * ```javascript
@@ -121,7 +131,6 @@ const StyledDropdown = component => styled(component)`
  * ];
  * ```
  */
-
 class Dropdown extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -168,15 +177,12 @@ class Dropdown extends React.Component {
       (placeholder
         ? { label: placeholder, value: null }
         : divided && divided[0]);
+    const label = currentItem && currentItem.label;
+    const Component = this.props.withComponent;
 
     return (
-      <div className={className} title={currentItem && currentItem.label}>
-        <SelectedItem onClick={this.handleClick}>
-          <Item>{currentItem && currentItem.label}</Item>
-          <div>
-            <SelectedItemIcon className="fa fa-caret-down" />
-          </div>
-        </SelectedItem>
+      <div className={className} title={label}>
+        <Component selectedLabel={label} onClick={this.handleClick} />
         {isOpen && (
           <div>
             <Overlay onClick={this.handleBgClick} />
@@ -233,6 +239,17 @@ Dropdown.propTypes = {
    * The initial text that will be display before a user selects an item.
    */
   placeholder: PropTypes.string,
+
+  /**
+   * A custom component to replace the default toggle view.
+   * The properties `selectedLabel` and `onClick` are provided. `onClick` needs to be incorporated
+   * to make the dropdown list toggle.
+   */
+  withComponent: PropTypes.func,
+};
+
+Dropdown.defaultProps = {
+  withComponent: DefaultToggleView,
 };
 
 export default StyledDropdown(Dropdown);
