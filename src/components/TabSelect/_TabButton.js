@@ -5,7 +5,7 @@ const TabName = styled.span``;
 
 const getBgColor = (selected, secondary, theme) => {
   if (secondary) {
-    return theme.colors.sand;
+    return theme.colors.whiteSmoke;
   }
 
   return selected ? theme.colors.white : theme.colors.lightgray;

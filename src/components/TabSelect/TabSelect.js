@@ -22,7 +22,7 @@ const bordersOnlyTop = props => `
 const TabContent = styled.div`
   padding: 20px;
   background-color: ${props =>
-    props.secondary ? props.theme.colors.sand : props.theme.colors.white};
+    props.secondary ? 'transparent' : props.theme.colors.white};
 
   ${props => (props.secondary ? bordersOnlyTop(props) : borders(props))};
 `;
