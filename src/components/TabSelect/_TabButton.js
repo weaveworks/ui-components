@@ -3,6 +3,14 @@ import styled from 'styled-components';
 
 const TabName = styled.span``;
 
+const getBgColor = (selected, secondary, theme) => {
+  if (secondary) {
+    return theme.colors.sand;
+  }
+
+  return selected ? theme.colors.white : theme.colors.lightgray;
+};
+
 const Styled = component => styled(component)`
   cursor: pointer;
   margin-bottom: -1px;
@@ -11,8 +19,8 @@ const Styled = component => styled(component)`
   font-size: ${props => props.theme.fontSizes.large};
   outline: 0;
 
-  ${({ selected, theme }) => `
-    background-color: ${selected ? theme.colors.white : theme.colors.lightgray};
+  ${({ selected, secondary, theme }) => `
+    background-color: ${getBgColor(selected, secondary, theme)};
     border-top-left-radius: ${theme.borderRadius.soft};
     border-top-right-radius: ${theme.borderRadius.soft};
     border: 1px solid ${theme.colors.athens};

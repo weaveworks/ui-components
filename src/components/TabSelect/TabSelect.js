@@ -8,16 +8,23 @@ import TabButton from './_TabButton';
 
 const TabButtons = styled.div``;
 
-const TabContent = styled.div`
-  padding: 20px;
-  background-color: ${props => props.theme.colors.white};
-
-  ${props => `
+const borders = props => `
     border-top-right-radius: ${props.theme.borderRadius.soft};
     border-bottom-right-radius: ${props.theme.borderRadius.soft};
     border-bottom-left-radius: ${props.theme.borderRadius.soft};
     border: 1px solid ${props.theme.colors.athens};
-  `};
+`;
+
+const bordersOnlyTop = props => `
+  border-top: 1px solid ${props.theme.colors.athens}
+`;
+
+const TabContent = styled.div`
+  padding: 20px;
+  background-color: ${props =>
+    props.secondary ? props.theme.colors.sand : props.theme.colors.white};
+
+  ${props => (props.secondary ? bordersOnlyTop(props) : borders(props))};
 `;
 
 const Styled = component => styled(component)``;
@@ -48,7 +55,7 @@ class TabSelect extends React.PureComponent {
   };
 
   render() {
-    const { className, children } = this.props;
+    const { className, children, secondary } = this.props;
     const tabs = React.Children.map(children, child =>
       pick(child.props, ['label', 'name'])
     );
@@ -63,19 +70,25 @@ class TabSelect extends React.PureComponent {
               key={tab.name}
               name={tab.name}
               selected={this.isSelectedTab(tab)}
+              secondary={secondary}
               onClick={this.handleTabClick}
             >
               {tab.label}
             </TabButton>
           ))}
         </TabButtons>
-        <TabContent>{selected}</TabContent>
+        <TabContent secondary={secondary}>{selected}</TabContent>
       </div>
     );
   }
 }
 
 TabSelect.propTypes = {
+  /**
+   * Secondary styling for TabSelect without border around content and
+   * transparent background
+   */
+  secondary: PropTypes.bool,
   /**
    * The tab to show on first render.
    * Supplying a new value to this prop will override the currently selected item
@@ -97,6 +110,10 @@ TabSelect.propTypes = {
     });
     return error;
   },
+};
+
+TabSelect.defaultProps = {
+  secondary: false,
 };
 
 export default Styled(TabSelect);
