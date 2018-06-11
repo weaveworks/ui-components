@@ -19,11 +19,17 @@ import TimelineDeployments from './_TimelineDeployments';
 import TimelinePeriodLabels from './_TimelinePeriodLabels';
 import TimelineRange from './_TimelineRange';
 
-const TIMELINE_HEIGHT = '55px';
+// A guess on the max initial width of the time travel timeline.
+// This is used for showing deployments, time tags, etc.. before
+// we get the actual timeline width from the ResizeAware listener.
+// Better have a big value here to make sure the whole canvas is
+// filled out, but don't have it too big not to slow down the rendering.
+const TIMELINE_MAX_WIDTH_PX = 3000;
 
 const TimelineWrapper = styled.div`
+  position: relative;
   width: 100%;
-  height: ${TIMELINE_HEIGHT};
+  height: 55px;
 
   &:before,
   &:after {
@@ -44,11 +50,11 @@ const TimelineWrapper = styled.div`
 
   &:before {
     top: 0;
-    height: ${TIMELINE_HEIGHT};
+    height: 100%;
   }
 
   &:after {
-    top: ${TIMELINE_HEIGHT};
+    top: 100%;
     height: 9px;
     opacity: 0.15;
   }
@@ -95,7 +101,7 @@ const OverflowHidden = styled.div`
 `;
 
 const CenteredContent = styled.div`
-  left: ${props => props.width / 2}px;
+  left: 50%;
   pointer-events: none;
   position: absolute;
   height: 100%;
@@ -111,7 +117,8 @@ class Timeline extends React.PureComponent {
     super(props);
 
     this.state = {
-      width: 0,
+      width: TIMELINE_MAX_WIDTH_PX,
+      isAnimated: false,
       isPanning: false,
       hasPanned: false,
     };
@@ -127,6 +134,13 @@ class Timeline extends React.PureComponent {
       .on('end', this.handlePanEnd)
       .on('drag', this.handlePan);
     this.svg.call(this.drag);
+
+    // Keep animation disabled for first half a second, so that nothing
+    // would move when re-mounting time travel component when switching
+    // between pages - keep the experience smooth!
+    setTimeout(() => {
+      this.setState({ isAnimated: true });
+    }, 500);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -197,7 +211,7 @@ class Timeline extends React.PureComponent {
 
     return (
       <TimelineContent>
-        <CenteredContent width={width}>
+        <CenteredContent>
           <TimelineDeployments
             deployments={this.props.deployments}
             timeScale={timeScale}
@@ -205,7 +219,7 @@ class Timeline extends React.PureComponent {
           />
         </CenteredContent>
         <OverflowHidden>
-          <CenteredContent width={width}>
+          <CenteredContent>
             <TimelineRange
               color={theme.colors.gray}
               endAt={this.props.earliestTimestamp}
@@ -273,25 +287,33 @@ class Timeline extends React.PureComponent {
             onWheel={this.handleZoom}
             title="Scroll to zoom, drag to pan"
           >
-            <Motion
-              style={{
-                focusedTimestampMs: strongSpring(
-                  moment(focusedTimestamp).valueOf()
-                ),
-                durationMsPerPixel: strongSpring(durationMsPerPixel),
-                rangeMs: strongSpring(rangeMs),
-              }}
-            >
-              {interpolated =>
-                this.renderContent({
-                  focusedTimestamp: formattedTimestamp(
-                    interpolated.focusedTimestampMs
+            {this.state.isAnimated ? (
+              <Motion
+                style={{
+                  focusedTimestampMs: strongSpring(
+                    moment(focusedTimestamp).valueOf()
                   ),
-                  durationMsPerPixel: interpolated.durationMsPerPixel,
-                  rangeMs: interpolated.rangeMs,
-                })
-              }
-            </Motion>
+                  durationMsPerPixel: strongSpring(durationMsPerPixel),
+                  rangeMs: strongSpring(rangeMs),
+                }}
+              >
+                {interpolated =>
+                  this.renderContent({
+                    focusedTimestamp: formattedTimestamp(
+                      interpolated.focusedTimestampMs
+                    ),
+                    durationMsPerPixel: interpolated.durationMsPerPixel,
+                    rangeMs: interpolated.rangeMs,
+                  })
+                }
+              </Motion>
+            ) : (
+              this.renderContent({
+                focusedTimestamp,
+                durationMsPerPixel,
+                rangeMs,
+              })
+            )}
           </TimelineContainer>
         </ResizeAware>
       </TimelineWrapper>
