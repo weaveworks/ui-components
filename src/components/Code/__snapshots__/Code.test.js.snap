@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Code /> should render correctly 1`] = `
+<Code__CodeWrapper
+  onClick={[Function]}
+>
+  <Code__Content>
+    <Code__Pre
+      innerRef={[Function]}
+    >
+      such code much programming
+    </Code__Pre>
+  </Code__Content>
+  <Code__CopyNotice>
+    <i
+      className="fa fa-check"
+    />
+     
+    Copy to clipboard
+  </Code__CopyNotice>
+</Code__CodeWrapper>
+`;
