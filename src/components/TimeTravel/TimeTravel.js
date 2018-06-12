@@ -13,6 +13,9 @@ import LiveModeToggle from './_LiveModeToggle';
 import TimestampInput from './_TimestampInput';
 import RangeSelector from './_RangeSelector';
 
+// Initial selected range size.
+const INITIAL_RANGE_WIDTH_PX = 200;
+
 const TimeTravelContainer = styled.div`
   position: relative;
 `;
@@ -151,10 +154,7 @@ class TimeTravel extends React.Component {
     };
 
     this.delayedReportZoom = debounce(this.reportZoom, 5000);
-    this.delayedOnChangeTimestamp = debounce(
-      this.props.onChangeTimestamp,
-      500
-    );
+    this.delayedOnChangeTimestamp = debounce(this.props.onChangeTimestamp, 500);
   }
 
   componentDidMount() {
@@ -167,6 +167,9 @@ class TimeTravel extends React.Component {
         this.setState({ focusedTimestamp: timestampNow });
       }
     }, 1000);
+
+    // Adjust timeline zoom level to the selected range immediately after mounting.
+    this.adjustZoomToRange(this.state.rangeMs);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -222,106 +225,102 @@ class TimeTravel extends React.Component {
     );
   }
 
-  handleRangeChange = (rangeMs) => {
+  handleRangeChange = rangeMs => {
     this.setState({ rangeMs });
-    this.adjustZoomToRange(rangeMs, this.state.timelineWidthPx);
+    this.adjustZoomToRange(rangeMs);
     this.props.onChangeRange(rangeMs);
-  }
+  };
 
-  handleInputChange = (timestamp) => {
+  handleInputChange = timestamp => {
     this.setFocusedTimestamp(timestamp);
     this.props.onTimestampInputEdit();
-  }
+  };
 
-  handleTimelineJump = (timestamp) => {
-    //  Order of callbacks is important.
+  handleTimelineJump = timestamp => {
+    // Order of callbacks is important.
     this.switchToPausedMode();
     this.setFocusedTimestamp(timestamp);
     this.props.onTimelineLabelClick();
-  }
+  };
 
-  handleTimelinePanButtonClick = (timestamp) => {
+  handleTimelinePanButtonClick = timestamp => {
     if (this.shouldStickySwitchToLiveMode({ focusedTimestamp: timestamp })) {
-      //  Order of callbacks is important.
+      // Order of callbacks is important.
       this.setFocusedTimestamp(this.state.timestampNow);
       this.switchToLiveMode();
     } else {
-      //  Order of callbacks is important.
+      // Order of callbacks is important.
       this.switchToPausedMode();
       this.setFocusedTimestamp(timestamp);
     }
     this.props.onTimelinePanButtonClick();
-  }
+  };
 
-  handleTimelineZoom = (duration) => {
+  handleTimelineZoom = duration => {
     const durationMsPerPixel = this.clampedDuration(duration);
     this.setState({ durationMsPerPixel });
     this.delayedReportZoom();
-  }
+  };
 
-  handleTimelinePan = (timestamp) => {
-    //  Order of callbacks is important.
+  handleTimelinePan = timestamp => {
+    // Order of callbacks is important.
     const focusedTimestamp = this.clampedTimestamp(timestamp);
     this.switchToPausedMode();
     this.setState({ focusedTimestamp });
     this.delayedOnChangeTimestamp(focusedTimestamp);
-  }
+  };
 
   handleTimelineRelease = () => {
     if (this.shouldStickySwitchToLiveMode()) {
-      //  Order of callbacks is important.
+      // Order of callbacks is important.
       this.setFocusedTimestamp(this.state.timestampNow);
       this.switchToLiveMode();
     }
     this.props.onTimelinePan();
-  }
+  };
 
-  handleTimelineResize = (timelineWidthPx) => {
-    // If this is the initial resize, adjust the zoom level to the current selected range.
-    if (!this.state.timelineWidthPx) {
-      this.adjustZoomToRange(this.state.rangeMs, timelineWidthPx);
-    }
+  handleTimelineResize = timelineWidthPx => {
     this.setState({ timelineWidthPx });
-  }
+  };
 
-  handleLiveModeToggle = (showingLive) => {
+  handleLiveModeToggle = showingLive => {
     if (showingLive) {
-      //  Order of callbacks is important.
+      // Order of callbacks is important.
       this.setState({ focusedTimestamp: this.state.timestampNow });
       this.switchToLiveMode();
     } else {
       this.switchToPausedMode();
     }
-  }
+  };
 
   switchToLiveMode = () => {
     if (this.props.hasLiveMode && !this.state.showingLive) {
       this.setState({ showingLive: true });
       this.props.onChangeLiveMode(true);
     }
-  }
+  };
 
   switchToPausedMode = () => {
     if (this.props.hasLiveMode && this.state.showingLive) {
       this.setState({ showingLive: false });
       this.props.onChangeLiveMode(false);
     }
-  }
+  };
 
-  setFocusedTimestamp = (timestamp) => {
+  setFocusedTimestamp = timestamp => {
     const focusedTimestamp = this.clampedTimestamp(timestamp);
     if (focusedTimestamp !== this.state.focusedTimestamp) {
       this.delayedOnChangeTimestamp.cancel();
       this.props.onChangeTimestamp(focusedTimestamp);
       this.setState({ focusedTimestamp });
     }
-  }
+  };
 
-  adjustZoomToRange = (rangeMs, timelineWidthPx) => {
-    const rawDurationMsPerPixel = rangeMs / (timelineWidthPx / 3);
+  adjustZoomToRange = rangeMs => {
+    const rawDurationMsPerPixel = rangeMs / INITIAL_RANGE_WIDTH_PX;
     const durationMsPerPixel = this.clampedDuration(rawDurationMsPerPixel);
     this.setState({ durationMsPerPixel });
-  }
+  };
 
   reportZoom = () => {
     const periods = [
@@ -341,7 +340,7 @@ class TimeTravel extends React.Component {
       period => Math.floor(momentDuration.get(period)) && period
     );
     this.props.onTimelineZoom(zoomedPeriod);
-  }
+  };
 
   render() {
     const timeScale = getTimeScale(this.state);
