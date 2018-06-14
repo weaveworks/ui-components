@@ -12,7 +12,7 @@ const Item = styled.div`
   &:hover {
     transition: color, 0.3s, ease;
     color: ${props => !props.active && props.theme.colors.gunpowder};
-    background-color: ${props => !props.active && props.theme.colors.lightgray};
+    background-color: ${props => !props.active && props.theme.colors.gallery};
     cursor: pointer;
   }
 
@@ -28,7 +28,7 @@ const Item = styled.div`
   ${props =>
     props.active &&
     `
-    color: ${props.theme.colors.sand};
+    color: ${props.theme.colors.gallery};
     background-color: ${props.theme.colors.primary.lavender};
   `};
 `;

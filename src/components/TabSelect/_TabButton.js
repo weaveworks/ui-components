@@ -8,7 +8,7 @@ const getBgColor = (selected, secondary, theme) => {
     return theme.colors.whiteSmoke;
   }
 
-  return selected ? theme.colors.white : theme.colors.lightgray;
+  return selected ? theme.colors.white : theme.colors.gallery;
 };
 
 const Styled = component => styled(component)`
