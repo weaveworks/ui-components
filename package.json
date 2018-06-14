@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.4.96",
+  "version": "0.4.97",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,9 @@
       "./test-shim.js",
       "./test-setup.js"
     ],
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "repository": {
     "type": "git",
