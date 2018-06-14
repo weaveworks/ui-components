@@ -3,28 +3,15 @@ import { isString, kebabCase, forEach } from 'lodash';
 export const colors = {
   // uncategorized colors
   aliceBlue: '#f0f8ff',
-  amethystSmoke: '#9292b7',
-  athens: '#e2e2ec',
-  athensGray: '#eeeef4',
   black: '#1a1a1a',
-  blueHaze: '#c0c0d5',
-  comet: '#5b5b88',
-  cometDark: '#5a5a7b',
   doveGray: '#737373',
   eastBay: '#4a5d87',
   gallery: '#f4f4f4',
-  gunpowder: '#3c3c5b',
-  kimberly: '#7d7da8',
-  kimberlyDark: '#656597',
-  logan: '#b1b1cb',
-  mischka: '#dfdfea',
-  mulledWine: '#46466a',
   mystic: '#dae4ea',
   silver: '#ccc',
   turquoise: '#037aa9',
   white: '#fff',
   whiteLilac: '#f0f0fa',
-  whiteSmoke: '#fafafc',
   promQL: {
     /**
      * GHColors theme by Avi Aryan (http://aviaryan.in)
@@ -44,8 +31,17 @@ export const colors = {
   },
   // use these for new stuff!
   primary: {
-    charcoal: '#32324b',
-    lavender: '#8383ac',
+    purple900: 'hsl(240, 20%, 25%)',      // #32324b
+    purple800: 'hsl(240, 20%, 30%)',      // #3d3d5c
+    purple700: 'hsl(240, 20%, 35%)',      // #47476b
+    purple600: 'hsl(240, 20%, 45%)',      // #5b5b88
+    purple500: 'hsl(240, 20%, 50%)',      // #666699
+    purple400: 'hsl(240, 20%, 60%)',      // #8585ad
+    purple300: 'hsl(240, 20%, 65%)',      // #9494b8
+    purple200: 'hsl(240, 20%, 75%)',      // #b1b1cb
+    purple100: 'hsl(240, 20%, 90%)',      // #dfdfea
+    purple50: 'hsl(240, 20%, 95%)',       // #eeeef4
+    purple25: 'hsl(240, 20%, 98%)',       // #fafafc
   },
   accent: {
     blue: '#00d2ff',

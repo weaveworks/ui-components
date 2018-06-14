@@ -5,7 +5,7 @@ const TabName = styled.span``;
 
 const getBgColor = (selected, secondary, theme) => {
   if (secondary) {
-    return theme.colors.whiteSmoke;
+    return theme.colors.primary.purple25;
   }
 
   return selected ? theme.colors.white : theme.colors.gallery;
@@ -23,13 +23,13 @@ const Styled = component => styled(component)`
     background-color: ${getBgColor(selected, secondary, theme)};
     border-top-left-radius: ${theme.borderRadius.soft};
     border-top-right-radius: ${theme.borderRadius.soft};
-    border: 1px solid ${theme.colors.athens};
+    border: 1px solid ${theme.colors.primary.purple100};
   `};
 
   ${props => props.selected && 'border-bottom: 1px solid transparent;'};
 
   ${TabName} {
-    color: ${props => props.theme.colors.primary.charcoal};
+    color: ${props => props.theme.colors.primary.purple900};
     opacity: ${props => (props.selected ? 1 : 0.65)};
   }
 `;

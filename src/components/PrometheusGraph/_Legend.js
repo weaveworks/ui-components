@@ -28,13 +28,13 @@ const LegendItem = styled.div`
   border-radius: ${props => props.theme.borderRadius.soft};
 
   &:hover {
-    background-color: ${props => props.theme.colors.athens};
+    background-color: ${props => props.theme.colors.primary.purple100};
   }
 
   ${props =>
     props.selected &&
     `
-    background-color: ${props.theme.colors.athens};
+    background-color: ${props.theme.colors.primary.purple100};
   `};
 `;
 
@@ -46,7 +46,7 @@ const LegendItemName = styled.span`
 `;
 
 const LegendToggle = styled.span`
-  color: ${props => props.theme.colors.primary.lavender};
+  color: ${props => props.theme.colors.primary.purple400};
   cursor: pointer;
   display: block;
   padding: 5px;

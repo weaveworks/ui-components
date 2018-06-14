@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const MenuWrapper = styled.div`
-  color: ${props => props.theme.colors.primary.lavender};
+  color: ${props => props.theme.colors.primary.purple400};
   text-align: left;
 `;
 

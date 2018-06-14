@@ -55,7 +55,7 @@ const diffColors = (a, b) => {
   const ca = maybeParseColor(a);
   const cb = maybeParseColor(b);
   if (!ca || !cb) {
-    return undefined;
+    return '';
   }
   return `Diff from ${TEST_COLOR_NAME}: hsl(${round(
     ca.hue - cb.hue,
@@ -66,15 +66,22 @@ const diffColors = (a, b) => {
   )})`;
 };
 
+const colorDesc = (x) => {
+  const cx = maybeParseColor(x);
+  if (!cx) return '';
+
+  return `hsl(${round(cx.hue, 2)}, ${round(cx.saturation, 2)}, ${round(cx.lightness, 2)})`;
+};
+
 const swatches = (collection, testColor) =>
   map(
     sortBy(toPairs(pickBy(collection, isString)), [
-      ([, c]) => parseToHsl(c).hue,
-      ([, c]) => parseToHsl(c).saturation,
-      ([, c]) => parseToHsl(c).lightness,
+      ([, c]) => round(parseToHsl(c).hue, 2),
+      ([, c]) => round(parseToHsl(c).saturation, 1),
+      ([, c]) => round(parseToHsl(c).lightness, 2),
     ]),
     ([name, c]) => (
-      <Sample key={c} title={testColor && diffColors(c, testColor)}>
+      <Sample key={c} title={testColor ? diffColors(c, testColor) : colorDesc(c)}>
         <Swatch color={c} />
         <Label em={name === TEST_COLOR_NAME}>
           {isNaN(parseFloat(name)) && name}

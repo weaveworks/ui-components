@@ -64,7 +64,7 @@ const WeaveLogoProgress = styled.div`
   overflow: hidden;
 
   .st0 {
-    fill: ${props => props.theme.colors.primary.charcoal};
+    fill: ${props => props.theme.colors.primary.purple900};
   }
   .st1 {
     fill: ${props => props.theme.colors.accent.blue};

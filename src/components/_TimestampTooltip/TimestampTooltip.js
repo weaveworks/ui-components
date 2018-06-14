@@ -9,7 +9,7 @@ const TooltipContainer = styled.div.attrs({
   // generation every time the tooltip is repositioned.
   style: ({ offsetX, offsetY }) => ({ left: offsetX, top: offsetY }),
 })`
-  color: ${props => props.theme.colors.primary.charcoal};
+  color: ${props => props.theme.colors.primary.purple900};
   background-color: ${props => props.theme.colors.gallery};
   border: 1px solid ${props => props.theme.colors.silver};
   border-radius: ${props => props.theme.borderRadius.soft};

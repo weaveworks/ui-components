@@ -12,11 +12,11 @@ const borders = props => `
     border-top-right-radius: ${props.theme.borderRadius.soft};
     border-bottom-right-radius: ${props.theme.borderRadius.soft};
     border-bottom-left-radius: ${props.theme.borderRadius.soft};
-    border: 1px solid ${props.theme.colors.athens};
+    border: 1px solid ${props.theme.colors.primary.purple100};
 `;
 
 const bordersOnlyTop = props => `
-  border-top: 1px solid ${props.theme.colors.athens}
+  border-top: 1px solid ${props.theme.colors.primary.purple100}
 `;
 
 const TabContent = styled.div`
