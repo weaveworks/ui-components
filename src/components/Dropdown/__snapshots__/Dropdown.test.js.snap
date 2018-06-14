@@ -17,7 +17,7 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
   cursor: pointer;
   border-radius: 4px;
   background-color: #fff;
-  border: 1px solid #969696;
+  border: 1px solid #737373;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -85,7 +85,7 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
   cursor: pointer;
   border-radius: 4px;
   background-color: #fff;
-  border: 1px solid #969696;
+  border: 1px solid #737373;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

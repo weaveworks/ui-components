@@ -30,12 +30,12 @@ const StyledInput = component => styled(component)`
   display: inline-block;
 
   input {
-    ${props => placeholder(props.theme.colors.dustyGray)};
+    ${props => placeholder(props.theme.colors.doveGray)};
     display: inline-block;
     padding: 0 12px;
     line-height: 36px;
     box-shadow: none;
-    border: 1px solid ${props => props.theme.colors.dustyGray};
+    border: 1px solid ${props => props.theme.colors.doveGray};
     border-radius: ${props => props.theme.borderRadius.soft};
   }
 `;

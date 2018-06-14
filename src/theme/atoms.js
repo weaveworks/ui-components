@@ -7,8 +7,8 @@ export const atoms = {
   Alert: {
     default: {
       color: colors.black,
-      background: colors.lightgray,
-      borderColor: darken(0.15, colors.lightgray),
+      background: colors.gallery,
+      borderColor: darken(0.15, colors.gallery),
     },
     info: {
       color: colors.white,
@@ -51,10 +51,10 @@ export const atoms = {
       hoverBackground: darken(0.05, colors.status.error),
     },
     disabled: {
-      color: colors.gray,
-      background: colors.lightgray,
-      hoverColor: colors.gray,
-      hoverBackground: colors.lightgray,
+      color: colors.doveGray,
+      background: colors.gallery,
+      hoverColor: colors.doveGray,
+      hoverBackground: colors.gallery,
     },
   },
 };

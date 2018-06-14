@@ -38,7 +38,7 @@ const NewColorFormRow = Row.extend`
   position: sticky;
   top: 0;
   padding: 12px 0;
-  background-color: ${theme.colors.sand};
+  background-color: ${theme.colors.gallery};
 `;
 
 const curly = start => (start ? '{' : '}');

@@ -27,7 +27,7 @@ exports[`<Tab Select /> snapshots renders 1`] = `
   padding: 10px 20px;
   font-size: 22px;
   outline: 0;
-  background-color: #f8f8f8;
+  background-color: #f4f4f4;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border: 1px solid #e2e2ec;
@@ -123,7 +123,7 @@ exports[`<Tab Select /> snapshots renders with a selectedTab 1`] = `
   padding: 10px 20px;
   font-size: 22px;
   outline: 0;
-  background-color: #f8f8f8;
+  background-color: #f4f4f4;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border: 1px solid #e2e2ec;

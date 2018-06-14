@@ -10,7 +10,7 @@ const TimelineLabelWrapper = styled.span.attrs({
 `;
 
 const TimelineLabelLine = styled.span`
-  border-left: 1px solid ${props => props.theme.colors.alto};
+  border-left: 1px solid ${props => props.theme.colors.silver};
   height: 75px;
 `;
 
@@ -34,7 +34,7 @@ const TimelineLabelContainer = styled.button`
   }
 
   &[disabled] {
-    color: ${props => props.theme.colors.gray};
+    color: ${props => props.theme.colors.doveGray};
     cursor: inherit;
   }
 

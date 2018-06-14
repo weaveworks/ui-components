@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const HEIGHT_PX = 27;
 
 const RangeSelectorWrapper = styled.div`
-  border-left: 1px solid ${props => props.theme.colors.silverDark};
+  border-left: 1px solid ${props => props.theme.colors.silver};
   min-width: 75px;
 `;
 
@@ -34,7 +34,7 @@ const RangeOptionsListWrapper = styled.div`
 
 const RangeOptionsList = styled.div`
   background-color: ${props => props.theme.colors.white};
-  border: 1px solid ${props => props.theme.colors.silverDark};
+  border: 1px solid ${props => props.theme.colors.silver};
   color: ${props => props.theme.colors.primary.charcoal};
   box-sizing: border-box;
   position: absolute;
@@ -59,7 +59,7 @@ const RangeOption = styled.div`
   padding: 0 8px;
 
   &:hover {
-    background-color: ${props => props.theme.colors.lightgray};
+    background-color: ${props => props.theme.colors.gallery};
   }
 
   ${props =>

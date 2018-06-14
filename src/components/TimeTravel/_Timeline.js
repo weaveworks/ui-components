@@ -80,7 +80,7 @@ const FullyPannableCanvas = styled.div`
 
 const TimelineContainer = FullyPannableCanvas.extend`
   background-color: ${props => transparentize(0.15, props.theme.colors.white)};
-  box-shadow: inset 0 0 7px ${props => props.theme.colors.gray};
+  box-shadow: inset 0 0 7px ${props => transparentize(0.35, props.theme.colors.doveGray)};
   pointer-events: all;
   position: relative;
   height: 100%;
@@ -221,13 +221,13 @@ class Timeline extends React.PureComponent {
         <OverflowHidden>
           <CenteredContent>
             <TimelineRange
-              color={theme.colors.gray}
+              color={theme.colors.silver}
               endAt={this.props.earliestTimestamp}
               timeScale={timeScale}
               width={width}
             />
             <TimelineRange
-              color={theme.colors.gray}
+              color={theme.colors.silver}
               startAt={this.props.timestampNow}
               timeScale={timeScale}
               width={width}
