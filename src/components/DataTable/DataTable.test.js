@@ -154,6 +154,30 @@ describe('DataTable', () => {
 
       expect(tree).toMatchSnapshot();
     });
+    it('renders extra headers', () => {
+      const tree = renderer
+        .create(
+          withTheme(
+            <DataTable
+              data={data}
+              columns={[{ value: 'name', label: 'Name' }, { value: 'email', label: 'Email' }]}
+              extraHeaders={[<div>Some other header</div>, <div>Another one</div>]}
+            >
+              {rows =>
+                map(rows, r => (
+                  <tr key={r.email}>
+                    <td>{r.name}</td>
+                    <td>{r.email}</td>
+                  </tr>
+                ))
+              }
+            </DataTable>
+          )
+        )
+        .toJSON();
+
+      expect(tree).toMatchSnapshot();
+    });
   });
   it('sorts on click', () => {
     const table = mount(
