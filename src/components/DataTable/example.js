@@ -2,6 +2,7 @@ import React from 'react';
 import { map, max } from 'lodash';
 
 import { Example } from '../../utils/example';
+import Button from '../Button';
 
 import DataTable from '.';
 
@@ -76,6 +77,23 @@ export default function DataTableExample() {
                   </tr>
                 ))}
               </tbody>
+            ))
+          }
+        </DataTable>
+      </Example>
+      <Example>
+        <h3>With extra headers</h3>
+        <DataTable
+          data={data}
+          columns={[{ value: 'name', label: 'Name' }, { value: 'email', label: 'Email' }]}
+          extraHeaders={[<Button>Extra Header</Button>]}
+        >
+          {rows =>
+            map(rows, r => (
+              <tr key={r.email}>
+                <td>{r.name}</td>
+                <td>{r.email}</td>
+              </tr>
             ))
           }
         </DataTable>

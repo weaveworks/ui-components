@@ -175,7 +175,7 @@ class DataTable extends React.PureComponent {
   };
 
   render() {
-    const { className, children, columns, nested } = this.props;
+    const { className, children, columns, nested, extraHeaders } = this.props;
     const { sortedData, sortOrder, sortField } = this.state;
 
     return (
@@ -193,6 +193,7 @@ class DataTable extends React.PureComponent {
                 {label}
               </Header>
             ))}
+            {map(extraHeaders, (h, i) => <th key={i}>{h}</th>)}
           </tr>
         </thead>
         {/* Don't render the tbody if nested; nested tables use <tbody> for rows */}
@@ -243,6 +244,11 @@ DataTable.propTypes = {
    * All child rows of `nested` tables should be <tbody /> tags
    */
   nested: PropTypes.bool,
+  /**
+   * Extra elements that will be added to the table headers.
+   * These columns will NOT be sortable.
+   */
+  extraHeaders: PropTypes.arrayOf(PropTypes.element),
 };
 
 DataTable.defaultProps = {
