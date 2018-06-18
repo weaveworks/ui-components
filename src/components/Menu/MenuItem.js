@@ -29,7 +29,7 @@ const Item = styled.div`
     props.active &&
     `
     color: ${props.theme.colors.gallery};
-    background-color: ${props.theme.colors.primary.purple400};
+    background-color: ${props.theme.colors.purple400};
   `};
 `;
 

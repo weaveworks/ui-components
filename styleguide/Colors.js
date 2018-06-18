@@ -66,33 +66,41 @@ const diffColors = (a, b) => {
   )})`;
 };
 
-const colorDesc = (x) => {
+const colorDesc = x => {
   const cx = maybeParseColor(x);
   if (!cx) return '';
 
-  return `hsl(${round(cx.hue, 2)}, ${round(cx.saturation, 2)}, ${round(cx.lightness, 2)})`;
+  return `hsl(${round(cx.hue, 2)}, ${round(cx.saturation, 2)}, ${round(
+    cx.lightness,
+    2
+  )})`;
 };
 
-const swatches = (collection, testColor) =>
+const swatches = (collection, testColor, matcher = /.*/) =>
   map(
     sortBy(toPairs(pickBy(collection, isString)), [
       ([, c]) => round(parseToHsl(c).hue, 2),
       ([, c]) => round(parseToHsl(c).saturation, 1),
       ([, c]) => round(parseToHsl(c).lightness, 2),
     ]),
-    ([name, c]) => (
-      <Sample key={c} title={testColor ? diffColors(c, testColor) : colorDesc(c)}>
-        <Swatch color={c} />
-        <Label em={name === TEST_COLOR_NAME}>
-          {isNaN(parseFloat(name)) && name}
-        </Label>
-      </Sample>
-    )
+    ([name, c]) =>
+      name.match(matcher) ? (
+        <Sample
+          key={c}
+          title={testColor ? diffColors(c, testColor) : colorDesc(c)}
+        >
+          <Swatch color={c} />
+          <Label em={name === TEST_COLOR_NAME}>
+            {isNaN(parseFloat(name)) && name}
+          </Label>
+        </Sample>
+      ) : null
   );
 
 class Colors extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = { newColor: '' };
   }
 
@@ -100,7 +108,7 @@ class Colors extends React.Component {
     this.setState({ newColor: ev.target.value });
   };
 
-  renderSwatches(collection) {
+  renderSwatches(collection, matcher) {
     return (
       <SwatchesBlock>
         {swatches(
@@ -110,7 +118,8 @@ class Colors extends React.Component {
               [TEST_COLOR_NAME]: this.state.newColor,
             }),
           },
-          this.state.newColor
+          this.state.newColor,
+          matcher
         )}
       </SwatchesBlock>
     );
@@ -142,17 +151,29 @@ class Colors extends React.Component {
             onChange={this.handleChange}
           />
         </NewColorFormRow>
-        <Text large bold>Primary Colors</Text>
-        <Row>{this.renderSwatches(theme.colors.primary)}</Row>
-        <Text large bold>Accent Colors</Text>
+        <Text large bold>
+          Primary Colors
+        </Text>
+        <Row>{this.renderSwatches(theme.colors, /^purple[0-9]+$/)}</Row>
+        <Text large bold>
+          Accent Colors
+        </Text>
         <Row>{this.renderSwatches(theme.colors.accent)}</Row>
-        <Text large bold>Status Colors</Text>
+        <Text large bold>
+          Status Colors
+        </Text>
         <Row>{this.renderSwatches(theme.colors.status)}</Row>
-        <Text large bold>Uncategorized Colors</Text>
-        <Row>{this.renderSwatches(theme.colors)}</Row>
-        <Text large bold>PromQL Colors</Text>
+        <Text large bold>
+          Uncategorized Colors
+        </Text>
+        <Row>{this.renderSwatches(theme.colors, /^[^0-9]+$/)}</Row>
+        <Text large bold>
+          PromQL Colors
+        </Text>
         <Row>{this.renderSwatches(theme.colors.promQL)}</Row>
-        <Text large bold>PrometheusGraph Themes</Text>
+        <Text large bold>
+          PrometheusGraph Themes
+        </Text>
         <div>
           <Text bold>Blue</Text>
           <Row>{this.renderSwatches(theme.colors.graphThemes.blue)}</Row>

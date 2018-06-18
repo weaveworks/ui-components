@@ -20,7 +20,7 @@ const SelectedRangeWrapper = styled.div`
 `;
 
 const SelectedRange = styled.div`
-  color: ${props => props.theme.colors.primary.purple900};
+  color: ${props => props.theme.colors.purple900};
 `;
 
 const RangeOptionsListWrapper = styled.div`
@@ -35,7 +35,7 @@ const RangeOptionsListWrapper = styled.div`
 const RangeOptionsList = styled.div`
   background-color: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.silver};
-  color: ${props => props.theme.colors.primary.purple900};
+  color: ${props => props.theme.colors.purple900};
   box-sizing: border-box;
   position: absolute;
   text-align: left;

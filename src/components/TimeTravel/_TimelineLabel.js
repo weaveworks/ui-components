@@ -16,7 +16,7 @@ const TimelineLabelLine = styled.span`
 
 const TimelineLabelContainer = styled.button`
   background-color: transparent;
-  color: ${props => props.theme.colors.primary.purple400};
+  color: ${props => props.theme.colors.purple400};
   font-size: ${props => props.theme.fontSizes.small};
   cursor: pointer;
   pointer-events: all;
@@ -39,7 +39,7 @@ const TimelineLabelContainer = styled.button`
   }
 
   &:not([disabled]):hover {
-    color: ${props => props.theme.colors.primary.purple900};
+    color: ${props => props.theme.colors.purple900};
   }
 `;
 
