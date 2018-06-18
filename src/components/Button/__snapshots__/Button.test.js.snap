@@ -18,6 +18,7 @@ exports[`<Button /> accepts a style prop 1`] = `
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
   background: #f2f2f2;
+  color: hsl(240,20%,30%);
 }
 
 <button
@@ -85,6 +86,7 @@ exports[`<Button /> snapshots renders default 1`] = `
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
   background: #f2f2f2;
+  color: hsl(240,20%,30%);
 }
 
 <button
@@ -180,6 +182,7 @@ exports[`<Button /> snapshots renders selected 1`] = `
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
   background: #f2f2f2;
+  color: hsl(240,20%,30%);
 }
 
 <button
