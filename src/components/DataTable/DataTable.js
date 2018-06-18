@@ -8,7 +8,7 @@ import { copyPropTypes } from '../../utils/compose';
 
 import Header from './_Header';
 
-const borderColor = props => transparentize(0.6, props.theme.colors.mischka);
+const borderColor = props => transparentize(0.6, props.theme.colors.purple100);
 
 const Styled = component => styled(component)`
   border-collapse: collapse;

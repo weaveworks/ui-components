@@ -35,7 +35,7 @@ export const atoms = {
     default: {
       color: colors.black,
       background: colors.white,
-      hoverColor: colors.gunpowder,
+      hoverColor: colors.purple800,
       hoverBackground: darken(0.05, colors.white),
     },
     primary: {

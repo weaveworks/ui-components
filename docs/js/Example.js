@@ -14,8 +14,8 @@ const Panel = styled.div`
 const PanelHeader = styled.div`
   height: 50px;
   padding-left: 20px;
-  background-color: ${props => props.theme.colors.athens};
-  color: ${props => props.theme.colors.gunpowder};
+  background-color: ${props => props.theme.colors.purple100};
+  color: ${props => props.theme.colors.purple800};
 
   &:first-child {
     line-height: 50px;
@@ -40,7 +40,7 @@ const TableHeader = styled.tr`
   border-bottom: 1px solid ${props => props.theme.colors.doveGray};
 
   th {
-    color: ${props => props.theme.colors.primary.lavender};
+    color: ${props => props.theme.colors.purple400};
     font-size: ${props => props.theme.fontSizes.tiny};
     font-weight: normal;
     text-transform: uppercase;
@@ -48,11 +48,11 @@ const TableHeader = styled.tr`
 `;
 
 const TableRow = styled.tr`
-  color: ${props => props.theme.colors.gunpowder};
+  color: ${props => props.theme.colors.purple800};
   font-size: ${props => props.theme.fontSizes.small};
 
   &:nth-child(odd) {
-    background-color: ${props => props.theme.colors.athens};
+    background-color: ${props => props.theme.colors.purple100};
   }
 
   td {

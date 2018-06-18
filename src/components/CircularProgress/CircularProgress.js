@@ -5,7 +5,7 @@ import { transparentize } from 'polished';
 
 import theme from '../../theme';
 
-const charcoal100 = theme.colors.primary.charcoal;
+const charcoal100 = theme.colors.purple900;
 const charcoal70 = transparentize(0.3, charcoal100);
 const charcoal50 = transparentize(0.5, charcoal100);
 const charcoal20 = transparentize(0.8, charcoal100);

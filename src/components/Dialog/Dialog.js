@@ -39,7 +39,7 @@ const Overlay = styled.div`
 const Window = styled.div`
   box-shadow: ${props => props.theme.boxShadow.light};
   background-color: ${props => props.theme.colors.white};
-  color: ${props => props.theme.colors.gunpowder};
+  color: ${props => props.theme.colors.purple800};
   margin: 0 auto;
   max-width: 768px;
   padding: 20px;

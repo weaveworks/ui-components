@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const PanButton = styled.button`
   background-color: transparent;
-  color: ${props => props.theme.colors.primary.lavender};
+  color: ${props => props.theme.colors.purple400};
   font-size: ${props => props.theme.fontSizes.small};
   cursor: pointer;
   pointer-events: all;
@@ -23,7 +23,7 @@ const PanButton = styled.button`
   }
 
   &:hover {
-    color: ${props => props.theme.colors.primary.charcoal};
+    color: ${props => props.theme.colors.purple900};
   }
 `;
 
