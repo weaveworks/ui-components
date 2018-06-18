@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import omit from 'lodash/omit';
 import styled from 'styled-components';
 
-const placeholder = content => `
-  &::-webkit-input-placeholder {${content}}
-  &:-moz-placeholder           {${content}}
-  &::-moz-placeholder          {${content}}
-  &:-ms-input-placeholder      {${content}}
+const placeholder = (property, content) => `
+  &::-webkit-input-placeholder {${property}: ${content};}
+  &:-moz-placeholder           {${property}: ${content};}
+  &::-moz-placeholder          {${property}: ${content};}
+  &:-ms-input-placeholder      {${property}: ${content};}
 `;
 
 const Icon = styled.i`
@@ -37,15 +36,19 @@ const StyledInput = component => styled(component)`
     box-shadow: none;
     border: 1px solid ${props => props.theme.colors.gray600};
     border-radius: ${props => props.theme.borderRadius.soft};
+    height: 36px;
+    box-sizing: border-box;
+
+    ${props => placeholder('color', props.theme.colors.dustyGray)};
   }
 `;
 
 const ValidationMessage = styled.span`
+  display: ${props => (props.remove ? 'none' : 'block')};
   font-size: ${props => props.theme.fontSizes.small};
   padding-left: 8px;
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
-  color: ${props =>
-    props.valid ? 'inherit' : props.theme.colors.status.error};
+  color: ${props => (props.valid ? 'inherit' : props.theme.colors.status.error)};
 `;
 
 /**
@@ -90,16 +93,16 @@ class Input extends React.Component {
   }
 
   render() {
-    const { valid, message, label, id, className, textarea } = this.props;
-    const inputProps = omit(this.props, [
-      'label',
-      'valid',
-      'message',
-      'className',
-      'autoSelectText',
-      'focus',
-      'textarea',
-    ]);
+    const {
+      valid,
+      message,
+      label,
+      id,
+      className,
+      textarea,
+      hideValidationMessage,
+      ...inputProps
+    } = this.props;
 
     return (
       <div className={className}>
@@ -113,7 +116,7 @@ class Input extends React.Component {
           })}
           <Icon visible={!valid} className="fa fa-times-circle" />
         </InputWrapper>
-        <ValidationMessage valid={valid} visible={message}>
+        <ValidationMessage remove={hideValidationMessage} valid={valid} visible={message}>
           {message}
         </ValidationMessage>
       </div>
