@@ -23,7 +23,7 @@ const Popover = styled.div`
   z-index: ${props => props.theme.layers.dropdown};
   box-shadow: ${props => props.theme.boxShadow.light};
   margin-top: 4px;
-  width: ${WIDTH};
+  width: ${props => props.width}px;
   box-sizing: border-box;
   padding: 6px 0;
 `;
@@ -39,8 +39,7 @@ const Overlay = styled.div`
 
 const ItemWrapper = Item.extend`
   line-height: ${HEIGHT};
-  color: ${props =>
-    props.selected ? props.theme.colors.blue400 : props.theme.textColor};
+  color: ${props => (props.selected ? props.theme.colors.blue400 : props.theme.textColor)};
   min-height: ${HEIGHT};
 
   &:hover {
@@ -76,21 +75,20 @@ const SelectedItemIcon = styled.span`
 
 const StyledDropdown = component => styled(component)`
   height: ${HEIGHT};
-  line-height: ${HEIGHT};
+  line-height: 34px;
   position: relative;
-  padding: 8px;
   width: ${WIDTH};
+  box-sizing: border-box;
 `;
 
-
 const DefaultToggleView = ({ onClick, selectedLabel }) => (
-  <SelectedItem onClick={onClick}>
+  <SelectedItem onClick={onClick} className="dropdown-toggle">
     <Item>{selectedLabel}</Item>
     <div>
       <SelectedItemIcon className="fa fa-caret-down" />
     </div>
-  </SelectedItem>);
-
+  </SelectedItem>
+);
 
 /**
  * A selectable drop-down menu.
@@ -139,6 +137,8 @@ class Dropdown extends React.Component {
       isOpen: false,
     };
 
+    this.element = React.createRef();
+
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleBgClick = this.handleBgClick.bind(this);
@@ -174,19 +174,17 @@ class Dropdown extends React.Component {
     // If nothing is selected, use the placeholder, else use the first item.
     const currentItem =
       find(divided, i => i && i.value === value) ||
-      (placeholder
-        ? { label: placeholder, value: null }
-        : divided && divided[0]);
+      (placeholder ? { label: placeholder, value: null } : divided && divided[0]);
     const label = currentItem && currentItem.label;
     const Component = this.props.withComponent;
 
     return (
-      <div className={className} title={label}>
+      <div className={className} title={label} ref={this.element}>
         <Component selectedLabel={label} onClick={this.handleClick} />
         {isOpen && (
           <div>
             <Overlay onClick={this.handleBgClick} />
-            <Popover>
+            <Popover width={this.element.current.offsetWidth}>
               {map(
                 divided,
                 (item, index) =>
@@ -223,9 +221,8 @@ Dropdown.propTypes = {
    * `value` should be an internal value,
    * `label` is what will be displayed to the user.
    */
-  items: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType])
-  ).isRequired,
+  items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType]))
+    .isRequired,
   /**
    * The value of the currently selected item. This much match a value in the `items` prop.
    * If no value is provided, the first elements's value will be used.
