@@ -37,3 +37,5 @@ export TimestampTag from './TimestampTag';
 export TabSelect, { Tab } from './TabSelect';
 
 export ResourceDial from './ResourceDial';
+
+export Search from './Search';
