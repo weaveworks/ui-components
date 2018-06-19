@@ -11,7 +11,7 @@ exports[`DataTable snapshots renders extra headers 1`] = `
 }
 
 .c1:hover {
-  color: #037aa9;
+  color: hsl(191,100%,35%);
 }
 
 .c0 {
@@ -111,7 +111,7 @@ exports[`DataTable snapshots renders nested rows 1`] = `
 }
 
 .c1:hover {
-  color: #037aa9;
+  color: hsl(191,100%,35%);
 }
 
 .c0 {
@@ -230,7 +230,7 @@ exports[`DataTable snapshots renders rows 1`] = `
 }
 
 .c1:hover {
-  color: #037aa9;
+  color: hsl(191,100%,35%);
 }
 
 .c0 {
@@ -320,7 +320,7 @@ exports[`DataTable snapshots sorts fields by a give order 1`] = `
 }
 
 .c1:hover {
-  color: #037aa9;
+  color: hsl(191,100%,35%);
 }
 
 .c0 {
@@ -410,7 +410,7 @@ exports[`DataTable snapshots sorts rows by a field 1`] = `
 }
 
 .c1:hover {
-  color: #037aa9;
+  color: hsl(191,100%,35%);
 }
 
 .c0 {

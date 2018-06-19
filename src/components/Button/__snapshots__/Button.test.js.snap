@@ -140,7 +140,7 @@ exports[`<Button /> snapshots renders primary 1`] = `
   border: 0;
   outline: none;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
-  background: #037aa9;
+  background: hsl(191,100%,35%);
   color: #fff;
   font-size: 14px;
   cursor: pointer;
@@ -149,7 +149,7 @@ exports[`<Button /> snapshots renders primary 1`] = `
 .c0:hover {
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
-  background: #036890;
+  background: #007d9a;
   color: #fff;
 }
 
