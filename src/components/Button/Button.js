@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { omit } from 'lodash';
 
 import { fromAtoms } from '../../utils/theme';
 
@@ -53,20 +54,19 @@ class Button extends React.PureComponent {
     const {
       children,
       text,
-      type,
       primary,
-      disabled,
       danger,
       selected,
-      style,
-      className,
+      disabled,
+      ...otherProps,
     } = this.props;
+
+    const buttonProps = omit(otherProps, ['onClick']);
 
     return (
       <StyledButton
         disabled={disabled}
         onClick={this.handleClick}
-        type={type}
         styled={{
           selected,
           type:
@@ -75,8 +75,7 @@ class Button extends React.PureComponent {
             (danger && 'danger') ||
             'default',
         }}
-        style={style}
-        className={className}
+        {...buttonProps}
       >
         {children || text}
       </StyledButton>
