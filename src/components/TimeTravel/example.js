@@ -24,26 +24,37 @@ export default class TimeTravelExample extends React.Component {
     super(props);
 
     this.state = {
-      timestamp1: moment().format(),
-      timestamp2: moment().format(),
-      timestamp3: moment().format(),
+      timestamp1: moment()
+        .utc()
+        .format(),
+      timestamp2: moment()
+        .utc()
+        .format(),
+      timestamp3: moment()
+        .utc()
+        .format(),
       isLoading2: false,
       showingLive3: true,
       rangeMs3: 3600000,
       visibleStartAt: null,
       visibleEndAt: null,
-      deployments: generateDeployments({
-        startTime: moment().subtract(1, 'month').unix(),
-        endTime: moment().unix(),
-      }, 500),
+      deployments: generateDeployments(
+        {
+          startTime: moment()
+            .subtract(1, 'month')
+            .unix(),
+          endTime: moment().unix(),
+        },
+        500
+      ),
     };
   }
 
-  handleChangeTimestamp1 = (timestamp1) => {
+  handleChangeTimestamp1 = timestamp1 => {
     this.setState({ timestamp1 });
   };
 
-  handleChangeTimestamp2 = (timestamp2) => {
+  handleChangeTimestamp2 = timestamp2 => {
     this.setState({ timestamp2, isLoading2: true });
     // Show loading indicator for 5 seconds after every timestamp change..
     setTimeout(() => {
@@ -51,15 +62,15 @@ export default class TimeTravelExample extends React.Component {
     }, 5000);
   };
 
-  handleChangeTimestamp3 = (timestamp3) => {
+  handleChangeTimestamp3 = timestamp3 => {
     this.setState({ timestamp3 });
   };
 
-  handleChangeLiveMode3 = (showingLive3) => {
+  handleChangeLiveMode3 = showingLive3 => {
     this.setState({ showingLive3 });
   };
 
-  handleChangeRange3 = (rangeMs3) => {
+  handleChangeRange3 = rangeMs3 => {
     this.setState({ rangeMs3 });
   };
 
@@ -68,7 +79,7 @@ export default class TimeTravelExample extends React.Component {
       visibleStartAt: startAt,
       visibleEndAt: endAt,
     });
-  }
+  };
 
   render() {
     return (

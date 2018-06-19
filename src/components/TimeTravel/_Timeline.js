@@ -80,7 +80,8 @@ const FullyPannableCanvas = styled.div`
 
 const TimelineContainer = FullyPannableCanvas.extend`
   background-color: ${props => transparentize(0.15, props.theme.colors.white)};
-  box-shadow: inset 0 0 7px ${props => transparentize(0.35, props.theme.colors.doveGray)};
+  box-shadow: inset 0 0 7px
+    ${props => transparentize(0.35, props.theme.colors.doveGray)};
   pointer-events: all;
   position: relative;
   height: 100%;
