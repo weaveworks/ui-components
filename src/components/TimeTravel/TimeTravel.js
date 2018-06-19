@@ -138,7 +138,7 @@ function initialDurationMsPerTimelinePx(earliestTimestamp) {
  * ```
  *
  */
-class TimeTravel extends React.Component {
+class TimeTravel extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
 
@@ -173,14 +173,15 @@ class TimeTravel extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const nextTimestamp = formattedTimestamp(nextProps.timestamp);
+
     // If live mode is supported and we're in it, ignore the timestamp prop and jump
-    // directly to the present timestamp, otherwise jump to the given timestamp prop.
+    // directly to the present timestamp, otherwise jump to the given timestamp prop
+    // if it has changed (to prevent regressions).
     if (nextProps.hasLiveMode && nextProps.showingLive) {
       this.setState({ focusedTimestamp: this.state.timestampNow });
-    } else {
-      this.setState({
-        focusedTimestamp: formattedTimestamp(nextProps.timestamp),
-      });
+    } else if (nextTimestamp !== this.props.timestamp) {
+      this.setState({ focusedTimestamp: nextTimestamp });
     }
     // Update live mode only if live mode toggle is enabled.
     if (nextProps.hasLiveMode) {
