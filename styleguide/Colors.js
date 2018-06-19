@@ -171,7 +171,7 @@ class Colors extends React.Component {
         </Text>
         <Row>{this.renderSwatches(theme.colors.status)}</Row>
         <Text large bold>
-          Uncategorized Colors
+          Neutral Colors
         </Text>
         <Row>{this.renderSwatches(theme.colors, /^[^0-9]+$/)}</Row>
         <Separator />

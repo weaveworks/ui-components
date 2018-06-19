@@ -21,15 +21,12 @@ export const colors = {
   blue400: 'hsl(191, 100%, 50%)', // #00d2ff
   blue50: 'hsl(191, 100%, 97%)', // #f0fcff
 
-  // Uncategorized Colors
+  // Neutral Colors
   black: '#1a1a1a',
   doveGray: '#737373',
-  eastBay: '#4a5d87',
   gallery: '#f4f4f4',
-  mystic: '#dae4ea',
   silver: '#ccc',
   white: '#fff',
-  whiteLilac: '#f0f0fa',
 
   // Use these when colorizing elements that should indicate a state or outcome, ie Alerts.
   status: {
