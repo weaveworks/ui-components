@@ -40,7 +40,7 @@ const Overlay = styled.div`
 const ItemWrapper = Item.extend`
   line-height: ${HEIGHT};
   color: ${props =>
-    props.selected ? props.theme.colors.accent.blue : props.theme.textColor};
+    props.selected ? props.theme.colors.blue400 : props.theme.textColor};
   min-height: ${HEIGHT};
 
   &:hover {

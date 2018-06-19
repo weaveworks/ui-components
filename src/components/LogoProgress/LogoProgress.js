@@ -67,10 +67,10 @@ const WeaveLogoProgress = styled.div`
     fill: ${props => props.theme.colors.purple900};
   }
   .st1 {
-    fill: ${props => props.theme.colors.accent.blue};
+    fill: ${props => props.theme.colors.blue400};
   }
   .st2 {
-    fill: ${props => props.theme.colors.accent.orange};
+    fill: ${props => props.theme.colors.orange500};
   }
 
   .a,

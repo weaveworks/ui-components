@@ -12,8 +12,8 @@ export const atoms = {
     },
     info: {
       color: colors.white,
-      background: colors.status.info,
-      borderColor: darken(0.15, colors.status.info),
+      background: colors.blue600,
+      borderColor: darken(0.15, colors.blue600),
     },
     success: {
       color: colors.white,
@@ -40,9 +40,9 @@ export const atoms = {
     },
     primary: {
       color: colors.white,
-      background: colors.turquoise,
+      background: colors.blue700,
       hoverColor: colors.white,
-      hoverBackground: darken(0.05, colors.turquoise),
+      hoverBackground: darken(0.05, colors.blue700),
     },
     danger: {
       color: colors.white,

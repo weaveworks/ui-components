@@ -65,7 +65,7 @@ const RangeOption = styled.div`
   ${props =>
     props.selected &&
     `
-    color: ${props.theme.colors.accent.blue};
+    color: ${props.theme.colors.blue400};
   `};
 `;
 

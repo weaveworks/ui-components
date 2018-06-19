@@ -7,7 +7,7 @@ const StyledHeader = component => styled(component)`
   user-select: none;
 
   &:hover {
-    color: ${props => (props.sortable ? props.theme.colors.turquoise : 'inherit')};
+    color: ${props => (props.sortable ? props.theme.colors.blue700 : 'inherit')};
   }
 `;
 
