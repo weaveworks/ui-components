@@ -11,7 +11,12 @@ export default function ButtonExample({ clickHandler }) {
         <Button onClick={onClick} text="Submit" />
       </Example>
       <Example>
-        <Button disabled onClick={onClick} text="Disabled" />
+        <Button
+          disabled
+          onClick={onClick}
+          title="Can't click this right now..."
+          text="Disabled"
+        />
       </Example>
       <Example>
         <Button primary onClick={onClick} text="Primary" />
