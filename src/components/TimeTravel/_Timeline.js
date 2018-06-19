@@ -34,7 +34,7 @@ const TimelineWrapper = styled.div`
   &:before,
   &:after {
     border: 1px solid ${props => props.theme.colors.white};
-    background-color: ${props => props.theme.colors.accent.orange};
+    background-color: ${props => props.theme.colors.orange500};
     z-index: ${props => props.theme.layers.front};
     box-sizing: border-box;
     content: '';
@@ -235,7 +235,7 @@ class Timeline extends React.PureComponent {
             />
             {this.props.inspectingInterval && (
               <TimelineRange
-                color={theme.colors.accent.blue}
+                color={theme.colors.blue400}
                 startAt={startTimestamp}
                 endAt={focusedTimestamp}
                 timeScale={timeScale}

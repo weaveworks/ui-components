@@ -22,7 +22,7 @@ const DeploymentAnnotationContainer = styled.div.attrs({
 
 const FocusPoint = styled.span`
   border-radius: ${props => props.theme.borderRadius.circle};
-  border: 2.5px solid ${props => props.theme.colors.accent.blue};
+  border: 2.5px solid ${props => props.theme.colors.blue400};
   background-color: ${props => props.theme.colors.white};
   box-sizing: border-box;
   position: absolute;
@@ -51,7 +51,7 @@ const AnnotationShadow = VerticalLine.extend`
 `;
 
 const AnnotationLine = VerticalLine.extend`
-  border-left: 1px solid ${props => props.theme.colors.accent.blue};
+  border-left: 1px solid ${props => props.theme.colors.blue400};
   opacity: 0.7;
 `;
 

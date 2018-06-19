@@ -99,7 +99,7 @@ Button.propTypes = {
    */
   disabled: PropTypes.bool,
   /**
-   * Render the button in turquoise (useful for CTAs)
+   * Render the button in blue700 (useful for CTAs)
    */
   primary: PropTypes.bool,
   /**

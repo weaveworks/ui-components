@@ -41,6 +41,13 @@ const NewColorFormRow = Row.extend`
   background-color: ${theme.colors.gallery};
 `;
 
+const Separator = styled.div`
+  border-top: 4px solid ${theme.colors.silver};
+  display: block;
+  margin: 50px 0;
+  width: 100%;
+`;
+
 const curly = start => (start ? '{' : '}');
 
 const maybeParseColor = v => {
@@ -79,7 +86,7 @@ const colorDesc = x => {
 const swatches = (collection, testColor, matcher = /.*/) =>
   map(
     sortBy(toPairs(pickBy(collection, isString)), [
-      ([, c]) => round(parseToHsl(c).hue, 2),
+      ([, c]) => round(parseToHsl(c).hue, 0),
       ([, c]) => round(parseToHsl(c).saturation, 1),
       ([, c]) => round(parseToHsl(c).lightness, 2),
     ]),
@@ -136,7 +143,7 @@ class Colors extends React.Component {
             const MyButton = styled.button`
             <br />
             &nbsp; background: ${curly(true)}props =&gt;
-            props.theme.colors.accent.blue{curly(false)};
+            props.theme.colors.blue400{curly(false)};
             <br />
             `;
           </pre>
@@ -158,7 +165,7 @@ class Colors extends React.Component {
         <Text large bold>
           Accent Colors
         </Text>
-        <Row>{this.renderSwatches(theme.colors.accent)}</Row>
+        <Row>{this.renderSwatches(theme.colors, /^(orange|blue)[0-9]+$/)}</Row>
         <Text large bold>
           Status Colors
         </Text>
@@ -167,8 +174,9 @@ class Colors extends React.Component {
           Uncategorized Colors
         </Text>
         <Row>{this.renderSwatches(theme.colors, /^[^0-9]+$/)}</Row>
+        <Separator />
         <Text large bold>
-          PromQL Colors
+          PromQL Theme
         </Text>
         <Row>{this.renderSwatches(theme.colors.promQL)}</Row>
         <Text large bold>

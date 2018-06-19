@@ -2,41 +2,43 @@ import { isString, kebabCase, forEach } from 'lodash';
 
 export const colors = {
   // Primary Colors
-  purple900: 'hsl(240, 20%, 25%)',      // #32324b
-  purple800: 'hsl(240, 20%, 30%)',      // #3d3d5c
-  purple700: 'hsl(240, 20%, 35%)',      // #47476b
-  purple600: 'hsl(240, 20%, 45%)',      // #5b5b88
-  purple500: 'hsl(240, 20%, 50%)',      // #666699
-  purple400: 'hsl(240, 20%, 60%)',      // #8585ad
-  purple300: 'hsl(240, 20%, 65%)',      // #9494b8
-  purple200: 'hsl(240, 20%, 75%)',      // #b1b1cb
-  purple100: 'hsl(240, 20%, 90%)',      // #dfdfea
-  purple50: 'hsl(240, 20%, 95%)',       // #eeeef4
-  purple25: 'hsl(240, 20%, 98%)',       // #fafafc
+  purple900: 'hsl(240, 20%, 25%)', // #32324b
+  purple800: 'hsl(240, 20%, 30%)', // #3d3d5c
+  purple700: 'hsl(240, 20%, 35%)', // #47476b
+  purple600: 'hsl(240, 20%, 45%)', // #5b5b88
+  purple500: 'hsl(240, 20%, 50%)', // #666699
+  purple400: 'hsl(240, 20%, 60%)', // #8585ad
+  purple300: 'hsl(240, 20%, 65%)', // #9494b8
+  purple200: 'hsl(240, 20%, 75%)', // #b1b1cb
+  purple100: 'hsl(240, 20%, 90%)', // #dfdfea
+  purple50: 'hsl(240, 20%, 95%)', // #eeeef4
+  purple25: 'hsl(240, 20%, 98%)', // #fafafc
 
-  accent: {
-    blue: '#00d2ff',
-    orange: '#ff4b19',
-  },
-  status: {
-    // Use these when colorizing elements that should indicate a state or outcome, ie Alerts.
-    success: '#38bd93', // green
-    error: '#c7254e', // red
-    warning: '#d4ab27', // amber
-    info: '#049cd7', // blue
-    disabled: '#9a9a9a',
-  },
-  // uncategorized colors
-  aliceBlue: '#f0f8ff',
+  // Accent Colors
+  orange500: 'hsl(13, 100%, 50%)', // #ff3700
+  blue700: 'hsl(191, 100%, 35%)', // #0092b3
+  blue600: 'hsl(191, 100%, 40%)', // #00a7cc
+  blue400: 'hsl(191, 100%, 50%)', // #00d2ff
+  blue50: 'hsl(191, 100%, 97%)', // #f0fcff
+
+  // Uncategorized Colors
   black: '#1a1a1a',
   doveGray: '#737373',
   eastBay: '#4a5d87',
   gallery: '#f4f4f4',
   mystic: '#dae4ea',
   silver: '#ccc',
-  turquoise: '#037aa9',
   white: '#fff',
   whiteLilac: '#f0f0fa',
+
+  // Use these when colorizing elements that should indicate a state or outcome, ie Alerts.
+  status: {
+    success: '#38bd93', // green
+    error: '#c7254e', // red
+    warning: '#d4ab27', // amber
+    disabled: '#9a9a9a',
+  },
+
   // PromQL
   promQL: {
     /**
