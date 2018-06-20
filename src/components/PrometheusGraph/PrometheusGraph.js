@@ -210,7 +210,6 @@ class PrometheusGraph extends React.PureComponent {
     this.state = {
       multiSeries: [],
       selectedLegendKeys: props.selectedLegendKeys,
-      selectedLegendOverride: false,
       hoveredLegendKey: null,
       hoverTimestampSec: null,
       hoverPoints: null,
@@ -229,10 +228,8 @@ class PrometheusGraph extends React.PureComponent {
     if (this.props.multiSeries !== nextProps.multiSeries) {
       this.prepareMultiSeries(nextProps);
     }
-    if (
-      this.props.selectedLegendKeys !== nextProps.selectedLegendKeys &&
-      !this.state.selectedLegendOverride
-    ) {
+
+    if (this.props.selectedLegendKeys !== nextProps.selectedLegendKeys) {
       const { selectedLegendKeys } = nextProps;
       this.prepareMultiSeries(nextProps, { selectedLegendKeys });
       this.setState({ selectedLegendKeys });
@@ -241,7 +238,7 @@ class PrometheusGraph extends React.PureComponent {
 
   handleSelectedLegendKeysChange = selectedLegendKeys => {
     this.prepareMultiSeries(this.props, { selectedLegendKeys });
-    this.setState({ selectedLegendKeys, selectedLegendOverride: true });
+    this.setState({ selectedLegendKeys });
     this.props.onChangeLegendSelection(selectedLegendKeys);
   };
 
