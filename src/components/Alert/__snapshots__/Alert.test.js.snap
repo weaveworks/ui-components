@@ -6,10 +6,10 @@ exports[`<Alert /> snapshots renders default 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #f4f4f4;
+  background: hsl(0,0%,96%);
   border-radius: 4px;
-  border: 2px solid #cecece;
-  color: #1a1a1a;
+  border: 2px solid #cfcfcf;
+  color: hsl(0,0%,10%);
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
@@ -19,7 +19,7 @@ exports[`<Alert /> snapshots renders default 1`] = `
 }
 
 .c0 a {
-  color: #1a1a1a;
+  color: hsl(0,0%,10%);
   text-decoration: underline;
 }
 
@@ -58,7 +58,7 @@ exports[`<Alert /> snapshots renders error 1`] = `
   background: #c7254e;
   border-radius: 4px;
   border: 2px solid #861935;
-  color: #fff;
+  color: hsl(0,0%,100%);
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
@@ -68,7 +68,7 @@ exports[`<Alert /> snapshots renders error 1`] = `
 }
 
 .c0 a {
-  color: #fff;
+  color: hsl(0,0%,100%);
   text-decoration: underline;
 }
 
@@ -104,10 +104,10 @@ exports[`<Alert /> snapshots renders icon if provided 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #f4f4f4;
+  background: hsl(0,0%,96%);
   border-radius: 4px;
-  border: 2px solid #cecece;
-  color: #1a1a1a;
+  border: 2px solid #cfcfcf;
+  color: hsl(0,0%,10%);
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
@@ -117,7 +117,7 @@ exports[`<Alert /> snapshots renders icon if provided 1`] = `
 }
 
 .c0 a {
-  color: #1a1a1a;
+  color: hsl(0,0%,10%);
   text-decoration: underline;
 }
 
@@ -156,7 +156,7 @@ exports[`<Alert /> snapshots renders success 1`] = `
   background: #38bd93;
   border-radius: 4px;
   border: 2px solid #278265;
-  color: #fff;
+  color: hsl(0,0%,100%);
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
@@ -166,7 +166,7 @@ exports[`<Alert /> snapshots renders success 1`] = `
 }
 
 .c0 a {
-  color: #fff;
+  color: hsl(0,0%,100%);
   text-decoration: underline;
 }
 
@@ -199,7 +199,7 @@ exports[`<Alert /> snapshots renders success 1`] = `
 exports[`<Alert /> snapshots renders title if provided 1`] = `
 .c3 {
   font-family: 'proxima-nova',Helvetica,Arial,sans-serif;
-  color: #1a1a1a;
+  color: hsl(0,0%,10%);
   font-size: 16px;
   font-weight: 600;
   text-transform: none;
@@ -211,10 +211,10 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #f4f4f4;
+  background: hsl(0,0%,96%);
   border-radius: 4px;
-  border: 2px solid #cecece;
-  color: #1a1a1a;
+  border: 2px solid #cfcfcf;
+  color: hsl(0,0%,10%);
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
@@ -224,7 +224,7 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
 }
 
 .c0 a {
-  color: #1a1a1a;
+  color: hsl(0,0%,10%);
   text-decoration: underline;
 }
 
@@ -276,7 +276,7 @@ exports[`<Alert /> snapshots renders warning 1`] = `
   background: #d4ab27;
   border-radius: 4px;
   border: 2px solid #93771b;
-  color: #fff;
+  color: hsl(0,0%,100%);
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
@@ -286,7 +286,7 @@ exports[`<Alert /> snapshots renders warning 1`] = `
 }
 
 .c0 a {
-  color: #fff;
+  color: hsl(0,0%,100%);
   text-decoration: underline;
 }
 
