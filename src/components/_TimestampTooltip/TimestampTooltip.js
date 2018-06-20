@@ -10,8 +10,8 @@ const TooltipContainer = styled.div.attrs({
   style: ({ offsetX, offsetY }) => ({ left: offsetX, top: offsetY }),
 })`
   color: ${props => props.theme.colors.purple900};
-  background-color: ${props => props.theme.colors.gallery};
-  border: 1px solid ${props => props.theme.colors.silver};
+  background-color: ${props => props.theme.colors.gray50};
+  border: 1px solid ${props => props.theme.colors.gray200};
   border-radius: ${props => props.theme.borderRadius.soft};
   z-index: ${props => props.theme.layers.tooltip};
   padding: 10px 15px;

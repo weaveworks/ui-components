@@ -45,7 +45,7 @@ const TooltipRowValue = styled.span`
 const HoverLine = styled.div.attrs({
   style: ({ left, height }) => ({ left, height }),
 })`
-  border-left: 1px solid ${props => props.theme.colors.doveGray};
+  border-left: 1px solid ${props => props.theme.colors.gray600};
   pointer-events: none;
   position: absolute;
   top: 0;

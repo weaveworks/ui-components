@@ -38,11 +38,11 @@ const NewColorFormRow = Row.extend`
   position: sticky;
   top: 0;
   padding: 12px 0;
-  background-color: ${theme.colors.gallery};
+  background-color: ${theme.colors.gray50};
 `;
 
 const Separator = styled.div`
-  border-top: 4px solid ${theme.colors.silver};
+  border-top: 4px solid ${theme.colors.gray200};
   display: block;
   margin: 50px 0;
   width: 100%;
@@ -161,11 +161,11 @@ class Colors extends React.Component {
         <Text large bold>
           Primary Colors
         </Text>
-        <Row>{this.renderSwatches(theme.colors, /^purple[0-9]+$/)}</Row>
+        <Row>{this.renderSwatches(theme.colors, /^purple[0-9]*$/)}</Row>
         <Text large bold>
           Accent Colors
         </Text>
-        <Row>{this.renderSwatches(theme.colors, /^(orange|blue)[0-9]+$/)}</Row>
+        <Row>{this.renderSwatches(theme.colors, /^(orange|blue)[0-9]*$/)}</Row>
         <Text large bold>
           Status Colors
         </Text>
@@ -173,7 +173,7 @@ class Colors extends React.Component {
         <Text large bold>
           Neutral Colors
         </Text>
-        <Row>{this.renderSwatches(theme.colors, /^[^0-9]+$/)}</Row>
+        <Row>{this.renderSwatches(theme.colors, /^(black|gray|white)[0-9]*$/)}</Row>
         <Separator />
         <Text large bold>
           PromQL Theme

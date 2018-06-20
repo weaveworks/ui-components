@@ -34,7 +34,7 @@ const Timestamp = styled.span`
   ${props =>
     !props.inheritStyles &&
     `
-    color: ${props.theme.colors.doveGray};
+    color: ${props.theme.colors.gray600};
     font-size: ${props.theme.fontSizes.small};
   `};
 `;

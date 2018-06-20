@@ -10,7 +10,7 @@ const Container = styled.div`
   ${props =>
     props.active &&
     `
-    background-color: ${props.theme.colors.gallery};
+    background-color: ${props.theme.colors.gray50};
   `};
 `;
 
