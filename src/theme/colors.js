@@ -22,18 +22,18 @@ export const colors = {
   blue50: 'hsl(191, 100%, 97%)', // #f0fcff
 
   // Neutral Colors
-  black: '#1a1a1a',
-  doveGray: '#737373',
-  gallery: '#f4f4f4',
-  silver: '#ccc',
-  white: '#fff',
+  black: 'hsl(0, 0%, 10%)', // #1a1a1a
+  gray600: 'hsl(0, 0%, 45%)', // #737373
+  gray200: 'hsl(0, 0%, 80%)', // #cccccc
+  gray100: 'hsl(0, 0%, 90%)', // #e6e6e6
+  gray50: 'hsl(0, 0%, 96%)', // #f4f4f4
+  white: 'hsl(0, 0%, 100%)', // #ffffff
 
   // Use these when colorizing elements that should indicate a state or outcome, ie Alerts.
   status: {
     success: '#38bd93', // green
     error: '#c7254e', // red
     warning: '#d4ab27', // amber
-    disabled: '#9a9a9a',
   },
 
   // PromQL

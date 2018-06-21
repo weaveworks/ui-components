@@ -30,14 +30,14 @@ const Table = styled.table`
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-collapse: collapse;
-  border-left-color: ${props => props.theme.colors.doveGray};
-  border-right-color: ${props => props.theme.colors.doveGray};
-  border-top-color: ${props => props.theme.colors.doveGray};
+  border-left-color: ${props => props.theme.colors.gray600};
+  border-right-color: ${props => props.theme.colors.gray600};
+  border-top-color: ${props => props.theme.colors.gray600};
 `;
 
 const TableHeader = styled.tr`
   box-shadow: 0 4px 2px -2px ${props => transparentize(0.84, props.theme.colors.black)};
-  border-bottom: 1px solid ${props => props.theme.colors.doveGray};
+  border-bottom: 1px solid ${props => props.theme.colors.gray600};
 
   th {
     color: ${props => props.theme.colors.purple400};
