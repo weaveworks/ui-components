@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { omit } from 'lodash';
+import styled, { css } from 'styled-components';
 
-const placeholder = (property, content) => `
-  &::-webkit-input-placeholder {${property}: ${content};}
-  &:-moz-placeholder           {${property}: ${content};}
-  &::-moz-placeholder          {${property}: ${content};}
-  &:-ms-input-placeholder      {${property}: ${content};}
+const placeholder = (property, content) => css`
+  &::-webkit-input-placeholder {
+    ${property}: ${content};
+  }
+  &::-moz-placeholder {
+    ${property}: ${content};
+  }
+  &:-moz-placeholder {
+    ${property}: ${content};
+  }
+  &:-ms-input-placeholder {
+    ${property}: ${content};
+  }
 `;
 
 const Icon = styled.i`
@@ -37,8 +46,6 @@ const StyledInput = component => styled(component)`
     border-radius: ${props => props.theme.borderRadius.soft};
     height: 36px;
     box-sizing: border-box;
-
-    ${props => placeholder('color', props.theme.colors.dustyGray)};
   }
 `;
 
@@ -109,7 +116,7 @@ class Input extends React.Component {
         <label htmlFor={id}>{label}</label>
         <InputWrapper>
           {React.createElement(textarea ? 'textarea' : 'input', {
-            ...inputProps,
+            ...omit(inputProps, 'autoSelectText'),
             ref: elem => {
               this.input = elem;
 
