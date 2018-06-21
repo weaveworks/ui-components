@@ -101,6 +101,7 @@ class Input extends React.Component {
       className,
       textarea,
       hideValidationMessage,
+      inputRef,
       ...inputProps
     } = this.props;
 
@@ -112,6 +113,10 @@ class Input extends React.Component {
             ...inputProps,
             ref: elem => {
               this.input = elem;
+
+              if (inputRef) {
+                inputRef(elem);
+              }
             },
           })}
           <Icon visible={!valid} className="fa fa-times-circle" />
@@ -146,6 +151,10 @@ Input.propTypes = {
    * Use a `textarea` element instead of an `input` element
    */
   textarea: PropTypes.bool,
+  /**
+   * A callback to which the input `ref` will be passed.
+   */
+  inputRef: PropTypes.func,
 };
 
 Input.defaultProps = {
