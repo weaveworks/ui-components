@@ -26,7 +26,6 @@ const InputWrapper = styled.div`
 
 const StyledInput = component => styled(component)`
   padding: 8px;
-  display: inline-block;
 
   input {
     ${props => placeholder(props.theme.colors.gray600)};
