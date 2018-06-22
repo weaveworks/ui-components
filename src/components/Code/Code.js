@@ -65,7 +65,56 @@ const Pre = styled.pre`
   font-size: ${props => props.theme.fontSizes.small};
 `;
 
+const PaddedLine = styled.div`
+  &:not(:last-child) {
+    padding-bottom: 8px;
+  }
+
+  /* required to make jsx children work with adding '\n' in multiLine */
+  & > div {
+    display: inline;
+  }
+`;
+
 const trimString = node => (isString(node) ? trim(node) : node);
+
+const formatSingleCommand = children =>
+  isFunction(children) ? children() : trimString(children);
+
+function formatMultiString(string) {
+  return trim(string)
+    .split('\n')
+    .map((line, i) => (
+      <PaddedLine key={i}>
+        {line}
+        {'\n'}
+      </PaddedLine>
+    ));
+}
+
+function formatMultiCommand(raw) {
+  let children = raw;
+
+  if (isFunction(children)) {
+    children = children();
+  }
+  const count = React.Children.count(children);
+
+  if (count === 1 && isString(children)) {
+    return formatMultiString(children);
+  }
+
+  if (count === 1) {
+    return children;
+  }
+
+  return React.Children.map(children, (child, i) => (
+    <PaddedLine key={i}>
+      {child}
+      {'\n'}
+    </PaddedLine>
+  ));
+}
 
 /**
  * Code allows for easy rendering of code snippets which can easliy be copied to
@@ -151,7 +200,7 @@ class Code extends Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { children, multiCommand } = this.props;
     const { isCopying, isHovered } = this.state;
 
     const copy =
@@ -170,7 +219,9 @@ class Code extends Component {
         <ScrollWrap>
           <Content>
             <Pre innerRef={e => (this.preNode = e)}>
-              {isFunction(children) ? children() : trimString(children)}
+              {multiCommand
+                ? formatMultiCommand(children)
+                : formatSingleCommand(children)}
             </Pre>
           </Content>
         </ScrollWrap>
@@ -184,14 +235,18 @@ class Code extends Component {
 }
 
 Code.propTypes = {
-  // Children can be anything that React can render
+  // children can be anything that React can render
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
+
+  // multiCommand determines if the code lines shall be padded
+  multiCommand: PropTypes.bool,
 
   // onCopy will be called when the CodeWrapper is clicked
   onCopy: PropTypes.func,
 };
 
 Code.defaultProps = {
+  multiCommand: false,
   onCopy: noop,
 };
 

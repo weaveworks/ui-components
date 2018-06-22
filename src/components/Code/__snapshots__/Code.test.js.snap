@@ -23,3 +23,134 @@ exports[`<Code /> should render correctly 1`] = `
   </Code__CopyNotice>
 </Code__CodeWrapper>
 `;
+
+exports[`<Code /> should render multi line function correctly with multiCommand=true 1`] = `
+<Code__CodeWrapper
+  onClick={[Function]}
+>
+  <Code__Content>
+    <Code__Pre
+      innerRef={[Function]}
+    >
+      <Code__PaddedLine
+        key="0"
+      >
+        sudo curl -l git.io/scope -o /usr/local/bin/scope
+        
+        
+      </Code__PaddedLine>
+      <Code__PaddedLine
+        key="1"
+      >
+        sudo chmod a+x /usr/local/bin/scope
+        
+        
+      </Code__PaddedLine>
+      <Code__PaddedLine
+        key="2"
+      >
+        scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
+        
+        
+      </Code__PaddedLine>
+    </Code__Pre>
+  </Code__Content>
+  <Code__CopyNotice>
+    <i
+      className="fa fa-check"
+    />
+     
+    Copy to clipboard
+  </Code__CopyNotice>
+</Code__CodeWrapper>
+`;
+
+exports[`<Code /> should render multi line jsx correctly with multiCommand=true 1`] = `
+<Code__CodeWrapper
+  onClick={[Function]}
+>
+  <Code__Content>
+    <Code__Pre
+      innerRef={[Function]}
+    >
+      <Code__PaddedLine
+        key="0/.0"
+      >
+        <div>
+          sudo curl -L git.io/scope -o /usr/local/bin/scope
+        </div>
+        
+        
+      </Code__PaddedLine>
+      <Code__PaddedLine
+        key="1/.1"
+      >
+        <div>
+          sudo chmod a+x /usr/local/bin/scope
+        </div>
+        
+        
+      </Code__PaddedLine>
+      <Code__PaddedLine
+        key="2/.2"
+      >
+        <div>
+          scope launch 
+          <wbr />
+          https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
+        </div>
+        
+        
+      </Code__PaddedLine>
+    </Code__Pre>
+  </Code__Content>
+  <Code__CopyNotice>
+    <i
+      className="fa fa-check"
+    />
+     
+    Copy to clipboard
+  </Code__CopyNotice>
+</Code__CodeWrapper>
+`;
+
+exports[`<Code /> should render multi line string correctly with multiCommand=true 1`] = `
+<Code__CodeWrapper
+  onClick={[Function]}
+>
+  <Code__Content>
+    <Code__Pre
+      innerRef={[Function]}
+    >
+      <Code__PaddedLine
+        key="0"
+      >
+        sudo curl -l git.io/scope -o /usr/local/bin/scope
+        
+        
+      </Code__PaddedLine>
+      <Code__PaddedLine
+        key="1"
+      >
+        sudo chmod a+x /usr/local/bin/scope
+        
+        
+      </Code__PaddedLine>
+      <Code__PaddedLine
+        key="2"
+      >
+        scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
+        
+        
+      </Code__PaddedLine>
+    </Code__Pre>
+  </Code__Content>
+  <Code__CopyNotice>
+    <i
+      className="fa fa-check"
+    />
+     
+    Copy to clipboard
+  </Code__CopyNotice>
+</Code__CodeWrapper>
+`;
