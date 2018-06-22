@@ -4,16 +4,18 @@ exports[`<Code /> should render correctly 1`] = `
 <Code__CodeWrapper
   onClick={[Function]}
 >
-  <Code__Content>
-    <Code__Pre
-      innerRef={[Function]}
-    >
-      such code much programming
-    </Code__Pre>
-  </Code__Content>
+  <Code__ScrollWrap>
+    <Code__Content>
+      <Code__Pre
+        innerRef={[Function]}
+      >
+        such code much programming
+      </Code__Pre>
+    </Code__Content>
+  </Code__ScrollWrap>
   <Code__CopyNotice>
     <i
-      className="fa fa-check"
+      className="fa fa-files-o"
     />
      
     Copy to clipboard

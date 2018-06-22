@@ -18,7 +18,6 @@ const CopyNotice = styled.div`
 
 const CodeWrapper = styled.div`
   position: relative;
-  padding: 10px 15px;
   background-color: ${props => props.theme.colors.purple800};
   box-sizing: border-box;
   border-radius: ${props => props.theme.borderRadius.soft};
@@ -29,10 +28,14 @@ const CodeWrapper = styled.div`
   }
 `;
 
+const ScrollWrap = styled.div`
+  overflow: auto;
+`;
+
 const Content = styled.div`
   flex-grow: 1;
-  overflow: auto;
   color: ${props => props.theme.colors.purple50};
+  padding: 10px 15px;
 `;
 
 const Pre = styled.pre`
@@ -117,15 +120,17 @@ class Code extends Component {
     const { isCopying } = this.state;
 
     const copyText = isCopying ? 'Copied to clipboard' : 'Copy to clipboard';
-    const copyIcon = isCopying ? 'files-o' : 'check';
+    const copyIcon = isCopying ? 'check' : 'files-o';
 
     return (
       <CodeWrapper onClick={this.handleCopyClick}>
-        <Content>
-          <Pre innerRef={e => (this.preNode = e)}>
-            {isFunction(children) ? children() : trimString(children)}
-          </Pre>
-        </Content>
+        <ScrollWrap>
+          <Content>
+            <Pre innerRef={e => (this.preNode = e)}>
+              {isFunction(children) ? children() : trimString(children)}
+            </Pre>
+          </Content>
+        </ScrollWrap>
 
         <CopyNotice>
           <i className={`fa fa-${copyIcon}`} /> {copyText}
