@@ -120,7 +120,7 @@ class Code extends Component {
     const { isCopying } = this.state;
 
     const copyText = isCopying ? 'Copied to clipboard' : 'Copy to clipboard';
-    const copyIcon = isCopying ? 'files-o' : 'check';
+    const copyIcon = isCopying ? 'check' : 'files-o';
 
     return (
       <CodeWrapper onClick={this.handleCopyClick}>
