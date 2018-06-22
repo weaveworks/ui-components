@@ -71,7 +71,7 @@ const PaddedLine = styled.div`
   }
 
   /* required to make jsx children work with adding '\n' in multiLine */
-  & > div {
+  & > * {
     display: inline;
   }
 `;
@@ -84,8 +84,8 @@ const formatSingleCommand = children =>
 function formatMultiString(string) {
   return trim(string)
     .split('\n')
-    .map((line, i) => (
-      <PaddedLine key={i}>
+    .map(line => (
+      <PaddedLine key={line}>
         {line}
         {'\n'}
       </PaddedLine>
@@ -100,12 +100,8 @@ function formatMultiCommand(raw) {
   }
   const count = React.Children.count(children);
 
-  if (count === 1 && isString(children)) {
-    return formatMultiString(children);
-  }
-
   if (count === 1) {
-    return children;
+    return isString(children) ? formatMultiString(children) : children;
   }
 
   return React.Children.map(children, (child, i) => (
@@ -156,7 +152,7 @@ class Code extends Component {
         selectedRange: selection.getRangeAt(0),
       });
     }
-    // console.dir(document.getSelection().anchorNode);
+
     const code =
       selectionString === '' ? this.preNode.textContent : selectionString;
     const txtArea = document.createElement('textarea');
