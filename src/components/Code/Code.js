@@ -7,7 +7,6 @@ const scale = keyframes`
   0% {
     transform: scale(0)
   }
-
   90% {
     transform: scale(1.2)
   }
@@ -21,22 +20,20 @@ const CopyNotice = styled.div`
   top: 0;
   right: 0;
   padding: 10px 15px;
+  ${props => props.isHovered && 'transition: opacity 300ms ease;'}
   border-radius: ${props => props.theme.borderRadius.soft};
   background-color: ${props => props.theme.colors.purple800};
-  transition: opacity 300ms ease;
   opacity: 0;
   font-size: ${props => props.theme.fontSizes.small};
   color: ${props => props.theme.colors.purple50};
-
   ${props =>
     props.isCopying &&
     `
-    & > i{
-
+    & > i {
         transform-origin: center;
         animation-name: ${scale};
         animation-duration: .4s;
-  }
+      }
   `};
 `;
 
@@ -79,6 +76,7 @@ class Code extends Component {
 
   state = {
     isCopying: false,
+    isHovered: false,
   };
 
   componentDidUpdate = () => {
@@ -139,18 +137,36 @@ class Code extends Component {
     }, 3000);
   };
 
+  onMouseEnter = () => {
+    this.setState({
+      isHovered: true,
+    });
+  };
+
+  onMouseLeave = () => {
+    this.setState({
+      isHovered: false,
+      isCopying: false,
+    });
+  };
+
   render() {
     const { children } = this.props;
-    const { isCopying } = this.state;
+    const { isCopying, isHovered } = this.state;
 
-    const copy = isCopying ? (
-      <i className={'fa fa-check'} />
-    ) : (
-      'Copy to clipboard'
-    );
+    const copy =
+      isCopying && isHovered ? (
+        <i className={'fa fa-check'} />
+      ) : (
+        'Copy to clipboard'
+      );
 
     return (
-      <CodeWrapper onClick={this.handleCopyClick}>
+      <CodeWrapper
+        onClick={this.handleCopyClick}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
+      >
         <ScrollWrap>
           <Content>
             <Pre innerRef={e => (this.preNode = e)}>
@@ -159,7 +175,9 @@ class Code extends Component {
           </Content>
         </ScrollWrap>
 
-        <CopyNotice isCopying={isCopying}>{copy}</CopyNotice>
+        <CopyNotice isCopying={isCopying} isHovered={isHovered}>
+          {copy}
+        </CopyNotice>
       </CodeWrapper>
     );
   }
