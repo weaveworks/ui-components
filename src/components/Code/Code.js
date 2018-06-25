@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { isFunction, isString, trim, noop } from 'lodash';
+
+const scale = keyframes`
+  0% {
+    transform: scale(0)
+  }
+
+  90% {
+    transform: scale(1.2)
+  }
+  100% {
+    transform: scale(1)
+  }
+`;
 
 const CopyNotice = styled.div`
   position: absolute;
@@ -14,6 +27,17 @@ const CopyNotice = styled.div`
   opacity: 0;
   font-size: ${props => props.theme.fontSizes.small};
   color: ${props => props.theme.colors.purple50};
+
+  ${props =>
+    props.isCopying &&
+    `
+    & > i{
+
+        transform-origin: center;
+        animation-name: ${scale};
+        animation-duration: .4s;
+  }
+  `};
 `;
 
 const CodeWrapper = styled.div`
@@ -119,8 +143,11 @@ class Code extends Component {
     const { children } = this.props;
     const { isCopying } = this.state;
 
-    const copyText = isCopying ? 'Copied to clipboard' : 'Copy to clipboard';
-    const copyIcon = isCopying ? 'check' : 'files-o';
+    const copy = isCopying ? (
+      <i className={'fa fa-check'} />
+    ) : (
+      'Copy to clipboard'
+    );
 
     return (
       <CodeWrapper onClick={this.handleCopyClick}>
@@ -132,9 +159,7 @@ class Code extends Component {
           </Content>
         </ScrollWrap>
 
-        <CopyNotice>
-          <i className={`fa fa-${copyIcon}`} /> {copyText}
-        </CopyNotice>
+        <CopyNotice isCopying={isCopying}>{copy}</CopyNotice>
       </CodeWrapper>
     );
   }
