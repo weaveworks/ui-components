@@ -20,7 +20,7 @@ const bordersOnlyTop = props => `
 `;
 
 const TabContent = styled.div`
-  padding: 20px;
+  padding: ${props => (props.small ? '10px' : '20px')};
   background-color: ${props =>
     props.secondary ? 'transparent' : props.theme.colors.white};
 
@@ -55,7 +55,7 @@ class TabSelect extends React.PureComponent {
   };
 
   render() {
-    const { className, children, secondary } = this.props;
+    const { className, children, secondary, small } = this.props;
     const tabs = React.Children.map(children, child =>
       pick(child.props, ['label', 'name'])
     );
@@ -71,13 +71,16 @@ class TabSelect extends React.PureComponent {
               name={tab.name}
               selected={this.isSelectedTab(tab)}
               secondary={secondary}
+              small={small}
               onClick={this.handleTabClick}
             >
               {tab.label}
             </TabButton>
           ))}
         </TabButtons>
-        <TabContent secondary={secondary}>{selected}</TabContent>
+        <TabContent small={small} secondary={secondary}>
+          {selected}
+        </TabContent>
       </div>
     );
   }
@@ -89,6 +92,10 @@ TabSelect.propTypes = {
    * transparent background
    */
   secondary: PropTypes.bool,
+  /**
+   * Small styling for TabSelect
+   */
+  small: PropTypes.bool,
   /**
    * The tab to show on first render.
    * Supplying a new value to this prop will override the currently selected item
@@ -114,6 +121,7 @@ TabSelect.propTypes = {
 
 TabSelect.defaultProps = {
   secondary: false,
+  small: false,
 };
 
 export default Styled(TabSelect);
