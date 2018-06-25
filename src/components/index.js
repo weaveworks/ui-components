@@ -35,3 +35,5 @@ export DataTable from './DataTable';
 export TimestampTag from './TimestampTag';
 
 export TabSelect, { Tab } from './TabSelect';
+
+export ResourceDial from './ResourceDial';
