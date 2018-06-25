@@ -3,6 +3,8 @@
 exports[`<Code /> should render correctly 1`] = `
 <Code__CodeWrapper
   onClick={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
 >
   <Code__ScrollWrap>
     <Code__Content>
@@ -13,11 +15,10 @@ exports[`<Code /> should render correctly 1`] = `
       </Code__Pre>
     </Code__Content>
   </Code__ScrollWrap>
-  <Code__CopyNotice>
-    <i
-      className="fa fa-files-o"
-    />
-     
+  <Code__CopyNotice
+    isCopying={false}
+    isHovered={false}
+  >
     Copy to clipboard
   </Code__CopyNotice>
 </Code__CodeWrapper>
