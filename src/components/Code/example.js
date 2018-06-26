@@ -64,6 +64,40 @@ kubectl create secret generic -n weave cloudwatch \\
           </Code>
         </Example>
 
+        <Info>Multiline multi command string</Info>
+        <Example>
+          <Code onCopy={this.onCopy} multiCommand>
+            {`
+sudo curl -L git.io/scope -o /usr/local/bin/scope
+sudo chmod a+x /usr/local/bin/scope
+scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
+          `}
+          </Code>
+        </Example>
+
+        <Info>Multiline multi command JSX</Info>
+        <Example>
+          <Code onCopy={this.onCopy} multiCommand>
+            <div>sudo curl -L git.io/scope -o /usr/local/bin/scope</div>
+            <div>sudo chmod a+x /usr/local/bin/scope</div>
+            <div>
+              scope launch <wbr />
+              https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
+            </div>
+          </Code>
+        </Example>
+
+        <Info>Multiline multi command function</Info>
+        <Example>
+          <Code onCopy={this.onCopy} multiCommand>
+            {() => `
+sudo curl -L git.io/scope -o /usr/local/bin/scope
+sudo chmod a+x /usr/local/bin/scope
+scope launch https://${this.state.value}
+          `}
+          </Code>
+        </Example>
+
         <Info>Dynamic content in template string</Info>
         <Example>
           <Code isFile onCopy={this.onCopy}>

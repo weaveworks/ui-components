@@ -23,3 +23,143 @@ exports[`<Code /> should render correctly 1`] = `
   </Code__CopyNotice>
 </Code__CodeWrapper>
 `;
+
+exports[`<Code /> should render multi line function correctly with multiCommand=true 1`] = `
+<Code__CodeWrapper
+  onClick={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  <Code__ScrollWrap>
+    <Code__Content>
+      <Code__Pre
+        innerRef={[Function]}
+      >
+        <Code__PaddedLine
+          key="sudo curl -l git.io/scope -o /usr/local/bin/scope"
+        >
+          sudo curl -l git.io/scope -o /usr/local/bin/scope
+          
+          
+        </Code__PaddedLine>
+        <Code__PaddedLine
+          key="sudo chmod a+x /usr/local/bin/scope"
+        >
+          sudo chmod a+x /usr/local/bin/scope
+          
+          
+        </Code__PaddedLine>
+        <Code__PaddedLine
+          key="scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works"
+        >
+          scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
+          
+          
+        </Code__PaddedLine>
+      </Code__Pre>
+    </Code__Content>
+  </Code__ScrollWrap>
+  <Code__CopyNotice
+    isCopying={false}
+    isHovered={false}
+  >
+    Copy to clipboard
+  </Code__CopyNotice>
+</Code__CodeWrapper>
+`;
+
+exports[`<Code /> should render multi line jsx correctly with multiCommand=true 1`] = `
+<Code__CodeWrapper
+  onClick={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  <Code__ScrollWrap>
+    <Code__Content>
+      <Code__Pre
+        innerRef={[Function]}
+      >
+        <Code__PaddedLine
+          key="0/.0"
+        >
+          <div>
+            sudo curl -L git.io/scope -o /usr/local/bin/scope
+          </div>
+          
+          
+        </Code__PaddedLine>
+        <Code__PaddedLine
+          key="1/.1"
+        >
+          <div>
+            sudo chmod a+x /usr/local/bin/scope
+          </div>
+          
+          
+        </Code__PaddedLine>
+        <Code__PaddedLine
+          key="2/.2"
+        >
+          <div>
+            scope launch 
+            <wbr />
+            https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
+          </div>
+          
+          
+        </Code__PaddedLine>
+      </Code__Pre>
+    </Code__Content>
+  </Code__ScrollWrap>
+  <Code__CopyNotice
+    isCopying={false}
+    isHovered={false}
+  >
+    Copy to clipboard
+  </Code__CopyNotice>
+</Code__CodeWrapper>
+`;
+
+exports[`<Code /> should render multi line string correctly with multiCommand=true 1`] = `
+<Code__CodeWrapper
+  onClick={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  <Code__ScrollWrap>
+    <Code__Content>
+      <Code__Pre
+        innerRef={[Function]}
+      >
+        <Code__PaddedLine
+          key="sudo curl -l git.io/scope -o /usr/local/bin/scope"
+        >
+          sudo curl -l git.io/scope -o /usr/local/bin/scope
+          
+          
+        </Code__PaddedLine>
+        <Code__PaddedLine
+          key="sudo chmod a+x /usr/local/bin/scope"
+        >
+          sudo chmod a+x /usr/local/bin/scope
+          
+          
+        </Code__PaddedLine>
+        <Code__PaddedLine
+          key="scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works"
+        >
+          scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
+          
+          
+        </Code__PaddedLine>
+      </Code__Pre>
+    </Code__Content>
+  </Code__ScrollWrap>
+  <Code__CopyNotice
+    isCopying={false}
+    isHovered={false}
+  >
+    Copy to clipboard
+  </Code__CopyNotice>
+</Code__CodeWrapper>
+`;
