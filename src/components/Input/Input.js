@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { omit } from 'lodash';
+import { omit, noop } from 'lodash';
 import styled, { css } from 'styled-components';
 
 const placeholder = (property, content) => css`
@@ -119,10 +119,7 @@ class Input extends React.Component {
             ...omit(inputProps, 'autoSelectText'),
             ref: elem => {
               this.input = elem;
-
-              if (inputRef) {
-                inputRef(elem);
-              }
+              inputRef(elem);
             },
           })}
           <Icon visible={!valid} className="fa fa-times-circle" />
@@ -165,6 +162,7 @@ Input.propTypes = {
 
 Input.defaultProps = {
   valid: true,
+  inputRef: noop,
 };
 
 export default StyledInput(Input);
