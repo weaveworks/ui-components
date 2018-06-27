@@ -4,10 +4,14 @@ import classNames from 'classnames';
 import { line, curveCardinalClosed } from 'd3-shape';
 import { range } from 'lodash';
 
+import theme from '../../../theme';
+
 const getMetricValue = () => ({ hasMetric: false });
 const getMetricColor = () => '#000';
 const encodeIdAttribute = s => s;
 const getClipPathDefinition = () => null;
+
+const STROKE_WIDTH = 0.1;
 
 export function curvedUnitPolygonPath(n) {
   const curve = curveCardinalClosed.tension(0.65);
@@ -32,10 +36,22 @@ class Shape extends React.Component {
         {highlighted && renderTemplate({
           className: 'highlight-border',
           transform: `scale(${0.5})`,
+          style: {
+            fill: 'none',
+            stroke: theme.colors.blue400,
+            strokeWidth: 0.7 + (STROKE_WIDTH * 2),
+            strokeOpacity: 0.5,
+          }
         })}
         {highlighted && renderTemplate({
           className: 'highlight-shadow',
           transform: `scale(${0.5})`,
+          style: {
+            fill: 'none',
+            stroke: theme.colors.white,
+            strokeWidth: 0.7,
+            strokeOpacity: 0.5,
+          }
         })}
         {renderTemplate({
           className: 'background',
@@ -57,8 +73,8 @@ class Shape extends React.Component {
           transform: `scale(${0.49})`,
           style: {
             fill: 'none',
-            stroke: 'white',
-            strokeWidth: 0.1,
+            stroke: theme.colors.white,
+            strokeWidth: STROKE_WIDTH,
           },
         })}
         {renderTemplate({
@@ -67,7 +83,7 @@ class Shape extends React.Component {
           style: {
             fill: 'none',
             strokeOpacity: 1,
-            strokeWidth: 0.1,
+            strokeWidth: STROKE_WIDTH,
           },
           stroke: color,
         })}
@@ -91,7 +107,7 @@ Shape.propTypes = {
 };
 
 Shape.defaultProps = {
-  highlighted: false,
+  highlighted: true,
   metric: null,
 };
 

@@ -15,8 +15,12 @@ export default function GraphNodeExample() {
   return (
     <div>
       <Example>
-        <NodeContainer><GraphNode type="pentagon" /></NodeContainer>
-        <NodeContainer><GraphNode type="hexagon" /></NodeContainer>
+        <NodeContainer>
+          <GraphNode type="pentagon" label="blublu" />
+        </NodeContainer>
+        <NodeContainer>
+          <GraphNode type="hexagon" label="dflslfkdlfk" />
+        </NodeContainer>
       </Example>
     </div>
   );
