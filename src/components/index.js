@@ -39,3 +39,5 @@ export TabSelect, { Tab } from './TabSelect';
 export ResourceDial from './ResourceDial';
 
 export Search from './Search';
+
+export GraphNode from './GraphNode';
