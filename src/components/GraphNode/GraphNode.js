@@ -4,12 +4,30 @@ import styled from 'styled-components';
 import { scaleLinear } from 'd3-scale';
 import { hsl } from 'd3-color';
 
+import ShapeCircle from './shapes/_ShapeCircle';
+import ShapeTriangle from './shapes/_ShapeTriangle';
+import ShapeSquare from './shapes/_ShapeSquare';
 import ShapePentagon from './shapes/_ShapePentagon';
 import ShapeHexagon from './shapes/_ShapeHexagon';
+import ShapeHeptagon from './shapes/_ShapeHeptagon';
+import ShapeOctagon from './shapes/_ShapeOctagon';
+import ShapeCloud from './shapes/_ShapeCloud';
+import ShapeSheet from './shapes/_ShapeSheet';
+import ShapeCylinder from './shapes/_ShapeCylinder';
+import ShapeDottedCylinder from './shapes/_ShapeDottedCylinder';
 
 const shapeMap = {
+  circle: ShapeCircle,
+  triangle: ShapeTriangle,
+  square: ShapeSquare,
   pentagon: ShapePentagon,
   hexagon: ShapeHexagon,
+  heptagon: ShapeHeptagon,
+  octagon: ShapeOctagon,
+  cloud: ShapeCloud,
+  sheet: ShapeSheet,
+  cylinder: ShapeCylinder,
+  dottedcylinder: ShapeDottedCylinder,
 };
 
 const PSEUDO_COLOR = '#b1b1cb';
@@ -63,6 +81,16 @@ const GraphNodeWrapper = styled.g`
   cursor: pointer;
 `;
 
+const TextContainer = styled.g.attrs({
+  transform: props => `translate(0, ${props.y})`,
+})`
+  pointer-events: none;
+`;
+
+const Label = styled.text.attrs({
+  fill: props => props.theme.colors.purple800,
+})``;
+
 class GraphNode extends React.Component {
   constructor(props) {
     super(props);
@@ -81,7 +109,7 @@ class GraphNode extends React.Component {
   }
 
   render() {
-    const { rank, label, pseudo } = this.props;
+    const { rank, label, pseudo, size } = this.props;
     const color = getNodeColor(rank, label, pseudo);
     const Shape = shapeMap[this.props.type];
 
@@ -93,9 +121,13 @@ class GraphNode extends React.Component {
         <Shape
           id="blublu"
           color={color}
+          size={size}
           highlighted={this.state.highlighted}
-          size={this.props.size}
         />
+
+        <TextContainer y={size / 2}>
+          <Label y="15" textAnchor="middle">{label}</Label>
+        </TextContainer>
       </GraphNodeWrapper>
     );
   }

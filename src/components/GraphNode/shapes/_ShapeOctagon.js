@@ -3,14 +3,14 @@ import React from 'react';
 import Shape, { curvedUnitPolygonPath } from './_Shape';
 
 const renderTemplate = attrs => (
-  <path d={curvedUnitPolygonPath(5)} {...attrs} />
+  <path d={curvedUnitPolygonPath(8)} {...attrs} />
 );
 
-export default class ShapePentagon extends React.Component {
+export default class ShapeOctagon extends React.Component {
   render() {
     return (
       <Shape
-        type="pentagon"
+        type="octagon"
         renderTemplate={renderTemplate}
         {...this.props}
       />
