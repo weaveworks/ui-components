@@ -1,0 +1,742 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Search /> snapshots renders a group of terms 1`] = `
+.c8 {
+  visibility: hidden;
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 22px;
+  color: #c7254e;
+}
+
+.c7 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 36px;
+}
+
+.c9 {
+  display: none;
+  font-size: 14px;
+  padding-left: 8px;
+  visibility: hidden;
+  color: inherit;
+}
+
+.c6 {
+  padding: 8px;
+}
+
+.c6 input {
+  display: inline-block;
+  padding: 0 12px;
+  line-height: 36px;
+  box-shadow: none;
+  border: 1px solid hsl(0,0%,45%);
+  border-radius: 4px;
+  height: 36px;
+  box-sizing: border-box;
+}
+
+.c4 {
+  margin: 4px 0 4px 2px;
+  padding: 4px;
+  background-color: hsl(191,100%,50%);
+  margin-left: 4px;
+  border-radius: 4px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c4 i {
+  padding-left: 4px;
+  cursor: pointer;
+}
+
+.c3 {
+  list-style: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c1 {
+  line-height: 34px;
+  padding: 0 8px;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  width: 100%;
+}
+
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: hsl(0,0%,100%);
+  border: 1px solid hsl(240,20%,90%);
+  border-radius: 4px;
+}
+
+.c0 div,
+.c0 input {
+  border: 0;
+}
+
+.c0 .c5,
+.c0 .Dropdown-dxAxgO {
+  padding: 0;
+  margin: 0;
+}
+
+.c0 .Dropdown-dxAxgO {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border-left: 1px solid hsl(0,0%,80%);
+}
+
+.c0 .c5 {
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  width: 100%;
+}
+
+.c0 .c5 input {
+  padding: 0 8px;
+  width: 100%;
+}
+
+.c0 .c5 input:focus {
+  outline: none;
+}
+
+.c0 .c5 div {
+  margin: 0;
+}
+
+<div
+  className="c0"
+>
+  <i
+    className="fa fa-search c1"
+  />
+  <div
+    className="c2"
+  >
+    <ul
+      className="c3"
+    >
+      <li
+        className="c4 search-term"
+      >
+        <div
+          className="search-term-text"
+        >
+          deployments
+        </div>
+        <i
+          className="fa fa-times remove-term"
+          onClick={[Function]}
+        />
+      </li>
+      <li
+        className="c4 search-term"
+      >
+        <div
+          className="search-term-text"
+        >
+          default
+        </div>
+        <i
+          className="fa fa-times remove-term"
+          onClick={[Function]}
+        />
+      </li>
+    </ul>
+    <div
+      className="c5 c6"
+    >
+      <label
+        htmlFor={undefined}
+      />
+      <div
+        className="c7"
+      >
+        <input
+          onBlur={[Function]}
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          value=""
+        />
+        <i
+          className="fa fa-times-circle c8"
+        />
+      </div>
+      <span
+        className="c9"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Search /> snapshots renders a search string 1`] = `
+.c7 {
+  visibility: hidden;
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 22px;
+  color: #c7254e;
+}
+
+.c6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 36px;
+}
+
+.c8 {
+  display: none;
+  font-size: 14px;
+  padding-left: 8px;
+  visibility: hidden;
+  color: inherit;
+}
+
+.c5 {
+  padding: 8px;
+}
+
+.c5 input {
+  display: inline-block;
+  padding: 0 12px;
+  line-height: 36px;
+  box-shadow: none;
+  border: 1px solid hsl(0,0%,45%);
+  border-radius: 4px;
+  height: 36px;
+  box-sizing: border-box;
+}
+
+.c3 {
+  list-style: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c1 {
+  line-height: 34px;
+  padding: 0 8px;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  width: 100%;
+}
+
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: hsl(0,0%,100%);
+  border: 1px solid hsl(240,20%,90%);
+  border-radius: 4px;
+}
+
+.c0 div,
+.c0 input {
+  border: 0;
+}
+
+.c0 .c4,
+.c0 .Dropdown-dxAxgO {
+  padding: 0;
+  margin: 0;
+}
+
+.c0 .Dropdown-dxAxgO {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border-left: 1px solid hsl(0,0%,80%);
+}
+
+.c0 .c4 {
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  width: 100%;
+}
+
+.c0 .c4 input {
+  padding: 0 8px;
+  width: 100%;
+}
+
+.c0 .c4 input:focus {
+  outline: none;
+}
+
+.c0 .c4 div {
+  margin: 0;
+}
+
+<div
+  className="c0"
+>
+  <i
+    className="fa fa-search c1"
+  />
+  <div
+    className="c2"
+  >
+    <ul
+      className="c3"
+    />
+    <div
+      className="c4 c5"
+    >
+      <label
+        htmlFor={undefined}
+      />
+      <div
+        className="c6"
+      >
+        <input
+          onBlur={[Function]}
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          value="ui-server"
+        />
+        <i
+          className="fa fa-times-circle c7"
+        />
+      </div>
+      <span
+        className="c8"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Search /> snapshots renders empty 1`] = `
+.c7 {
+  visibility: hidden;
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 22px;
+  color: #c7254e;
+}
+
+.c6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 36px;
+}
+
+.c8 {
+  display: none;
+  font-size: 14px;
+  padding-left: 8px;
+  visibility: hidden;
+  color: inherit;
+}
+
+.c5 {
+  padding: 8px;
+}
+
+.c5 input {
+  display: inline-block;
+  padding: 0 12px;
+  line-height: 36px;
+  box-shadow: none;
+  border: 1px solid hsl(0,0%,45%);
+  border-radius: 4px;
+  height: 36px;
+  box-sizing: border-box;
+}
+
+.c3 {
+  list-style: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c1 {
+  line-height: 34px;
+  padding: 0 8px;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  width: 100%;
+}
+
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: hsl(0,0%,100%);
+  border: 1px solid hsl(240,20%,90%);
+  border-radius: 4px;
+}
+
+.c0 div,
+.c0 input {
+  border: 0;
+}
+
+.c0 .c4,
+.c0 .Dropdown-dxAxgO {
+  padding: 0;
+  margin: 0;
+}
+
+.c0 .Dropdown-dxAxgO {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border-left: 1px solid hsl(0,0%,80%);
+}
+
+.c0 .c4 {
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  width: 100%;
+}
+
+.c0 .c4 input {
+  padding: 0 8px;
+  width: 100%;
+}
+
+.c0 .c4 input:focus {
+  outline: none;
+}
+
+.c0 .c4 div {
+  margin: 0;
+}
+
+<div
+  className="c0"
+>
+  <i
+    className="fa fa-search c1"
+  />
+  <div
+    className="c2"
+  >
+    <ul
+      className="c3"
+    />
+    <div
+      className="c4 c5"
+    >
+      <label
+        htmlFor={undefined}
+      />
+      <div
+        className="c6"
+      >
+        <input
+          onBlur={[Function]}
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          value=""
+        />
+        <i
+          className="fa fa-times-circle c7"
+        />
+      </div>
+      <span
+        className="c8"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<Search /> snapshots renders filters 1`] = `
+.c7 {
+  visibility: hidden;
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 22px;
+  color: #c7254e;
+}
+
+.c6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 36px;
+}
+
+.c8 {
+  display: none;
+  font-size: 14px;
+  padding-left: 8px;
+  visibility: hidden;
+  color: inherit;
+}
+
+.c5 {
+  padding: 8px;
+}
+
+.c5 input {
+  display: inline-block;
+  padding: 0 12px;
+  line-height: 36px;
+  box-shadow: none;
+  border: 1px solid hsl(0,0%,45%);
+  border-radius: 4px;
+  height: 36px;
+  box-sizing: border-box;
+}
+
+.c13 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.c11 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: hsl(0,0%,100%);
+  border: 1px solid hsl(0,0%,45%);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c11 .c12 {
+  padding: 0;
+}
+
+.c11 div:last-child {
+  margin-left: auto;
+}
+
+.c14 {
+  padding-left: 1em;
+  float: right;
+  line-height: 36px !important;
+}
+
+.c10 {
+  height: 36px;
+  line-height: 34px;
+  position: relative;
+  width: 256px;
+  box-sizing: border-box;
+}
+
+.c3 {
+  list-style: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.c1 {
+  line-height: 34px;
+  padding: 0 8px;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex: 3;
+  -ms-flex: 3;
+  flex: 3;
+  width: 100%;
+}
+
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: hsl(0,0%,100%);
+  border: 1px solid hsl(240,20%,90%);
+  border-radius: 4px;
+}
+
+.c0 div,
+.c0 input {
+  border: 0;
+}
+
+.c0 .c4,
+.c0 .c9 {
+  padding: 0;
+  margin: 0;
+}
+
+.c0 .c9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border-left: 1px solid hsl(0,0%,80%);
+}
+
+.c0 .c4 {
+  -webkit-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  width: 100%;
+}
+
+.c0 .c4 input {
+  padding: 0 8px;
+  width: 100%;
+}
+
+.c0 .c4 input:focus {
+  outline: none;
+}
+
+.c0 .c4 div {
+  margin: 0;
+}
+
+<div
+  className="c0"
+>
+  <i
+    className="fa fa-search c1"
+  />
+  <div
+    className="c2"
+  >
+    <ul
+      className="c3"
+    />
+    <div
+      className="c4 c5"
+    >
+      <label
+        htmlFor={undefined}
+      />
+      <div
+        className="c6"
+      >
+        <input
+          onBlur={[Function]}
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          value=""
+        />
+        <i
+          className="fa fa-times-circle c7"
+        />
+      </div>
+      <span
+        className="c8"
+      />
+    </div>
+  </div>
+  <div
+    className="c9 c10"
+    title="Filters"
+  >
+    <div
+      className="dropdown-toggle c11"
+      onClick={[Function]}
+    >
+      <div
+        className="c12 c13"
+      >
+        Filters
+      </div>
+      <div>
+        <span
+          className="fa fa-caret-down c14"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
