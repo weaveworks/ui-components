@@ -5,7 +5,7 @@ import { spring, Motion } from 'react-motion';
 import styled from 'styled-components';
 import { format } from 'd3-format';
 import { arc } from 'd3-shape';
-import { isEmpty, isNumber } from 'lodash';
+import { isEmpty, isFinite } from 'lodash';
 
 import theme from '../../theme';
 
@@ -123,7 +123,7 @@ class ResourceDial extends React.PureComponent {
     const { value } = this.state;
     const { label, disabled, to } = this.props;
     const hasLink = !isEmpty(to) && !disabled;
-    const hasValue = isNumber(value);
+    const hasValue = isFinite(value);
 
     return (
       <DialLink to={hasLink ? to : ''}>
