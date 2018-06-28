@@ -35,6 +35,20 @@ export default function TabSelectExample() {
           </Tab>
         </TabSelect>
       </Example>
+      <Info>Small</Info>
+      <Example>
+        <TabSelect small>
+          <Tab label="A" name="a">
+            Tab A
+          </Tab>
+          <Tab label="B" name="b">
+            Tab B
+          </Tab>
+          <Tab label="C" name="c">
+            Tab C
+          </Tab>
+        </TabSelect>
+      </Example>
     </div>
   );
 }

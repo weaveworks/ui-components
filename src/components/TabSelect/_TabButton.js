@@ -15,8 +15,9 @@ const Styled = component => styled(component)`
   cursor: pointer;
   margin-bottom: -1px;
   margin-right: 5px;
-  padding: 10px 20px;
-  font-size: ${props => props.theme.fontSizes.large};
+  padding: ${props => (props.small ? '5px 10px' : '10px 20px')};
+  font-size: ${props =>
+    props.small ? props.theme.fontSizes.normal : props.theme.fontSizes.large};
   outline: 0;
 
   ${({ selected, secondary, theme }) => `
