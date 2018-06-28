@@ -112,6 +112,13 @@ class ResourceDial extends React.PureComponent {
     };
   }
 
+  componentDidMount() {
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({
+      value: this.props.value,
+    });
+  }
+
   componentWillReceiveProps(nextProps) {
     // setState is async so triggers another render allowing animation to happen
     this.setState({
