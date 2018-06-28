@@ -10,7 +10,6 @@ export default class ShapeTriangle extends React.Component {
   render() {
     return (
       <Shape
-        type="triangle"
         renderTemplate={renderTemplate}
         {...this.props}
       />

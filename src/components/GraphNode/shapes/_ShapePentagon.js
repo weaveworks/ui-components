@@ -10,7 +10,6 @@ export default class ShapePentagon extends React.Component {
   render() {
     return (
       <Shape
-        type="pentagon"
         renderTemplate={renderTemplate}
         {...this.props}
       />

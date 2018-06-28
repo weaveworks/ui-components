@@ -10,7 +10,6 @@ export default class ShapeSquare extends React.Component {
   render() {
     return (
       <Shape
-        type="square"
         renderTemplate={renderTemplate}
         {...this.props}
       />

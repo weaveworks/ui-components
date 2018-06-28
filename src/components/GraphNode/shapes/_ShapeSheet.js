@@ -12,7 +12,6 @@ export default class ShapeSheet extends React.Component {
   render() {
     return (
       <Shape
-        type="sheet"
         renderTemplate={renderTemplate}
         {...this.props}
       />

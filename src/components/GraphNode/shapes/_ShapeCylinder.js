@@ -18,7 +18,6 @@ export default class ShapeCylinder extends React.Component {
   render() {
     return (
       <Shape
-        type="cylinder"
         renderTemplate={renderTemplate}
         {...this.props}
       />

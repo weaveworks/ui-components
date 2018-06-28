@@ -18,7 +18,6 @@ export default class ShapeDottedCylinder extends React.Component {
   render() {
     return (
       <Shape
-        type="dottedcylinder"
         renderTemplate={renderTemplate}
         {...this.props}
       />

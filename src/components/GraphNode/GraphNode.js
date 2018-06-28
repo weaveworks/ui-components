@@ -16,7 +16,7 @@ import ShapeSheet from './shapes/_ShapeSheet';
 import ShapeCylinder from './shapes/_ShapeCylinder';
 import ShapeDottedCylinder from './shapes/_ShapeDottedCylinder';
 
-const shapeMap = {
+export const shapeMap = {
   circle: ShapeCircle,
   triangle: ShapeTriangle,
   square: ShapeSquare,
@@ -109,7 +109,7 @@ class GraphNode extends React.Component {
   }
 
   render() {
-    const { rank, label, pseudo, size } = this.props;
+    const { id, rank, label, pseudo, size, stacked } = this.props;
     const color = getNodeColor(rank, label, pseudo);
     const Shape = shapeMap[this.props.type];
 
@@ -119,9 +119,10 @@ class GraphNode extends React.Component {
         onMouseLeave={this.handleMouseLeave}
       >
         <Shape
-          id="blublu"
+          id={id}
           color={color}
           size={size}
+          stacked={stacked}
           highlighted={this.state.highlighted}
         />
 
@@ -134,15 +135,18 @@ class GraphNode extends React.Component {
 }
 
 GraphNode.propTypes = {
+  id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   rank: PropTypes.string,
+  stacked: PropTypes.bool,
   pseudo: PropTypes.bool,
   size: PropTypes.number,
 };
 
 GraphNode.defaultProps = {
   rank: '',
+  stacked: false,
   pseudo: false,
   size: 65,
 };

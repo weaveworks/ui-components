@@ -10,7 +10,6 @@ export default class ShapeCircle extends React.Component {
   render() {
     return (
       <Shape
-        type="circle"
         renderTemplate={renderTemplate}
         {...this.props}
       />

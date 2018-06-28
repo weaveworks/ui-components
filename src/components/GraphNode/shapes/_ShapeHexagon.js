@@ -10,7 +10,6 @@ export default class ShapeHexagon extends React.Component {
   render() {
     return (
       <Shape
-        type="hexagon"
         renderTemplate={renderTemplate}
         {...this.props}
       />

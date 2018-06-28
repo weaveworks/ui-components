@@ -16,7 +16,6 @@ export default class ShapeCloud extends React.Component {
   render() {
     return (
       <Shape
-        type="cloud"
         renderTemplate={renderTemplate}
         {...this.props}
       />
