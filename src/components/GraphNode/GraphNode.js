@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { scaleLinear } from 'd3-scale';
-import { hsl } from 'd3-color';
+import { format } from 'd3-format';
+import { constant } from 'lodash';
+
+import theme from '../../theme';
 
 import ShapeCircle from './shapes/_ShapeCircle';
 import ShapeTriangle from './shapes/_ShapeTriangle';
@@ -30,53 +32,6 @@ export const shapeMap = {
   dottedcylinder: ShapeDottedCylinder,
 };
 
-const PSEUDO_COLOR = '#b1b1cb';
-const hueRange = [20, 330]; // exclude red
-const hueScale = scaleLinear().range(hueRange);
-// map hues to lightness
-const lightnessScale = scaleLinear().domain(hueRange).range([0.5, 0.7]);
-const startLetterRange = 'A'.charCodeAt();
-const endLetterRange = 'Z'.charCodeAt();
-const letterRange = endLetterRange - startLetterRange;
-
-/**
- * Converts a text to a 360 degree value
- */
-/* eslint-disable no-restricted-properties */
-function text2degree(text) {
-  const input = text.substr(0, 2).toUpperCase();
-  let num = 0;
-  for (let i = 0; i < input.length; i += 1) {
-    const charCode = Math.max(Math.min(input[i].charCodeAt(), endLetterRange), startLetterRange);
-    num += Math.pow(letterRange, input.length - i - 1) * (charCode - startLetterRange);
-  }
-  hueScale.domain([0, Math.pow(letterRange, input.length)]);
-  return hueScale(num);
-}
-/* eslint-enable no-restricted-properties */
-
-function colors(text, secondText) {
-  let hue = text2degree(text);
-  // skip green and shift to the end of the color wheel
-  if (hue > 70 && hue < 150) {
-    hue += 80;
-  }
-  const saturation = 0.6;
-  let lightness = 0.5;
-  if (secondText) {
-    // reuse text2degree and feed degree to lightness scale
-    lightness = lightnessScale(text2degree(secondText));
-  }
-  return hsl(hue, saturation, lightness);
-}
-
-function getNodeColor(text = '', secondText = '', isPseudo = false) {
-  if (isPseudo) {
-    return PSEUDO_COLOR;
-  }
-  return colors(text, secondText).toString();
-}
-
 const GraphNodeWrapper = styled.g`
   cursor: pointer;
 `;
@@ -92,12 +47,8 @@ const Label = styled.text.attrs({
 })``;
 
 class GraphNode extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      highlighted: false,
-    };
+  state = {
+    highlighted: false,
   }
 
   handleMouseEnter = () => {
@@ -109,8 +60,10 @@ class GraphNode extends React.Component {
   }
 
   render() {
-    const { id, rank, label, pseudo, size, stacked } = this.props;
-    const color = getNodeColor(rank, label, pseudo);
+    const { id, label, size, stacked, metricValue } = this.props;
+    const metricLabel = metricValue ? this.props.metricLabelFunction(metricValue) : '';
+    const metricColor = this.props.metricColorFunction(metricValue);
+    const color = this.props.colorFunction({ label });
     const Shape = shapeMap[this.props.type];
 
     return (
@@ -123,6 +76,9 @@ class GraphNode extends React.Component {
           color={color}
           size={size}
           stacked={stacked}
+          metricColor={metricColor}
+          metricLabel={metricLabel}
+          metricValue={metricValue}
           highlighted={this.state.highlighted}
         />
 
@@ -138,16 +94,20 @@ GraphNode.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  rank: PropTypes.string,
+  colorFunction: PropTypes.func,
+  metricColorFunction: PropTypes.func,
+  metricLabelFunction: PropTypes.func,
+  metricValue: PropTypes.number,
   stacked: PropTypes.bool,
-  pseudo: PropTypes.bool,
   size: PropTypes.number,
 };
 
 GraphNode.defaultProps = {
-  rank: '',
+  colorFunction: constant(theme.colors.purple400),
+  metricColorFunction: constant(theme.colors.status.warning),
+  metricLabelFunction: format('.0%'),
+  metricValue: undefined,
   stacked: false,
-  pseudo: false,
   size: 65,
 };
 

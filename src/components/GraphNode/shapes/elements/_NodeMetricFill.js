@@ -1,13 +1,11 @@
 
-// TODO: Make this meaningful.
-const getMetricColor = () => '#000';
-
-const NodeMetricFill = (renderTemplate, { clipId, metric }) => (
+const NodeMetricFill = (renderTemplate, { clipId, metricColor }) => (
   renderTemplate({
     transform: `scale(${0.48})`,
     clipPath: `url(#${clipId})`,
     style: {
-      fill: getMetricColor(metric),
+      fill: metricColor,
+      opacity: 0.5,
     },
   })
 );

@@ -5,6 +5,8 @@ import { keys, uniq } from 'lodash';
 import { Example, Info } from '../../utils/example';
 import GraphNode, { shapeMap } from './GraphNode';
 
+const colorFunction = ({ label }) => `hsl(${(label.charCodeAt(0) - 97) * 10}, 50%, 65%)`;
+
 const GraphNodeContainer = props => (
   <svg width="200px" height="200px">
     <g style={{ transform: 'translate(100px, 100px)' }}>
@@ -15,7 +17,8 @@ const GraphNodeContainer = props => (
 
 export default class GraphNodeExample extends React.Component {
   state = {
-    ranks: uniq(faker.lorem.words(20).split(' ')),
+    labels: uniq(faker.lorem.words(20).split(' ')),
+    metrics: ['0', '0.01', '0.1', '0.5', '0.9', '0.99', '1'],
   }
 
   render() {
@@ -38,21 +41,26 @@ export default class GraphNodeExample extends React.Component {
           ))}
         </Example>
         <Example>
-          <Info>Random Ranks</Info>
-          {this.state.ranks.map(rank => (
-            <GraphNodeContainer key={rank}>
-              <GraphNode type="pentagon" id={rank} label={rank} rank={rank} />
+          <Info>Random Colors</Info>
+          {this.state.labels.map(label => (
+            <GraphNodeContainer key={label}>
+              <GraphNode type="pentagon" id={label} label={label} colorFunction={colorFunction} />
             </GraphNodeContainer>
           ))}
         </Example>
         <Example>
-          <Info>Pseudo Nodes</Info>
-          <GraphNodeContainer>
-            <GraphNode pseudo type="square" id="square" label="Uncontained" />
-          </GraphNodeContainer>
-          <GraphNodeContainer>
-            <GraphNode pseudo type="cloud" id="cloud" label="Internet" />
-          </GraphNodeContainer>
+          <Info>Metric Fills</Info>
+          {this.state.metrics.map(metric => (
+            <GraphNodeContainer key={metric}>
+              <GraphNode
+                type="pentagon"
+                id={metric}
+                label="node"
+                metricText={metric}
+                metricValue={Number(metric)}
+              />
+            </GraphNodeContainer>
+          ))}
         </Example>
       </div>
     );

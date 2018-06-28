@@ -5,8 +5,8 @@ const NodeShadow = renderTemplate => (
     transform: `scale(${0.49})`,
     style: {
       fill: 'none',
-      stroke: theme.colors.white,
-      strokeWidth: 0.1,
+      stroke: theme.colors.gray50,
+      strokeWidth: 0.17,
     },
   })
 );
