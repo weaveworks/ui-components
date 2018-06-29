@@ -5,7 +5,7 @@ import { spring, Motion } from 'react-motion';
 import styled from 'styled-components';
 import { format } from 'd3-format';
 import { arc } from 'd3-shape';
-import { isEmpty, isNumber } from 'lodash';
+import { isEmpty, isFinite } from 'lodash';
 
 import theme from '../../theme';
 
@@ -104,10 +104,33 @@ const dialSpring = value =>
   spring(value, { stiffness: 50, damping: 13, precision: 0.01 });
 
 class ResourceDial extends React.PureComponent {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      value: null,
+    };
+  }
+
+  componentDidMount() {
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({
+      value: this.props.value,
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // setState is async so triggers another render allowing animation to happen
+    this.setState({
+      value: nextProps.value,
+    });
+  }
+
   render() {
-    const { label, value, disabled, to } = this.props;
+    const { value } = this.state;
+    const { label, disabled, to } = this.props;
     const hasLink = !isEmpty(to) && !disabled;
-    const hasValue = isNumber(value);
+    const hasValue = isFinite(value);
 
     return (
       <DialLink to={hasLink ? to : ''}>
@@ -116,7 +139,9 @@ class ResourceDial extends React.PureComponent {
             <DialContainer disabled={!hasLink}>
               <DialValueContainer>
                 <DialValue>
-                  {hasValue ? roundedValuePercent(interpolatedValue * 100) : '-'}
+                  {hasValue
+                    ? roundedValuePercent(interpolatedValue * 100)
+                    : '-'}
                 </DialValue>
                 {hasValue && <PercentageSign>%</PercentageSign>}
               </DialValueContainer>
@@ -152,10 +177,7 @@ ResourceDial.propTypes = {
   /**
    * React router link for clicking on the dial
    */
-  to: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-  ]),
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 ResourceDial.defaultProps = {
