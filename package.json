@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,26 +10,27 @@
     "build": "yarn build:theme && yarn build:utils && yarn build:components && yarn build:index",
     "build:theme": "babel src/theme --out-dir lib/theme --ignore *.test.js",
     "build:utils": "babel src/utils --out-dir lib/utils --ignore *.test.js",
-    "build:components":
-      "babel src/components --out-dir lib/components --ignore *.test.js,example.js",
+    "build:components": "babel src/components --out-dir lib/components --ignore *.test.js,example.js",
     "build:index": "babel src/index.js --out-file lib/index.js",
-    "postversion":
-      "export TAG=$(jq -r '.version' package.json); git add package.json && git commit -m \"v${TAG}\" && git tag \"v${TAG}\" && git push origin --follow-tags",
+    "postversion": "export TAG=$(jq -r '.version' package.json); git add package.json && git commit -m \"v${TAG}\" && git tag \"v${TAG}\" && git push origin --follow-tags",
     "prepublishOnly": "yarn ci && yarn build",
     "postpublish": "yarn docs:publish",
-    "docs:build":
-      "export NODE_ENV=production; export RELEASE=true; rm -rf dist && webpack --config webpack.config.js",
+    "docs:build": "export NODE_ENV=production; export RELEASE=true; rm -rf dist && webpack --config webpack.config.js",
     "docs:copy-images": "cp -R src/images dist",
-    "docs:s3":
-      "aws --profile default-mfa s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
+    "docs:s3": "aws --profile default-mfa s3 sync ./dist/ s3://weaveworks-ui-components --acl public-read",
     "docs:publish": "yarn docs:build && yarn docs:copy-images && yarn docs:s3",
     "docs:analyze": "ANALYZE_BUNDLE=true yarn docs:build",
     "start": "node bin/dev-server",
     "prettify": "prettier --write '**/*.{js,jsx}'"
   },
   "jest": {
-    "setupFiles": ["./test-shim.js", "./test-setup.js"],
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "setupFiles": [
+      "./test-shim.js",
+      "./test-setup.js"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "repository": {
     "type": "git",
