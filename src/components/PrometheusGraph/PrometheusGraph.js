@@ -16,8 +16,6 @@ import {
   omit,
   size,
   isEmpty,
-  filter,
-  every,
   get,
   reverse,
   indexOf,
@@ -59,13 +57,10 @@ function asJSONString(hash) {
   return JSON.stringify(hash, null, 1);
 }
 
-const hasGrouping = query =>
-  /\s(by|without|ignoring|on|group_left|group_right)\s?/.test(query);
-
-function getDefaultSeriesName(series, multiSeries, forLegend = false) {
+function getDefaultSeriesName(series) {
   // Extract metric name in a separate variable.
   const metricName = get(series.metric, '__name__') || '';
-  let metricHash = omit(series.metric, ['__name__']);
+  const metricHash = omit(series.metric, ['__name__']);
 
   // Handle some special cases if metric name is not present.
   if (!metricName) {
@@ -75,23 +70,11 @@ function getDefaultSeriesName(series, multiSeries, forLegend = false) {
     }
     // Return the value if only a single one is present.
     if (size(metricHash) === 1) {
-      if (hasGrouping(series.query)) {
-        return [first(values(metricHash)), series.query];
-      }
       return first(values(metricHash));
     }
   }
 
-  // If multi-series context is given and more than one series is present in
-  // the graph, filter out all the metric keys that appear in every series.
-  if (forLegend && size(multiSeries) > 1) {
-    const repeatedKeys = filter(keys(metricHash), metricKey =>
-      every(multiSeries, s => s.metric[metricKey] === metricHash[metricKey])
-    );
-    metricHash = omit(metricHash, repeatedKeys);
-  }
-
-  // Then return a stringified JSON of metrics
+  // Return a stringified JSON of metrics
   // (with metric name in front if it exists).
   return `${metricName}${asJSONString(metricHash)}`;
 }
