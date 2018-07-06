@@ -182,15 +182,16 @@ class DataTable extends React.PureComponent {
       <table className={className}>
         <thead>
           <tr>
-            {map(columns, ({ value, label, sortable }) => (
+            {map(columns, ({ value, label, sortable, width, element }) => (
               <Header
                 sortable={sortable}
                 order={sortField === value ? sortOrder : null}
                 value={value}
                 onClick={this.handleHeaderClick}
                 key={value}
+                width={width}
               >
-                {label}
+                {element || label}
               </Header>
             ))}
             {map(extraHeaders, (h, i) => <th key={i}>{h}</th>)}
@@ -206,6 +207,9 @@ class DataTable extends React.PureComponent {
 const columnPropType = PropTypes.shape({
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   label: PropTypes.string,
+  sortable: PropTypes.bool,
+  width: PropTypes.string,
+  element: PropTypes.element,
 });
 
 DataTable.propTypes = {
@@ -221,6 +225,7 @@ DataTable.propTypes = {
   /**
    * An array of objects that will be used as columns.
    * `value` must map to a key in your data in order for sorting to work.
+   * If an `element` key is specified, that element will be used instead of `label`.
    */
   columns: PropTypes.arrayOf(columnPropType).isRequired,
   /**

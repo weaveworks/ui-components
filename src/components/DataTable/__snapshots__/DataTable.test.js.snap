@@ -1,5 +1,202 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`DataTable snapshots renders an element instead of a label 1`] = `
+.c1 {
+  text-align: left;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.c1:hover {
+  color: hsl(191,100%,35%);
+}
+
+.c0 {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.c0 td {
+  padding: 10px 8px;
+  vertical-align: top;
+  border-left: 1px solid rgba(224,224,235,0.4);
+}
+
+.c0 thead td {
+  border: 0;
+  font-weight: bold;
+}
+
+.c0 thead,
+.c0 tbody {
+  border-bottom: 1px solid rgba(224,224,235,0.4);
+  border-left: 3px solid transparent;
+}
+
+<table
+  className="c0"
+>
+  <thead>
+    <tr>
+      <td
+        className="c1"
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-some-icon"
+        />
+         
+        <i
+          className="fa fa-caret-up"
+        />
+      </td>
+      <td
+        className="c1"
+        onClick={[Function]}
+      >
+        Email
+         
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Albert
+      </td>
+      <td>
+        b@weave.works
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Bob
+      </td>
+      <td>
+        a@weave.works
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ty
+      </td>
+      <td>
+        c@weave.works
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`DataTable snapshots renders column widths 1`] = `
+.c1 {
+  text-align: left;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 20px;
+}
+
+.c1:hover {
+  color: hsl(191,100%,35%);
+}
+
+.c2 {
+  text-align: left;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 80px;
+}
+
+.c2:hover {
+  color: hsl(191,100%,35%);
+}
+
+.c0 {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.c0 td {
+  padding: 10px 8px;
+  vertical-align: top;
+  border-left: 1px solid rgba(224,224,235,0.4);
+}
+
+.c0 thead td {
+  border: 0;
+  font-weight: bold;
+}
+
+.c0 thead,
+.c0 tbody {
+  border-bottom: 1px solid rgba(224,224,235,0.4);
+  border-left: 3px solid transparent;
+}
+
+<table
+  className="c0"
+>
+  <thead>
+    <tr>
+      <td
+        className="c1"
+        onClick={[Function]}
+      >
+        Name
+         
+        <i
+          className="fa fa-caret-up"
+        />
+      </td>
+      <td
+        className="c2"
+        onClick={[Function]}
+      >
+        Email
+         
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Albert
+      </td>
+      <td>
+        b@weave.works
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Bob
+      </td>
+      <td>
+        a@weave.works
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Ty
+      </td>
+      <td>
+        c@weave.works
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
 exports[`DataTable snapshots renders extra headers 1`] = `
 .c1 {
   text-align: left;
