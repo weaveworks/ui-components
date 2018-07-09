@@ -45,6 +45,7 @@ exports[`DataTable snapshots renders an element instead of a label 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title={undefined}
       >
         <i
           className="fa fa-some-icon"
@@ -57,6 +58,7 @@ exports[`DataTable snapshots renders an element instead of a label 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Email"
       >
         Email
          
@@ -152,6 +154,7 @@ exports[`DataTable snapshots renders column widths 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Name"
       >
         Name
          
@@ -162,6 +165,7 @@ exports[`DataTable snapshots renders column widths 1`] = `
       <td
         className="c2"
         onClick={[Function]}
+        title="Email"
       >
         Email
          
@@ -242,6 +246,7 @@ exports[`DataTable snapshots renders extra headers 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Name"
       >
         Name
          
@@ -252,6 +257,7 @@ exports[`DataTable snapshots renders extra headers 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Email"
       >
         Email
          
@@ -342,6 +348,7 @@ exports[`DataTable snapshots renders nested rows 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Workload"
       >
         Workload
          
@@ -352,6 +359,7 @@ exports[`DataTable snapshots renders nested rows 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Containers"
       >
         Containers
          
@@ -359,6 +367,7 @@ exports[`DataTable snapshots renders nested rows 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Behind"
       >
         Behind
          
@@ -461,6 +470,7 @@ exports[`DataTable snapshots renders rows 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Name"
       >
         Name
          
@@ -471,6 +481,7 @@ exports[`DataTable snapshots renders rows 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Email"
       >
         Email
          
@@ -551,6 +562,7 @@ exports[`DataTable snapshots sorts fields by a give order 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Name"
       >
         Name
          
@@ -558,6 +570,7 @@ exports[`DataTable snapshots sorts fields by a give order 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Email"
       >
         Email
          
@@ -641,6 +654,7 @@ exports[`DataTable snapshots sorts rows by a field 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Name"
       >
         Name
          
@@ -648,6 +662,7 @@ exports[`DataTable snapshots sorts rows by a field 1`] = `
       <td
         className="c1"
         onClick={[Function]}
+        title="Email"
       >
         Email
          

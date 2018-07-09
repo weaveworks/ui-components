@@ -190,6 +190,7 @@ class DataTable extends React.PureComponent {
                 onClick={this.handleHeaderClick}
                 key={value}
                 width={width}
+                title={label}
               >
                 {element || label}
               </Header>
