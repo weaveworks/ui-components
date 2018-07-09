@@ -178,6 +178,58 @@ describe('DataTable', () => {
 
       expect(tree).toMatchSnapshot();
     });
+    it('renders an element instead of a label', () => {
+      const tree = renderer
+        .create(
+          withTheme(
+            <DataTable
+              data={data}
+              columns={[
+                { value: 'name', element: <i className="fa fa-some-icon" /> },
+                { value: 'email', label: 'Email' },
+              ]}
+            >
+              {rows =>
+                map(rows, r => (
+                  <tr key={r.email}>
+                    <td>{r.name}</td>
+                    <td>{r.email}</td>
+                  </tr>
+                ))
+              }
+            </DataTable>
+          )
+        )
+        .toJSON();
+
+      expect(tree).toMatchSnapshot();
+    });
+    it('renders column widths', () => {
+      const tree = renderer
+        .create(
+          withTheme(
+            <DataTable
+              data={data}
+              columns={[
+                { value: 'name', label: 'Name', width: '20px' },
+                { value: 'email', label: 'Email', width: '80px' },
+              ]}
+            >
+              {rows =>
+                map(rows, r => (
+                  <tr key={r.email}>
+                    <td>{r.name}</td>
+                    <td>{r.email}</td>
+                  </tr>
+                ))
+              }
+            </DataTable>
+          )
+        )
+        .toJSON();
+
+      expect(tree).toMatchSnapshot();
+    });
   });
   it('sorts on click', () => {
     const table = mount(
