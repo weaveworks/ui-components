@@ -41,7 +41,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
 .c4 {
   margin: 4px 0 4px 2px;
   padding: 4px;
-  background-color: hsl(191,100%,50%);
+  background-color: hsl(191,100%,80%);
   margin-left: 4px;
   border-radius: 4px;
   display: -webkit-box;
