@@ -49,7 +49,7 @@ export default class GraphNodeExample extends React.Component {
           ))}
         </Example>
         <Example>
-          <Info>Random Nodes</Info>
+          <Info>Random Nodes (standard format with matches)</Info>
           {this.state.randomNodes.map(node => (
             <GraphNodeContainer key={node.key}>
               <GraphNode
@@ -58,6 +58,21 @@ export default class GraphNodeExample extends React.Component {
                 label={node.label}
                 labelMinor={node.labelMinor}
                 colorFunction={colorFunction}
+              />
+            </GraphNodeContainer>
+          ))}
+        </Example>
+        <Example>
+          <Info>Random Nodes (exporting format)</Info>
+          {this.state.randomNodes.map(node => (
+            <GraphNodeContainer key={node.key}>
+              <GraphNode
+                id={node.key}
+                type={node.type}
+                label={node.label}
+                labelMinor={node.labelMinor}
+                colorFunction={colorFunction}
+                forceSvg
               />
             </GraphNodeContainer>
           ))}

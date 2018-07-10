@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { format } from 'd3-format';
-import { constant } from 'lodash';
+import { constant, get } from 'lodash';
 
 import theme from '../../theme';
+import MatchedText from '../MatchedText';
 
 import ShapeCircle from './shapes/_ShapeCircle';
 import ShapeTriangle from './shapes/_ShapeTriangle';
@@ -32,27 +33,53 @@ export const shapeMap = {
   dottedcylinder: ShapeDottedCylinder,
 };
 
+const labelWidth = 120;
+
 const GraphNodeWrapper = styled.g`
   cursor: pointer;
 `;
 
-const TextContainer = styled.g.attrs({
+const SvgTextContainer = styled.g.attrs({
   transform: props => `translate(0, ${props.y})`,
 })`
+  pointer-events: none;
+`;
+
+const LabelSvg = styled.text.attrs({
+  fill: props => props.theme.colors.purple800,
+  textAnchor: 'middle',
+  y: 20,
+})`
+  font-size: ${props => props.theme.fontSizes.normal};
   pointer-events: all;
 `;
 
-const Label = styled.text.attrs({
-  fill: props => props.theme.colors.purple800,
-})`
-  font-size: ${props => props.theme.fontSizes.normal};
-`;
-
-const LabelMinor = styled.text.attrs({
+const LabelMinorSvg = styled.text.attrs({
   fill: props => props.theme.colors.purple600,
+  textAnchor: 'middle',
+  y: 40,
 })`
   font-size: ${props => props.theme.fontSizes.small};
+  pointer-events: all;
 `;
+
+const LabelStandard = styled.div`
+  color: ${props => props.theme.colors.purple800};
+  font-size: ${props => props.theme.fontSizes.normal};
+  pointer-events: all;
+  text-align: center;
+  margin-top: 6px;
+`;
+
+const LabelMinorStandard = styled.div`
+  color: ${props => props.theme.colors.purple600};
+  font-size: ${props => props.theme.fontSizes.small};
+  pointer-events: all;
+  text-align: center;
+  margin-top: 3px;
+`;
+
+const MatchedResults = styled.div``;
 
 class GraphNode extends React.Component {
   state = {
@@ -69,14 +96,32 @@ class GraphNode extends React.Component {
 
   renderSvgLabels() {
     return (
-      <TextContainer y={this.props.size / 2}>
-        <Label y="20" textAnchor="middle">
-          {this.props.label}
-        </Label>
-        <LabelMinor y="40" textAnchor="middle">
-          {this.props.labelMinor}
-        </LabelMinor>
-      </TextContainer>
+      <SvgTextContainer y={this.props.size / 2}>
+        <LabelSvg>{this.props.label}</LabelSvg>
+        <LabelMinorSvg>{this.props.labelMinor}</LabelMinorSvg>
+      </SvgTextContainer>
+    );
+  }
+
+  renderStandardLabels() {
+    const { label, labelMinor, matches } = this.props;
+
+    return (
+      <foreignObject
+        y={this.props.size / 2}
+        x={-0.5 * labelWidth}
+        width={labelWidth}
+        height="100px"
+        style={{ pointerEvents: 'none' }}
+      >
+        <LabelStandard>
+          <MatchedText text={label} match={get(matches, 'label')} />
+        </LabelStandard>
+        <LabelMinorStandard>
+          <MatchedText text={labelMinor} match={get(matches, 'labelMinor')} />
+        </LabelMinorStandard>
+        <MatchedResults matches={get(matches, 'parents')} />
+      </foreignObject>
     );
   }
 
@@ -105,7 +150,9 @@ class GraphNode extends React.Component {
           highlighted={this.state.highlighted}
         />
 
-        {this.renderSvgLabels()}
+        {this.props.forceSvg
+          ? this.renderSvgLabels()
+          : this.renderStandardLabels()}
       </GraphNodeWrapper>
     );
   }
@@ -122,6 +169,12 @@ GraphNode.propTypes = {
   metricValue: PropTypes.number,
   stacked: PropTypes.bool,
   size: PropTypes.number,
+  forceSvg: PropTypes.bool,
+  matches: PropTypes.shape({
+    label: PropTypes.object,
+    labelMinor: PropTypes.object,
+    parents: PropTypes.object,
+  }),
 };
 
 GraphNode.defaultProps = {
@@ -132,6 +185,8 @@ GraphNode.defaultProps = {
   metricValue: undefined,
   stacked: false,
   size: 65,
+  forceSvg: false,
+  matches: {},
 };
 
 export default GraphNode;
