@@ -7,6 +7,7 @@ import { constant, get } from 'lodash';
 import theme from '../../theme';
 import MatchedText from '../MatchedText';
 
+import MatchedResults from './_MatchedResults';
 import ShapeCircle from './shapes/_ShapeCircle';
 import ShapeTriangle from './shapes/_ShapeTriangle';
 import ShapeSquare from './shapes/_ShapeSquare';
@@ -79,8 +80,6 @@ const LabelMinorStandard = styled.div`
   margin-top: 3px;
 `;
 
-const MatchedResults = styled.div``;
-
 class GraphNode extends React.Component {
   state = {
     highlighted: false,
@@ -115,10 +114,14 @@ class GraphNode extends React.Component {
         style={{ pointerEvents: 'none' }}
       >
         <LabelStandard>
-          <MatchedText text={label} match={get(matches, 'label')} />
+          <MatchedText noBorder text={label} match={get(matches, 'label')} />
         </LabelStandard>
         <LabelMinorStandard>
-          <MatchedText text={labelMinor} match={get(matches, 'labelMinor')} />
+          <MatchedText
+            noBorder
+            text={labelMinor}
+            match={get(matches, 'labelMinor')}
+          />
         </LabelMinorStandard>
         <MatchedResults matches={get(matches, 'parents')} />
       </foreignObject>
