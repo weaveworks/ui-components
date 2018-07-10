@@ -1,5 +1,4 @@
-
-const NodeBorder = (renderTemplate, { color }) => (
+const NodeBorder = (renderTemplate, { color }) =>
   renderTemplate({
     stroke: color,
     transform: `scale(${0.5})`,
@@ -8,7 +7,6 @@ const NodeBorder = (renderTemplate, { color }) => (
       strokeOpacity: 1,
       strokeWidth: 0.1,
     },
-  })
-);
+  });
 
 export default NodeBorder;

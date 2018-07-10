@@ -1,5 +1,4 @@
-
-const NodeMetricFill = (renderTemplate, { clipId, metricColor }) => (
+const NodeMetricFill = (renderTemplate, { clipId, metricColor }) =>
   renderTemplate({
     transform: `scale(${0.48})`,
     clipPath: `url(#${clipId})`,
@@ -7,7 +6,6 @@ const NodeMetricFill = (renderTemplate, { clipId, metricColor }) => (
       fill: metricColor,
       opacity: 0.5,
     },
-  })
-);
+  });
 
 export default NodeMetricFill;

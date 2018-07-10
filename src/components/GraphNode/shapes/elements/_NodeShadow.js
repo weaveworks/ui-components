@@ -1,6 +1,6 @@
 import theme from '../../../../theme';
 
-const NodeShadow = renderTemplate => (
+const NodeShadow = renderTemplate =>
   renderTemplate({
     transform: `scale(${0.49})`,
     style: {
@@ -8,7 +8,6 @@ const NodeShadow = renderTemplate => (
       stroke: theme.colors.gray50,
       strokeWidth: 0.17,
     },
-  })
-);
+  });
 
 export default NodeShadow;

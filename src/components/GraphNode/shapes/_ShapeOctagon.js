@@ -8,11 +8,6 @@ const renderTemplate = attrs => (
 
 export default class ShapeOctagon extends React.Component {
   render() {
-    return (
-      <Shape
-        renderTemplate={renderTemplate}
-        {...this.props}
-      />
-    );
+    return <Shape renderTemplate={renderTemplate} {...this.props} />;
   }
 }

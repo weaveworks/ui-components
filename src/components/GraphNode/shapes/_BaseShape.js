@@ -47,7 +47,14 @@ const MetricText = styled.text.attrs({
 class BaseShape extends React.Component {
   render() {
     const {
-      renderTemplate, id, highlighted, color, metricValue, metricColor, metricLabel, size
+      renderTemplate,
+      id,
+      highlighted,
+      color,
+      metricValue,
+      metricColor,
+      metricLabel,
+      size,
     } = this.props;
 
     const clipId = encodeIdAttribute(`metric-clip-${id}`);
@@ -66,10 +73,11 @@ class BaseShape extends React.Component {
         {NodeShadow(renderTemplate)}
         {NodeBorder(renderTemplate, { color })}
 
-        {hasMetric && highlighted ?
-          <MetricText>{metricLabel}</MetricText> :
+        {hasMetric && highlighted ? (
+          <MetricText>{metricLabel}</MetricText>
+        ) : (
           <NodeAnchor />
-        }
+        )}
       </g>
     );
   }

@@ -39,9 +39,7 @@ const MoreMatches = styled.div`
 
 const Match = match => (
   <MatchedResultMatchWrapper key={match.label}>
-    <MatchedResultMatchLabel>
-      {match.label}:
-    </MatchedResultMatchLabel>
+    <MatchedResultMatchLabel>{match.label}:</MatchedResultMatchLabel>
     <MatchedResultMatchValue>
       <MatchedText
         noBorder
@@ -73,11 +71,11 @@ export default class MatchedResults extends React.PureComponent {
     return (
       <MatchedResultsContainer>
         {take(values(matches), SHOW_ROW_COUNT).map(Match)}
-        {moreFieldMatches &&
+        {moreFieldMatches && (
           <MoreMatches title={moreFieldMatchesTitle}>
             {`${size(moreFieldMatches)} more matches`}
           </MoreMatches>
-        }
+        )}
       </MatchedResultsContainer>
     );
   }

@@ -12,9 +12,7 @@ const colorFunction = ({ label }) =>
 
 const GraphNodeContainer = ({ big, children }) => (
   <svg width={`${big ? 300 : 150}px`} height={`${big ? 300 : 175}px`}>
-    <g style={{ transform: 'translate(75px, 100px)' }}>
-      {children}
-    </g>
+    <g style={{ transform: 'translate(75px, 100px)' }}>{children}</g>
   </svg>
 );
 
@@ -44,7 +42,10 @@ export default class GraphNodeExample extends React.Component {
       metadata: {
         docker_image_name: {
           label: 'Image name',
-          text: faker.lorem.words(2).split(' ').join('/'),
+          text: faker.lorem
+            .words(2)
+            .split(' ')
+            .join('/'),
         },
         docker_container_state_human: {
           label: 'State',
@@ -60,16 +61,25 @@ export default class GraphNodeExample extends React.Component {
     matches: {},
   };
 
-  searchRandomNodes = (terms) => {
+  searchRandomNodes = terms => {
     this.setState({
-      matches: fromPairs(map(this.state.randomNodes, node => ([node.key, {
-        label: findFirstMatch(node.label, terms),
-        labelMinor: findFirstMatch(node.labelMinor, terms),
-        parents: fromPairs(compact(map(node.metadata, (value, key) => {
-          const match = findFirstMatch(value.text, terms);
-          return !isEmpty(match) && [key, { ...match, ...value }];
-        }))),
-      }]))),
+      matches: fromPairs(
+        map(this.state.randomNodes, node => [
+          node.key,
+          {
+            label: findFirstMatch(node.label, terms),
+            labelMinor: findFirstMatch(node.labelMinor, terms),
+            parents: fromPairs(
+              compact(
+                map(node.metadata, (value, key) => {
+                  const match = findFirstMatch(value.text, terms);
+                  return !isEmpty(match) && [key, { ...match, ...value }];
+                })
+              )
+            ),
+          },
+        ])
+      ),
     });
   };
 
@@ -95,7 +105,9 @@ export default class GraphNodeExample extends React.Component {
         <Example>
           <Info>Random Nodes (standard format with search matches)</Info>
           <Search
-            onChange={(text, terms = []) => this.searchRandomNodes(compact([text, ...terms]))}
+            onChange={(text, terms = []) =>
+              this.searchRandomNodes(compact([text, ...terms]))
+            }
           />
           {this.state.randomNodes.map(node => (
             <GraphNodeContainer big key={node.key}>
