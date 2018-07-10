@@ -2,24 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
-  max,
-  flatten,
-  range,
-  keys,
-  values,
-  sortBy,
   first,
-  last,
-  fromPairs,
-  zipObject,
+  flatten,
   forEach,
-  omit,
-  size,
-  isEmpty,
+  fromPairs,
   get,
-  reverse,
+  head,
   indexOf,
+  isEmpty,
+  keys,
+  last,
+  max,
   noop,
+  omit,
+  range,
+  reverse,
+  size,
+  sortBy,
+  values,
+  zipObject,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
 import {
@@ -57,7 +58,7 @@ function asJSONString(hash) {
   return JSON.stringify(hash, null, 1);
 }
 
-function getDefaultSeriesName(series) {
+function getDefaultSeriesNameParts(series) {
   // Extract metric name in a separate variable.
   const metricName = get(series.metric, '__name__') || '';
   const metricHash = omit(series.metric, ['__name__']);
@@ -66,17 +67,17 @@ function getDefaultSeriesName(series) {
   if (!metricName) {
     // Return the query string if the series has no metrics.
     if (isEmpty(metricHash)) {
-      return series.query;
+      return [series.query];
     }
     // Return the value if only a single one is present.
     if (size(metricHash) === 1) {
-      return first(values(metricHash));
+      return [first(values(metricHash))];
     }
   }
 
   // Return a stringified JSON of metrics
   // (with metric name in front if it exists).
-  return `${metricName}${asJSONString(metricHash)}`;
+  return [`${metricName}${asJSONString(metricHash)}`];
 }
 
 function getColorTheme({ colorTheme, showStacked }) {
@@ -189,7 +190,7 @@ const valueFormatters = {
  *         stepDurationSec={this.state.stepDuration}
  *         startTimeSec={this.state.startTime}
  *         endTimeSec={this.state.endTime}
- *         getSeriesName={({ metric }) => JSON.stringify(metric)}
+ *         getSeriesNameParts={({ metric }) => JSON.stringify(metric)}
  *       />
  *     );
  *   }
@@ -250,15 +251,15 @@ class PrometheusGraph extends React.PureComponent {
 
   prepareMultiSeries = (props, { selectedLegendKeys } = this.state) => {
     const getSeriesColor = getColorTheme(props);
-    const getSeriesName = (series, forLegend) =>
-      props.getSeriesName(series, props.multiSeries, forLegend);
+    const getSeriesNameParts = series =>
+      props.getSeriesNameParts(series, props.multiSeries);
 
     // The key generating function will make series key equal the series name,
     // unless this is not the first series with this name, in which case the
     // index of the series within the legend is attached to the key.
-    const multiSeriesByName = props.multiSeries.map(getSeriesName);
+    const multiSeriesByName = props.multiSeries.map(getSeriesNameParts);
     const getSeriesKey = (series, index) => {
-      const seriesName = getSeriesName(series);
+      const seriesName = head(getSeriesNameParts(series));
       const firstIndex = indexOf(multiSeriesByName, seriesName);
 
       let seriesKey = seriesName;
@@ -332,8 +333,8 @@ class PrometheusGraph extends React.PureComponent {
     const multiSeries = multiSeriesKeys.map((seriesKey, seriesIndex) => ({
       key: seriesKey,
       color: getSeriesColor(seriesIndex),
-      hoverName: getSeriesName(multiSeriesByKey[seriesKey]),
-      legendName: getSeriesName(multiSeriesByKey[seriesKey], true),
+      hoverName: getSeriesNameParts(multiSeriesByKey[seriesKey]),
+      legendNameParts: getSeriesNameParts(multiSeriesByKey[seriesKey], true),
       datapoints: timestampSecs.map((timestampSec, timestampIndex) => ({
         timestampSec,
         value: valuesByTimestamp[timestampSec][seriesKey],
@@ -366,8 +367,9 @@ class PrometheusGraph extends React.PureComponent {
     // scaleQuantize would normally map domain in buckets of uniform lengths. To
     // make it map to the nearest point in timestampSecs instead, we need to extend
     // the domain by half of stepDurationSec at each end.
-    const startDomain = first(timestampSecs) - (0.5 * stepDurationSec);
-    const endDomain = last(timestampSecs) + (0.5 * stepDurationSec);
+    // prettier-ignore - https://github.com/prettier/prettier/issues/187
+    const startDomain = first(timestampSecs) - (0.5 * stepDurationSec); // prettier-ignore
+    const endDomain = last(timestampSecs) + (0.5 * stepDurationSec); // prettier-ignore
     return scaleQuantize()
       .domain([startDomain, endDomain])
       .range(timestampSecs);
@@ -513,7 +515,7 @@ PrometheusGraph.propTypes = {
    * itself, second argument multiSeries context and third argument options hash with only
    *
    */
-  getSeriesName: PropTypes.func,
+  getSeriesNameParts: PropTypes.func,
   /**
    * Color theme for the graph
    */
@@ -565,7 +567,7 @@ PrometheusGraph.propTypes = {
 };
 
 PrometheusGraph.defaultProps = {
-  getSeriesName: getDefaultSeriesName,
+  getSeriesNameParts: getDefaultSeriesNameParts,
   colorTheme: 'mixed',
   metricUnits: 'numeric',
   valuesMinSpread: 0.012,

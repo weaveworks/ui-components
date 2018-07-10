@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { map, max } from 'lodash';
+import { head, map, max } from 'lodash';
 
 import TimestampTooltip from '../_TimestampTooltip';
 
@@ -124,7 +124,7 @@ class HoverInfo extends React.PureComponent {
           {filteredHoverPoints.map(datapoint => (
             <TooltipRow key={datapoint.key} focused={datapoint.focused}>
               <TooltipRowColor color={datapoint.color} />
-              <TooltipRowName>{datapoint.hoverName}</TooltipRowName>
+              <TooltipRowName>{head(datapoint.hoverName)}</TooltipRowName>
               <TooltipRowValue>{formatValue(datapoint.value)}</TooltipRowValue>
             </TooltipRow>
           ))}

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { isArray, without } from 'lodash';
+import { size, without } from 'lodash';
 
 const LegendContainer = styled.div`
   opacity: ${props => (props.loading ? 0.35 : 1)};
@@ -150,12 +150,12 @@ class Legend extends React.PureComponent {
         {this.state.shown && (
           <LegendItems>
             {this.props.multiSeries.map(series => {
-              const multiLine = isArray(series.legendName);
+              const multiLine = size(series.legendNameParts) > 1;
 
               return (
                 <LegendItem
                   key={series.key}
-                  title={series.hoverName}
+                  title={series.hoverName.join('\n')}
                   onClick={ev => this.handleLegendItemClick(ev, series)}
                   onMouseEnter={() => this.handleLegendItemMouseEnter(series)}
                   onMouseLeave={() => this.handleLegendItemMouseLeave()}
@@ -163,9 +163,7 @@ class Legend extends React.PureComponent {
                 >
                   <ColorBox color={series.color} />
                   <LegendItemName multiLine={multiLine}>
-                    {multiLine
-                      ? series.legendName.join('\n')
-                      : series.legendName}
+                    {series.legendNameParts.join('\n')}
                   </LegendItemName>
                 </LegendItem>
               );
