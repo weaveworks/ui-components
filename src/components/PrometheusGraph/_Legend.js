@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { without } from 'lodash';
+import { size, without } from 'lodash';
 
 const LegendContainer = styled.div`
   opacity: ${props => (props.loading ? 0.35 : 1)};
@@ -21,7 +21,7 @@ const LegendItem = styled.div`
   cursor: pointer;
   display: flex;
   font-size: ${props => props.theme.fontSizes.small};
-  align-items: center;
+  align-items: flex-start;
   padding: 2px 16px 2px 7px;
   margin-right: 2px;
   margin-bottom: 2px;
@@ -43,6 +43,23 @@ const LegendItemName = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
   max-width: 36ch;
+
+  ${props =>
+    props.multiLine &&
+    `
+    white-space: normal;
+    max-height: 32px;
+  `};
+
+  ${LegendItem}:hover & {
+    ${props =>
+      props.multiLine &&
+      `
+        max-height: 100%;
+        word-break: break-word;
+        text-overflow: normal;
+    `};
+  }
 `;
 
 const LegendToggle = styled.span`
@@ -60,6 +77,7 @@ const LegendCaret = styled.span`
 
 const ColorBox = styled.span`
   background-color: ${props => props.color};
+  margin-top: 5px;
   margin-right: 4px;
   min-width: 13px;
   height: 5px;
@@ -131,19 +149,25 @@ class Legend extends React.PureComponent {
         )}
         {this.state.shown && (
           <LegendItems>
-            {this.props.multiSeries.map(series => (
-              <LegendItem
-                key={series.key}
-                title={series.hoverName}
-                onClick={ev => this.handleLegendItemClick(ev, series)}
-                onMouseEnter={() => this.handleLegendItemMouseEnter(series)}
-                onMouseLeave={() => this.handleLegendItemMouseLeave()}
-                selected={this.seriesSelected(series)}
-              >
-                <ColorBox color={series.color} />
-                <LegendItemName>{series.legendName}</LegendItemName>
-              </LegendItem>
-            ))}
+            {this.props.multiSeries.map(series => {
+              const multiLine = size(series.legendNameParts) > 1;
+
+              return (
+                <LegendItem
+                  key={series.key}
+                  title={series.hoverName.join('\n')}
+                  onClick={ev => this.handleLegendItemClick(ev, series)}
+                  onMouseEnter={() => this.handleLegendItemMouseEnter(series)}
+                  onMouseLeave={() => this.handleLegendItemMouseLeave()}
+                  selected={this.seriesSelected(series)}
+                >
+                  <ColorBox color={series.color} />
+                  <LegendItemName multiLine={multiLine}>
+                    {series.legendNameParts.join('\n')}
+                  </LegendItemName>
+                </LegendItem>
+              );
+            })}
           </LegendItems>
         )}
       </LegendContainer>

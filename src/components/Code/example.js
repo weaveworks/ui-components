@@ -16,7 +16,7 @@ export default class CodeExample extends React.Component {
   };
 
   onCopy = () => {
-    console.log('Copied');
+    console.log('Copied'); // eslint-disable-line no-console
   };
 
   onChange = e => {

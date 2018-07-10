@@ -101,7 +101,7 @@ export default class PrometheusGraphExample extends React.Component {
     clearInterval(this.timer);
   }
 
-  changeLegendSelection = (selectedCorrelatedKeys) => {
+  changeLegendSelection = selectedCorrelatedKeys => {
     this.setState({ selectedCorrelatedKeys });
   };
 
@@ -116,7 +116,10 @@ export default class PrometheusGraphExample extends React.Component {
             stepDurationSec={this.state.stepDuration}
             startTimeSec={this.state.startTime}
             endTimeSec={this.state.endTime}
-            getSeriesName={({ metric }) => JSON.stringify(metric)}
+            getSeriesNameParts={({ metric }) => [
+              JSON.stringify(metric),
+              'sum(rate(prometheus_remote_storage_succeeded_samples_total{}[5m])) by (queue)',
+            ]}
           />
           <Info>Namespaces with deployments</Info>
           <PrometheusGraph

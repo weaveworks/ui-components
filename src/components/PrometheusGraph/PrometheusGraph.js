@@ -2,29 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
-  max,
-  flatten,
-  range,
-  keys,
-  values,
-  sortBy,
   first,
-  last,
-  fromPairs,
-  zipObject,
+  flatten,
   forEach,
-  omit,
-  size,
-  isEmpty,
-  filter,
-  every,
+  fromPairs,
   get,
-  reverse,
+  head,
   indexOf,
+  isEmpty,
+  keys,
+  last,
+  max,
   noop,
+  omit,
+  range,
+  reverse,
+  size,
+  sortBy,
+  values,
+  zipObject,
 } from 'lodash';
 import { scaleLinear, scaleQuantize } from 'd3-scale';
-import { format, formatPrefix, precisionPrefix, precisionFixed } from 'd3-format';
+import {
+  format,
+  formatPrefix,
+  precisionPrefix,
+  precisionFixed,
+} from 'd3-format';
 import { stack } from 'd3-shape';
 
 import theme from '../../theme';
@@ -54,35 +58,26 @@ function asJSONString(hash) {
   return JSON.stringify(hash, null, 1);
 }
 
-function getDefaultSeriesName(series, multiSeries, forLegend = false) {
+function getDefaultSeriesNameParts(series) {
   // Extract metric name in a separate variable.
   const metricName = get(series.metric, '__name__') || '';
-  let metricHash = omit(series.metric, ['__name__']);
+  const metricHash = omit(series.metric, ['__name__']);
 
   // Handle some special cases if metric name is not present.
   if (!metricName) {
     // Return the query string if the series has no metrics.
     if (isEmpty(metricHash)) {
-      return series.query;
+      return [series.query];
     }
     // Return the value if only a single one is present.
     if (size(metricHash) === 1) {
-      return first(values(metricHash));
+      return [first(values(metricHash))];
     }
   }
 
-  // If multi-series context is given and more than one series is present in
-  // the graph, filter out all the metric keys that appear in every series.
-  if (forLegend && size(multiSeries) > 1) {
-    const repeatedKeys = filter(keys(metricHash), metricKey =>
-      every(multiSeries, s => s.metric[metricKey] === metricHash[metricKey])
-    );
-    metricHash = omit(metricHash, repeatedKeys);
-  }
-
-  // Then return a stringified JSON of metrics
+  // Return a stringified JSON of metrics
   // (with metric name in front if it exists).
-  return `${metricName}${asJSONString(metricHash)}`;
+  return [`${metricName}${asJSONString(metricHash)}`];
 }
 
 function getColorTheme({ colorTheme, showStacked }) {
@@ -195,7 +190,7 @@ const valueFormatters = {
  *         stepDurationSec={this.state.stepDuration}
  *         startTimeSec={this.state.startTime}
  *         endTimeSec={this.state.endTime}
- *         getSeriesName={({ metric }) => JSON.stringify(metric)}
+ *         getSeriesNameParts={({ metric }) => JSON.stringify(metric)}
  *       />
  *     );
  *   }
@@ -256,15 +251,15 @@ class PrometheusGraph extends React.PureComponent {
 
   prepareMultiSeries = (props, { selectedLegendKeys } = this.state) => {
     const getSeriesColor = getColorTheme(props);
-    const getSeriesName = (series, forLegend) =>
-      props.getSeriesName(series, props.multiSeries, forLegend);
+    const getSeriesNameParts = series =>
+      props.getSeriesNameParts(series, props.multiSeries);
 
     // The key generating function will make series key equal the series name,
     // unless this is not the first series with this name, in which case the
     // index of the series within the legend is attached to the key.
-    const multiSeriesByName = props.multiSeries.map(getSeriesName);
+    const multiSeriesByName = props.multiSeries.map(getSeriesNameParts);
     const getSeriesKey = (series, index) => {
-      const seriesName = getSeriesName(series);
+      const seriesName = head(getSeriesNameParts(series));
       const firstIndex = indexOf(multiSeriesByName, seriesName);
 
       let seriesKey = seriesName;
@@ -276,8 +271,13 @@ class PrometheusGraph extends React.PureComponent {
 
     // Build a dictionary that references original multi series by keys,
     // and a sorted list of those keys by which we can later iterate.
-    const getSeriesKeyValuePair = (series, index) => [getSeriesKey(series, index), series];
-    const multiSeriesByKey = fromPairs(props.multiSeries.map(getSeriesKeyValuePair));
+    const getSeriesKeyValuePair = (series, index) => [
+      getSeriesKey(series, index),
+      series,
+    ];
+    const multiSeriesByKey = fromPairs(
+      props.multiSeries.map(getSeriesKeyValuePair)
+    );
     const multiSeriesKeys = keys(multiSeriesByKey).sort();
 
     // Calculate the keys of stacked series:
@@ -317,17 +317,24 @@ class PrometheusGraph extends React.PureComponent {
 
     // Stack the graph series in the alphabetical order.
     const stackFunction = stack().keys(stackedMultiSeriesKeys);
-    const valuesForStacking = sortBy(values(valuesByTimestamp), ['timestampSec']);
-    const stackedData = zipObject(stackedMultiSeriesKeys, stackFunction(valuesForStacking));
+    const valuesForStacking = sortBy(values(valuesByTimestamp), [
+      'timestampSec',
+    ]);
+    const stackedData = zipObject(
+      stackedMultiSeriesKeys,
+      stackFunction(valuesForStacking)
+    );
     const getStackedOffset = (seriesKey, timestampIndex) =>
-      stackedMultiSeriesKeys.includes(seriesKey) ? stackedData[seriesKey][timestampIndex][0] : 0;
+      stackedMultiSeriesKeys.includes(seriesKey)
+        ? stackedData[seriesKey][timestampIndex][0]
+        : 0;
 
     // Finally store the multi-series ready to be graphed.
     const multiSeries = multiSeriesKeys.map((seriesKey, seriesIndex) => ({
       key: seriesKey,
       color: getSeriesColor(seriesIndex),
-      hoverName: getSeriesName(multiSeriesByKey[seriesKey]),
-      legendName: getSeriesName(multiSeriesByKey[seriesKey], true),
+      hoverName: getSeriesNameParts(multiSeriesByKey[seriesKey]),
+      legendNameParts: getSeriesNameParts(multiSeriesByKey[seriesKey], true),
       datapoints: timestampSecs.map((timestampSec, timestampIndex) => ({
         timestampSec,
         value: valuesByTimestamp[timestampSec][seriesKey],
@@ -352,12 +359,17 @@ class PrometheusGraph extends React.PureComponent {
     // Timestamp values are stepDurationSec seconds apart and they always end at
     // endTimeSec. We make startTimeSec a bit smaller to include it in the range in case
     // (endTimeSec - startTimeSec) is divisible by stepDurationSec.
-    const timestampSecs = range(endTimeSec, startTimeSec - 1e-6, -stepDurationSec).sort();
+    const timestampSecs = range(
+      endTimeSec,
+      startTimeSec - 1e-6,
+      -stepDurationSec
+    ).sort();
     // scaleQuantize would normally map domain in buckets of uniform lengths. To
     // make it map to the nearest point in timestampSecs instead, we need to extend
     // the domain by half of stepDurationSec at each end.
-    const startDomain = first(timestampSecs) - (0.5 * stepDurationSec);
-    const endDomain = last(timestampSecs) + (0.5 * stepDurationSec);
+    // prettier-ignore - https://github.com/prettier/prettier/issues/187
+    const startDomain = first(timestampSecs) - (0.5 * stepDurationSec); // prettier-ignore
+    const endDomain = last(timestampSecs) + (0.5 * stepDurationSec); // prettier-ignore
     return scaleQuantize()
       .domain([startDomain, endDomain])
       .range(timestampSecs);
@@ -445,12 +457,14 @@ class PrometheusGraph extends React.PureComponent {
             onHoverUpdate={this.handleHoverUpdate}
             onChartResize={this.handleChartResize}
           />
-          {hasData && <DeploymentAnnotations
-            deployments={deployments}
-            timeScale={timeScale}
-            chartWidth={chartWidth}
-            chartHeight={chartHeight}
-          />}
+          {hasData && (
+            <DeploymentAnnotations
+              deployments={deployments}
+              timeScale={timeScale}
+              chartWidth={chartWidth}
+              chartHeight={chartHeight}
+            />
+          )}
           <HoverInfo
             mouseX={hoverX}
             mouseY={hoverY}
@@ -501,7 +515,7 @@ PrometheusGraph.propTypes = {
    * itself, second argument multiSeries context and third argument options hash with only
    *
    */
-  getSeriesName: PropTypes.func,
+  getSeriesNameParts: PropTypes.func,
   /**
    * Color theme for the graph
    */
@@ -553,7 +567,7 @@ PrometheusGraph.propTypes = {
 };
 
 PrometheusGraph.defaultProps = {
-  getSeriesName: getDefaultSeriesName,
+  getSeriesNameParts: getDefaultSeriesNameParts,
   colorTheme: 'mixed',
   metricUnits: 'numeric',
   valuesMinSpread: 0.012,
