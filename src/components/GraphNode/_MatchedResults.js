@@ -32,6 +32,7 @@ const MatchedResultMatchValue = styled.span`
 
 const MoreMatches = styled.div`
   color: ${props => props.theme.colors.blue700};
+  font-size: ${props => props.theme.fontSizes.small};
   text-align: center;
   margin-top: 4px;
 `;

@@ -19,6 +19,7 @@ export const colors = {
   blue700: 'hsl(191, 100%, 35%)', // #0092b3
   blue600: 'hsl(191, 100%, 40%)', // #00a7cc
   blue400: 'hsl(191, 100%, 50%)', // #00d2ff
+  blue200: 'hsl(191, 100%, 80%)', // #99ecff
   blue50: 'hsl(191, 100%, 97%)', // #f0fcff
 
   // Neutral Colors

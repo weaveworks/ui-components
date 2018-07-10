@@ -1,8 +1,9 @@
 import React from 'react';
 import faker from 'faker';
-import { keys, times, sample } from 'lodash';
+import { keys, times, sample, map, fromPairs, compact, isEmpty } from 'lodash';
 
 import { Example, Info } from '../../utils/example';
+import Search from '../Search';
 import GraphNode, { shapeMap } from './GraphNode';
 
 const nodeTypes = keys(shapeMap);
@@ -17,6 +18,19 @@ const GraphNodeContainer = ({ big, children }) => (
   </svg>
 );
 
+const findFirstMatch = (text, terms) => {
+  let match = {};
+
+  terms.forEach(term => {
+    const start = text.search(term);
+    if (isEmpty(match) && start !== -1) {
+      match = { start, length: term.length };
+    }
+  });
+
+  return match;
+};
+
 export default class GraphNodeExample extends React.Component {
   state = {
     randomNodes: times(20, () => ({
@@ -27,32 +41,36 @@ export default class GraphNodeExample extends React.Component {
         .ip()
         .split('.')
         .join('-')}`,
-    })),
-    metrics: ['0', '0.01', '0.1', '0.5', '0.9', '0.99', '1'],
-    matches: {
-      label: { start: 1, length: 2 },
-      labelMinor: { start: 10, length: 5 },
-      parents: {
+      metadata: {
         docker_image_name: {
           label: 'Image name',
-          length: 2,
-          start: 15,
-          text: 'weaveworks/weaveexec',
+          text: faker.lorem.words(2).split(' ').join('/'),
         },
         docker_container_state_human: {
           label: 'State',
-          length: 2,
-          start: 14,
-          text: 'Exited (0) 4 weeks ago',
+          text: faker.lorem.sentence(4),
         },
         docker_container_id: {
           label: 'ID',
-          length: 2,
-          start: 1,
-          text: '7ee2f74343c81a1593db52cb147d615a62d928df698d554f00d19b49a690895b',
+          text: faker.random.alphaNumeric(50),
         },
-      }
-    },
+      },
+    })),
+    metrics: ['0', '0.01', '0.1', '0.5', '0.9', '0.99', '1'],
+    matches: {},
+  };
+
+  searchRandomNodes = (terms) => {
+    this.setState({
+      matches: fromPairs(map(this.state.randomNodes, node => ([node.key, {
+        label: findFirstMatch(node.label, terms),
+        labelMinor: findFirstMatch(node.labelMinor, terms),
+        parents: fromPairs(compact(map(node.metadata, (value, key) => {
+          const match = findFirstMatch(value.text, terms);
+          return !isEmpty(match) && [key, { ...match, ...value }];
+        }))),
+      }]))),
+    });
   };
 
   render() {
@@ -75,7 +93,10 @@ export default class GraphNodeExample extends React.Component {
           ))}
         </Example>
         <Example>
-          <Info>Random Nodes (standard format with matches)</Info>
+          <Info>Random Nodes (standard format with search matches)</Info>
+          <Search
+            onChange={(text, terms = []) => this.searchRandomNodes(compact([text, ...terms]))}
+          />
           {this.state.randomNodes.map(node => (
             <GraphNodeContainer big key={node.key}>
               <GraphNode
@@ -84,7 +105,7 @@ export default class GraphNodeExample extends React.Component {
                 label={node.label}
                 labelMinor={node.labelMinor}
                 colorFunction={colorFunction}
-                matches={this.state.matches}
+                matches={this.state.matches[node.key]}
               />
             </GraphNodeContainer>
           ))}
@@ -99,6 +120,7 @@ export default class GraphNodeExample extends React.Component {
                 label={node.label}
                 labelMinor={node.labelMinor}
                 colorFunction={colorFunction}
+                matches={this.state.matches[node.key]}
                 forceSvg
               />
             </GraphNodeContainer>
