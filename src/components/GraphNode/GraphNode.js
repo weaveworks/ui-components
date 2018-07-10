@@ -39,29 +39,52 @@ const GraphNodeWrapper = styled.g`
 const TextContainer = styled.g.attrs({
   transform: props => `translate(0, ${props.y})`,
 })`
-  pointer-events: none;
+  pointer-events: all;
 `;
 
 const Label = styled.text.attrs({
   fill: props => props.theme.colors.purple800,
-})``;
+})`
+  font-size: ${props => props.theme.fontSizes.normal};
+`;
+
+const LabelMinor = styled.text.attrs({
+  fill: props => props.theme.colors.purple600,
+})`
+  font-size: ${props => props.theme.fontSizes.small};
+`;
 
 class GraphNode extends React.Component {
   state = {
     highlighted: false,
-  }
+  };
 
   handleMouseEnter = () => {
     this.setState({ highlighted: true });
-  }
+  };
 
   handleMouseLeave = () => {
     this.setState({ highlighted: false });
+  };
+
+  renderSvgLabels() {
+    return (
+      <TextContainer y={this.props.size / 2}>
+        <Label y="20" textAnchor="middle">
+          {this.props.label}
+        </Label>
+        <LabelMinor y="40" textAnchor="middle">
+          {this.props.labelMinor}
+        </LabelMinor>
+      </TextContainer>
+    );
   }
 
   render() {
     const { id, label, size, stacked, metricValue } = this.props;
-    const metricLabel = metricValue ? this.props.metricLabelFunction(metricValue) : '';
+    const metricLabel = metricValue
+      ? this.props.metricLabelFunction(metricValue)
+      : '';
     const metricColor = this.props.metricColorFunction(metricValue);
     const color = this.props.colorFunction({ label });
     const Shape = shapeMap[this.props.type];
@@ -82,9 +105,7 @@ class GraphNode extends React.Component {
           highlighted={this.state.highlighted}
         />
 
-        <TextContainer y={size / 2}>
-          <Label y="15" textAnchor="middle">{label}</Label>
-        </TextContainer>
+        {this.renderSvgLabels()}
       </GraphNodeWrapper>
     );
   }
@@ -94,6 +115,7 @@ GraphNode.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  labelMinor: PropTypes.string,
   colorFunction: PropTypes.func,
   metricColorFunction: PropTypes.func,
   metricLabelFunction: PropTypes.func,
@@ -103,6 +125,7 @@ GraphNode.propTypes = {
 };
 
 GraphNode.defaultProps = {
+  labelMinor: '',
   colorFunction: constant(theme.colors.purple400),
   metricColorFunction: constant(theme.colors.status.warning),
   metricLabelFunction: format('.0%'),
