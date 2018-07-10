@@ -1,5 +1,6 @@
 import React from 'react';
 import faker from 'faker';
+import { format } from 'd3-format';
 import { keys, times, sample, map, fromPairs, compact, isEmpty } from 'lodash';
 
 import { Example, Info } from '../../utils/example';
@@ -7,7 +8,7 @@ import Search from '../Search';
 import GraphNode, { shapeMap } from './GraphNode';
 
 const nodeTypes = keys(shapeMap);
-const colorFunction = ({ label }) =>
+const colorFunction = label =>
   `hsl(${(label.charCodeAt(0) - 97) * 10}, 50%, 65%)`;
 
 const GraphNodeContainer = ({ big, children }) => (
@@ -31,7 +32,15 @@ const findFirstMatch = (text, terms) => {
 
 export default class GraphNodeExample extends React.Component {
   state = {
-    randomNodes: times(20, () => ({
+    availableShapes: nodeTypes.map(type => ({
+      type,
+      key: faker.lorem.slug(),
+    })),
+    stackedShape: nodeTypes.map(type => ({
+      type,
+      key: faker.lorem.slug(),
+    })),
+    randomSearchableNodes: times(20, () => ({
       type: sample(nodeTypes),
       key: faker.lorem.slug(),
       label: faker.lorem.word(),
@@ -57,14 +66,28 @@ export default class GraphNodeExample extends React.Component {
         },
       },
     })),
-    metrics: ['0', '0.01', '0.1', '0.5', '0.9', '0.99', '1'],
+    randomSvgNodes: times(20, () => ({
+      type: sample(nodeTypes),
+      key: faker.lorem.slug(),
+      label: faker.lorem.word(),
+      labelMinor: `ip-${faker.internet
+        .ip()
+        .split('.')
+        .join('-')}`,
+    })),
+    metricNodes: [0, 0.01, 0.1, 0.5, 0.9, 0.99, 1].map(metricValue => ({
+      key: faker.lorem.slug(),
+      metricLabel: format('.0%')(metricValue),
+      metricValue,
+    })),
+    hoveredNode: null,
     matches: {},
   };
 
   searchRandomNodes = terms => {
     this.setState({
       matches: fromPairs(
-        map(this.state.randomNodes, node => [
+        map(this.state.randomSearchableNodes, node => [
           node.key,
           {
             label: findFirstMatch(node.label, terms),
@@ -83,22 +106,45 @@ export default class GraphNodeExample extends React.Component {
     });
   };
 
+  handleMouseEnter = hoveredNodeId => {
+    this.setState({ hoveredNodeId });
+  };
+
+  handleMouseLeave = () => {
+    this.setState({ hoveredNodeId: null });
+  };
+
   render() {
     return (
       <div>
         <Example>
           <Info>Available Shapes</Info>
-          {nodeTypes.map(type => (
-            <GraphNodeContainer key={type}>
-              <GraphNode type={type} id={type} label={type} />
+          {this.state.availableShapes.map(node => (
+            <GraphNodeContainer key={node.key}>
+              <GraphNode
+                id={node.key}
+                type={node.type}
+                label={node.type}
+                highlighted={node.key === this.state.hoveredNodeId}
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
+              />
             </GraphNodeContainer>
           ))}
         </Example>
         <Example>
           <Info>Stacked Shapes</Info>
-          {nodeTypes.map(type => (
-            <GraphNodeContainer key={type}>
-              <GraphNode stacked type={type} id={type} label={type} />
+          {this.state.stackedShape.map(node => (
+            <GraphNodeContainer key={node.key}>
+              <GraphNode
+                stacked
+                id={node.key}
+                type={node.type}
+                label={node.type}
+                highlighted={node.key === this.state.hoveredNodeId}
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
+              />
             </GraphNodeContainer>
           ))}
         </Example>
@@ -109,30 +155,35 @@ export default class GraphNodeExample extends React.Component {
               this.searchRandomNodes(compact([text, ...terms]))
             }
           />
-          {this.state.randomNodes.map(node => (
+          {this.state.randomSearchableNodes.map(node => (
             <GraphNodeContainer big key={node.key}>
               <GraphNode
                 id={node.key}
                 type={node.type}
                 label={node.label}
                 labelMinor={node.labelMinor}
-                colorFunction={colorFunction}
+                color={colorFunction(node.label)}
                 matches={this.state.matches[node.key]}
+                highlighted={node.key === this.state.hoveredNodeId}
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
               />
             </GraphNodeContainer>
           ))}
         </Example>
         <Example>
           <Info>Random Nodes (exporting format)</Info>
-          {this.state.randomNodes.map(node => (
+          {this.state.randomSvgNodes.map(node => (
             <GraphNodeContainer key={node.key}>
               <GraphNode
                 id={node.key}
                 type={node.type}
                 label={node.label}
                 labelMinor={node.labelMinor}
-                colorFunction={colorFunction}
-                matches={this.state.matches[node.key]}
+                color={colorFunction(node.label)}
+                highlighted={node.key === this.state.hoveredNodeId}
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
                 forceSvg
               />
             </GraphNodeContainer>
@@ -140,14 +191,17 @@ export default class GraphNodeExample extends React.Component {
         </Example>
         <Example>
           <Info>Metric Fills</Info>
-          {this.state.metrics.map(metric => (
-            <GraphNodeContainer key={metric}>
+          {this.state.metricNodes.map(node => (
+            <GraphNodeContainer key={node.key}>
               <GraphNode
+                id={node.key}
                 type="pentagon"
-                id={metric}
                 label="node"
-                metricText={metric}
-                metricValue={Number(metric)}
+                metricLabel={node.metricLabel}
+                metricValue={node.metricValue}
+                highlighted={node.key === this.state.hoveredNodeId}
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
               />
             </GraphNodeContainer>
           ))}

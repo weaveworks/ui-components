@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { format } from 'd3-format';
-import { constant, get } from 'lodash';
+import { get, noop } from 'lodash';
 
 import theme from '../../theme';
 import MatchedText from '../MatchedText';
@@ -64,35 +63,25 @@ const LabelMinorSvg = styled.text.attrs({
   pointer-events: all;
 `;
 
-const LabelStandard = styled.div`
+const LabelStandard = styled.span`
   color: ${props => props.theme.colors.purple800};
   font-size: ${props => props.theme.fontSizes.normal};
+  display: inline-block;
   pointer-events: all;
   text-align: center;
-  margin-top: 6px;
+  padding-top: 6px;
 `;
 
-const LabelMinorStandard = styled.div`
+const LabelMinorStandard = styled.span`
   color: ${props => props.theme.colors.purple600};
   font-size: ${props => props.theme.fontSizes.small};
+  display: inline-block;
   pointer-events: all;
   text-align: center;
-  margin-top: 3px;
+  padding-top: 3px;
 `;
 
 class GraphNode extends React.Component {
-  state = {
-    highlighted: false,
-  };
-
-  handleMouseEnter = () => {
-    this.setState({ highlighted: true });
-  };
-
-  handleMouseLeave = () => {
-    this.setState({ highlighted: false });
-  };
-
   renderSvgLabels() {
     return (
       <SvgTextContainer y={this.props.size / 2}>
@@ -111,7 +100,10 @@ class GraphNode extends React.Component {
         x={-0.5 * labelWidth}
         width={labelWidth}
         height="100px"
-        style={{ pointerEvents: 'none' }}
+        style={{
+          textAlign: 'center',
+          pointerEvents: 'none',
+        }}
       >
         <LabelStandard>
           <MatchedText noBorder text={label} match={get(matches, 'label')} />
@@ -129,28 +121,22 @@ class GraphNode extends React.Component {
   }
 
   render() {
-    const { id, label, size, stacked, metricValue } = this.props;
-    const metricLabel = metricValue
-      ? this.props.metricLabelFunction(metricValue)
-      : '';
-    const metricColor = this.props.metricColorFunction(metricValue);
-    const color = this.props.colorFunction({ label });
     const Shape = shapeMap[this.props.type];
 
     return (
       <GraphNodeWrapper
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
+        onMouseEnter={() => this.props.onMouseEnter(this.props.id)}
+        onMouseLeave={() => this.props.onMouseLeave(this.props.id)}
       >
         <Shape
-          id={id}
-          color={color}
-          size={size}
-          stacked={stacked}
-          metricColor={metricColor}
-          metricLabel={metricLabel}
-          metricValue={metricValue}
-          highlighted={this.state.highlighted}
+          id={this.props.id}
+          size={this.props.size}
+          stacked={this.props.stacked}
+          color={this.props.color}
+          metricColor={this.props.metricColor}
+          metricLabel={this.props.metricLabel}
+          metricValue={this.props.metricValue}
+          highlighted={this.props.highlighted}
         />
 
         {this.props.forceSvg
@@ -166,9 +152,10 @@ GraphNode.propTypes = {
   type: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   labelMinor: PropTypes.string,
-  colorFunction: PropTypes.func,
-  metricColorFunction: PropTypes.func,
-  metricLabelFunction: PropTypes.func,
+  color: PropTypes.string,
+  highlighted: PropTypes.bool,
+  metricColor: PropTypes.string,
+  metricLabel: PropTypes.string,
   metricValue: PropTypes.number,
   stacked: PropTypes.bool,
   size: PropTypes.number,
@@ -178,18 +165,25 @@ GraphNode.propTypes = {
     labelMinor: PropTypes.object,
     parents: PropTypes.object,
   }),
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 GraphNode.defaultProps = {
   labelMinor: '',
-  colorFunction: constant(theme.colors.purple400),
-  metricColorFunction: constant(theme.colors.status.warning),
-  metricLabelFunction: format('.0%'),
-  metricValue: undefined,
+  color: theme.colors.purple400,
+  highlighted: false,
+  metricColor: theme.colors.status.warning,
+  metricLabel: '',
+  metricValue: null,
   stacked: false,
   size: 65,
   forceSvg: false,
   matches: {},
+  onMouseEnter: noop,
+  onMouseLeave: noop,
+  onClick: noop,
 };
 
 export default GraphNode;
