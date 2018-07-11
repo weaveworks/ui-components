@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { map } from 'lodash';
 import renderer from 'react-test-renderer';
-import { createSpy } from 'expect';
 import 'jest-styled-components';
 
 import { withTheme } from '../../utils/theme';
