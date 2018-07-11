@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { map } from 'lodash';
 import renderer from 'react-test-renderer';
+import { createSpy } from 'expect';
 import 'jest-styled-components';
 
 import { withTheme } from '../../utils/theme';
@@ -263,6 +264,9 @@ describe('DataTable', () => {
     // Click again to reverse the order.
     $emailHeader.simulate('click');
     expect(getFirstRowName(table)).toEqual('Ty');
+    // Back to ascending
+    $emailHeader.simulate('click');
+    expect(getFirstRowName(table)).toEqual('Bob');
   });
   it('handles custom sorting logic', () => {
     // Custom sort function to sort by length instead of alphabetized.
