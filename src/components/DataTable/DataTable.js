@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { map, orderBy, get, first } from 'lodash';
+import { map, orderBy, get, first, partialRight } from 'lodash';
 import { transparentize } from 'polished';
 
 import { copyPropTypes } from '../../utils/compose';
@@ -138,7 +138,6 @@ class DataTable extends React.PureComponent {
         field = nextProps.sortBy;
         order = nextProps.sortOrder;
       }
-
       this.doSort(nextProps.data, field, order);
     }
   }
@@ -152,7 +151,7 @@ class DataTable extends React.PureComponent {
       sortedData:
         // User overrides if specified, else do the default sort
         sortOverrides && sortOverrides[sortField]
-          ? orderBy(data, sortOverrides[sortField], sortOrder)
+          ? orderBy(data, partialRight(sortOverrides[sortField], sortOrder), sortOrder)
           : sort(data, sortField, sortOrder),
     });
   };
