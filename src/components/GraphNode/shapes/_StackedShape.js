@@ -4,12 +4,11 @@ import BaseShape from './_BaseShape';
 import HighlightBorder from './elements/_HighlightBorder';
 import HighlightShadow from './elements/_HighlightShadow';
 
-const NODE_BASE_SIZE = 100;
-
 class StackedShape extends React.Component {
   render() {
     const { highlighted, contrastMode, renderTemplate, size } = this.props;
-    const verticalDistance = NODE_BASE_SIZE * (contrastMode ? 0.12 : 0.1);
+
+    const verticalDistance = size * (contrastMode ? 0.18 : 0.15);
     const verticalTranslate = t => `translate(0, ${t * verticalDistance})`;
 
     // Stack three shapes on top of one another pretending they are never highlighted.
@@ -19,17 +18,17 @@ class StackedShape extends React.Component {
     return (
       <g transform={verticalTranslate(-2.5)}>
         <g transform={`${verticalTranslate(1)} scale(${size}, ${1.14 * size})`}>
-          {highlighted && HighlightBorder(renderTemplate)}
-          {highlighted && HighlightShadow(renderTemplate)}
+          {highlighted && HighlightBorder(renderTemplate, contrastMode)}
+          {highlighted && HighlightShadow(renderTemplate, contrastMode)}
         </g>
         <g transform={verticalTranslate(2)}>
-          <BaseShape {...this.props} highlighted={false} />
+          <BaseShape {...this.props} highlighted={false} metricValue="" />
         </g>
         <g transform={verticalTranslate(1)}>
-          <BaseShape {...this.props} highlighted={false} />
+          <BaseShape {...this.props} highlighted={false} metricValue="" />
         </g>
         <g transform={verticalTranslate(0)}>
-          <BaseShape {...this.props} highlighted={false} />
+          <BaseShape {...this.props} highlighted={false} metricValue="" />
         </g>
       </g>
     );

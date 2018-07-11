@@ -46,7 +46,10 @@ const SvgTextContainer = styled.g.attrs({
 `;
 
 const LabelSvg = styled.text.attrs({
-  fill: props => props.theme.colors.purple800,
+  fill: props =>
+    props.contrastMode
+      ? props.theme.colors.black
+      : props.theme.colors.purple800,
   textAnchor: 'middle',
   y: 20,
 })`
@@ -55,7 +58,10 @@ const LabelSvg = styled.text.attrs({
 `;
 
 const LabelMinorSvg = styled.text.attrs({
-  fill: props => props.theme.colors.purple600,
+  fill: props =>
+    props.contrastMode
+      ? props.theme.colors.black
+      : props.theme.colors.purple600,
   textAnchor: 'middle',
   y: 40,
 })`
@@ -64,7 +70,10 @@ const LabelMinorSvg = styled.text.attrs({
 `;
 
 const LabelStandard = styled.span`
-  color: ${props => props.theme.colors.purple800};
+  color: ${props =>
+    props.contrastMode
+      ? props.theme.colors.black
+      : props.theme.colors.purple800};
   font-size: ${props => props.theme.fontSizes.normal};
   display: inline-block;
   pointer-events: all;
@@ -73,7 +82,10 @@ const LabelStandard = styled.span`
 `;
 
 const LabelMinorStandard = styled.span`
-  color: ${props => props.theme.colors.purple600};
+  color: ${props =>
+    props.contrastMode
+      ? props.theme.colors.black
+      : props.theme.colors.purple600};
   font-size: ${props => props.theme.fontSizes.small};
   display: inline-block;
   pointer-events: all;
@@ -85,14 +97,18 @@ class GraphNode extends React.Component {
   renderSvgLabels() {
     return (
       <SvgTextContainer y={this.props.size / 2}>
-        <LabelSvg>{this.props.label}</LabelSvg>
-        <LabelMinorSvg>{this.props.labelMinor}</LabelMinorSvg>
+        <LabelSvg contrastMode={this.props.contrastMode}>
+          {this.props.label}
+        </LabelSvg>
+        <LabelMinorSvg contrastMode={this.props.contrastMode}>
+          {this.props.labelMinor}
+        </LabelMinorSvg>
       </SvgTextContainer>
     );
   }
 
   renderStandardLabels() {
-    const { label, labelMinor, matches } = this.props;
+    const { label, labelMinor, matches, contrastMode } = this.props;
 
     return (
       <foreignObject
@@ -105,10 +121,10 @@ class GraphNode extends React.Component {
           pointerEvents: 'none',
         }}
       >
-        <LabelStandard>
+        <LabelStandard contrastMode={contrastMode}>
           <MatchedText noBorder text={label} match={get(matches, 'label')} />
         </LabelStandard>
-        <LabelMinorStandard>
+        <LabelMinorStandard contrastMode={contrastMode}>
           <MatchedText
             noBorder
             text={labelMinor}
@@ -137,6 +153,7 @@ class GraphNode extends React.Component {
           metricLabel={this.props.metricLabel}
           metricValue={this.props.metricValue}
           highlighted={this.props.highlighted}
+          contrastMode={this.props.contrastMode}
         />
 
         {this.props.forceSvg
@@ -160,6 +177,7 @@ GraphNode.propTypes = {
   stacked: PropTypes.bool,
   size: PropTypes.number,
   forceSvg: PropTypes.bool,
+  contrastMode: PropTypes.bool,
   matches: PropTypes.shape({
     label: PropTypes.object,
     labelMinor: PropTypes.object,
@@ -180,6 +198,7 @@ GraphNode.defaultProps = {
   stacked: false,
   size: 65,
   forceSvg: false,
+  contrastMode: false,
   matches: {},
   onMouseEnter: noop,
   onMouseLeave: noop,

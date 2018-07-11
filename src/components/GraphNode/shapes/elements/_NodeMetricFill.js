@@ -4,7 +4,8 @@ const NodeMetricFill = (renderTemplate, { clipId, metricColor }) =>
     clipPath: `url(#${clipId})`,
     style: {
       fill: metricColor,
-      opacity: 0.5,
+      fillOpacity: 0.7,
+      stroke: 'none',
     },
   });
 

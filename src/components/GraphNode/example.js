@@ -2,6 +2,7 @@ import React from 'react';
 import faker from 'faker';
 import { format } from 'd3-format';
 import { keys, times, sample, map, fromPairs, compact, isEmpty } from 'lodash';
+import styled from 'styled-components';
 
 import { Example, Info } from '../../utils/example';
 import Search from '../Search';
@@ -29,6 +30,11 @@ const findFirstMatch = (text, terms) => {
 
   return match;
 };
+
+const Input = styled.input`
+  margin-right: 10px;
+  margin-bottom: 30px;
+`;
 
 export default class GraphNodeExample extends React.Component {
   state = {
@@ -80,6 +86,7 @@ export default class GraphNodeExample extends React.Component {
       metricLabel: format('.0%')(metricValue),
       metricValue,
     })),
+    contrastMode: false,
     hoveredNode: null,
     matches: {},
   };
@@ -106,6 +113,10 @@ export default class GraphNodeExample extends React.Component {
     });
   };
 
+  handleContrastModeChange = () => {
+    this.setState({ contrastMode: !this.state.contrastMode });
+  };
+
   handleMouseEnter = hoveredNodeId => {
     this.setState({ hoveredNodeId });
   };
@@ -117,6 +128,12 @@ export default class GraphNodeExample extends React.Component {
   render() {
     return (
       <div>
+        <Input
+          type="checkbox"
+          checked={this.state.contrastMode}
+          onChange={this.handleContrastModeChange}
+        />
+        Contrast Mode
         <Example>
           <Info>Available Shapes</Info>
           {this.state.availableShapes.map(node => (
@@ -125,6 +142,7 @@ export default class GraphNodeExample extends React.Component {
                 id={node.key}
                 type={node.type}
                 label={node.type}
+                contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
@@ -141,6 +159,7 @@ export default class GraphNodeExample extends React.Component {
                 id={node.key}
                 type={node.type}
                 label={node.type}
+                contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
@@ -164,6 +183,7 @@ export default class GraphNodeExample extends React.Component {
                 labelMinor={node.labelMinor}
                 color={colorFunction(node.label)}
                 matches={this.state.matches[node.key]}
+                contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
@@ -181,6 +201,7 @@ export default class GraphNodeExample extends React.Component {
                 label={node.label}
                 labelMinor={node.labelMinor}
                 color={colorFunction(node.label)}
+                contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
@@ -199,6 +220,7 @@ export default class GraphNodeExample extends React.Component {
                 label="node"
                 metricLabel={node.metricLabel}
                 metricValue={node.metricValue}
+                contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}

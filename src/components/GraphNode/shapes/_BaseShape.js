@@ -32,16 +32,22 @@ const NodeAnchor = styled.circle.attrs({
   strokeWidth: 0.005,
   r: 0.1,
 })`
-  fill: ${props => props.theme.colors.purple800};
+  fill: ${props =>
+    props.contrastMode
+      ? props.theme.colors.black
+      : props.theme.colors.purple800};
   stroke: ${props => props.theme.colors.white};
 `;
 
 const MetricText = styled.text.attrs({
-  textAnchor: 'middle',
   transform: 'scale(0.015)',
-  y: 5,
+  dominantBaseline: 'middle',
+  textAnchor: 'middle',
 })`
-  fill: ${props => props.theme.colors.purple800};
+  fill: ${props =>
+    props.contrastMode
+      ? props.theme.colors.black
+      : props.theme.colors.purple800};
 `;
 
 class BaseShape extends React.Component {
@@ -54,6 +60,7 @@ class BaseShape extends React.Component {
       metricValue,
       metricColor,
       metricLabel,
+      contrastMode,
       size,
     } = this.props;
 
@@ -62,21 +69,23 @@ class BaseShape extends React.Component {
 
     return (
       <g transform={`scale(${size})`}>
-        {highlighted && HighlightBorder(renderTemplate)}
-        {highlighted && HighlightShadow(renderTemplate)}
+        {highlighted && HighlightBorder(renderTemplate, contrastMode)}
+        {highlighted && HighlightShadow(renderTemplate, contrastMode)}
 
-        {NodeBackground(renderTemplate)}
+        {NodeBackground(renderTemplate, contrastMode)}
 
         {hasMetric && getClipPathDefinition(clipId, metricValue, 0.48)}
         {hasMetric && NodeMetricFill(renderTemplate, { clipId, metricColor })}
 
-        {NodeShadow(renderTemplate)}
-        {NodeBorder(renderTemplate, { color })}
+        {NodeShadow(renderTemplate, contrastMode)}
+        {NodeBorder(renderTemplate, contrastMode, { hasMetric, color })}
 
         {hasMetric && highlighted ? (
-          <MetricText>{metricLabel}</MetricText>
+          <MetricText contrastMode={contrastMode}>
+            {metricLabel}
+          </MetricText>
         ) : (
-          <NodeAnchor />
+          <NodeAnchor contrastMode={contrastMode} />
         )}
       </g>
     );

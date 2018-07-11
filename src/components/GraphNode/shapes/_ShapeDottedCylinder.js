@@ -13,7 +13,7 @@ const UNIT_CYLINDER_PATH =
 
 const renderTemplate = (attrs, { allowStroke = true } = {}) =>
   allowStroke ? (
-    <path d={UNIT_CYLINDER_PATH} strokeDasharray="0.2, 0.1" {...attrs} />
+    <path d={UNIT_CYLINDER_PATH} strokeDasharray="0.1, 0.05" {...attrs} />
   ) : (
     <path d={UNIT_CYLINDER_PATH} {...attrs} />
   );
