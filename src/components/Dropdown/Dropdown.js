@@ -144,10 +144,10 @@ class Dropdown extends React.Component {
     this.handleBgClick = this.handleBgClick.bind(this);
   }
 
-  handleChange(ev, value) {
+  handleChange(ev, value, label) {
     this.setState({ isOpen: false });
     if (this.props.onChange) {
-      this.props.onChange(ev, value);
+      this.props.onChange(ev, value, label);
     }
   }
 
@@ -192,7 +192,7 @@ class Dropdown extends React.Component {
                     <ItemWrapper
                       className="dropdown-item"
                       key={item.value}
-                      onClick={ev => this.handleChange(ev, item.value)}
+                      onClick={ev => this.handleChange(ev, item.value, item.label)}
                       selected={item.value === value}
                       title={item && item.label}
                     >
