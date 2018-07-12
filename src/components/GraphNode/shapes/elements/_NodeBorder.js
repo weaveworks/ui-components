@@ -5,7 +5,7 @@ const NodeBorder = (renderTemplate, contrastMode, { hasMetric, color }) =>
     style: {
       fill: 'none',
       strokeOpacity: hasMetric ? 0.5 : 1,
-      strokeWidth: contrastMode ? 0.15 : 0.1,
+      strokeWidth: contrastMode ? 0.15 : 0.12,
     },
   });
 

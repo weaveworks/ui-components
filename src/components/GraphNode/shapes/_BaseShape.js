@@ -57,15 +57,16 @@ class BaseShape extends React.Component {
       id,
       highlighted,
       color,
-      metricValue,
       metricColor,
-      metricLabel,
+      metricFormattedValue,
+      metricNumericValue,
       contrastMode,
       size,
     } = this.props;
 
     const clipId = encodeIdAttribute(`metric-clip-${id}`);
-    const hasMetric = !isEmpty(metricLabel) && isNumber(metricValue);
+    const hasMetric =
+      !isEmpty(metricFormattedValue) && isNumber(metricNumericValue);
 
     return (
       <g transform={`scale(${size})`}>
@@ -74,7 +75,7 @@ class BaseShape extends React.Component {
 
         {NodeBackground(renderTemplate, contrastMode)}
 
-        {hasMetric && getClipPathDefinition(clipId, metricValue, 0.48)}
+        {hasMetric && getClipPathDefinition(clipId, metricNumericValue, 0.48)}
         {hasMetric && NodeMetricFill(renderTemplate, { clipId, metricColor })}
 
         {NodeShadow(renderTemplate, contrastMode)}
@@ -82,7 +83,7 @@ class BaseShape extends React.Component {
 
         {hasMetric && highlighted ? (
           <MetricText contrastMode={contrastMode}>
-            {metricLabel}
+            {metricFormattedValue}
           </MetricText>
         ) : (
           <NodeAnchor contrastMode={contrastMode} />
@@ -99,8 +100,8 @@ BaseShape.propTypes = {
   renderTemplate: PropTypes.func.isRequired,
   highlighted: PropTypes.bool.isRequired,
   metricColor: PropTypes.string.isRequired,
-  metricLabel: PropTypes.string.isRequired,
-  metricValue: PropTypes.number,
+  metricFormattedValue: PropTypes.string.isRequired,
+  metricNumericValue: PropTypes.number,
 };
 
 export default BaseShape;

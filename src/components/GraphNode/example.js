@@ -1,79 +1,62 @@
 import React from 'react';
 import faker from 'faker';
 import { format } from 'd3-format';
-import { keys, times, sample, map, fromPairs, compact, isEmpty } from 'lodash';
+import { keys, times, sample, compact } from 'lodash';
 import styled from 'styled-components';
 
 import { Example, Info } from '../../utils/example';
 import Search from '../Search';
-import GraphNode, { shapeMap } from './GraphNode';
+import GraphNode, { shapes } from './GraphNode';
 
-const nodeTypes = keys(shapeMap);
+const nodeTypes = keys(shapes);
 const colorFunction = label =>
   `hsl(${(label.charCodeAt(0) - 97) * 10}, 50%, 65%)`;
 
-const GraphNodeContainer = ({ big, children }) => (
-  <svg width={`${big ? 300 : 150}px`} height={`${big ? 300 : 175}px`}>
-    <g style={{ transform: 'translate(75px, 100px)' }}>{children}</g>
+const GraphNodeContainer = ({ size, children }) => (
+  <svg width={`${2.5 * size}px`} height={`${3 * size}px`}>
+    <g style={{ transform: `translate(${size * 1.2}px, ${size * 1.6}px)` }}>
+      {children}
+    </g>
   </svg>
 );
 
-const findFirstMatch = (text, terms) => {
-  let match = {};
-
-  terms.forEach(term => {
-    const start = text.search(term);
-    if (isEmpty(match) && start !== -1) {
-      match = { start, length: term.length };
-    }
-  });
-
-  return match;
-};
-
-const Input = styled.input`
+const CheckBox = styled.input.attrs({
+  type: 'checkbox',
+})`
   margin-right: 10px;
   margin-bottom: 30px;
 `;
 
+const TextInput = styled.input.attrs({
+  type: 'input',
+})`
+  text-align: right;
+  margin-left: 30px;
+  margin-right: 5px;
+  width: 40px;
+`;
+
 export default class GraphNodeExample extends React.Component {
   state = {
-    availableShapes: nodeTypes.map(type => ({
-      type,
+    availableShapes: nodeTypes.map(shape => ({
+      shape,
       key: faker.lorem.slug(),
     })),
-    stackedShape: nodeTypes.map(type => ({
-      type,
+    stackedShape: nodeTypes.map(shape => ({
+      shape,
       key: faker.lorem.slug(),
     })),
     randomSearchableNodes: times(20, () => ({
-      type: sample(nodeTypes),
+      shape: sample(nodeTypes),
       key: faker.lorem.slug(),
       label: faker.lorem.word(),
       labelMinor: `ip-${faker.internet
         .ip()
         .split('.')
         .join('-')}`,
-      metadata: {
-        docker_image_name: {
-          label: 'Image name',
-          text: faker.lorem
-            .words(2)
-            .split(' ')
-            .join('/'),
-        },
-        docker_container_state_human: {
-          label: 'State',
-          text: faker.lorem.sentence(4),
-        },
-        docker_container_id: {
-          label: 'ID',
-          text: faker.random.alphaNumeric(50),
-        },
-      },
     })),
     randomSvgNodes: times(20, () => ({
-      type: sample(nodeTypes),
+      shape: sample(nodeTypes),
       key: faker.lorem.slug(),
       label: faker.lorem.word(),
       labelMinor: `ip-${faker.internet
@@ -81,40 +64,23 @@ export default class GraphNodeExample extends React.Component {
         .split('.')
         .join('-')}`,
     })),
-    metricNodes: [0, 0.01, 0.1, 0.5, 0.9, 0.99, 1].map(metricValue => ({
+    metricNodes: [0, 0.01, 0.1, 0.5, 0.9, 0.99, 1].map(value => ({
       key: faker.lorem.slug(),
-      metricLabel: format('.0%')(metricValue),
-      metricValue,
+      metricFormattedValue: format('.0%')(value),
+      metricNumericValue: value,
     })),
+    size: 65,
     contrastMode: false,
     hoveredNode: null,
-    matches: {},
-  };
-
-  searchRandomNodes = terms => {
-    this.setState({
-      matches: fromPairs(
-        map(this.state.randomSearchableNodes, node => [
-          node.key,
-          {
-            label: findFirstMatch(node.label, terms),
-            labelMinor: findFirstMatch(node.labelMinor, terms),
-            parents: fromPairs(
-              compact(
-                map(node.metadata, (value, key) => {
-                  const match = findFirstMatch(value.text, terms);
-                  return !isEmpty(match) && [key, { ...match, ...value }];
-                })
-              )
-            ),
-          },
-        ])
-      ),
-    });
+    searchTerms: [],
   };
 
   handleContrastModeChange = () => {
     this.setState({ contrastMode: !this.state.contrastMode });
+  };
+
+  handleSizeChange = ev => {
+    this.setState({ size: Number(ev.target.value) });
   };
 
   handleMouseEnter = hoveredNodeId => {
@@ -128,20 +94,22 @@ export default class GraphNodeExample extends React.Component {
   render() {
     return (
       <div>
-        <Input
-          type="checkbox"
+        <CheckBox
           checked={this.state.contrastMode}
           onChange={this.handleContrastModeChange}
         />
         Contrast Mode
+        <TextInput value={this.state.size} onChange={this.handleSizeChange} />
+        px - node size
         <Example>
           <Info>Available Shapes</Info>
           {this.state.availableShapes.map(node => (
-            <GraphNodeContainer key={node.key}>
+            <GraphNodeContainer size={this.state.size} key={node.key}>
               <GraphNode
                 id={node.key}
-                type={node.type}
-                label={node.type}
+                shape={node.shape}
+                label={node.shape}
+                size={this.state.size}
                 contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
                 onMouseEnter={this.handleMouseEnter}
@@ -153,12 +121,13 @@ export default class GraphNodeExample extends React.Component {
         <Example>
           <Info>Stacked Shapes</Info>
           {this.state.stackedShape.map(node => (
-            <GraphNodeContainer key={node.key}>
+            <GraphNodeContainer size={this.state.size} key={node.key}>
               <GraphNode
                 stacked
                 id={node.key}
-                type={node.type}
-                label={node.type}
+                shape={node.shape}
+                label={node.shape}
+                size={this.state.size}
                 contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
                 onMouseEnter={this.handleMouseEnter}
@@ -171,18 +140,19 @@ export default class GraphNodeExample extends React.Component {
           <Info>Random Nodes (standard format with search matches)</Info>
           <Search
             onChange={(text, terms = []) =>
-              this.searchRandomNodes(compact([text, ...terms]))
+              this.setState({ searchTerms: compact([text, ...terms]) })
             }
           />
           {this.state.randomSearchableNodes.map(node => (
-            <GraphNodeContainer big key={node.key}>
+            <GraphNodeContainer big size={this.state.size} key={node.key}>
               <GraphNode
                 id={node.key}
-                type={node.type}
+                shape={node.shape}
                 label={node.label}
                 labelMinor={node.labelMinor}
                 color={colorFunction(node.label)}
-                matches={this.state.matches[node.key]}
+                searchTerms={this.state.searchTerms}
+                size={this.state.size}
                 contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
                 onMouseEnter={this.handleMouseEnter}
@@ -194,13 +164,14 @@ export default class GraphNodeExample extends React.Component {
         <Example>
           <Info>Random Nodes (exporting format)</Info>
           {this.state.randomSvgNodes.map(node => (
-            <GraphNodeContainer key={node.key}>
+            <GraphNodeContainer size={this.state.size} key={node.key}>
               <GraphNode
                 id={node.key}
-                type={node.type}
+                shape={node.shape}
                 label={node.label}
                 labelMinor={node.labelMinor}
                 color={colorFunction(node.label)}
+                size={this.state.size}
                 contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
                 onMouseEnter={this.handleMouseEnter}
@@ -213,13 +184,14 @@ export default class GraphNodeExample extends React.Component {
         <Example>
           <Info>Metric Fills</Info>
           {this.state.metricNodes.map(node => (
-            <GraphNodeContainer key={node.key}>
+            <GraphNodeContainer size={this.state.size} key={node.key}>
               <GraphNode
                 id={node.key}
-                type="pentagon"
+                shape="pentagon"
                 label="node"
-                metricLabel={node.metricLabel}
-                metricValue={node.metricValue}
+                metricFormattedValue={node.metricFormattedValue}
+                metricNumericValue={node.metricNumericValue}
+                size={this.state.size}
                 contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
                 onMouseEnter={this.handleMouseEnter}
