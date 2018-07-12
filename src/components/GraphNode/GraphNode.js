@@ -116,6 +116,10 @@ const LabelMinorStandard = LabelTemplate.extend`
   margin-top: -7px;
 `;
 
+
+/**
+ * A component for rendering labeled graph nodes.
+ */
 class GraphNode extends React.Component {
   findFirstSearchMatch = text => {
     let match = {};
