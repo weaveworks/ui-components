@@ -6,7 +6,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   display: inline-block;
   margin-left: 4px;
   font-size: 22px;
-  color: #c7254e;
+  color: hsl(13,100%,40%);
 }
 
 .c7 {
@@ -208,7 +208,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   display: inline-block;
   margin-left: 4px;
   font-size: 22px;
-  color: #c7254e;
+  color: hsl(13,100%,40%);
 }
 
 .c6 {
@@ -366,7 +366,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
   display: inline-block;
   margin-left: 4px;
   font-size: 22px;
-  color: #c7254e;
+  color: hsl(13,100%,40%);
 }
 
 .c6 {
@@ -524,7 +524,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
   display: inline-block;
   margin-left: 4px;
   font-size: 22px;
-  color: #c7254e;
+  color: hsl(13,100%,40%);
 }
 
 .c6 {

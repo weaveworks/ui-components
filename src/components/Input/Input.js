@@ -24,7 +24,7 @@ const Icon = styled.i`
   display: inline-block;
   margin-left: 4px;
   font-size: ${props => props.theme.fontSizes.large};
-  color: ${props => props.theme.colors.status.error};
+  color: ${props => props.theme.colors.orange600};
 `;
 
 const InputWrapper = styled.div`
@@ -54,7 +54,7 @@ const ValidationMessage = styled.span`
   font-size: ${props => props.theme.fontSizes.small};
   padding-left: 8px;
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
-  color: ${props => (props.valid ? 'inherit' : props.theme.colors.status.error)};
+  color: ${props => (props.valid ? 'inherit' : props.theme.colors.orange600)};
 `;
 
 /**
