@@ -43,7 +43,7 @@ const GraphNodeWrapper = styled.g.attrs({
 `;
 
 const SvgTextContainer = styled.g.attrs({
-  transform: props => `scale(1.7) translate(0, ${props.y})`,
+  transform: props => `translate(0, ${props.y + 85})`,
 })`
   pointer-events: all;
 `;
@@ -53,8 +53,8 @@ const LabelSvg = styled.text.attrs({
     props.contrastMode
       ? props.theme.colors.black
       : props.theme.colors.purple800,
+  transform: 'scale(1.7)',
   textAnchor: 'middle',
-  y: 20,
 })`
   font-size: ${props => props.theme.fontSizes.normal};
 `;
@@ -64,8 +64,9 @@ const LabelMinorSvg = styled.text.attrs({
     props.contrastMode
       ? props.theme.colors.black
       : props.theme.colors.purple600,
+  transform: 'scale(1.7)',
   textAnchor: 'middle',
-  y: 40,
+  y: 20,
 })`
   font-size: ${props => props.theme.fontSizes.small};
 `;
@@ -134,7 +135,7 @@ class GraphNode extends React.Component {
 
   renderSvgLabels() {
     return (
-      <SvgTextContainer y={(this.props.size / 2) + this.props.labelOffset}>
+      <SvgTextContainer y={this.props.labelOffset}>
         <LabelSvg contrastMode={this.props.contrastMode}>
           {this.props.label}
         </LabelSvg>
