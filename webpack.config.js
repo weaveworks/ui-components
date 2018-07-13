@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const FlowWebpackPlugin = require('flow-webpack-plugin');
 
 let externals;
 let entry = {
@@ -32,6 +33,7 @@ let plugins = [
     analyzerPort: 8888,
     openAnalyzer: true,
   }),
+  new FlowWebpackPlugin(),
 ];
 
 const loaders = [
@@ -86,6 +88,7 @@ if (process.env.RELEASE) {
         warnings: false,
       },
     }),
+    new FlowWebpackPlugin(),
   ];
 } else {
   // Normal sass loader. This complains if it runs in the RELEASE job, so only apply it if RELEASE

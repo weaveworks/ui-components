@@ -4,10 +4,32 @@
     "plugin:prettier/recommended"
   ],
   "parser": "babel-eslint",
+  "plugins": [
+    "flowtype"
+  ],
   "env": {
     "browser": true,
     "jest": true,
     "node": true
+  },
+  //
+  // These flow global types aren't defined in the plugin yet.
+  // https://github.com/gajus/eslint-plugin-flowtype/issues/261
+  //
+  "globals": {
+    "SyntheticEvent": true,
+    "SyntheticAnimationEvent": true,
+    "SyntheticClipboardEvent": true,
+    "SyntheticCompositionEvent": true,
+    "SyntheticInputEvent": true,
+    "SyntheticUIEvent": true,
+    "SyntheticFocusEvent": true,
+    "SyntheticKeyboardEvent": true,
+    "SyntheticMouseEvent": true,
+    "SyntheticDragEvent": true,
+    "SyntheticWheelEvent": true,
+    "SyntheticTouchEvent": true,
+    "SyntheticTransitionEvent": true
   },
   "rules": {
     "arrow-parens": 0,

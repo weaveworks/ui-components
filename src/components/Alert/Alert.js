@@ -1,6 +1,7 @@
+// @flow
 import React from 'react';
+import type { Node } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 import Text from '../Text';
 import { fromAtoms } from '../../utils/theme';
@@ -48,6 +49,30 @@ const CloseIcon = styled.i`
 const normaliseIconName = name =>
   name.indexOf('fa-') === -1 ? `fa-${name}` : name;
 
+type Props = {
+  children: Node,
+  /**
+   * Show an icon for the title
+   */
+  icon?: string,
+  /**
+   * Callback that runs with the alert is dismissed by clicking the 'X'
+   */
+  onClose?: mixed => void,
+  /**
+   * Show a title for the alert
+   */
+  title?: string,
+  /**
+   * Toggle whether the alert is shown
+   */
+  visible?: boolean,
+  /**
+   * Set the color scheme to indicate the nature of the alert.
+   */
+  type?: 'default' | 'info' | 'success' | 'warning' | 'error',
+};
+
 /**
  * An alert to let the user know about an action or state.
  * ```javascript
@@ -64,7 +89,7 @@ const normaliseIconName = name =>
  * }
  * ```
  */
-function Alert(props) {
+function Alert(props: Props) {
   const { children, icon, onClose, title, visible } = props;
 
   return (
@@ -90,29 +115,6 @@ function Alert(props) {
     </StyledAlert>
   );
 }
-
-Alert.propTypes = {
-  /**
-   * Show an icon for the title
-   */
-  icon: PropTypes.string,
-  /**
-   * Show a title for the alert
-   */
-  title: PropTypes.string,
-  /**
-   * Set the color scheme to indicate the nature of the alert.
-   */
-  type: PropTypes.oneOf(['default', 'info', 'success', 'warning', 'error']),
-  /**
-   * Toggle whether the alert is shown
-   */
-  visible: PropTypes.bool,
-  /**
-   * Callback that runs with the alert is dismissed by clicking the 'X'
-   */
-  onClose: PropTypes.func,
-};
 
 Alert.defaultProps = {
   icon: '',

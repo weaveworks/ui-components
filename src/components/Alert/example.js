@@ -1,9 +1,10 @@
+// @flow
 import React from 'react';
 
 import { Example } from '../../utils/example';
 import Button from '../Button';
 
-import Alert from '.';
+import Alert from './Alert';
 
 const initial = {
   default: true,
@@ -15,7 +16,7 @@ const initial = {
   warning: true,
 };
 
-export default class AlertExample extends React.Component {
+export default class AlertExample extends React.Component<any, any> {
   constructor() {
     super();
     this.state = initial;
