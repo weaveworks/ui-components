@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { initial, last, shuffle } from 'lodash';
 
 import { Example } from '../../utils/example';
 import GraphNode from '../GraphNode';
@@ -55,6 +56,24 @@ export default class GraphNodeExample extends React.Component {
       },
     ],
   };
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState({
+        edges: [
+          ...initial(this.state.edges),
+          {
+            ...last(this.state.edges),
+            waypoints: [A, ...shuffle([B, C]), D],
+          },
+        ],
+      });
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
   handleContrastModeChange = () => {
     this.setState({ contrastMode: !this.state.contrastMode });
