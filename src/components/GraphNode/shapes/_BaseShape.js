@@ -3,19 +3,14 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { isEmpty, isNumber } from 'lodash';
 
+import { encodeIdAttribute } from '../../../utils/dom';
+
 import HighlightBorder from './elements/_HighlightBorder';
 import HighlightShadow from './elements/_HighlightShadow';
 import NodeBackground from './elements/_NodeBackground';
 import NodeMetricFill from './elements/_NodeMetricFill';
 import NodeShadow from './elements/_NodeShadow';
 import NodeBorder from './elements/_NodeBorder';
-
-// Cleans up a value to be used as an element ID.
-// Encodes invalid characters to be valid in XHTML and makes it
-// so that it can be reversed by decodeIdAttribute.
-function encodeIdAttribute(id) {
-  return id.replace(/[<>&;]/gm, m => `__u${m.charCodeAt(0)}__`);
-}
 
 function getClipPathDefinition(clipId, height, radius) {
   const barHeight = 1 - (2 * height); // in the interval [-1, 1]
