@@ -29,7 +29,7 @@ const EdgeShadow = styled.path`
     `};
 `;
 
-const EdgeDashed = styled.path`
+const EdgeDotted = styled.path`
   stroke: ${props =>
     props.contrastMode
       ? props.theme.colors.black
@@ -96,7 +96,7 @@ const waypointsArrayToMap = waypointsArray => {
 };
 
 /**
- * A component for rendering labeled graph nodes.
+ * A component for rendering edges that connect the graph nodes.
  */
 class GraphEdge extends React.Component {
   state = {
@@ -141,7 +141,7 @@ class GraphEdge extends React.Component {
       thickness,
       withArrow,
       arrowOffset,
-      isDashed,
+      isDotted,
       highlighted,
       contrastMode,
     } = props;
@@ -171,7 +171,7 @@ class GraphEdge extends React.Component {
           thickness={thickness}
           contrastMode={contrastMode}
         />
-        {isDashed && <EdgeDashed d={path} contrastMode={contrastMode} />}
+        {isDotted && <EdgeDotted d={path} contrastMode={contrastMode} />}
         <EdgeLine
           d={path}
           thickness={thickness}
@@ -213,13 +213,40 @@ GraphEdge.propTypes = {
    * A unique edge ID
    */
   id: PropTypes.string.isRequired,
-  waypoints: PropTypes.array.isRequired,
+  /**
+   * A list of points in the { x, y } format describing the edge path
+   */
+  waypoints: PropTypes.arrayOf(PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  })).isRequired,
+  /**
+   * A number of waypoints to cap to in case the edge is animated
+   */
   waypointsCap: PropTypes.number,
+  /**
+   * Thickness of the rendered edge line
+   */
   thickness: PropTypes.number,
+  /**
+   * Shows the blue shadow around the edge if true
+   */
   highlighted: PropTypes.bool,
+  /**
+   * Draws a one-way arrow on the edge if true
+   */
   withArrow: PropTypes.bool,
+  /**
+   * Distance from the target point (tweak this to pull the arrow out of the rendered node)
+   */
   arrowOffset: PropTypes.number,
-  isDashed: PropTypes.bool,
+  /**
+   * Shows extra dots on the edge path if true
+   */
+  isDotted: PropTypes.bool,
+  /**
+   * Animates the edge motion if true
+   */
   isAnimated: PropTypes.bool,
   /**
    * Renders the edge in a high contrast mode
@@ -240,9 +267,9 @@ GraphEdge.defaultProps = {
   thickness: 1,
   highlighted: false,
   withArrow: false,
-  arrowOffset: 28,
-  isDashed: false,
-  isAnimated: true,
+  arrowOffset: 0,
+  isDotted: false,
+  isAnimated: false,
   contrastMode: false,
   onMouseEnter: noop,
   onMouseLeave: noop,

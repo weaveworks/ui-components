@@ -43,11 +43,13 @@ const TranslatedNode = ({ name, point, ...props }) => (
 export default class GraphNodeExample extends React.Component {
   state = {
     thickness: 1,
+    arrowOffset: 28,
     contrastMode: false,
     highlightedEdgeId: null,
     edges: [
       { id: 'straight-edge', waypoints: [A, D] },
-      { id: 'curvy-edge', waypoints: [A, B, C, D] },
+      { id: 'curvy-edge', waypoints: [A, B, C, D], withArrow: true },
+      { id: 'dotted-edge', waypoints: [A, B, C, D], isDotted: true },
       {
         id: 'animated-edge',
         waypoints: [A, C, B, D],
@@ -83,6 +85,10 @@ export default class GraphNodeExample extends React.Component {
     this.setState({ thickness: Number(ev.target.value) });
   };
 
+  handleArrowOffsetChange = ev => {
+    this.setState({ arrowOffset: Number(ev.target.value) });
+  };
+
   handleEdgeMouseEnter = highlightedEdgeId => {
     this.setState({ highlightedEdgeId });
   };
@@ -104,6 +110,11 @@ export default class GraphNodeExample extends React.Component {
           onChange={this.handleThicknessChange}
         />
         px - edge thickness
+        <TextInput
+          value={this.state.arrowOffset}
+          onChange={this.handleArrowOffsetChange}
+        />
+        px - arrow offset
         <Example>
           {this.state.edges.map(edge => (
             <GraphEdgeContainer key={edge.id}>
@@ -114,8 +125,10 @@ export default class GraphNodeExample extends React.Component {
                   edge.withArrow || edge.id === this.state.highlightedEdgeId
                 }
                 highlighted={edge.id === this.state.highlightedEdgeId}
+                isDotted={edge.isDotted}
                 isAnimated={edge.isAnimated}
                 thickness={this.state.thickness}
+                arrowOffset={this.state.arrowOffset}
                 contrastMode={this.state.contrastMode}
                 onMouseEnter={this.handleEdgeMouseEnter}
                 onMouseLeave={this.handleEdgeMouseLeave}
