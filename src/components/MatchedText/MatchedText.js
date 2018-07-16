@@ -13,7 +13,7 @@ const TRUNCATE_ELLIPSIS = '…';
  * `('text', {start: 2, length: 1}) => [{text: 'te'}, {text: 'x', match: true}, {text: 't'}]`
  */
 function chunkText(text, { start, length }) {
-  if (text && !isNaN(start) && !isNaN(length)) {
+  if (text && !Number.isNaN(start) && !Number.isNaN(length)) {
     const chunks = [];
     // text chunk before match
     if (start > 0) {
@@ -83,8 +83,7 @@ function truncateChunks(chunks, text, maxLength) {
 }
 
 const MatchedTextWrapper = styled.span`
-  background-color: ${props =>
-    transparentize(0.7, props.theme.colors.blue400)};
+  background-color: ${props => transparentize(0.7, props.theme.colors.blue400)};
   border: 1px solid ${props => props.theme.colors.blue400};
 
   ${props => props.noBorder && 'border: none;'};
@@ -116,10 +115,10 @@ class MatchedText extends React.Component {
 
     return (
       <span title={text}>
-        {truncateChunks(chunks, displayText, maxLength).map((chunk, index) => {
+        {truncateChunks(chunks, displayText, maxLength).map(chunk => {
           if (chunk.match) {
             return (
-              <MatchedTextWrapper key={index} noBorder={noBorder}>
+              <MatchedTextWrapper key={chunk.text} noBorder={noBorder}>
                 {chunk.text}
               </MatchedTextWrapper>
             );
@@ -150,6 +149,7 @@ MatchedText.propTypes = {
 };
 
 MatchedText.defaultProps = {
+  match: null,
   noBorder: false,
 };
 

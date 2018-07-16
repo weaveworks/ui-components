@@ -339,4 +339,8 @@ Timeline.propTypes = {
   onResize: PropTypes.func.isRequired,
 };
 
+Timeline.defaultProps = {
+  earliestTimestamp: '',
+};
+
 export default Timeline;

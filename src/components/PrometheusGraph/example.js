@@ -4,8 +4,9 @@ import moment from 'moment';
 import styled from 'styled-components';
 import { compact, range, times } from 'lodash';
 
-import PrometheusGraph from '.';
 import { Example, Info } from '../../utils/example';
+
+import PrometheusGraph from '.';
 
 const InlineBlock = styled.div`
   display: inline-block;

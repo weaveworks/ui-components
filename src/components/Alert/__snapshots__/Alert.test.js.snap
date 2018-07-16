@@ -20,10 +20,12 @@ exports[`<Alert /> snapshots renders default 1`] = `
 
 .c0 a {
   color: hsl(0,0%,10%);
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
 .c0 a:hover {
+  -webkit-text-decoration: none;
   text-decoration: none;
 }
 
@@ -69,10 +71,12 @@ exports[`<Alert /> snapshots renders error 1`] = `
 
 .c0 a {
   color: hsl(0,0%,100%);
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
 .c0 a:hover {
+  -webkit-text-decoration: none;
   text-decoration: none;
 }
 
@@ -118,10 +122,12 @@ exports[`<Alert /> snapshots renders icon if provided 1`] = `
 
 .c0 a {
   color: hsl(0,0%,10%);
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
 .c0 a:hover {
+  -webkit-text-decoration: none;
   text-decoration: none;
 }
 
@@ -167,10 +173,12 @@ exports[`<Alert /> snapshots renders success 1`] = `
 
 .c0 a {
   color: hsl(0,0%,100%);
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
 .c0 a:hover {
+  -webkit-text-decoration: none;
   text-decoration: none;
 }
 
@@ -225,10 +233,12 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
 
 .c0 a {
   color: hsl(0,0%,10%);
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
 .c0 a:hover {
+  -webkit-text-decoration: none;
   text-decoration: none;
 }
 
@@ -287,10 +297,12 @@ exports[`<Alert /> snapshots renders warning 1`] = `
 
 .c0 a {
   color: hsl(0,0%,100%);
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
 .c0 a:hover {
+  -webkit-text-decoration: none;
   text-decoration: none;
 }
 

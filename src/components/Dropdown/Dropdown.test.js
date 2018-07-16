@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import 'jest-styled-components';
 import { withTheme } from '../../utils/theme';
 
@@ -23,12 +24,16 @@ describe('<Dropdown />', () => {
 
   describe('snapshots', () => {
     it('renders default', () => {
-      const tree = renderer.create(withTheme(<Dropdown items={items} />)).toJSON();
+      const tree = renderer
+        .create(withTheme(<Dropdown items={items} />))
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders a placeholder', () => {
       const tree = renderer
-        .create(withTheme(<Dropdown placeholder="Select an item" items={items} />))
+        .create(
+          withTheme(<Dropdown placeholder="Select an item" items={items} />)
+        )
         .toJSON();
       expect(tree).toMatchSnapshot();
     });

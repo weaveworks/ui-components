@@ -107,15 +107,19 @@ class RangeSelector extends React.Component {
     const { rangeMs } = this.props;
     const { isOpen } = this.state;
 
-    const selectedRangeIndex = rangeOptions.findIndex(r => r.valueMs === rangeMs);
-    const selectedRangeLabel = rangeOptions.find(r => r.valueMs === rangeMs).label;
-    const anchorEl = this.containerRef && this.containerRef.getBoundingClientRect();
+    const selectedRangeIndex = rangeOptions.findIndex(
+      r => r.valueMs === rangeMs
+    );
+    const selectedRangeLabel = rangeOptions.find(r => r.valueMs === rangeMs)
+      .label;
+    const anchorEl =
+      this.containerRef && this.containerRef.getBoundingClientRect();
     const menuStyle = anchorEl
       ? {
-        top: anchorEl.top - (selectedRangeIndex * HEIGHT_PX) - 1,
-        left: anchorEl.right - anchorEl.width,
-        minWidth: anchorEl.width + 1,
-      }
+          top: anchorEl.top - selectedRangeIndex * HEIGHT_PX - 1,
+          left: anchorEl.right - anchorEl.width,
+          minWidth: anchorEl.width + 1,
+        }
       : {};
 
     return (

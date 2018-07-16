@@ -141,9 +141,15 @@ HoverInfo.propTypes = {
   valueFormatter: PropTypes.func.isRequired,
   simpleTooltip: PropTypes.bool.isRequired,
   datapoints: PropTypes.array,
-  timestampSec: PropTypes.number,
+  timestampSec: PropTypes.number.isRequired,
   mouseX: PropTypes.number,
   mouseY: PropTypes.number,
+};
+
+HoverInfo.defaultProps = {
+  datapoints: [],
+  mouseX: 0,
+  mouseY: 0,
 };
 
 export default HoverInfo;

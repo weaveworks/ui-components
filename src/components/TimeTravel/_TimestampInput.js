@@ -64,7 +64,7 @@ class TimestampInput extends React.PureComponent {
   }
 
   submit() {
-    const timestamp = this.state.timestamp;
+    const { timestamp } = this.state;
     if (moment(timestamp).isValid()) {
       this.props.onChangeTimestamp(timestamp);
     }
@@ -90,6 +90,10 @@ TimestampInput.propTypes = {
   timestamp: PropTypes.string.isRequired,
   onChangeTimestamp: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+};
+
+TimestampInput.defaultProps = {
+  disabled: false,
 };
 
 export default TimestampInput;

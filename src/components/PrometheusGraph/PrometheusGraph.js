@@ -242,7 +242,12 @@ class PrometheusGraph extends React.PureComponent {
   };
 
   handleHoverUpdate = ({ hoverPoints, hoverTimestampSec, hoverX, hoverY }) => {
-    this.setState({ hoverPoints, hoverTimestampSec, hoverX, hoverY });
+    this.setState({
+      hoverPoints,
+      hoverTimestampSec,
+      hoverX,
+      hoverY,
+    });
   };
 
   handleChartResize = ({ chartWidth, chartHeight }) => {
@@ -567,6 +572,7 @@ PrometheusGraph.propTypes = {
 };
 
 PrometheusGraph.defaultProps = {
+  error: '',
   getSeriesNameParts: getDefaultSeriesNameParts,
   colorTheme: 'mixed',
   metricUnits: 'numeric',

@@ -15,12 +15,16 @@ describe('<Search />', () => {
       expect(tree).toMatchSnapshot();
     });
     it('renders a search string', () => {
-      const tree = renderer.create(withTheme(<Search initialQuery="ui-server" />)).toJSON();
+      const tree = renderer
+        .create(withTheme(<Search initialQuery="ui-server" />))
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders a group of terms', () => {
       const tree = renderer
-        .create(withTheme(<Search initialPinnedTerms={['deployments', 'default']} />))
+        .create(
+          withTheme(<Search initialPinnedTerms={['deployments', 'default']} />)
+        )
         .toJSON();
       expect(tree).toMatchSnapshot();
     });

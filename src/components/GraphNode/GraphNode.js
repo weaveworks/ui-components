@@ -117,7 +117,6 @@ const LabelMinorStandard = LabelTemplate.extend`
   margin-top: -7px;
 `;
 
-
 /**
  * A component for rendering labeled graph nodes.
  */
@@ -147,11 +146,17 @@ class GraphNode extends React.Component {
   }
 
   renderStandardLabels() {
-    const { label, labelMinor, highlighted, contrastMode, labelOffset } = this.props;
+    const {
+      label,
+      labelMinor,
+      highlighted,
+      contrastMode,
+      labelOffset,
+    } = this.props;
 
     return (
       <foreignObject
-        y={(nodeBaseSize / 2) + labelOffset}
+        y={nodeBaseSize / 2 + labelOffset}
         x={-0.5 * labelWidth}
         width={labelWidth}
         height="100px"

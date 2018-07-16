@@ -3,7 +3,9 @@ import { trim } from 'lodash';
 import styled from 'styled-components';
 
 import { Example, Info } from '../../utils/example';
+
 import { Input } from '..';
+
 import Code from '.';
 
 const Highlight = styled.span`

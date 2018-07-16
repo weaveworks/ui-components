@@ -49,4 +49,9 @@ TimelineLoader.propTypes = {
   width: PropTypes.number.isRequired,
 };
 
+TimelineLoader.defaultProps = {
+  endAt: '',
+  startAt: '',
+};
+
 export default TimelineLoader;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+
 import { withTheme } from '../../utils/theme';
 
 import Menu from './Menu';

@@ -58,7 +58,12 @@ class TimestampTooltip extends React.PureComponent {
   getTooltipBoundingRect() {
     return this.tooltipRef
       ? this.tooltipRef.getBoundingClientRect()
-      : { width: 0, height: 0, top: 0, left: 0 };
+      : {
+          width: 0,
+          height: 0,
+          top: 0,
+          left: 0,
+        };
   }
 
   render() {

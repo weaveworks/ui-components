@@ -2,6 +2,7 @@ import React from 'react';
 import times from 'lodash/times';
 
 import { Example, Info } from '../../utils/example';
+
 import { Grid, GridColumn, GridRow as Row } from '.';
 
 export default function GridExample() {

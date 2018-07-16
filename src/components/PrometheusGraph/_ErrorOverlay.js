@@ -46,4 +46,8 @@ ErrorOverlay.propTypes = {
   error: PropTypes.string,
 };
 
+ErrorOverlay.defaultProps = {
+  error: '',
+};
+
 export default ErrorOverlay;

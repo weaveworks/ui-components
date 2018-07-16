@@ -1,10 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { map, concat, without, includes, debounce, last, noop } from 'lodash';
+import {
+  map,
+  concat,
+  without,
+  includes,
+  isEmpty,
+  debounce,
+  last,
+  noop,
+} from 'lodash';
 import PropTypes from 'prop-types';
 
 import { copyPropTypes } from '../../utils/compose';
-
 import Input from '../Input';
 import Dropdown from '../Dropdown';
 
@@ -95,7 +103,10 @@ class Search extends React.PureComponent {
   addSearchTerm = (ev, value) => {
     if (!includes(this.state.terms, value)) {
       // only push unique values
-      this.setState({ terms: concat(...this.state.terms, value) }, this.doPinSearchTerm);
+      this.setState(
+        { terms: concat(...this.state.terms, value) },
+        this.doPinSearchTerm
+      );
     }
     this.setState({ text: '' }, this.doSearch);
   };
@@ -153,7 +164,9 @@ class Search extends React.PureComponent {
         <Icon className="fa fa-search" />
         <SearchInput>
           <TermsContainer>
-            {map(terms, term => <Term key={term} term={term} onRemove={this.removeSearchTerm} />)}
+            {map(terms, term => (
+              <Term key={term} term={term} onRemove={this.removeSearchTerm} />
+            ))}
           </TermsContainer>
           <Input
             hideValidationMessage
@@ -167,8 +180,12 @@ class Search extends React.PureComponent {
           />
         </SearchInput>
 
-        {filters && (
-          <Dropdown items={filters} placeholder="Filters" onChange={this.handleFilterChange} />
+        {!isEmpty(filters) && (
+          <Dropdown
+            items={filters}
+            placeholder="Filters"
+            onChange={this.handleFilterChange}
+          />
         )}
       </div>
     );
@@ -211,6 +228,7 @@ Search.propTypes = {
 };
 
 Search.defaultProps = {
+  filters: [],
   initialQuery: '',
   initialPinnedTerms: [],
   onPin: noop,

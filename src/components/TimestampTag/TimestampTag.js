@@ -39,7 +39,6 @@ const Timestamp = styled.span`
   `};
 `;
 
-
 /**
  * TimestampTag renders an auto-update timestamp in a consistent format.
  * ```javascript

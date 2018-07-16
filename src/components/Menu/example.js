@@ -1,7 +1,8 @@
-/* eslint-disable react/jsx-no-bind*/
+/* eslint-disable react/jsx-no-bind */
 import React from 'react';
 
 import { Example } from '../../utils/example';
+
 import { Menu, MenuItem } from '.';
 
 export default class Name extends React.Component {

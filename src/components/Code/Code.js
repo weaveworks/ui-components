@@ -201,7 +201,7 @@ class Code extends Component {
 
     const copy =
       isCopying && isHovered ? (
-        <i className={'fa fa-check'} />
+        <i className="fa fa-check" />
       ) : (
         'Copy to clipboard'
       );
@@ -214,7 +214,11 @@ class Code extends Component {
       >
         <ScrollWrap>
           <Content>
-            <Pre innerRef={e => (this.preNode = e)}>
+            <Pre
+              innerRef={e => {
+                this.preNode = e;
+              }}
+            >
               {multiCommand
                 ? formatMultiCommand(children)
                 : formatSingleCommand(children)}

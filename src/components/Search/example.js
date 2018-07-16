@@ -38,20 +38,35 @@ class SearchExample extends React.Component {
           <h3>Normal</h3>
           <Search
             onChange={(text, terms) =>
-              this.setState({ queries: { ...this.state.queries, normal: { text, terms } } })
+              this.setState({
+                queries: { ...this.state.queries, normal: { text, terms } },
+              })
             }
           />
-          <List items={['red', 'green', 'blue']} terms={normal.terms} text={normal.text} />
+          <List
+            items={['red', 'green', 'blue']}
+            terms={normal.terms}
+            text={normal.text}
+          />
         </Example>
         <Example>
           <h3>With filters</h3>
           <Search
             onChange={(text, terms) =>
-              this.setState({ queries: { ...this.state.queries, filters: { text, terms } } })
+              this.setState({
+                queries: { ...this.state.queries, filters: { text, terms } },
+              })
             }
-            filters={[{ value: 'red', label: 'Red' }, { value: 'blue', label: 'Blue' }]}
+            filters={[
+              { value: 'red', label: 'Red' },
+              { value: 'blue', label: 'Blue' },
+            ]}
           />
-          <List items={['red', 'green', 'blue']} text={filters.text} terms={filters.terms} />
+          <List
+            items={['red', 'green', 'blue']}
+            text={filters.text}
+            terms={filters.terms}
+          />
         </Example>
         <Example>
           <h3>With an initial query and filters</h3>

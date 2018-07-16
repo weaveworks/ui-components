@@ -22,13 +22,25 @@ class StackedShape extends React.Component {
           {highlighted && HighlightShadow(renderTemplate, contrastMode)}
         </g>
         <g transform={verticalTranslate(2)}>
-          <BaseShape {...this.props} highlighted={false} metricValue={undefined} />
+          <BaseShape
+            {...this.props}
+            highlighted={false}
+            metricValue={undefined}
+          />
         </g>
         <g transform={verticalTranslate(1)}>
-          <BaseShape {...this.props} highlighted={false} metricValue={undefined} />
+          <BaseShape
+            {...this.props}
+            highlighted={false}
+            metricValue={undefined}
+          />
         </g>
         <g transform={verticalTranslate(0)}>
-          <BaseShape {...this.props} highlighted={false} metricValue={undefined} />
+          <BaseShape
+            {...this.props}
+            highlighted={false}
+            metricValue={undefined}
+          />
         </g>
       </g>
     );

@@ -1,7 +1,9 @@
 import React from 'react';
 import enzyme, { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+
 import { withTheme } from '../../utils/theme';
+
 import Code from '.';
 
 enzyme.configure({ adapter: new Adapter() });
@@ -42,11 +44,13 @@ describe('<Code />', () => {
   it('should render multi line string correctly with multiCommand=true', () => {
     wrapper = shallow(
       withTheme(
-        <Code multiCommand>{`
+        <Code multiCommand>
+          {`
 sudo curl -l git.io/scope -o /usr/local/bin/scope
 sudo chmod a+x /usr/local/bin/scope
 scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
-      `}</Code>
+          `}
+        </Code>
       )
     );
     expect(wrapper.dive()).toMatchSnapshot();

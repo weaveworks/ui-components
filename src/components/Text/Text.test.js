@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer';
 import 'jest-styled-components';
 
 import theme from '../../theme';
+
 import Text from './Text';
 
 describe('<Text />', () => {

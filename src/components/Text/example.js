@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Example } from '../../utils/example';
+
 import Text from '.';
 
 export default function TextExample() {

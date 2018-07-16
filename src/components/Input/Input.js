@@ -124,7 +124,11 @@ class Input extends React.Component {
           })}
           <Icon visible={!valid} className="fa fa-times-circle" />
         </InputWrapper>
-        <ValidationMessage remove={hideValidationMessage} valid={valid} visible={message}>
+        <ValidationMessage
+          remove={hideValidationMessage}
+          valid={valid}
+          visible={message}
+        >
           {message}
         </ValidationMessage>
       </div>
@@ -161,8 +165,12 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-  valid: true,
   inputRef: noop,
+  label: '',
+  message: '',
+  onChange: noop,
+  textarea: false,
+  valid: true,
 };
 
 export default StyledInput(Input);

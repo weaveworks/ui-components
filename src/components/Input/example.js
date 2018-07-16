@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Example, Info } from '../../utils/example';
+
 import Input from '.';
 
 const onChange = () => null;

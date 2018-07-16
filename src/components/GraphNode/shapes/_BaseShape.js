@@ -18,7 +18,7 @@ function encodeIdAttribute(id) {
 }
 
 function getClipPathDefinition(clipId, height, radius) {
-  const barHeight = 1 - (2 * height); // in the interval [-1, 1]
+  const barHeight = 1 - 2 * height; // in the interval [-1, 1]
   return (
     <defs>
       <clipPath id={clipId} transform={`scale(${2 * radius})`}>
@@ -102,6 +102,10 @@ BaseShape.propTypes = {
   metricColor: PropTypes.string.isRequired,
   metricFormattedValue: PropTypes.string.isRequired,
   metricNumericValue: PropTypes.number,
+};
+
+BaseShape.defaultProps = {
+  metricNumericValue: null,
 };
 
 export default BaseShape;

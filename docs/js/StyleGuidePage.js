@@ -2,14 +2,14 @@ import React from 'react';
 import { capitalize, compact } from 'lodash';
 import PropTypes from 'prop-types';
 
-import { isActivePage } from './utils';
-
 import { Menu, MenuItem } from '../../src/components/Menu';
 import {
   Grid,
   GridColumn as Column,
   GridRow as Row,
 } from '../../src/components/Grid';
+
+import { isActivePage } from './utils';
 
 class StyleGuidePage extends React.Component {
   constructor(props, context) {
@@ -22,20 +22,22 @@ class StyleGuidePage extends React.Component {
   }
 
   render() {
-    const items = compact(this.context.styles.keys().map(page => {
-      const pageName = page
-        .split('/')
-        .pop()
-        .replace('.js', '');
-      return pageName === 'Intro' ? null : (
-        <MenuItem
-          active={isActivePage(pageName)}
-          key={page}
-          onClick={this.navigate}
-          text={capitalize(pageName)}
-        />
-      );
-    }));
+    const items = compact(
+      this.context.styles.keys().map(page => {
+        const pageName = page
+          .split('/')
+          .pop()
+          .replace('.js', '');
+        return pageName === 'Intro' ? null : (
+          <MenuItem
+            active={isActivePage(pageName)}
+            key={page}
+            onClick={this.navigate}
+            text={capitalize(pageName)}
+          />
+        );
+      })
+    );
 
     return (
       <div className="styleguide-page">

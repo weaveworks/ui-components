@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { clamp, find, debounce, noop } from 'lodash';
 
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
-import { MAX_TICK_SPACING_PX } from './_TimelinePeriodLabels';
 
+import { MAX_TICK_SPACING_PX } from './_TimelinePeriodLabels';
 import Timeline from './_Timeline';
 import TimelinePanButton from './_TimelinePanButton';
 import LiveModeToggle from './_LiveModeToggle';
@@ -407,7 +407,7 @@ TimeTravel.propTypes = {
   /**
    * The timestamp in focus
    */
-  timestamp: PropTypes.string,
+  timestamp: PropTypes.string.isRequired,
   /**
    * The earliest timestamp we can travel back in time to
    */

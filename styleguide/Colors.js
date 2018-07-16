@@ -98,7 +98,7 @@ const swatches = (collection, testColor, matcher = /.*/) =>
         >
           <Swatch color={c} />
           <Label em={name === TEST_COLOR_NAME}>
-            {isNaN(parseFloat(name)) && name}
+            {Number.isNaN(parseFloat(name)) && name}
           </Label>
         </Sample>
       ) : null
@@ -173,7 +173,9 @@ class Colors extends React.Component {
         <Text large bold>
           Neutral Colors
         </Text>
-        <Row>{this.renderSwatches(theme.colors, /^(black|gray|white)[0-9]*$/)}</Row>
+        <Row>
+          {this.renderSwatches(theme.colors, /^(black|gray|white)[0-9]*$/)}
+        </Row>
         <Separator />
         <Text large bold>
           PromQL Theme

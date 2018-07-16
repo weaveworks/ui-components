@@ -1,6 +1,8 @@
+// eslint-disable
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { noop } from 'lodash';
 
 import Button from '../Button';
 
@@ -130,6 +132,7 @@ class Dialog extends React.Component {
           <Actions className="weave-dialog-actions">
             {actions &&
               actions.map((Action, i) => {
+                /* eslint react/no-array-index-key: 0 */
                 if (React.isValidElement(Action)) {
                   return React.cloneElement(Action, { key: i });
                 }
@@ -140,6 +143,7 @@ class Dialog extends React.Component {
                     text={Action}
                   />
                 );
+                /* eslint react/no-array-index-key: 0 */
               })}
           </Actions>
         </Window>
@@ -176,6 +180,10 @@ Dialog.propTypes = {
 };
 
 Dialog.defaultProps = {
+  actions: [],
+  active: false,
+  onActionClick: noop,
+  onClose: noop,
   overlay: true,
 };
 

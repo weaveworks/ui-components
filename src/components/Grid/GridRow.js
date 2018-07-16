@@ -27,7 +27,7 @@ GridRow.propTypes = {
   /**
    * The direction in which to justify content. Should be 'left', 'center', or 'right';
    */
-  alignContent: PropTypes.string,
+  alignContent: PropTypes.string.isRequired,
 };
 
 export default GridRow;

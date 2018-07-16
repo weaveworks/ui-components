@@ -40,7 +40,10 @@ describe('DataTable', () => {
           withTheme(
             <DataTable
               data={data}
-              columns={[{ value: 'name', label: 'Name' }, { value: 'email', label: 'Email' }]}
+              columns={[
+                { value: 'name', label: 'Name' },
+                { value: 'email', label: 'Email' },
+              ]}
             >
               {rows =>
                 map(rows, r => (
@@ -64,7 +67,10 @@ describe('DataTable', () => {
             <DataTable
               data={data}
               sortBy="email"
-              columns={[{ value: 'name', label: 'Name' }, { value: 'email', label: 'Email' }]}
+              columns={[
+                { value: 'name', label: 'Name' },
+                { value: 'email', label: 'Email' },
+              ]}
             >
               {rows =>
                 map(rows, r => (
@@ -88,7 +94,10 @@ describe('DataTable', () => {
               data={data}
               sortBy="email"
               sortOrder="desc"
-              columns={[{ value: 'name', label: 'Name' }, { value: 'email', label: 'Email' }]}
+              columns={[
+                { value: 'name', label: 'Name' },
+                { value: 'email', label: 'Email' },
+              ]}
             >
               {rows =>
                 map(rows, r => (
@@ -139,7 +148,9 @@ describe('DataTable', () => {
                   <tbody key={r.workloadId}>
                     {map(r.containers, (c, i) => (
                       <tr key={c.name}>
-                        {i === 0 && <td rowSpan={r.containers.length}>{r.workloadId}</td>}
+                        {i === 0 && (
+                          <td rowSpan={r.containers.length}>{r.workloadId}</td>
+                        )}
                         <td>{c.name}</td>
                         <td>{c.behind}</td>
                       </tr>
@@ -160,8 +171,14 @@ describe('DataTable', () => {
           withTheme(
             <DataTable
               data={data}
-              columns={[{ value: 'name', label: 'Name' }, { value: 'email', label: 'Email' }]}
-              extraHeaders={[<div>Some other header</div>, <div>Another one</div>]}
+              columns={[
+                { value: 'name', label: 'Name' },
+                { value: 'email', label: 'Email' },
+              ]}
+              extraHeaders={[
+                <div>Some other header</div>,
+                <div>Another one</div>,
+              ]}
             >
               {rows =>
                 map(rows, r => (
@@ -238,7 +255,10 @@ describe('DataTable', () => {
           data={data}
           sortBy="email"
           sortOrder="asc"
-          columns={[{ value: 'name', label: 'Name' }, { value: 'email', label: 'Email' }]}
+          columns={[
+            { value: 'name', label: 'Name' },
+            { value: 'email', label: 'Email' },
+          ]}
         >
           {rows =>
             map(rows, r => (
@@ -274,7 +294,10 @@ describe('DataTable', () => {
           data={data}
           sortBy="name"
           sortOrder="asc"
-          columns={[{ value: 'name', label: 'Name' }, { value: 'email', label: 'Email' }]}
+          columns={[
+            { value: 'name', label: 'Name' },
+            { value: 'email', label: 'Email' },
+          ]}
           sortOverrides={{ name: sortByNameLength }}
         >
           {rows =>

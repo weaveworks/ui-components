@@ -7,7 +7,8 @@ import { lookupValue } from '../../utils/theme';
 const StyledText = styled.span`
   font-family: ${props => props.theme.fontFamilies.regular};
   color: ${props => props.theme.textColor};
-  font-size: ${props => lookupValue(props, props.theme.fontSizes, props.theme.fontSizes.normal)};
+  font-size: ${props =>
+    lookupValue(props, props.theme.fontSizes, props.theme.fontSizes.normal)};
   font-weight: ${props => (props.bold ? '600' : '400')};
   text-transform: ${props => (props.capitalize ? 'uppercase' : 'none')};
   font-style: ${props => (props.italic ? 'italic' : 'normal')};
@@ -55,6 +56,11 @@ Text.propTypes = {
    * Make the text bold
    */
   bold: PropTypes.bool,
+};
+
+Text.defaultProps = {
+  bold: false,
+  italic: false,
 };
 
 export default Text;

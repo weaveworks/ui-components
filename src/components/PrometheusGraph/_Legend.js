@@ -53,7 +53,7 @@ const LegendItemName = styled.span`
 
   ${LegendItem}:hover & {
     ${props =>
-      props.multiLine &&
+      props.multiLine && // eslint-disable-line
       `
         max-height: 100%;
         word-break: break-word;
@@ -90,7 +90,6 @@ class Legend extends React.PureComponent {
     this.state = {
       shown: props.shown,
       selectedKeys: props.selectedKeys,
-      hoveredKey: null,
     };
   }
 
@@ -122,12 +121,10 @@ class Legend extends React.PureComponent {
   };
 
   handleLegendItemMouseEnter = series => {
-    this.setState({ hoveredKey: series.key });
     this.props.onHoveredKeyChange(series.key);
   };
 
   handleLegendItemMouseLeave = () => {
-    this.setState({ hoveredKey: null });
     this.props.onHoveredKeyChange(null);
   };
 

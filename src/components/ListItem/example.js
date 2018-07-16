@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Example } from '../../utils/example';
+
 import { ListItem } from '.';
 
 export default function ListItemExample({ clickHandler }) {

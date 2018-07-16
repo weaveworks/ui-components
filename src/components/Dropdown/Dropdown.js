@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
-import { map, find, flattenDepth, isArray } from 'lodash';
+import { map, noop, find, flattenDepth, isArray } from 'lodash';
 
 const WIDTH = '256px';
 const HEIGHT = '36px';
@@ -39,7 +38,8 @@ const Overlay = styled.div`
 
 const ItemWrapper = Item.extend`
   line-height: ${HEIGHT};
-  color: ${props => (props.selected ? props.theme.colors.blue400 : props.theme.textColor)};
+  color: ${props =>
+    props.selected ? props.theme.colors.blue400 : props.theme.textColor};
   min-height: ${HEIGHT};
 
   &:hover {
@@ -174,7 +174,9 @@ class Dropdown extends React.Component {
     // If nothing is selected, use the placeholder, else use the first item.
     const currentItem =
       find(divided, i => i && i.value === value) ||
-      (placeholder ? { label: placeholder, value: null } : divided && divided[0]);
+      (placeholder
+        ? { label: placeholder, value: null }
+        : divided && divided[0]);
     const label = currentItem && currentItem.label;
     const Component = this.props.withComponent;
 
@@ -221,8 +223,9 @@ Dropdown.propTypes = {
    * `value` should be an internal value,
    * `label` is what will be displayed to the user.
    */
-  items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType]))
-    .isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType])
+  ).isRequired,
   /**
    * The value of the currently selected item. This much match a value in the `items` prop.
    * If no value is provided, the first elements's value will be used.
@@ -246,6 +249,9 @@ Dropdown.propTypes = {
 };
 
 Dropdown.defaultProps = {
+  onChange: noop,
+  placeholder: '',
+  value: '',
   withComponent: DefaultToggleView,
 };
 

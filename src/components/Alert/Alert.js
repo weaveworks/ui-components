@@ -119,6 +119,7 @@ Alert.defaultProps = {
   title: '',
   type: 'default',
   visible: true,
+  onClose: null,
 };
 
 export default Alert;

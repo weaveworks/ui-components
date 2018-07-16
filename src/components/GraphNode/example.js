@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import { Example, Info } from '../../utils/example';
 import Search from '../Search';
+
 import GraphNode, { shapes } from './GraphNode';
 
 const nodeTypes = keys(shapes);
@@ -71,7 +72,6 @@ export default class GraphNodeExample extends React.Component {
     })),
     size: 65,
     contrastMode: false,
-    hoveredNode: null,
     searchTerms: [],
   };
 

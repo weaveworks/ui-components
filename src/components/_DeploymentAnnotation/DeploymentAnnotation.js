@@ -106,9 +106,7 @@ class DeploymentAnnotations extends React.PureComponent {
               <strong>{this.props.action}</strong>
             </InfoLine>
             {this.props.serviceIDs.map(serviceId => (
-              <InfoLine key={serviceId}>
-                &rarr; {serviceId}
-              </InfoLine>
+              <InfoLine key={serviceId}>&rarr; {serviceId}</InfoLine>
             ))}
           </TimestampTooltip>
         )}
@@ -130,6 +128,5 @@ DeploymentAnnotations.propTypes = {
 DeploymentAnnotations.defaultProps = {
   onAxis: false,
 };
-
 
 export default DeploymentAnnotations;

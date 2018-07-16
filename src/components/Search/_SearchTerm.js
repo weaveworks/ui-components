@@ -52,6 +52,7 @@ SearchTerm.propTypes = {
 };
 
 SearchTerm.defaultProps = {
+  label: '',
   onRemove: noop,
 };
 

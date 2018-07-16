@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Example } from '../../utils/example';
+
 import Button from '.';
 
 export default function ButtonExample({ clickHandler }) {
