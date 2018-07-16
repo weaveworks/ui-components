@@ -1,47 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { line, curveBasis } from 'd3-shape';
 import { noop } from 'lodash';
 
 import { encodeIdAttribute } from '../../utils/dom';
 
-const EdgeArrowMarker = styled.marker`
-  color: ${props =>
-    props.contrastMode
-      ? props.theme.colors.black
-      : props.theme.colors.purple500};
-  fill: ${props =>
-    props.contrastMode
-      ? props.theme.colors.black
-      : props.theme.colors.purple500};
-`;
-
-const EdgeArrowDefinition = ({ id, zoomed, contrastMode }) => {
-  const markerOffset = zoomed ? '35' : '40';
-  const markerSize = zoomed ? '10' : '30';
-  return (
-    <defs>
-      <EdgeArrowMarker
-        id={id}
-        contrastMode={contrastMode}
-        viewBox="1 0 10 10"
-        refX={markerOffset}
-        refY="3.5"
-        markerWidth={markerSize}
-        markerHeight={markerSize}
-        orient="auto"
-      >
-        <polygon className="link" points="0 0, 10 3.5, 0 7" />
-      </EdgeArrowMarker>
-    </defs>
-  );
-};
+const spline = line()
+  .curve(curveBasis)
+  .x(d => d.x)
+  .y(d => d.y);
 
 const EdgeShadow = styled.path`
   stroke: ${props => props.theme.colors.blue400};
   stroke-width: ${props => 10 * props.thickness};
-  stroke-opacity: ${props => (props.contrastMode ? 0.3 : 0.1)};
+  stroke-opacity: 0;
   fill: none;
+
+  ${props =>
+    props.highlighted &&
+    `
+      stroke-opacity: ${props.contrastMode ? 0.3 : 0.1};
+    `};
 `;
 
 const EdgeDashed = styled.path`
@@ -64,6 +44,29 @@ const EdgeLine = styled.path`
   fill: none;
 `;
 
+const EdgeArrowPolygon = styled.polygon`
+  fill: ${props =>
+    props.contrastMode
+      ? props.theme.colors.black
+      : props.theme.colors.purple500};
+`;
+
+const EdgeArrowDefinition = ({ id, offset, thickness, contrastMode }) => (
+  <defs>
+    <marker
+      id={id}
+      refY="3.5"
+      refX={offset / thickness}
+      markerWidth={15 / thickness}
+      markerHeight={15 / thickness}
+      viewBox="1 0 10 10"
+      orient="auto"
+    >
+      <EdgeArrowPolygon points="0 0, 10 3.5, 0 7" contrastMode={contrastMode} />
+    </marker>
+  </defs>
+);
+
 /**
  * A component for rendering labeled graph nodes.
  */
@@ -71,16 +74,19 @@ class GraphEdge extends React.Component {
   render() {
     const {
       id,
-      path,
+      waypoints,
       thickness,
-      showArrow,
-      showDashed,
+      withArrow,
+      arrowOffset,
+      isDashed,
       highlighted,
       contrastMode,
     } = this.props;
 
     const encodedId = encodeIdAttribute(id);
     const encodedArrowId = `end-arrow-${encodedId}`;
+    const arrowThickness = Math.sqrt(thickness);
+    const path = spline(waypoints);
 
     return (
       <g
@@ -88,22 +94,26 @@ class GraphEdge extends React.Component {
         onMouseEnter={ev => this.props.onMouseEnter(id, ev)}
         onMouseLeave={ev => this.props.onMouseLeave(id, ev)}
       >
-        {showArrow && (
-          <EdgeArrowDefinition id={encodedArrowId} zoomed={false} />
-        )}
-        {highlighted && (
-          <EdgeShadow
-            d={path}
-            thickness={thickness}
+        {withArrow && (
+          <EdgeArrowDefinition
+            id={encodedArrowId}
+            thickness={arrowThickness}
+            offset={arrowOffset}
             contrastMode={contrastMode}
           />
         )}
-        {showDashed && <EdgeDashed d={path} contrastMode={contrastMode} />}
+        <EdgeShadow
+          d={path}
+          highlighted={highlighted}
+          thickness={thickness}
+          contrastMode={contrastMode}
+        />
+        {isDashed && <EdgeDashed d={path} contrastMode={contrastMode} />}
         <EdgeLine
           d={path}
           thickness={thickness}
           contrastMode={contrastMode}
-          markerEnd={showArrow ? `url(#${encodedArrowId})` : null}
+          markerEnd={withArrow ? `url(#${encodedArrowId})` : null}
         />
       </g>
     );
@@ -115,10 +125,12 @@ GraphEdge.propTypes = {
    * A unique node ID
    */
   id: PropTypes.string.isRequired,
+  waypoints: PropTypes.array.isRequired,
   thickness: PropTypes.number,
   highlighted: PropTypes.bool,
-  showArrow: PropTypes.bool,
-  showDashed: PropTypes.bool,
+  withArrow: PropTypes.bool,
+  arrowOffset: PropTypes.number,
+  isDashed: PropTypes.bool,
   isAnimated: PropTypes.bool,
   /**
    * Renders the edge in a high contrast mode
@@ -137,8 +149,9 @@ GraphEdge.propTypes = {
 GraphEdge.defaultProps = {
   thickness: 1,
   highlighted: false,
-  showArrow: false,
-  showDashed: false,
+  withArrow: false,
+  arrowOffset: 28,
+  isDashed: false,
   isAnimated: true,
   contrastMode: false,
   onMouseEnter: noop,

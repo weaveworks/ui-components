@@ -41,3 +41,5 @@ export ResourceDial from './ResourceDial';
 export Search from './Search';
 
 export GraphNode from './GraphNode';
+
+export GraphEdge from './GraphEdge';
