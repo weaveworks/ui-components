@@ -33,8 +33,8 @@ export const shapes = {
   dottedcylinder: ShapeDottedCylinder,
 };
 
-const nodeBaseSize = 100;
-const labelWidth = nodeBaseSize * 1.4;
+const nodeBaseSize = 55;
+const labelWidth = nodeBaseSize * 2.5;
 
 const GraphNodeWrapper = styled.g.attrs({
   transform: props => `scale(${props.size / nodeBaseSize})`,
@@ -53,8 +53,8 @@ const LabelSvg = styled.text.attrs({
     props.contrastMode
       ? props.theme.colors.black
       : props.theme.colors.purple800,
-  transform: 'scale(1.7)',
   textAnchor: 'middle',
+  y: -38,
 })`
   font-size: ${props => props.theme.fontSizes.normal};
 `;
@@ -64,17 +64,13 @@ const LabelMinorSvg = styled.text.attrs({
     props.contrastMode
       ? props.theme.colors.black
       : props.theme.colors.purple600,
-  transform: 'scale(1.7)',
   textAnchor: 'middle',
-  y: 20,
+  y: -20,
 })`
   font-size: ${props => props.theme.fontSizes.small};
 `;
 
-const LabelsStandardContainer = styled.div`
-  transform-origin: top;
-  transform: scale(1.7);
-`;
+const LabelsStandardContainer = styled.div``;
 
 const LabelTemplate = styled.div`
   background-color: ${props =>
