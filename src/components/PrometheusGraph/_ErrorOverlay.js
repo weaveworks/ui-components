@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const ErrorContainer = styled.div`
-  color: ${props => props.theme.colors.status.error};
+  color: ${props => props.theme.colors.orange600};
   opacity: ${props => (props.loading ? 0.2 : 1)};
   position: absolute;
   top: 0;

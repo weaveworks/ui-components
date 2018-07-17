@@ -17,7 +17,7 @@ exports[`<Button /> accepts a style prop 1`] = `
 .c0:hover {
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
-  background: #f2f2f2;
+  background: hsl(0,0%,96%);
   color: hsl(240,20%,30%);
 }
 
@@ -43,7 +43,7 @@ exports[`<Button /> snapshots renders danger 1`] = `
   border: 0;
   outline: none;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);
-  background: #c7254e;
+  background: hsl(13,100%,40%);
   color: hsl(0,0%,100%);
   font-size: 14px;
   cursor: pointer;
@@ -52,7 +52,7 @@ exports[`<Button /> snapshots renders danger 1`] = `
 .c0:hover {
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
-  background: #b12146;
+  background: hsl(13,100%,35%);
   color: hsl(0,0%,100%);
 }
 
@@ -82,7 +82,7 @@ exports[`<Button /> snapshots renders default 1`] = `
 .c0:hover {
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
-  background: #f2f2f2;
+  background: hsl(0,0%,96%);
   color: hsl(240,20%,30%);
 }
 
@@ -142,7 +142,7 @@ exports[`<Button /> snapshots renders primary 1`] = `
 .c0:hover {
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
-  background: #007d9a;
+  background: hsl(191,100%,30%);
   color: hsl(0,0%,100%);
 }
 
@@ -172,7 +172,7 @@ exports[`<Button /> snapshots renders selected 1`] = `
 .c0:hover {
   -webkit-transition: color 0.3s ease;
   transition: color 0.3s ease;
-  background: #f2f2f2;
+  background: hsl(0,0%,96%);
   color: hsl(240,20%,30%);
 }
 

@@ -15,7 +15,11 @@ export const colors = {
   purple25: 'hsl(240, 20%, 98%)', // #fafafc
 
   // Accent Colors
+  orange800: 'hsl(13, 100%, 30%)', // #992100
+  orange700: 'hsl(13, 100%, 35%)', // #b32700
+  orange600: 'hsl(13, 100%, 40%)', // #cc2c00
   orange500: 'hsl(13, 100%, 50%)', // #ff3700
+  blue800: 'hsl(191, 100%, 30%)', // #007d99
   blue700: 'hsl(191, 100%, 35%)', // #0092b3
   blue600: 'hsl(191, 100%, 40%)', // #00a7cc
   blue400: 'hsl(191, 100%, 50%)', // #00d2ff
@@ -30,10 +34,9 @@ export const colors = {
   gray50: 'hsl(0, 0%, 96%)', // #f4f4f4
   white: 'hsl(0, 0%, 100%)', // #ffffff
 
-  // Use these when colorizing elements that should indicate a state or outcome, ie Alerts.
+  /* Legacy */
   status: {
     success: '#38bd93', // green
-    error: '#c7254e', // red
     warning: '#d4ab27', // amber
   },
 

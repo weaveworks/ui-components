@@ -8,12 +8,12 @@ export const atoms = {
     default: {
       color: colors.black,
       background: colors.gray50,
-      borderColor: darken(0.15, colors.gray50),
+      borderColor: colors.gray200,
     },
     info: {
       color: colors.white,
       background: colors.blue600,
-      borderColor: darken(0.15, colors.blue600),
+      borderColor: colors.blue800,
     },
     success: {
       color: colors.white,
@@ -27,8 +27,8 @@ export const atoms = {
     },
     error: {
       color: colors.white,
-      background: colors.status.error,
-      borderColor: darken(0.15, colors.status.error),
+      background: colors.orange600,
+      borderColor: colors.orange800,
     },
   },
   Button: {
@@ -36,19 +36,19 @@ export const atoms = {
       color: colors.black,
       background: colors.white,
       hoverColor: colors.purple800,
-      hoverBackground: darken(0.05, colors.white),
+      hoverBackground: colors.gray50,
     },
     primary: {
       color: colors.white,
       background: colors.blue700,
       hoverColor: colors.white,
-      hoverBackground: darken(0.05, colors.blue700),
+      hoverBackground: colors.blue800,
     },
     danger: {
       color: colors.white,
-      background: colors.status.error,
+      background: colors.orange600,
       hoverColor: colors.white,
-      hoverBackground: darken(0.05, colors.status.error),
+      hoverBackground: colors.orange700,
     },
     disabled: {
       color: colors.gray600,
