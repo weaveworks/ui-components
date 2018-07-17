@@ -37,7 +37,7 @@
     "url": "https://github.com/weaveworks/ui-components.git"
   },
   "author": "Weaveworks",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "peerDependencies": {
     "font-awesome": "^4.0.0",
     "lodash": "^4.0.0",
