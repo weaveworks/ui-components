@@ -51,7 +51,7 @@ export default class ResourceDialExample extends React.Component {
         <Example>
           <Info>Spectrum of different values</Info>
           <InlineWrapper>
-            <ResourceDial label="CPU usage" value={0} />
+            <ResourceDial label="GPU Memory usage" value={0} />
           </InlineWrapper>
           <InlineWrapper>
             <ResourceDial label="CPU usage" value={0.0001} />
