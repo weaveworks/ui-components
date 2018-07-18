@@ -118,7 +118,6 @@ class GraphEdge extends React.Component {
     }
   }
 
-
   prepareWaypointsForMotion({ waypoints, waypointsCap, isAnimated }) {
     // Don't update if the edges are not animated.
     if (!isAnimated) return;
@@ -216,10 +215,12 @@ GraphEdge.propTypes = {
   /**
    * A list of points in the { x, y } format describing the edge path
    */
-  waypoints: PropTypes.arrayOf(PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  })).isRequired,
+  waypoints: PropTypes.arrayOf(
+    PropTypes.shape({
+      x: PropTypes.number.isRequired,
+      y: PropTypes.number.isRequired,
+    })
+  ).isRequired,
   /**
    * A number of waypoints to cap to in case the edge is animated
    */
