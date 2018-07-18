@@ -1,6 +1,6 @@
 const docgen = require('react-docgen');
 
-module.exports = function (content) {
+module.exports = function(content) {
   this.cacheable();
   this.value = content;
   try {

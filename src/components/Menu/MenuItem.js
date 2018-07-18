@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styled from 'styled-components';
+import { noop } from 'lodash';
 
 const Item = styled.div`
   display: block;
@@ -82,6 +83,8 @@ MenuItem.propTypes = {
 
 MenuItem.defaultProps = {
   isSubItem: false,
+  onClick: noop,
+  text: '',
 };
 
 export default MenuItem;

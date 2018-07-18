@@ -180,7 +180,9 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
     >
       <label
         htmlFor={undefined}
-      />
+      >
+        
+      </label>
       <div
         className="c7"
       >
@@ -196,7 +198,9 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
       </div>
       <span
         className="c9"
-      />
+      >
+        
+      </span>
     </div>
   </div>
 </div>
@@ -338,7 +342,9 @@ exports[`<Search /> snapshots renders a search string 1`] = `
     >
       <label
         htmlFor={undefined}
-      />
+      >
+        
+      </label>
       <div
         className="c6"
       >
@@ -354,7 +360,9 @@ exports[`<Search /> snapshots renders a search string 1`] = `
       </div>
       <span
         className="c8"
-      />
+      >
+        
+      </span>
     </div>
   </div>
 </div>
@@ -496,7 +504,9 @@ exports[`<Search /> snapshots renders empty 1`] = `
     >
       <label
         htmlFor={undefined}
-      />
+      >
+        
+      </label>
       <div
         className="c6"
       >
@@ -512,7 +522,9 @@ exports[`<Search /> snapshots renders empty 1`] = `
       </div>
       <span
         className="c8"
-      />
+      >
+        
+      </span>
     </div>
   </div>
 </div>
@@ -699,7 +711,9 @@ exports[`<Search /> snapshots renders filters 1`] = `
     >
       <label
         htmlFor={undefined}
-      />
+      >
+        
+      </label>
       <div
         className="c6"
       >
@@ -715,7 +729,9 @@ exports[`<Search /> snapshots renders filters 1`] = `
       </div>
       <span
         className="c8"
-      />
+      >
+        
+      </span>
     </div>
   </div>
   <div

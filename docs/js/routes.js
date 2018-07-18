@@ -1,4 +1,4 @@
-/* eslint-disable import/first, import/no-unresolved, import/extensions, react/no-danger*/
+/* eslint-disable import/first, import/no-unresolved, import/extensions, react/no-danger */
 import React from 'react';
 import { includes } from 'lodash';
 

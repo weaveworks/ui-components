@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { values, flatMap, includes, reduce, concat } from 'lodash';
 
-import { isActivePage } from './utils';
-
 import {
   Grid,
   GridColumn as Column,
   GridRow as Row,
 } from '../../src/components/Grid';
 import { Menu, MenuItem } from '../../src/components/Menu';
+
+import { isActivePage } from './utils';
 
 class ComponentsPage extends React.Component {
   constructor(props, context) {

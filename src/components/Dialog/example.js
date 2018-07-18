@@ -1,9 +1,10 @@
-/* eslint-disable react/jsx-no-bind*/
+/* eslint-disable react/jsx-no-bind */
 import React from 'react';
 
 import { Example, Info } from '../../utils/example';
-import Dialog from '.';
 import Button from '../Button';
+
+import Dialog from '.';
 
 export default class DialogExample extends React.Component {
   constructor(props, context) {

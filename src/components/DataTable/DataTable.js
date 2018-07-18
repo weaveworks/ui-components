@@ -124,7 +124,11 @@ class DataTable extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.doSort(this.state.sortedData, this.state.sortField, this.state.sortOrder);
+    this.doSort(
+      this.state.sortedData,
+      this.state.sortField,
+      this.state.sortOrder
+    );
   }
 
   componentWillReceiveProps(nextProps) {
@@ -134,7 +138,10 @@ class DataTable extends React.PureComponent {
 
     if (nextProps !== this.props) {
       // Only translate if props have *actually* changed.
-      if (nextProps.sortBy !== this.props.sortBy || nextProps.sortOrder !== this.props.sortOrder) {
+      if (
+        nextProps.sortBy !== this.props.sortBy ||
+        nextProps.sortOrder !== this.props.sortOrder
+      ) {
         field = nextProps.sortBy;
         order = nextProps.sortOrder;
       }
@@ -259,6 +266,10 @@ DataTable.propTypes = {
 
 DataTable.defaultProps = {
   sortOrder: 'asc',
+  sortOverrides: {},
+  nested: false,
+  extraHeaders: [],
+  sortBy: '',
 };
 
 export default copyPropTypes(DataTable, Styled(DataTable));

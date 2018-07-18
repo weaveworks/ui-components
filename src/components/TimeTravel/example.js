@@ -4,8 +4,9 @@ import moment from 'moment';
 import { compact, times } from 'lodash';
 
 import Text from '../Text';
-import TimeTravel from '.';
 import { Example, Info } from '../../utils/example';
+
+import TimeTravel from '.';
 
 function generateDeployments({ startTime, endTime }, count) {
   return times(count, () => ({

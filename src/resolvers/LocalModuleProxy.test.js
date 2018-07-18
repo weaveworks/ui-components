@@ -1,4 +1,5 @@
 import expect, { createSpy } from 'expect';
+
 import LocalModuleProxy from './LocalModuleProxy';
 
 function stub() {}

@@ -21,7 +21,7 @@
     "docs:publish": "yarn docs:build && yarn docs:copy-images && yarn docs:s3",
     "docs:analyze": "ANALYZE_BUNDLE=true yarn docs:build",
     "start": "node bin/dev-server",
-    "prettify": "prettier --write '**/*.{js,jsx}'"
+    "prettify": "prettier --write '{src,docs,styleguide}/**/*.{js,jsx}'"
   },
   "jest": {
     "setupFiles": [
@@ -62,7 +62,7 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "6.18.2",
-    "babel-eslint": "7.1.1",
+    "babel-eslint": "8.2.1",
     "babel-jest": "^17.0.2",
     "babel-loader": "6.2.8",
     "babel-plugin-lodash": "^3.3.2",
@@ -76,14 +76,15 @@
     "enzyme": "3.1.1",
     "enzyme-adapter-react-16": "^1.0.4",
     "enzyme-to-json": "^3.3.4",
-    "eslint": "3.10.2",
-    "eslint-config-airbnb": "13.0.0",
+    "eslint": "4.17.0",
+    "eslint-config-airbnb": "16.1.0",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-loader": "1.9.0",
-    "eslint-plugin-import": "2.1.0",
-    "eslint-plugin-jsx-a11y": "2.2.3",
+    "eslint-loader": "2.0.0",
+    "eslint-plugin-flowtype": "^2.49.3",
+    "eslint-plugin-import": "2.12.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-react": "6.7.1",
+    "eslint-plugin-react": "7.6.1",
     "expect": "1.20.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "faker": "^4.1.0",

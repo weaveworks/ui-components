@@ -1,8 +1,9 @@
-/* eslint-disable react/jsx-no-bind*/
+/* eslint-disable react/jsx-no-bind */
 import React from 'react';
 
-import CircularProgress from '.';
 import { Example, Info } from '../../utils/example';
+
+import CircularProgress from '.';
 
 export default class Name extends React.Component {
   render() {

@@ -116,9 +116,14 @@ class Chart extends React.PureComponent {
   };
 
   getSvgBoundingRect() {
-    return this.svgRef
-      ? this.svgRef.getBoundingClientRect()
-      : { width: 0, height: 0, top: 0, left: 0 };
+    const defaultRect = {
+      width: 0,
+      height: 0,
+      top: 0,
+      left: 0,
+    };
+
+    return this.svgRef ? this.svgRef.getBoundingClientRect() : defaultRect;
   }
 
   isFadedSeries(series) {
@@ -194,6 +199,10 @@ Chart.propTypes = {
   hoveredLegendKey: PropTypes.string,
   onHoverUpdate: PropTypes.func.isRequired,
   onChartResize: PropTypes.func.isRequired,
+};
+
+Chart.defaultProps = {
+  hoveredLegendKey: '',
 };
 
 export default Chart;

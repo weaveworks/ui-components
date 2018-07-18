@@ -23,13 +23,14 @@ exports[`<Button /> accepts a style prop 1`] = `
 
 <button
   className="c0"
-  disabled={undefined}
+  disabled={false}
   onClick={[Function]}
   style={
     Object {
       "color": "blue",
     }
   }
+  type="submit"
 >
   Submit
 </button>
@@ -58,8 +59,9 @@ exports[`<Button /> snapshots renders danger 1`] = `
 
 <button
   className="c0"
-  disabled={undefined}
+  disabled={false}
   onClick={[Function]}
+  type="submit"
 >
   Danger
 </button>
@@ -88,8 +90,9 @@ exports[`<Button /> snapshots renders default 1`] = `
 
 <button
   className="c0"
-  disabled={undefined}
+  disabled={false}
   onClick={[Function]}
+  type="submit"
 >
   Submit
 </button>
@@ -120,6 +123,7 @@ exports[`<Button /> snapshots renders disabled 1`] = `
   className="c0"
   disabled={true}
   onClick={[Function]}
+  type="submit"
 >
   Disabled
 </button>
@@ -148,8 +152,9 @@ exports[`<Button /> snapshots renders primary 1`] = `
 
 <button
   className="c0"
-  disabled={undefined}
+  disabled={false}
   onClick={[Function]}
+  type="submit"
 >
   Primary
 </button>
@@ -178,8 +183,9 @@ exports[`<Button /> snapshots renders selected 1`] = `
 
 <button
   className="c0"
-  disabled={undefined}
+  disabled={false}
   onClick={[Function]}
+  type="submit"
 >
   Selected
 </button>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+
 import { Grid, GridColumn, GridRow as Row } from '../../src/components/Grid';
 
 export default function LandingPage() {

@@ -31,7 +31,7 @@ GridColumn.propTypes = {
   /**
    * The desired col-span; maximum of 12 columns
    */
-  span: PropTypes.number,
+  span: PropTypes.number.isRequired,
 };
 
 export default GridColumn;

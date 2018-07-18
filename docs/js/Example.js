@@ -5,6 +5,7 @@ import { map, reduce } from 'lodash';
 import { transparentize } from 'polished';
 
 import Dialog from '../../src/components/Dialog';
+
 import { renderMarkdown } from './utils';
 
 const Panel = styled.div`
@@ -84,7 +85,6 @@ export default class Example extends React.Component {
       dialogActive: false,
       callbackName: '',
       demoOutput: '',
-      fetchingDocs: true,
     };
     this.instrumentElement = this.instrumentElementProps.bind(this);
     this.renderPropTable = this.renderPropTable.bind(this);
@@ -196,9 +196,9 @@ export default class Example extends React.Component {
           actions={[]}
           overlay
         >
-          <div className="callback-name">{`"${
-            this.state.callbackName
-          }" called with:`}</div>
+          <div className="callback-name">
+            {`"${this.state.callbackName}" called with:`}
+          </div>
           {map(this.state.demoOutput, (o, i) => (
             <div key={o}>
               args[{i.toString()}]: {JSON.stringify(o)}

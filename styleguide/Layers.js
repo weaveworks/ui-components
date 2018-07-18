@@ -20,14 +20,17 @@ class Layers extends React.Component {
     return (
       <div>
         <Row>
-          <Text extraLarge>Layers <i>(z-index)</i></Text>
+          <Text extraLarge>
+            Layers <i>(z-index)</i>
+          </Text>
         </Row>
         <Row>
           <pre>
             const MyButton = styled.button`
             <br />
-            &nbsp; z-index: ${curly(true)}props =&gt;
-            props.theme.layers.tooltip{curly(false)};
+            &nbsp; z-index: ${curly(true)}props =&gt; props.theme.layers.tooltip{curly(
+              false
+            )};
             <br />
             `;
           </pre>

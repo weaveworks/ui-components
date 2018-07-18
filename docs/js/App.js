@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router';
 import { ThemeProvider } from 'styled-components';
 
-import { isActivePage } from './utils';
 import theme from '../../src/theme';
-
 import Logo from '../../src/components/WeaveWorksLogo';
 import { Menu, MenuItem } from '../../src/components/Menu';
 import { Grid, GridColumn, GridRow as Row } from '../../src/components/Grid';
+
+import { isActivePage } from './utils';
 
 export default function LandingPage({ children }) {
   return (

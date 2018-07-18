@@ -57,7 +57,9 @@ const divided = [
 ];
 
 const DropdownButton = ({ onClick }) => (
-  <Button onClick={onClick}>More actions <i className="fa fa-caret-down" /></Button>
+  <Button onClick={onClick}>
+    More actions <i className="fa fa-caret-down" />
+  </Button>
 );
 
 export default class DropdownExample extends React.Component {
@@ -79,13 +81,21 @@ export default class DropdownExample extends React.Component {
           <Column span={6}>
             <Example>
               <Info>Default dropdown</Info>
-              <Dropdown items={items} value={this.state.selected} onChange={this.handleChange} />
+              <Dropdown
+                items={items}
+                value={this.state.selected}
+                onChange={this.handleChange}
+              />
             </Example>
           </Column>
           <Column span={6}>
             <Example>
               <Info>Grouped items (passed as subarrays)</Info>
-              <Dropdown items={groups} value={this.state.selected} onChange={this.handleChange} />
+              <Dropdown
+                items={groups}
+                value={this.state.selected}
+                onChange={this.handleChange}
+              />
             </Example>
           </Column>
         </Row>
@@ -93,7 +103,11 @@ export default class DropdownExample extends React.Component {
           <Column span={6}>
             <Example>
               <Info>Grouped items (with null as dividers)</Info>
-              <Dropdown items={divided} value={this.state.selected} onChange={this.handleChange} />
+              <Dropdown
+                items={divided}
+                value={this.state.selected}
+                onChange={this.handleChange}
+              />
             </Example>
           </Column>
           <Column span={6}>
@@ -111,7 +125,9 @@ export default class DropdownExample extends React.Component {
         <Row>
           <Column span={6}>
             <Example>
-              <Info>With <code>Button</code> component</Info>
+              <Info>
+                With <code>Button</code> component
+              </Info>
               <Dropdown
                 withComponent={DropdownButton}
                 items={divided}

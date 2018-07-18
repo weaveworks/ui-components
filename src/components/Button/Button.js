@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { omit } from 'lodash';
+import { noop, omit } from 'lodash';
 
 import { fromAtoms } from '../../utils/theme';
 
@@ -58,7 +58,7 @@ class Button extends React.PureComponent {
       danger,
       selected,
       disabled,
-      ...otherProps,
+      ...otherProps
     } = this.props;
 
     const buttonProps = omit(otherProps, ['onClick']);
@@ -117,6 +117,12 @@ Button.propTypes = {
 
 Button.defaultProps = {
   text: 'Submit',
+  type: 'submit',
+  disabled: false,
+  primary: false,
+  danger: false,
+  selected: false,
+  onClick: noop,
 };
 
 export default Button;

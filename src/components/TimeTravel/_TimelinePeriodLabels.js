@@ -48,7 +48,7 @@ const TimelineLabels = styled.div.attrs({
   style: ({ y, opacity }) => ({
     transform: `translateY(${y}px)`,
     opacity,
-  })
+  }),
 })``;
 
 // TODO: Tidy up this component.
@@ -186,7 +186,11 @@ class TimelinePeriodLabels extends React.PureComponent {
     const isBarelyVisible = opacity < 0.4;
 
     return (
-      <TimelineLabels className={period} opacity={opacity} y={ticksRow * TICKS_ROW_SPACING}>
+      <TimelineLabels
+        className={period}
+        opacity={opacity}
+        y={ticksRow * TICKS_ROW_SPACING}
+      >
         {map(ticks, ({ timestamp, position, isBehind }) => (
           <TimelineLabel
             key={timestamp}

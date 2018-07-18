@@ -40,7 +40,10 @@ export default function DataTableExample() {
         <h3>Default Table</h3>
         <DataTable
           data={data}
-          columns={[{ value: 'name', label: 'Name' }, { value: 'email', label: 'Email' }]}
+          columns={[
+            { value: 'name', label: 'Name' },
+            { value: 'email', label: 'Email' },
+          ]}
         >
           {rows =>
             map(rows, r => (
@@ -64,14 +67,18 @@ export default function DataTableExample() {
             { value: 'containers', label: 'Containers' },
             { value: 'behind', label: 'Behind' },
           ]}
-          sortOverrides={{ behind: row => max(map(row.containers, c => c.behind)) }}
+          sortOverrides={{
+            behind: row => max(map(row.containers, c => c.behind)),
+          }}
         >
           {rows =>
             map(rows, r => (
               <tbody key={r.workloadId}>
                 {map(r.containers, (c, i) => (
                   <tr key={c.name}>
-                    {i === 0 && <td rowSpan={r.containers.length}>{r.workloadId}</td>}
+                    {i === 0 && (
+                      <td rowSpan={r.containers.length}>{r.workloadId}</td>
+                    )}
                     <td>{c.name}</td>
                     <td>{c.behind}</td>
                   </tr>
@@ -85,7 +92,10 @@ export default function DataTableExample() {
         <h3>With extra headers</h3>
         <DataTable
           data={data}
-          columns={[{ value: 'name', label: 'Name' }, { value: 'email', label: 'Email' }]}
+          columns={[
+            { value: 'name', label: 'Name' },
+            { value: 'email', label: 'Email' },
+          ]}
           extraHeaders={[<Button>Extra Header</Button>]}
         >
           {rows =>

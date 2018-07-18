@@ -93,12 +93,22 @@ class ListItem extends React.Component {
 
 ListItem.propTypes = {
   active: PropTypes.bool,
-  text: PropTypes.any,
-  subText: PropTypes.any,
+  leftIcon: PropTypes.node,
   onClick: PropTypes.func,
   style: PropTypes.object,
-  value: PropTypes.any,
-  leftIcon: PropTypes.any,
+  subText: PropTypes.node,
+  text: PropTypes.node,
+  value: PropTypes.node,
+};
+
+ListItem.defaultProps = {
+  active: false,
+  leftIcon: null,
+  onClick: null,
+  style: {},
+  subText: '',
+  text: '',
+  value: '',
 };
 
 export default ListItem;

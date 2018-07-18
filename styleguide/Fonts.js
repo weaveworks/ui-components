@@ -41,7 +41,7 @@ class Fonts extends React.Component {
         <Row>
           {map(theme.fontSizes, (value, name) => (
             <FontRow key={name}>
-              <Text {...{[name]: true}} style={{ opacity: 0.5 }}>
+              <Text {...{ [name]: true }} style={{ opacity: 0.5 }}>
                 theme.fontSizes.{name} ({value})
               </Text>
             </FontRow>

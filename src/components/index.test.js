@@ -1,6 +1,7 @@
 /* eslint-disable import/no-duplicates, no-duplicate-imports */
-import expect from 'expect';
 import fs from 'fs';
+
+import expect from 'expect';
 import _ from 'lodash';
 
 import * as WeaveComponents from './index';

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const TimelineLabelWrapper = styled.span.attrs({
-  style: ({ x }) => ({ transform: `translateX(${x}px)` })
+  style: ({ x }) => ({ transform: `translateX(${x}px)` }),
 })`
   position: absolute;
 `;
@@ -48,7 +48,7 @@ class TimelineLabel extends React.Component {
     if (!this.props.disabled) {
       this.props.onClick(this.props.timestamp);
     }
-  }
+  };
 
   render() {
     const {
@@ -83,6 +83,11 @@ TimelineLabel.propTypes = {
   onClick: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   isBehind: PropTypes.bool,
+};
+
+TimelineLabel.defaultProps = {
+  disabled: false,
+  isBehind: false,
 };
 
 export default TimelineLabel;

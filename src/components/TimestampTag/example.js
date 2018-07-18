@@ -10,13 +10,15 @@ export default class TimestampTagExample extends React.Component {
     super(props);
 
     this.state = {
-      minTimestamp: moment().subtract(1, 'day').unix(),
+      minTimestamp: moment()
+        .subtract(1, 'day')
+        .unix(),
       maxTimestamp: moment().unix(),
       timestamp: moment().unix(),
     };
   }
 
-  changeTimestamp = (ev) => {
+  changeTimestamp = ev => {
     this.setState({
       timestamp: ev.target.value,
     });

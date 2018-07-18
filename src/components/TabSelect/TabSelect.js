@@ -104,8 +104,15 @@ TabSelect.propTypes = {
   /**
    * Children of `TabSelect` must be a `Tab` component
    */
+  // eslint can't figure out that this is required because of custom checker
+  // function and so requires a defaultProp be set
+  // eslint-disable-next-line react/require-default-props
   children: (props, propName) => {
     let error = null;
+    if (React.Children.count === 0) {
+      return new Error('You cannot have a TabSelect without any Tabs');
+    }
+
     React.Children.forEach(props[propName], child => {
       if (child.type !== Tab) {
         error = new Error(
@@ -122,6 +129,7 @@ TabSelect.propTypes = {
 TabSelect.defaultProps = {
   secondary: false,
   small: false,
+  selectedTab: '',
 };
 
 export default Styled(TabSelect);
