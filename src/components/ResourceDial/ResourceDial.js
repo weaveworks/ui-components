@@ -99,6 +99,11 @@ const FillArc = ({ color, value = 1 }) => (
   />
 );
 
+const Label = styled.span`
+  max-width: calc(100% - 40px);
+  text-align: center;
+`;
+
 // TODO: Extract this into the theme.
 const dialSpring = value =>
   spring(value, { stiffness: 50, damping: 13, precision: 0.01 });
@@ -145,7 +150,7 @@ class ResourceDial extends React.PureComponent {
                 </DialValue>
                 {hasValue && <PercentageSign>%</PercentageSign>}
               </DialValueContainer>
-              {label}
+              <Label>{label}</Label>
               <DialArc width="100%" height="100%">
                 <FillArc color={theme.colors.gray100} />
                 <FillArc

@@ -186,7 +186,10 @@ class Dropdown extends React.Component {
         {isOpen && (
           <div>
             <Overlay onClick={this.handleBgClick} />
-            <Popover className="dropdown-popover" width={this.element.current.offsetWidth}>
+            <Popover
+              className="dropdown-popover"
+              width={this.element.current.offsetWidth}
+            >
               {map(
                 divided,
                 (item, index) =>
