@@ -9,7 +9,8 @@ import Button from '../Button';
 const Wrapper = styled.div`
   transition: opacity 0.2s ease;
   position: fixed;
-  padding-top: 30vh;
+  display: flex;
+  align-items: center;
   opacity: 0;
   height: 100%;
   left: -100%;
