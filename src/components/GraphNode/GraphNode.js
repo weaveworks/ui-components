@@ -118,7 +118,7 @@ const LabelMinorStandard = LabelTemplate.extend`
  */
 class GraphNode extends React.Component {
   findFirstSearchMatch = text => {
-    let match = {};
+    let match = null;
     this.props.searchTerms.forEach(term => {
       const start = text.search(term);
       if (isEmpty(match) && start !== -1) {
