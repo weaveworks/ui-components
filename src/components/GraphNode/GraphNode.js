@@ -87,6 +87,7 @@ const LabelTemplate = styled.div`
   text-align: center;
   padding: 2px 10px;
   max-width: 100%;
+  pointer-events: all;
 
   ${props =>
     !props.highlighted &&
@@ -155,10 +156,10 @@ class GraphNode extends React.Component {
         y={nodeBaseSize / 2 + labelOffset}
         x={-0.5 * labelWidth}
         width={labelWidth}
-        height="100px"
+        height="200px"
         style={{
           textAlign: 'center',
-          pointerEvents: 'all',
+          pointerEvents: 'none',
         }}
       >
         <LabelsStandardContainer>
