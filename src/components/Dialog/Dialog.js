@@ -45,7 +45,7 @@ const Window = styled.div`
   width: ${props => props.width};
   margin: 0 auto;
   max-width: 768px;
-  padding: 20px;
+  padding: 15px 20px 20px;
   position: relative;
 `;
 
@@ -56,13 +56,15 @@ const Header = styled.div`
 `;
 
 const Title = styled.span`
-  font-size: ${props => props.theme.fontSizes.large};
+  font-size: ${props => props.theme.fontSizes.normal};
+  font-weight: bold;
 `;
 
 const ButtonClose = styled.button`
   border: 0;
   background: transparent;
   cursor: pointer;
+  margin-right: -5px;
   padding: 5px;
   outline: 0;
 
@@ -144,9 +146,9 @@ const Dialog = ({
         {actions &&
           actions.map((Action, index) => {
             if (React.isValidElement(Action)) {
-              /* eslint react/no-array-index-key: 0 */
+              /* eslint-disable react/no-array-index-key */
               return React.cloneElement(Action, { key: index });
-              /* eslint react/no-array-index-key: 0 */
+              /* eslint-enable react/no-array-index-key */
             }
             return (
               <Button
