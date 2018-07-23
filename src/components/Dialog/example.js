@@ -7,16 +7,12 @@ import Button from '../Button';
 import Dialog from '.';
 
 export default class DialogExample extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      normalButtonActive: false,
-      otherButtonActive: false,
-    };
-    this.handleDialogActivate = this.handleDialogActivate.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-  }
-  handleDialogActivate(type, args) {
+  state = {
+    normalButtonActive: false,
+    otherButtonActive: false,
+  };
+
+  handleDialogActivate = (type, args) => {
     const key = `${type}ButtonActive`;
     if (this.state[key]) {
       this.props.clickHandler('onActionClick', args);
@@ -24,13 +20,15 @@ export default class DialogExample extends React.Component {
     this.setState({
       [key]: !this.state[key],
     });
-  }
-  handleClose() {
+  };
+
+  handleClose = () => {
     this.setState({
       normalButtonActive: false,
       otherButtonActive: false,
     });
-  }
+  };
+
   render() {
     const Action1 = () => (
       <Button
@@ -64,7 +62,6 @@ export default class DialogExample extends React.Component {
             actions={['Submit', 'Cancel']}
             onClose={this.handleClose}
             onActionClick={this.handleClose}
-            overlay
           >
             <p>Here is some content that I would like to display</p>
           </Dialog>
@@ -83,7 +80,8 @@ export default class DialogExample extends React.Component {
             active={this.state.otherButtonActive}
             actions={[<Action1 />, <Action2 />]}
             onClose={this.handleClose}
-            overlay
+            title="Dialog with title"
+            width="400px"
           >
             <p>This one has custom actions</p>
           </Dialog>

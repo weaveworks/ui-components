@@ -1,4 +1,3 @@
-// eslint-disable
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -7,63 +6,81 @@ import { noop } from 'lodash';
 import Button from '../Button';
 
 const Wrapper = styled.div`
+  z-index: ${props => props.theme.layers.modal};
   transition: opacity 0.2s ease;
+  align-items: center;
   position: fixed;
   display: flex;
-  align-items: center;
   opacity: 0;
   height: 100%;
   left: -100%;
-  top: 0;
   width: 100%;
-  z-index: ${props => props.theme.layers.modal};
+  top: 0;
 
-  &.active {
+  ${props =>
+    props.active &&
+    `
     left: 0;
     opacity: 1;
-  }
+  `};
 `;
 
 const Overlay = styled.div`
   background-color: ${props => props.theme.colors.black};
-  opacity: 0;
   position: absolute;
+  opacity: 0.3;
   height: 100%;
-  left: -100%;
-  top: 0;
   width: 100%;
+  left: 0;
+  top: 0;
 
-  & {
-    opacity: 0.5;
-    left: 0;
-  }
+  /* Currently not supported by most of the browsers, but the future is near :) */
+  backdrop-filter: blur(2px);
 `;
 
 const Window = styled.div`
   box-shadow: ${props => props.theme.boxShadow.light};
   background-color: ${props => props.theme.colors.white};
   color: ${props => props.theme.colors.purple800};
+  width: ${props => props.width};
   margin: 0 auto;
   max-width: 768px;
-  padding: 20px;
-  width: 75%;
+  padding: 15px 20px 20px;
   position: relative;
 `;
 
-const ButtonClose = styled.div`
-  text-align: right;
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-  & > span:hover {
-    cursor: pointer;
+const Title = styled.span`
+  font-size: ${props => props.theme.fontSizes.normal};
+  font-weight: bold;
+`;
+
+const ButtonClose = styled.button`
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  margin-right: -5px;
+  padding: 5px;
+  outline: 0;
+
+  &:hover {
+    opacity: 0.5;
   }
 `;
+
+const Content = styled.div``;
 
 const Actions = styled.div`
   text-align: right;
   min-height: 36px;
 
-  button:first-child {
-    margin-right: 10px;
+  button {
+    margin-left: 10px;
   }
 `;
 
@@ -106,58 +123,59 @@ const Actions = styled.div`
  * }
  * ```
  */
-class Dialog extends React.Component {
-  handleActionClick = text => {
-    this.props.onActionClick(text);
-  };
-
-  handleClose = () => {
-    this.props.onClose();
-  };
-
-  render() {
-    const { children, active, actions, overlay } = this.props;
-    return (
-      <Wrapper className={active ? 'weave-dialog active' : 'weave-dialog'}>
-        {overlay && (
-          <Overlay
-            onClick={this.handleClose}
-            className="weave-dialog-overlay"
-          />
-        )}
-        <Window className="weave-dialog-window">
-          <ButtonClose className="weave-dialog-close">
-            <span onClick={this.handleClose} className="fa fa-close" />
-          </ButtonClose>
-          <div className="weave-dialog-content">{children}</div>
-          <Actions className="weave-dialog-actions">
-            {actions &&
-              actions.map((Action, i) => {
-                /* eslint react/no-array-index-key: 0 */
-                if (React.isValidElement(Action)) {
-                  return React.cloneElement(Action, { key: i });
-                }
-                return (
-                  <Button
-                    key={i}
-                    onClick={() => this.handleActionClick(Action)}
-                    text={Action}
-                  />
-                );
-                /* eslint react/no-array-index-key: 0 */
-              })}
-          </Actions>
-        </Window>
-      </Wrapper>
-    );
-  }
-}
+const Dialog = ({
+  active,
+  title,
+  width,
+  actions,
+  onActionClick,
+  onClose,
+  children,
+}) => (
+  <Wrapper active={active}>
+    <Overlay onClick={onClose} />
+    <Window width={width}>
+      <Header>
+        <Title>{title}</Title>
+        <ButtonClose text="" onClick={onClose}>
+          <i className="fa fa-close" />
+        </ButtonClose>
+      </Header>
+      <Content>{children}</Content>
+      <Actions>
+        {actions &&
+          actions.map((Action, index) => {
+            if (React.isValidElement(Action)) {
+              /* eslint-disable react/no-array-index-key */
+              return React.cloneElement(Action, { key: index });
+              /* eslint-enable react/no-array-index-key */
+            }
+            return (
+              <Button
+                key={Action}
+                text={Action}
+                onClick={() => onActionClick(Action)}
+              />
+            );
+          })}
+      </Actions>
+    </Window>
+  </Wrapper>
+);
 
 Dialog.propTypes = {
   /**
    * Flag to show/hide the dialog
    */
-  active: PropTypes.bool,
+  active: PropTypes.bool.isRequired,
+  /**
+   * The title of the dialog
+   */
+  title: PropTypes.string,
+  /**
+   * Width of the dialog window (CSS format)
+   */
+  width: PropTypes.string,
   /**
    * An array of options that the user will be able to click.
    * Each item in the array will be rendered as a <Button /> in the dialog window.
@@ -165,27 +183,23 @@ Dialog.propTypes = {
    */
   actions: PropTypes.array,
   /**
-   * Callback that will be run when the dialog is closed
-   */
-  onClose: PropTypes.func,
-  /**
    * Callback that runs when an action is clicked by the user. If the actions
    * If the `actions` prop is an array of strings,
    * this callback will return the action that was clicked.
    */
   onActionClick: PropTypes.func,
   /**
-   * Toggles a modal overlay. If set to true, the overlay will appear,
+   * Callback that will be run when the modal is closed
    */
-  overlay: PropTypes.bool,
+  onClose: PropTypes.func,
 };
 
 Dialog.defaultProps = {
+  title: '',
+  width: '75%',
   actions: [],
-  active: false,
   onActionClick: noop,
   onClose: noop,
-  overlay: true,
 };
 
 export default Dialog;
