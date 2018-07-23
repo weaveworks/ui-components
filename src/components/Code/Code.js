@@ -20,7 +20,7 @@ const CopyNotice = styled.div`
   top: 0;
   right: 0;
   padding: 10px 15px;
-  ${props => props.isHovered && 'transition: opacity 300ms ease;'}
+  ${props => props.isHovered && 'transition: opacity 300ms ease;'};
   border-radius: ${props => props.theme.borderRadius.soft};
   background-color: ${props => props.theme.colors.purple800};
   opacity: 0;

@@ -71,7 +71,8 @@ const ProgressWrapper = styled.div`
     `
     display: inline-block;
     vertical-align: middle;
-  `} ${props =>
+  `};
+  ${props =>
     props.center &&
     `
     margin-left: auto;
