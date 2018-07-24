@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { noop } from 'lodash';
+import { noop, isEmpty } from 'lodash';
 
 import Button from '../Button';
 
@@ -142,9 +142,9 @@ const Dialog = ({
         </ButtonClose>
       </Header>
       <Content>{children}</Content>
-      <Actions>
-        {actions &&
-          actions.map((Action, index) => {
+      {!isEmpty(actions) && (
+        <Actions>
+          {actions.map((Action, index) => {
             if (React.isValidElement(Action)) {
               /* eslint-disable react/no-array-index-key */
               return React.cloneElement(Action, { key: index });
@@ -158,7 +158,8 @@ const Dialog = ({
               />
             );
           })}
-      </Actions>
+        </Actions>
+      )}
     </Window>
   </Wrapper>
 );

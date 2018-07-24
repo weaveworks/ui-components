@@ -10,6 +10,7 @@ export default class DialogExample extends React.Component {
   state = {
     normalButtonActive: false,
     otherButtonActive: false,
+    emptyButtonActive: false,
   };
 
   handleDialogActivate = (type, args) => {
@@ -26,6 +27,7 @@ export default class DialogExample extends React.Component {
     this.setState({
       normalButtonActive: false,
       otherButtonActive: false,
+      emptyButtonActive: false,
     });
   };
 
@@ -84,6 +86,21 @@ export default class DialogExample extends React.Component {
             width="400px"
           >
             <p>This one has custom actions</p>
+          </Dialog>
+        </Example>
+        <Example>
+          <Info>Dialog with no actions actions</Info>
+          <Button
+            onClick={this.handleDialogActivate.bind(this, 'empty')}
+            text="No Actions"
+          />
+          <Dialog
+            active={this.state.emptyButtonActive}
+            onClose={this.handleClose}
+            title="Dialog with title"
+            width="300px"
+          >
+            <span>This one has no actions</span>
           </Dialog>
         </Example>
       </div>
