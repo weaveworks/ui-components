@@ -2,40 +2,67 @@
 
 exports[`<Search /> snapshots renders a group of terms 1`] = `
 .c8 {
+  position: absolute;
+  right: 10px;
   visibility: hidden;
-  display: inline-block;
-  margin-left: 4px;
   font-size: 22px;
   color: hsl(13,100%,40%);
 }
 
 .c7 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   height: 36px;
 }
 
-.c9 {
-  display: none;
-  font-size: 14px;
-  padding-left: 8px;
-  visibility: hidden;
-  color: inherit;
-}
-
-.c6 {
-  padding: 8px;
-}
-
-.c6 input {
-  display: inline-block;
-  padding: 0 12px;
+.c7 input {
+  padding-right: 12px;
+  padding-left: 12px;
+  width: 100%;
   line-height: 36px;
   box-shadow: none;
   border: 1px solid hsl(0,0%,45%);
   border-radius: 4px;
   height: 36px;
   box-sizing: border-box;
+}
+
+.c7 input::-webkit-input-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c7 input::-moz-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c7 input:-moz-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c7 input:-ms-input-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c9 {
+  display: none;
+  padding-left: 8px;
+  font-size: 14px;
+  text-align: left;
+  color: inherit;
+  visibility: hidden;
+}
+
+.c6 {
+  padding: 8px;
 }
 
 .c4 {
@@ -208,40 +235,67 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
 
 exports[`<Search /> snapshots renders a search string 1`] = `
 .c7 {
+  position: absolute;
+  right: 10px;
   visibility: hidden;
-  display: inline-block;
-  margin-left: 4px;
   font-size: 22px;
   color: hsl(13,100%,40%);
 }
 
 .c6 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   height: 36px;
 }
 
-.c8 {
-  display: none;
-  font-size: 14px;
-  padding-left: 8px;
-  visibility: hidden;
-  color: inherit;
-}
-
-.c5 {
-  padding: 8px;
-}
-
-.c5 input {
-  display: inline-block;
-  padding: 0 12px;
+.c6 input {
+  padding-right: 12px;
+  padding-left: 12px;
+  width: 100%;
   line-height: 36px;
   box-shadow: none;
   border: 1px solid hsl(0,0%,45%);
   border-radius: 4px;
   height: 36px;
   box-sizing: border-box;
+}
+
+.c6 input::-webkit-input-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c6 input::-moz-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c6 input:-moz-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c6 input:-ms-input-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c8 {
+  display: none;
+  padding-left: 8px;
+  font-size: 14px;
+  text-align: left;
+  color: inherit;
+  visibility: hidden;
+}
+
+.c5 {
+  padding: 8px;
 }
 
 .c3 {
@@ -370,40 +424,67 @@ exports[`<Search /> snapshots renders a search string 1`] = `
 
 exports[`<Search /> snapshots renders empty 1`] = `
 .c7 {
+  position: absolute;
+  right: 10px;
   visibility: hidden;
-  display: inline-block;
-  margin-left: 4px;
   font-size: 22px;
   color: hsl(13,100%,40%);
 }
 
 .c6 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   height: 36px;
 }
 
-.c8 {
-  display: none;
-  font-size: 14px;
-  padding-left: 8px;
-  visibility: hidden;
-  color: inherit;
-}
-
-.c5 {
-  padding: 8px;
-}
-
-.c5 input {
-  display: inline-block;
-  padding: 0 12px;
+.c6 input {
+  padding-right: 12px;
+  padding-left: 12px;
+  width: 100%;
   line-height: 36px;
   box-shadow: none;
   border: 1px solid hsl(0,0%,45%);
   border-radius: 4px;
   height: 36px;
   box-sizing: border-box;
+}
+
+.c6 input::-webkit-input-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c6 input::-moz-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c6 input:-moz-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c6 input:-ms-input-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c8 {
+  display: none;
+  padding-left: 8px;
+  font-size: 14px;
+  text-align: left;
+  color: inherit;
+  visibility: hidden;
+}
+
+.c5 {
+  padding: 8px;
 }
 
 .c3 {
@@ -532,40 +613,67 @@ exports[`<Search /> snapshots renders empty 1`] = `
 
 exports[`<Search /> snapshots renders filters 1`] = `
 .c7 {
+  position: absolute;
+  right: 10px;
   visibility: hidden;
-  display: inline-block;
-  margin-left: 4px;
   font-size: 22px;
   color: hsl(13,100%,40%);
 }
 
 .c6 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   height: 36px;
 }
 
-.c8 {
-  display: none;
-  font-size: 14px;
-  padding-left: 8px;
-  visibility: hidden;
-  color: inherit;
-}
-
-.c5 {
-  padding: 8px;
-}
-
-.c5 input {
-  display: inline-block;
-  padding: 0 12px;
+.c6 input {
+  padding-right: 12px;
+  padding-left: 12px;
+  width: 100%;
   line-height: 36px;
   box-shadow: none;
   border: 1px solid hsl(0,0%,45%);
   border-radius: 4px;
   height: 36px;
   box-sizing: border-box;
+}
+
+.c6 input::-webkit-input-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c6 input::-moz-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c6 input:-moz-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c6 input:-ms-input-placeholder {
+  color: hsl(0,0%,45%);
+}
+
+.c8 {
+  display: none;
+  padding-left: 8px;
+  font-size: 14px;
+  text-align: left;
+  color: inherit;
+  visibility: hidden;
+}
+
+.c5 {
+  padding: 8px;
 }
 
 .c13 {

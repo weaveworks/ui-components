@@ -121,7 +121,7 @@ class Input extends React.Component {
         <label htmlFor={id}>{label}</label>
         <InputWrapper valid={valid}>
           {React.createElement(textarea ? 'textarea' : 'input', {
-            ...omit(inputProps, 'autoSelectText'),
+            ...omit(inputProps, 'autoSelectText', 'focus'),
             ref: elem => {
               this.input = elem;
               inputRef(elem);
@@ -132,7 +132,7 @@ class Input extends React.Component {
         <ValidationMessage
           remove={hideValidationMessage}
           valid={valid}
-          visible={message}
+          visible={message && !valid}
         >
           {message}
         </ValidationMessage>
@@ -142,6 +142,14 @@ class Input extends React.Component {
 }
 
 Input.propTypes = {
+  /*
+   * Select the text inside the input. Requires focus attribute to be true
+   */
+  autoSelectText: PropTypes.bool,
+  /*
+   * Focus the input on render
+   */
+  focus: PropTypes.bool,
   /*
    * Remove the validation message from the DOM
    */
@@ -174,6 +182,8 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
+  autoSelectText: false,
+  focus: false,
   hideValidationMessage: false,
   inputRef: noop,
   label: '',
