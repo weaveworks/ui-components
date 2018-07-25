@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { noop } from 'lodash';
 
 const Item = styled.div`
+  border-radius: ${props => props.theme.borderRadius.soft};
   display: block;
   min-height: 40px;
   line-height: 40px;
