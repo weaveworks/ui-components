@@ -26,6 +26,7 @@ const StyledButton = styled('button')`
 
   /* Other */
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  border-radius: ${props => props.theme.borderRadius.soft};
 
   /* Pseudo-selectors */
   &:hover {
