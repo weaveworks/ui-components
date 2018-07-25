@@ -141,6 +141,7 @@ class Search extends React.PureComponent {
     if (this.state.text) {
       this.addSearchTerm(ev, this.state.text);
     }
+    this.props.onBlur(ev);
   };
 
   handleFilterChange = (ev, value) => {
@@ -149,6 +150,7 @@ class Search extends React.PureComponent {
   };
 
   doPinSearchTerm() {
+    this.props.onChange(this.state.text, this.state.terms);
     this.props.onPin(this.state.terms);
   }
 
@@ -157,7 +159,7 @@ class Search extends React.PureComponent {
   }
 
   render() {
-    const { className, filters } = this.props;
+    const { className, filters, placeholder } = this.props;
     const { terms, text } = this.state;
     return (
       <div className={className}>
@@ -174,9 +176,12 @@ class Search extends React.PureComponent {
             value={text}
             onKeyDown={this.handleInputKeyPress}
             onBlur={this.handleInputBlur}
+            onFocus={this.props.onFocus}
             inputRef={ref => {
               this.input = ref;
             }}
+            // Don't show the placeholder if terms are present.
+            placeholder={terms.length === 0 ? placeholder : null}
           />
         </SearchInput>
 
@@ -225,6 +230,10 @@ Search.propTypes = {
    * Returns an array of the currently pinned terms.
    */
   onPin: PropTypes.func,
+  /**
+   * Text that will be passed to the search input as the placeholder.
+   */
+  placeholder: PropTypes.string,
 };
 
 Search.defaultProps = {
@@ -233,6 +242,8 @@ Search.defaultProps = {
   initialPinnedTerms: [],
   onPin: noop,
   onChange: noop,
+  onFocus: noop,
+  onBlur: noop,
 };
 
 export default copyPropTypes(Search, Styled(Search));

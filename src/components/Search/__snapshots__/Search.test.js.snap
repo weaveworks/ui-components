@@ -216,7 +216,9 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
         <input
           onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           onKeyDown={[Function]}
+          placeholder={null}
           value=""
         />
         <i
@@ -405,7 +407,9 @@ exports[`<Search /> snapshots renders a search string 1`] = `
         <input
           onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           onKeyDown={[Function]}
+          placeholder={undefined}
           value="ui-server"
         />
         <i
@@ -594,7 +598,9 @@ exports[`<Search /> snapshots renders empty 1`] = `
         <input
           onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           onKeyDown={[Function]}
+          placeholder={undefined}
           value=""
         />
         <i
@@ -828,7 +834,9 @@ exports[`<Search /> snapshots renders filters 1`] = `
         <input
           onBlur={[Function]}
           onChange={[Function]}
+          onFocus={[Function]}
           onKeyDown={[Function]}
+          placeholder={undefined}
           value=""
         />
         <i
