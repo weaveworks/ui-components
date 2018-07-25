@@ -12,6 +12,7 @@ exports[`<Button /> accepts a style prop 1`] = `
   color: hsl(0,0%,10%);
   font-size: 14px;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .c0:hover {
@@ -48,6 +49,7 @@ exports[`<Button /> snapshots renders danger 1`] = `
   color: hsl(0,0%,100%);
   font-size: 14px;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .c0:hover {
@@ -79,6 +81,7 @@ exports[`<Button /> snapshots renders default 1`] = `
   color: hsl(0,0%,10%);
   font-size: 14px;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .c0:hover {
@@ -110,6 +113,7 @@ exports[`<Button /> snapshots renders disabled 1`] = `
   color: hsl(0,0%,45%);
   font-size: 14px;
   cursor: not-allowed;
+  border-radius: 2px;
 }
 
 .c0:hover {
@@ -141,6 +145,7 @@ exports[`<Button /> snapshots renders primary 1`] = `
   color: hsl(0,0%,100%);
   font-size: 14px;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .c0:hover {
@@ -172,6 +177,7 @@ exports[`<Button /> snapshots renders selected 1`] = `
   color: hsl(0,0%,10%);
   font-size: 14px;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .c0:hover {

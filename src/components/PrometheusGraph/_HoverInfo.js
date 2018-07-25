@@ -21,6 +21,7 @@ const TooltipRow = styled.div`
 
 const TooltipRowColor = styled.span`
   background-color: ${props => props.color};
+  border-radius: ${props => props.theme.borderRadius.soft};
   margin-right: 4px;
   min-width: 10px;
   height: 4px;

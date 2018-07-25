@@ -31,7 +31,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   line-height: 36px;
   box-shadow: none;
   border: 1px solid hsl(0,0%,45%);
-  border-radius: 4px;
+  border-radius: 2px;
   height: 36px;
   box-sizing: border-box;
 }
@@ -70,7 +70,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   padding: 4px;
   background-color: hsl(191,100%,80%);
   margin-left: 4px;
-  border-radius: 4px;
+  border-radius: 2px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -122,7 +122,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   display: flex;
   background-color: hsl(0,0%,100%);
   border: 1px solid hsl(240,20%,90%);
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .c0 div,
@@ -264,7 +264,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   line-height: 36px;
   box-shadow: none;
   border: 1px solid hsl(0,0%,45%);
-  border-radius: 4px;
+  border-radius: 2px;
   height: 36px;
   box-sizing: border-box;
 }
@@ -338,7 +338,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   display: flex;
   background-color: hsl(0,0%,100%);
   border: 1px solid hsl(240,20%,90%);
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .c0 div,
@@ -453,7 +453,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
   line-height: 36px;
   box-shadow: none;
   border: 1px solid hsl(0,0%,45%);
-  border-radius: 4px;
+  border-radius: 2px;
   height: 36px;
   box-sizing: border-box;
 }
@@ -527,7 +527,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
   display: flex;
   background-color: hsl(0,0%,100%);
   border: 1px solid hsl(240,20%,90%);
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .c0 div,
@@ -642,7 +642,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
   line-height: 36px;
   box-shadow: none;
   border: 1px solid hsl(0,0%,45%);
-  border-radius: 4px;
+  border-radius: 2px;
   height: 36px;
   box-sizing: border-box;
 }
@@ -690,7 +690,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
   white-space: nowrap;
   padding: 0 12px;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 2px;
   background-color: hsl(0,0%,100%);
   border: 1px solid hsl(0,0%,45%);
   display: -webkit-box;
@@ -761,7 +761,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
   display: flex;
   background-color: hsl(0,0%,100%);
   border: 1px solid hsl(240,20%,90%);
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .c0 div,

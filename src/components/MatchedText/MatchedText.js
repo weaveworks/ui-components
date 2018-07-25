@@ -85,6 +85,7 @@ function truncateChunks(chunks, text, maxLength) {
 const MatchedTextWrapper = styled.span`
   background-color: ${props => transparentize(0.7, props.theme.colors.blue400)};
   border: 1px solid ${props => props.theme.colors.blue400};
+  border-radius: ${props => props.theme.borderRadius.soft};
 
   ${props => props.noBorder && 'border: none;'};
 `;
