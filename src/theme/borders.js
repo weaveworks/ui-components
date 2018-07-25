@@ -2,7 +2,7 @@ import { kebabCase, forEach } from 'lodash';
 
 export const borderRadius = {
   none: '0',
-  soft: '4px',
+  soft: '2px',
   circle: '50%',
 };
 
