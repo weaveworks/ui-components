@@ -20,26 +20,26 @@ const placeholder = (property, content) => css`
 `;
 
 const Icon = styled.i`
+  position: absolute;
+  right: 10px;
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
-  display: inline-block;
-  margin-left: 4px;
   font-size: ${props => props.theme.fontSizes.large};
   color: ${props => props.theme.colors.orange600};
 `;
 
 const InputWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   height: 36px;
-`;
-
-const StyledInput = component => styled(component)`
-  padding: 8px;
 
   input {
-    ${props => placeholder(props.theme.colors.gray600)};
-    display: inline-block;
-    padding: 0 12px;
+    ${props => placeholder('color', props.theme.colors.gray600)};
+    padding-right: ${props => (props.valid ? '12px' : '38px')};
+    padding-left: 12px;
+    width: 100%;
     line-height: 36px;
     box-shadow: none;
     border: 1px solid ${props => props.theme.colors.gray600};
@@ -49,12 +49,17 @@ const StyledInput = component => styled(component)`
   }
 `;
 
+const StyledInput = component => styled(component)`
+  padding: 8px;
+`;
+
 const ValidationMessage = styled.span`
   display: ${props => (props.remove ? 'none' : 'block')};
-  font-size: ${props => props.theme.fontSizes.small};
   padding-left: 8px;
-  visibility: ${props => (props.visible ? 'visible' : 'hidden')};
+  font-size: ${props => props.theme.fontSizes.small};
+  text-align: left;
   color: ${props => (props.valid ? 'inherit' : props.theme.colors.orange600)};
+  visibility: ${props => (props.visible ? 'visible' : 'hidden')};
 `;
 
 /**
@@ -100,23 +105,23 @@ class Input extends React.Component {
 
   render() {
     const {
-      valid,
-      message,
-      label,
-      id,
       className,
-      textarea,
       hideValidationMessage,
+      id,
       inputRef,
+      label,
+      message,
+      textarea,
+      valid,
       ...inputProps
     } = this.props;
 
     return (
       <div className={className}>
         <label htmlFor={id}>{label}</label>
-        <InputWrapper>
+        <InputWrapper valid={valid}>
           {React.createElement(textarea ? 'textarea' : 'input', {
-            ...omit(inputProps, 'autoSelectText'),
+            ...omit(inputProps, 'autoSelectText', 'focus'),
             ref: elem => {
               this.input = elem;
               inputRef(elem);
@@ -127,7 +132,7 @@ class Input extends React.Component {
         <ValidationMessage
           remove={hideValidationMessage}
           valid={valid}
-          visible={message}
+          visible={message && !valid}
         >
           {message}
         </ValidationMessage>
@@ -137,6 +142,22 @@ class Input extends React.Component {
 }
 
 Input.propTypes = {
+  /*
+   * Select the text inside the input. Requires focus attribute to be true
+   */
+  autoSelectText: PropTypes.bool,
+  /*
+   * Focus the input on render
+   */
+  focus: PropTypes.bool,
+  /*
+   * Remove the validation message from the DOM
+   */
+  hideValidationMessage: PropTypes.bool,
+  /**
+   * A callback to which the input `ref` will be passed.
+   */
+  inputRef: PropTypes.func,
   /**
    * The label that will appear above the input field
    */
@@ -147,10 +168,6 @@ Input.propTypes = {
    */
   message: PropTypes.any,
   /**
-   * Whether or not the form value is valid. The icon will not appear when `valid` is truthy.
-   */
-  valid: PropTypes.bool,
-  /**
    * Callback to run when the input is edited by the user
    */
   onChange: PropTypes.func,
@@ -159,12 +176,15 @@ Input.propTypes = {
    */
   textarea: PropTypes.bool,
   /**
-   * A callback to which the input `ref` will be passed.
+   * Whether or not the form value is valid. The icon will not appear when `valid` is truthy.
    */
-  inputRef: PropTypes.func,
+  valid: PropTypes.bool,
 };
 
 Input.defaultProps = {
+  autoSelectText: false,
+  focus: false,
+  hideValidationMessage: false,
   inputRef: noop,
   label: '',
   message: '',
