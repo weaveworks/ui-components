@@ -1,1 +1,4 @@
-export default from './Alert';
+// @flow
+import Alert from './Alert';
+
+export default Alert;
