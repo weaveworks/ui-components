@@ -77,6 +77,7 @@ const LegendCaret = styled.span`
 
 const ColorBox = styled.span`
   background-color: ${props => props.color};
+  border-radius: ${props => props.theme.borderRadius.soft};
   margin-top: 5px;
   margin-right: 4px;
   min-width: 13px;

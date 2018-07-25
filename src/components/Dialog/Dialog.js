@@ -40,6 +40,7 @@ const Overlay = styled.div`
 
 const Window = styled.div`
   box-shadow: ${props => props.theme.boxShadow.light};
+  border-radius: ${props => props.theme.borderRadius.soft};
   background-color: ${props => props.theme.colors.white};
   color: ${props => props.theme.colors.purple800};
   width: ${props => props.width};
