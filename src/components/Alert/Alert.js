@@ -46,7 +46,7 @@ const CloseIcon = styled.i`
   margin-left: 1em;
 `;
 
-const normaliseIconName = name =>
+const normaliseIconName = (name: string): string =>
   name.indexOf('fa-') === -1 ? `fa-${name}` : name;
 
 type Props = {
@@ -58,7 +58,7 @@ type Props = {
   /**
    * Callback that runs with the alert is dismissed by clicking the 'X'
    */
-  onClose?: mixed => void,
+  onClose?: (mixed => void) | null,
   /**
    * Show a title for the alert
    */
