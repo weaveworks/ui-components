@@ -283,6 +283,9 @@ describe('DataTable', () => {
     // Click again to reverse the order.
     $emailHeader.simulate('click');
     expect(getFirstRowName(table)).toEqual('Ty');
+    // Back to ascending
+    $emailHeader.simulate('click');
+    expect(getFirstRowName(table)).toEqual('Bob');
   });
   it('handles custom sorting logic', () => {
     // Custom sort function to sort by length instead of alphabetized.
