@@ -70,10 +70,31 @@ export default class GraphNodeExample extends React.Component {
       metricFormattedValue: format('.0%')(value),
       metricNumericValue: value,
     })),
+    animatedNode: {
+      size: 50,
+      x: 50,
+      y: 50,
+    },
     size: 65,
     contrastMode: false,
     searchTerms: [],
   };
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState({
+        animatedNode: {
+          size: faker.random.number({ min: 30, max: 90 }),
+          x: faker.random.number({ min: 100, max: 700 }),
+          y: faker.random.number({ min: 100, max: 500 }),
+        },
+      });
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
   handleContrastModeChange = () => {
     this.setState({ contrastMode: !this.state.contrastMode });
@@ -199,6 +220,19 @@ export default class GraphNodeExample extends React.Component {
               />
             </GraphNodeContainer>
           ))}
+        </Example>
+        <Example>
+          <Info>Animated Node</Info>
+          <svg width="800px" height="600px">
+            <GraphNode
+              id="animated-node"
+              shape="pentagon"
+              label="node"
+              isAnimated
+              contrastMode={this.state.contrastMode}
+              {...this.state.animatedNode}
+            />
+          </svg>
         </Example>
       </div>
     );
