@@ -158,7 +158,11 @@ class DataTable extends React.PureComponent {
       sortedData:
         // User overrides if specified, else do the default sort
         sortOverrides && sortOverrides[sortField]
-          ? orderBy(data, partialRight(sortOverrides[sortField], sortOrder), sortOrder)
+          ? orderBy(
+              data,
+              partialRight(sortOverrides[sortField], sortOrder),
+              sortOrder
+            )
           : sort(data, sortField, sortOrder),
     });
   };

@@ -197,7 +197,9 @@ class Dropdown extends React.Component {
                     <ItemWrapper
                       className="dropdown-item"
                       key={item.value}
-                      onClick={ev => this.handleChange(ev, item.value, item.label)}
+                      onClick={ev =>
+                        this.handleChange(ev, item.value, item.label)
+                      }
                       selected={item.value === value}
                       title={item && item.label}
                     >

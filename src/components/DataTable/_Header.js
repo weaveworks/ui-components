@@ -9,7 +9,8 @@ const StyledHeader = component => styled(component)`
   width: ${props => props.width};
 
   &:hover {
-    color: ${props => (props.sortable ? props.theme.colors.blue700 : 'inherit')};
+    color: ${props =>
+      props.sortable ? props.theme.colors.blue700 : 'inherit'};
   }
 `;
 
@@ -29,7 +30,13 @@ class Header extends React.Component {
       <td onClick={this.handleClick} className={className} title={title}>
         {children}{' '}
         {order &&
-          sortable && <i className={order === 'desc' ? 'fa fa-caret-up' : 'fa fa-caret-down'} />}
+          sortable && (
+            <i
+              className={
+                order === 'desc' ? 'fa fa-caret-up' : 'fa fa-caret-down'
+              }
+            />
+          )}
       </td>
     );
   }
