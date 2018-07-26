@@ -409,7 +409,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
           onChange={[Function]}
           onFocus={[Function]}
           onKeyDown={[Function]}
-          placeholder={undefined}
+          placeholder=""
           value="ui-server"
         />
         <i
@@ -600,7 +600,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
           onChange={[Function]}
           onFocus={[Function]}
           onKeyDown={[Function]}
-          placeholder={undefined}
+          placeholder=""
           value=""
         />
         <i
@@ -836,7 +836,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
           onChange={[Function]}
           onFocus={[Function]}
           onKeyDown={[Function]}
-          placeholder={undefined}
+          placeholder=""
           value=""
         />
         <i
