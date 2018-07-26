@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { noop, keys, isEmpty } from 'lodash';
 import { transparentize } from 'polished';
+import { spring, Motion } from 'react-motion';
 
 import theme from '../../theme';
 import MatchedText from '../MatchedText';
@@ -36,8 +37,13 @@ export const shapes = {
 const nodeBaseSize = 55;
 const labelWidth = nodeBaseSize * 2.5;
 
+function weakSpring(value) {
+  return spring(value, { stiffness: 100, damping: 18, precision: 1 });
+}
+
 const GraphNodeWrapper = styled.g.attrs({
-  transform: props => `scale(${props.size / nodeBaseSize})`,
+  transform: ({ x, y, size }) =>
+    `translate(${x},${y}) scale(${size / nodeBaseSize})`,
 })`
   cursor: pointer;
 `;
@@ -118,9 +124,9 @@ const LabelMinorStandard = LabelTemplate.extend`
  * A component for rendering labeled graph nodes.
  */
 class GraphNode extends React.Component {
-  findFirstSearchMatch = text => {
+  findFirstSearchMatch = (searchTerms, text) => {
     let match = null;
-    this.props.searchTerms.forEach(term => {
+    searchTerms.forEach(term => {
       const start = text.search(term);
       if (isEmpty(match) && start !== -1) {
         match = { start, length: term.length };
@@ -129,27 +135,26 @@ class GraphNode extends React.Component {
     return match;
   };
 
-  renderSvgLabels() {
+  renderSvgLabels(props) {
     return (
-      <SvgTextContainer y={this.props.labelOffset}>
-        <LabelSvg contrastMode={this.props.contrastMode}>
-          {this.props.label}
-        </LabelSvg>
-        <LabelMinorSvg contrastMode={this.props.contrastMode}>
-          {this.props.labelMinor}
+      <SvgTextContainer y={props.labelOffset}>
+        <LabelSvg contrastMode={props.contrastMode}>{props.label}</LabelSvg>
+        <LabelMinorSvg contrastMode={props.contrastMode}>
+          {props.labelMinor}
         </LabelMinorSvg>
       </SvgTextContainer>
     );
   }
 
-  renderStandardLabels() {
+  renderStandardLabels(props) {
     const {
       label,
       labelMinor,
       highlighted,
       contrastMode,
       labelOffset,
-    } = this.props;
+      searchTerms,
+    } = props;
 
     return (
       <foreignObject
@@ -167,7 +172,7 @@ class GraphNode extends React.Component {
             <MatchedText
               noBorder
               text={label}
-              match={this.findFirstSearchMatch(label)}
+              match={this.findFirstSearchMatch(searchTerms, label)}
             />
           </LabelStandard>
           {!isEmpty(labelMinor) && (
@@ -178,45 +183,71 @@ class GraphNode extends React.Component {
               <MatchedText
                 noBorder
                 text={labelMinor}
-                match={this.findFirstSearchMatch(labelMinor)}
+                match={this.findFirstSearchMatch(searchTerms, labelMinor)}
               />
             </LabelMinorStandard>
           )}
 
-          {this.props.renderAppendedInfo()}
+          {props.renderAppendedInfo()}
         </LabelsStandardContainer>
       </foreignObject>
     );
   }
 
-  render() {
-    const Shape = shapes[this.props.shape];
+  renderNode(props) {
+    const Shape = shapes[props.shape];
 
     return (
       <GraphNodeWrapper
-        onMouseEnter={ev => this.props.onMouseEnter(this.props.id, ev)}
-        onMouseLeave={ev => this.props.onMouseLeave(this.props.id, ev)}
-        onClick={ev => this.props.onClick(this.props.id, ev)}
-        size={this.props.size}
+        onMouseEnter={ev => props.onMouseEnter(props.id, ev)}
+        onMouseLeave={ev => props.onMouseLeave(props.id, ev)}
+        onClick={ev => props.onClick(props.id, ev)}
+        size={props.size}
+        x={props.x}
+        y={props.y}
       >
-        {this.props.renderPrependedInfo()}
+        {props.renderPrependedInfo()}
 
-        {this.props.forceSvg
-          ? this.renderSvgLabels()
-          : this.renderStandardLabels()}
+        {props.forceSvg
+          ? this.renderSvgLabels(props)
+          : this.renderStandardLabels(props)}
 
         <Shape
-          id={this.props.id}
+          id={props.id}
           size={nodeBaseSize}
-          stacked={this.props.stacked}
-          color={this.props.color}
-          metricColor={this.props.metricColor}
-          metricFormattedValue={this.props.metricFormattedValue}
-          metricNumericValue={this.props.metricNumericValue}
-          highlighted={this.props.highlighted}
-          contrastMode={this.props.contrastMode}
+          stacked={props.stacked}
+          color={props.color}
+          metricColor={props.metricColor}
+          metricFormattedValue={props.metricFormattedValue}
+          metricNumericValue={props.metricNumericValue}
+          highlighted={props.highlighted}
+          contrastMode={props.contrastMode}
         />
       </GraphNodeWrapper>
+    );
+  }
+
+  render() {
+    if (!this.props.isAnimated) {
+      return this.renderNode(this.props);
+    }
+
+    return (
+      // Animate only the position and size props.
+      <Motion
+        style={{
+          x: weakSpring(this.props.x),
+          y: weakSpring(this.props.y),
+          size: weakSpring(this.props.size),
+        }}
+      >
+        {interpolated =>
+          this.renderNode({
+            ...this.props,
+            ...interpolated,
+          })
+        }
+      </Motion>
     );
   }
 }
@@ -258,6 +289,10 @@ GraphNode.propTypes = {
    * The radius of the shape in pixels
    */
   size: PropTypes.number,
+  /**
+   * Animates the node motion if true
+   */
+  isAnimated: PropTypes.bool,
   /**
    * Renders the node in a high contrast mode
    */
@@ -302,6 +337,14 @@ GraphNode.propTypes = {
    * Callback for mouse click on the node
    */
   onClick: PropTypes.func,
+  /**
+   * x-coordinate position of the node
+   */
+  x: PropTypes.number,
+  /**
+   * y-coordinate position of the node
+   */
+  y: PropTypes.number,
 };
 
 GraphNode.defaultProps = {
@@ -311,6 +354,7 @@ GraphNode.defaultProps = {
   highlighted: false,
   color: theme.colors.purple400,
   size: nodeBaseSize,
+  isAnimated: false,
   contrastMode: false,
   forceSvg: false,
   metricColor: theme.colors.status.warning,
@@ -322,6 +366,8 @@ GraphNode.defaultProps = {
   onMouseEnter: noop,
   onMouseLeave: noop,
   onClick: noop,
+  x: 0,
+  y: 0,
 };
 
 export default GraphNode;
