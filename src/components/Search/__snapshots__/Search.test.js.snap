@@ -20,7 +20,6 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   -ms-flex-align: center;
   align-items: center;
   margin-top: 10px;
-  margin-bottom: 8px;
   height: 36px;
 }
 
@@ -55,6 +54,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
 .c9 {
   display: none;
   padding-left: 8px;
+  margin-top: 8px;
   font-size: 14px;
   text-align: left;
   color: inherit;
@@ -255,7 +255,6 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   -ms-flex-align: center;
   align-items: center;
   margin-top: 10px;
-  margin-bottom: 8px;
   height: 36px;
 }
 
@@ -290,6 +289,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
 .c8 {
   display: none;
   padding-left: 8px;
+  margin-top: 8px;
   font-size: 14px;
   text-align: left;
   color: inherit;
@@ -446,7 +446,6 @@ exports[`<Search /> snapshots renders empty 1`] = `
   -ms-flex-align: center;
   align-items: center;
   margin-top: 10px;
-  margin-bottom: 8px;
   height: 36px;
 }
 
@@ -481,6 +480,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
 .c8 {
   display: none;
   padding-left: 8px;
+  margin-top: 8px;
   font-size: 14px;
   text-align: left;
   color: inherit;
@@ -637,7 +637,6 @@ exports[`<Search /> snapshots renders filters 1`] = `
   -ms-flex-align: center;
   align-items: center;
   margin-top: 10px;
-  margin-bottom: 8px;
   height: 36px;
 }
 
@@ -672,6 +671,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
 .c8 {
   display: none;
   padding-left: 8px;
+  margin-top: 8px;
   font-size: 14px;
   text-align: left;
   color: inherit;

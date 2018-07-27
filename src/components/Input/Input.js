@@ -32,7 +32,6 @@ const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-top: 10px;
-  margin-bottom: 8px;
   height: 36px;
 
   input {
@@ -54,8 +53,9 @@ const StyledInput = component => styled(component)`
 `;
 
 const ValidationMessage = styled.span`
-  display: ${props => (props.remove ? 'none' : 'block')};
+  display: ${props => (props.remove || !props.visible ? 'none' : 'block')};
   padding-left: 8px;
+  margin-top: 8px;
   font-size: ${props => props.theme.fontSizes.small};
   text-align: left;
   color: ${props => (props.valid ? 'inherit' : props.theme.colors.orange600)};
