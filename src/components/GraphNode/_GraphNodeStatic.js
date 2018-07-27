@@ -184,15 +184,26 @@ class GraphNodeStatic extends React.PureComponent {
     );
   }
 
+  handleMouseEnter = ev => {
+    this.props.onMouseEnter(this.props.id, ev);
+  };
+
+  handleMouseLeave = ev => {
+    this.props.onMouseLeave(this.props.id, ev);
+  };
+
+  handleClick = ev => {
+    this.props.onClick(this.props.id, ev);
+  };
+
   render() {
-    const { id } = this.props;
     const Shape = shapes[this.props.shape];
 
     return (
       <GraphNodeWrapper
-        onMouseEnter={ev => this.props.onMouseEnter(id, ev)}
-        onMouseLeave={ev => this.props.onMouseLeave(id, ev)}
-        onClick={ev => this.props.onClick(id, ev)}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+        onClick={this.handleClick}
       >
         {this.props.renderPrependedInfo()}
 
@@ -201,7 +212,7 @@ class GraphNodeStatic extends React.PureComponent {
           : this.renderStandardLabels()}
 
         <Shape
-          id={id}
+          id={this.props.id}
           size={nodeBaseSize}
           stacked={this.props.stacked}
           color={this.props.color}
