@@ -7,7 +7,8 @@ import styled from 'styled-components';
 import { Example, Info } from '../../utils/example';
 import Search from '../Search';
 
-import GraphNode, { shapes } from './GraphNode';
+import { shapes } from './_GraphNodeStatic';
+import GraphNode from './GraphNode';
 
 const nodeTypes = keys(shapes);
 const colorFunction = label =>

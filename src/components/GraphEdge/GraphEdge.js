@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { line, curveBasis } from 'd3-shape';
-import { filter, isEmpty, times, noop, each } from 'lodash';
+import { range, times, noop, each, size } from 'lodash';
 import { spring, Motion } from 'react-motion';
 
 import { encodeIdAttribute } from '../../utils/dom';
@@ -16,9 +16,11 @@ const spline = line()
   .x(d => d.x)
   .y(d => d.y);
 
-const EdgeShadow = styled.path`
+const EdgeShadow = styled.path.attrs({
+  // Animation optimization.
+  style: ({ thickness }) => ({ strokeWidth: 10 * thickness }),
+})`
   stroke: ${props => props.theme.colors.blue400};
-  stroke-width: ${props => 10 * props.thickness};
   stroke-opacity: 0;
   fill: none;
 
@@ -40,12 +42,14 @@ const EdgeDotted = styled.path`
   fill: none;
 `;
 
-const EdgeLine = styled.path`
+const EdgeLine = styled.path.attrs({
+  // Animation optimization.
+  style: ({ thickness }) => ({ strokeWidth: thickness }),
+})`
   stroke: ${props =>
     props.contrastMode
       ? props.theme.colors.black
       : props.theme.colors.purple500};
-  stroke-width: ${props => props.thickness};
   fill: none;
 `;
 
@@ -75,14 +79,11 @@ const EdgeArrowDefinition = ({ id, offset, thickness, contrastMode }) => (
 // Converts a waypoints map of the format { x0: 11, y0: 22, x1: 33, y1: 44 }
 // that is used by Motion to an array of waypoints in the format
 // [{ x: 11, y: 22 }, { x: 33, y: 44 }] that can be used by D3.
-const waypointsMapToArray = waypointsMap => {
-  const waypointsArray = times(10, () => ({}));
-  each(waypointsMap, (value, key) => {
-    const [axis, index] = [key[0], key.slice(1)];
-    waypointsArray[index][axis] = value;
-  });
-  return filter(waypointsArray, e => !isEmpty(e));
-};
+const waypointsMapToArray = waypointsMap =>
+  range(size(waypointsMap) / 2).map(index => ({
+    x: waypointsMap[`x${index}`],
+    y: waypointsMap[`y${index}`],
+  }));
 
 // Converts a waypoints array of the input format [{ x: 11, y: 22 }, { x: 33, y: 44 }]
 // to an array of waypoints that is used by Motion in the format { x0: 11, y0: 22, x1: 33, y1: 44 }.
@@ -98,7 +99,7 @@ const waypointsArrayToMap = waypointsArray => {
 /**
  * A component for rendering edges that connect the graph nodes.
  */
-class GraphEdge extends React.Component {
+class GraphEdge extends React.PureComponent {
   state = {
     waypointsMap: [],
   };
@@ -125,7 +126,7 @@ class GraphEdge extends React.Component {
     // The Motion library requires the number of waypoints to be constant, so we fill in for
     // the missing ones by reusing the edge source point, which doesn't affect the edge shape
     // because of how the curveBasis interpolation is done.
-    const waypointsMissing = waypointsCap - waypoints.size;
+    const waypointsMissing = waypointsCap - size(waypoints);
     if (waypointsMissing > 0) {
       waypoints = times(waypointsMissing, () => waypoints[0]).concat(waypoints);
     }
@@ -136,6 +137,7 @@ class GraphEdge extends React.Component {
   renderEdge(props) {
     const {
       id,
+      encodedArrowId,
       waypoints,
       thickness,
       withArrow,
@@ -145,14 +147,11 @@ class GraphEdge extends React.Component {
       contrastMode,
     } = props;
 
-    const encodedId = encodeIdAttribute(id);
-    const encodedArrowId = `end-arrow-${encodedId}`;
     const arrowThickness = Math.sqrt(thickness);
     const path = spline(waypoints);
 
     return (
       <g
-        id={encodedId}
         onMouseEnter={ev => props.onMouseEnter(id, ev)}
         onMouseLeave={ev => props.onMouseLeave(id, ev)}
       >
@@ -182,8 +181,14 @@ class GraphEdge extends React.Component {
   }
 
   render() {
-    if (!this.props.isAnimated) {
-      return this.renderEdge(this.props);
+    const { isAnimated, ...otherProps } = this.props;
+    const encodedArrowId = `end-arrow-${encodeIdAttribute(this.props.id)}`;
+
+    if (!isAnimated) {
+      return this.renderEdge({
+        ...otherProps,
+        encodedArrowId,
+      });
     }
 
     return (
@@ -192,14 +197,21 @@ class GraphEdge extends React.Component {
       <Motion
         style={{
           interpolatedThickness: weakSpring(this.props.thickness),
+          interpolatedArrowOffset: weakSpring(this.props.arrowOffset),
           ...this.state.waypointsMap,
         }}
       >
-        {({ interpolatedThickness, ...interpolatedWaypoints }) =>
+        {({
+          interpolatedThickness,
+          interpolatedArrowOffset,
+          ...interpolatedWaypoints
+        }) =>
           this.renderEdge({
-            ...this.props,
-            waypoints: waypointsMapToArray(interpolatedWaypoints),
+            ...otherProps,
+            encodedArrowId,
             thickness: interpolatedThickness,
+            arrowOffset: interpolatedArrowOffset,
+            waypoints: waypointsMapToArray(interpolatedWaypoints),
           })
         }
       </Motion>
