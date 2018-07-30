@@ -10,7 +10,8 @@ const Item = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0 12px;
+  padding-right: 28px;
+  padding-left: 12px;
   cursor: pointer;
 `;
 
@@ -53,6 +54,8 @@ const Divider = styled.div`
 `;
 
 const SelectedItem = Item.extend`
+  height: ${HEIGHT};
+  box-sizing: border-box;
   border-radius: ${props => props.theme.borderRadius.soft};
   background-color: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.gray600};
@@ -68,9 +71,10 @@ const SelectedItem = Item.extend`
 `;
 
 const SelectedItemIcon = styled.span`
-  padding-left: 1em;
-  float: right;
-  line-height: ${HEIGHT} !important;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 `;
 
 const StyledDropdown = component => styled(component)`
@@ -84,9 +88,7 @@ const StyledDropdown = component => styled(component)`
 const DefaultToggleView = ({ onClick, selectedLabel }) => (
   <SelectedItem onClick={onClick} className="dropdown-toggle">
     <Item>{selectedLabel}</Item>
-    <div>
-      <SelectedItemIcon className="fa fa-caret-down" />
-    </div>
+    <SelectedItemIcon className="fa fa-caret-down" />
   </SelectedItem>
 );
 

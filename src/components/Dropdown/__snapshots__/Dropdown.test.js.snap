@@ -5,7 +5,8 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0 12px;
+  padding-right: 28px;
+  padding-left: 12px;
   cursor: pointer;
 }
 
@@ -13,8 +14,11 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0 12px;
+  padding-right: 28px;
+  padding-left: 12px;
   cursor: pointer;
+  height: 36px;
+  box-sizing: border-box;
   border-radius: 2px;
   background-color: hsl(0,0%,100%);
   border: 1px solid hsl(0,0%,45%);
@@ -33,9 +37,12 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
 }
 
 .c4 {
-  padding-left: 1em;
-  float: right;
-  line-height: 36px !important;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .c0 {
@@ -59,11 +66,9 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
     >
       Select an item
     </div>
-    <div>
-      <span
-        className="fa fa-caret-down c4"
-      />
-    </div>
+    <span
+      className="fa fa-caret-down c4"
+    />
   </div>
 </div>
 `;
@@ -73,7 +78,8 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0 12px;
+  padding-right: 28px;
+  padding-left: 12px;
   cursor: pointer;
 }
 
@@ -81,8 +87,11 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0 12px;
+  padding-right: 28px;
+  padding-left: 12px;
   cursor: pointer;
+  height: 36px;
+  box-sizing: border-box;
   border-radius: 2px;
   background-color: hsl(0,0%,100%);
   border: 1px solid hsl(0,0%,45%);
@@ -101,9 +110,12 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
 }
 
 .c4 {
-  padding-left: 1em;
-  float: right;
-  line-height: 36px !important;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .c0 {
@@ -127,11 +139,9 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
     >
       First Thing
     </div>
-    <div>
-      <span
-        className="fa fa-caret-down c4"
-      />
-    </div>
+    <span
+      className="fa fa-caret-down c4"
+    />
   </div>
 </div>
 `;
