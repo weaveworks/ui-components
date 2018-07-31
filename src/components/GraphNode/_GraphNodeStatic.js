@@ -36,7 +36,7 @@ export const shapes = {
 const labelWidth = nodeBaseSize * 2.5;
 
 const GraphNodeWrapper = styled.g`
-  cursor: pointer;
+  cursor: ${props => props.cursorType};
 `;
 
 const SvgTextContainer = styled.g.attrs({
@@ -201,6 +201,7 @@ class GraphNodeStatic extends React.PureComponent {
 
     return (
       <GraphNodeWrapper
+        cursorType={this.props.cursorType}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         onClick={this.handleClick}
@@ -242,6 +243,7 @@ GraphNodeStatic.propTypes = {
   metricFormattedValue: PropTypes.string.isRequired,
   metricNumericValue: PropTypes.number.isRequired,
   searchTerms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  cursorType: PropTypes.string.isRequired,
   renderPrependedInfo: PropTypes.func.isRequired,
   renderAppendedInfo: PropTypes.func.isRequired,
   onMouseEnter: PropTypes.func.isRequired,

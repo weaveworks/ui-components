@@ -115,6 +115,10 @@ GraphNode.propTypes = {
    */
   searchTerms: PropTypes.arrayOf(PropTypes.string),
   /**
+   * The cursor type shown on hovering over the node
+   */
+  cursorType: PropTypes.string,
+  /**
    * Render function for the info to be displayed before node labels (not working in full SVG mode)
    */
   renderPrependedInfo: PropTypes.func,
@@ -158,6 +162,7 @@ GraphNode.defaultProps = {
   metricFormattedValue: '',
   metricNumericValue: NaN,
   searchTerms: [],
+  cursorType: 'pointer',
   renderPrependedInfo: noop,
   renderAppendedInfo: noop,
   onMouseEnter: noop,
