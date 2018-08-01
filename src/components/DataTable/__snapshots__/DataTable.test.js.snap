@@ -52,7 +52,7 @@ exports[`DataTable snapshots renders an element instead of a label 1`] = `
         />
          
         <i
-          className="fa fa-caret-down"
+          className="fa fa-caret-up"
         />
       </td>
       <td
@@ -159,7 +159,7 @@ exports[`DataTable snapshots renders column widths 1`] = `
         Name
          
         <i
-          className="fa fa-caret-down"
+          className="fa fa-caret-up"
         />
       </td>
       <td
@@ -251,7 +251,7 @@ exports[`DataTable snapshots renders extra headers 1`] = `
         Name
          
         <i
-          className="fa fa-caret-down"
+          className="fa fa-caret-up"
         />
       </td>
       <td
@@ -353,7 +353,7 @@ exports[`DataTable snapshots renders nested rows 1`] = `
         Workload
          
         <i
-          className="fa fa-caret-down"
+          className="fa fa-caret-up"
         />
       </td>
       <td
@@ -475,7 +475,7 @@ exports[`DataTable snapshots renders rows 1`] = `
         Name
          
         <i
-          className="fa fa-caret-down"
+          className="fa fa-caret-up"
         />
       </td>
       <td
@@ -575,7 +575,7 @@ exports[`DataTable snapshots sorts fields by a give order 1`] = `
         Email
          
         <i
-          className="fa fa-caret-up"
+          className="fa fa-caret-down"
         />
       </td>
     </tr>
@@ -667,7 +667,7 @@ exports[`DataTable snapshots sorts rows by a field 1`] = `
         Email
          
         <i
-          className="fa fa-caret-down"
+          className="fa fa-caret-up"
         />
       </td>
     </tr>
