@@ -167,21 +167,23 @@ class DataTable extends React.PureComponent {
     });
   };
 
-  handleHeaderClick = (ev, column) => {
+  handleHeaderClick = (ev, columnValue) => {
     let order;
     let field = this.state.sortField;
+    const column = this.props.columns.find(c => c.value === columnValue);
 
-    const isCurrentColumn = column === this.state.sortField;
+    const isCurrentColumn = columnValue === this.state.sortField;
     if (isCurrentColumn) {
       // If we are already sorting by this column, change the order.
       order = this.state.sortOrder === 'asc' ? 'desc' : 'asc';
     } else {
       // Else, order by the new column, ascending
-      order = 'asc';
-      field = column;
+      order = column.initialSortOrder || 'asc';
+      field = columnValue;
     }
 
     this.doSort(this.state.sortedData, field, order);
+    this.props.onSort(field, order);
   };
 
   render() {
@@ -219,6 +221,7 @@ const columnPropType = PropTypes.shape({
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   label: PropTypes.string,
   sortable: PropTypes.bool,
+  initialSortOrder: PropTypes.oneOf(['asc', 'desc']),
   width: PropTypes.string,
   element: PropTypes.element,
 });
@@ -265,6 +268,10 @@ DataTable.propTypes = {
    * These columns will NOT be sortable.
    */
   extraHeaders: PropTypes.arrayOf(PropTypes.element),
+  /**
+   * Optional callback triggered when a header is clicked.
+   */
+  onSort: PropTypes.func,
 };
 
 DataTable.defaultProps = {
@@ -273,6 +280,7 @@ DataTable.defaultProps = {
   nested: false,
   extraHeaders: [],
   sortBy: '',
+  onSort: () => null,
 };
 
 export default copyPropTypes(DataTable, Styled(DataTable));
