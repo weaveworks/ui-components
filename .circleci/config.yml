@@ -3,20 +3,13 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:8.4.0
+      - image: mhart/alpine-node:8.4.0
     steps:
       - checkout
       - run: echo 'export PATH=${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin' >> $BASH_ENV
-      - restore_cache:
-          keys:
-            - yarn_cache
       - run: yarn install
       - run: yarn lint
       - run: yarn test
-      - save_cache:
-          key: yarn_cache
-          paths:
-            - ~/.cache/yarn
 
 workflows:
   version: 2
