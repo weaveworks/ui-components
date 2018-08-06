@@ -145,6 +145,7 @@ class GraphEdge extends React.PureComponent {
       isDotted,
       highlighted,
       contrastMode,
+      graphEdgeRef,
     } = props;
 
     const arrowThickness = Math.sqrt(thickness);
@@ -152,6 +153,7 @@ class GraphEdge extends React.PureComponent {
 
     return (
       <g
+        ref={graphEdgeRef}
         onMouseEnter={ev => props.onMouseEnter(id, ev)}
         onMouseLeave={ev => props.onMouseLeave(id, ev)}
       >
@@ -266,6 +268,10 @@ GraphEdge.propTypes = {
    */
   contrastMode: PropTypes.bool,
   /**
+   * A callback to which the GraphNode `ref` will be passed.
+   */
+  graphEdgeRef: PropTypes.func,
+  /**
    * Callback for mouse pointer entering the edge
    */
   onMouseEnter: PropTypes.func,
@@ -284,6 +290,7 @@ GraphEdge.defaultProps = {
   isDotted: false,
   isAnimated: false,
   contrastMode: false,
+  graphEdgeRef: noop,
   onMouseEnter: noop,
   onMouseLeave: noop,
 };
