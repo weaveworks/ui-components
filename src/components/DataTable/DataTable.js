@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { map, orderBy, get, first, partialRight } from 'lodash';
+import { map, orderBy, noop, get, first, partialRight } from 'lodash';
 import { transparentize } from 'polished';
 
 import { copyPropTypes } from '../../utils/compose';
@@ -280,7 +280,7 @@ DataTable.defaultProps = {
   nested: false,
   extraHeaders: [],
   sortBy: '',
-  onSort: () => null,
+  onSort: noop,
 };
 
 export default copyPropTypes(DataTable, Styled(DataTable));
