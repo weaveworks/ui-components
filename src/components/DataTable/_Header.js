@@ -33,7 +33,7 @@ class Header extends React.Component {
           sortable && (
             <i
               className={
-                order === 'desc' ? 'fa fa-caret-up' : 'fa fa-caret-down'
+                order === 'desc' ? 'fa fa-caret-down' : 'fa fa-caret-up'
               }
             />
           )}
