@@ -290,7 +290,7 @@ GraphEdge.defaultProps = {
   isDotted: false,
   isAnimated: false,
   contrastMode: false,
-  graphEdgeRef: noop,
+  graphEdgeRef: undefined,
   onMouseEnter: noop,
   onMouseLeave: noop,
 };

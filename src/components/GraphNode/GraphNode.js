@@ -172,7 +172,7 @@ GraphNode.defaultProps = {
   cursorType: 'pointer',
   renderPrependedInfo: noop,
   renderAppendedInfo: noop,
-  graphNodeRef: noop,
+  graphNodeRef: undefined,
   onMouseEnter: noop,
   onMouseLeave: noop,
   onClick: noop,
