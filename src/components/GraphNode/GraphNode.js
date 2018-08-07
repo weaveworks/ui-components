@@ -16,9 +16,12 @@ function weakSpring(value) {
  */
 class GraphNode extends React.PureComponent {
   renderNode(props) {
-    const { x, y, size, ...otherProps } = props;
+    const { x, y, size, graphNodeRef, ...otherProps } = props;
     return (
-      <g transform={`translate(${x},${y}) scale(${size / nodeBaseSize})`}>
+      <g
+        ref={graphNodeRef}
+        transform={`translate(${x},${y}) scale(${size / nodeBaseSize})`}
+      >
         <GraphNodeStatic {...otherProps} />
       </g>
     );
@@ -127,6 +130,10 @@ GraphNode.propTypes = {
    */
   renderAppendedInfo: PropTypes.func,
   /**
+   * A callback to which the GraphNode `ref` will be passed.
+   */
+  graphNodeRef: PropTypes.func,
+  /**
    * Callback for mouse pointer entering the node
    */
   onMouseEnter: PropTypes.func,
@@ -165,6 +172,7 @@ GraphNode.defaultProps = {
   cursorType: 'pointer',
   renderPrependedInfo: noop,
   renderAppendedInfo: noop,
+  graphNodeRef: undefined,
   onMouseEnter: noop,
   onMouseLeave: noop,
   onClick: noop,
