@@ -58,6 +58,7 @@ class DeploymentAnnotations extends React.PureComponent {
             timestamp={deployment.timestamp}
             containerWidth={this.props.chartWidth}
             containerHeight={this.props.chartHeight}
+            linkTo={this.props.linkBuilder(deployment)}
             onAxis
           />
         ))}
@@ -71,6 +72,7 @@ DeploymentAnnotations.propTypes = {
   chartHeight: PropTypes.number.isRequired,
   timeScale: PropTypes.func.isRequired,
   deployments: PropTypes.array.isRequired,
+  linkBuilder: PropTypes.func.isRequired,
 };
 
 export default DeploymentAnnotations;

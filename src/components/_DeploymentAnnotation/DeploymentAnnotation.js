@@ -1,6 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router';
 
 import TimestampTooltip from '../_TimestampTooltip';
 
@@ -26,7 +28,6 @@ const FocusPoint = styled.span`
   background-color: ${props => props.theme.colors.white};
   box-sizing: border-box;
   position: absolute;
-  cursor: default;
 
   ${props => `
     margin-left: -${props.radius}px;
@@ -64,14 +65,17 @@ const InfoLine = styled.span`
   overflow: hidden;
 `;
 
-class DeploymentAnnotations extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const NoLink = styled.span`
+  cursor: default;
+`;
 
-    this.state = {
-      isHovered: false,
-    };
-  }
+const MaybeLinkable = ({ linkTo, children }) =>
+  linkTo ? <Link to={linkTo}>{children}</Link> : <NoLink>{children}</NoLink>;
+
+class DeploymentAnnotations extends React.PureComponent {
+  state = {
+    isHovered: false,
+  };
 
   handleMouseEnter = () => {
     this.setState({ isHovered: true });
@@ -87,13 +91,15 @@ class DeploymentAnnotations extends React.PureComponent {
         <DeploymentAnnotationContainer x={this.props.x}>
           <AnnotationShadow />
           <AnnotationLine />
-          <FocusPoint
-            hoverable
-            radius="5"
-            onAxis={this.props.onAxis}
-            onMouseMove={this.handleMouseEnter}
-            onMouseLeave={this.handleMouseLeave}
-          />
+          <MaybeLinkable linkTo={this.props.linkTo}>
+            <FocusPoint
+              hoverable
+              radius="5"
+              onAxis={this.props.onAxis}
+              onMouseMove={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+            />
+          </MaybeLinkable>
         </DeploymentAnnotationContainer>
         {this.state.isHovered && (
           <TimestampTooltip
@@ -122,10 +128,12 @@ DeploymentAnnotations.propTypes = {
   timestamp: PropTypes.string.isRequired,
   containerWidth: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
+  linkTo: PropTypes.string,
   onAxis: PropTypes.bool,
 };
 
 DeploymentAnnotations.defaultProps = {
+  linkTo: '',
   onAxis: false,
 };
 

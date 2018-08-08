@@ -29,14 +29,14 @@
     "import/default": "error",
     "import/export": "error",
     "import/named": "error",
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devdependencies": true,
-        "optionaldependencies": true,
-        "peerdependencies": true
-      }
-    ],
+    // "import/no-extraneous-dependencies": [
+    //   "error",
+    //   {
+    //     "devdependencies": true,
+    //     "optionaldependencies": true,
+    //     "peerdependencies": true
+    //   }
+    // ],
     "import/no-named-as-default" : 0,
     "import/no-unresolved": "error",
     "import/no-webpack-loader-syntax": 0,
