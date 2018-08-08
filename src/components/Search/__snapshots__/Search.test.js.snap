@@ -143,6 +143,10 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   border-left: 1px solid hsl(0,0%,80%);
 }
 
+.c0 .Dropdown-dxAxgO .dropdown-popover {
+  width: auto;
+}
+
 .c0 .c5 {
   -webkit-flex: 2;
   -ms-flex: 2;
@@ -361,6 +365,10 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   border-left: 1px solid hsl(0,0%,80%);
 }
 
+.c0 .Dropdown-dxAxgO .dropdown-popover {
+  width: auto;
+}
+
 .c0 .c4 {
   -webkit-flex: 2;
   -ms-flex: 2;
@@ -550,6 +558,10 @@ exports[`<Search /> snapshots renders empty 1`] = `
   -ms-flex: 1;
   flex: 1;
   border-left: 1px solid hsl(0,0%,80%);
+}
+
+.c0 .Dropdown-dxAxgO .dropdown-popover {
+  width: auto;
 }
 
 .c0 .c4 {
@@ -793,6 +805,10 @@ exports[`<Search /> snapshots renders filters 1`] = `
   -ms-flex: 1;
   flex: 1;
   border-left: 1px solid hsl(0,0%,80%);
+}
+
+.c0 .c9 .dropdown-popover {
+  width: auto;
 }
 
 .c0 .c4 {
