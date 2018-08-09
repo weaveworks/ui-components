@@ -263,7 +263,7 @@ class PrometheusGraph extends React.PureComponent {
     // unless this is not the first series with this name, in which case the
     // index of the series within the legend is attached to the key.
     const multiSeriesByName = props.multiSeries.map(getSeriesNameParts);
-    const getSeriesKey = (series, index) => {
+    const getDefaultSeriesKey = (series, index) => {
       const seriesName = head(getSeriesNameParts(series));
       const firstIndex = indexOf(multiSeriesByName, seriesName);
 
@@ -273,6 +273,9 @@ class PrometheusGraph extends React.PureComponent {
       }
       return seriesKey;
     };
+
+    // Use default key assigner only if no explicit one has been provided.
+    const getSeriesKey = props.getSeriesKey || getDefaultSeriesKey;
 
     // Build a dictionary that references original multi series by keys,
     // and a sorted list of those keys by which we can later iterate.
@@ -518,9 +521,12 @@ PrometheusGraph.propTypes = {
    */
   endTimeSec: PropTypes.number.isRequired,
   /**
+   * Optional method that generates the series key based on its data.
+   */
+  getSeriesKey: PropTypes.func,
+  /**
    * Method that builds series name from its metadata. First argument should be the series
    * itself, second argument multiSeries context and third argument options hash with only
-   *
    */
   getSeriesNameParts: PropTypes.func,
   /**
@@ -579,6 +585,7 @@ PrometheusGraph.propTypes = {
 
 PrometheusGraph.defaultProps = {
   error: '',
+  getSeriesKey: undefined,
   getSeriesNameParts: getDefaultSeriesNameParts,
   colorTheme: 'mixed',
   metricUnits: 'numeric',
