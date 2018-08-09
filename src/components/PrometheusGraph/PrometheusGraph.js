@@ -411,6 +411,7 @@ class PrometheusGraph extends React.PureComponent {
     const {
       yAxisLabel,
       deployments,
+      deploymentsLinkBuilder,
       metricUnits,
       showStacked,
       simpleTooltip,
@@ -464,6 +465,7 @@ class PrometheusGraph extends React.PureComponent {
           />
           {hasData && (
             <DeploymentAnnotations
+              linkBuilder={deploymentsLinkBuilder}
               deployments={deployments}
               timeScale={timeScale}
               chartWidth={chartWidth}
@@ -569,6 +571,10 @@ PrometheusGraph.propTypes = {
    * Optional list of deployment annotations shown over the graph
    */
   deployments: PropTypes.array,
+  /**
+   * Optional function that builds links that deployment clicks should lead to
+   */
+  deploymentsLinkBuilder: PropTypes.func,
 };
 
 PrometheusGraph.defaultProps = {
@@ -585,6 +591,7 @@ PrometheusGraph.defaultProps = {
   onChangeLegendSelection: noop,
   selectedLegendKeys: [],
   deployments: [],
+  deploymentsLinkBuilder: noop,
 };
 
 export default PrometheusGraph;
