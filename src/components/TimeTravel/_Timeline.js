@@ -217,6 +217,7 @@ class Timeline extends React.PureComponent {
           <TimelineDeployments
             deployments={this.props.deployments}
             linkBuilder={this.props.deploymentsLinkBuilder}
+            onClick={this.props.onDeploymentClick}
             timeScale={timeScale}
             width={width}
           />
@@ -333,6 +334,7 @@ Timeline.propTypes = {
   rangeMs: PropTypes.number.isRequired,
   deployments: PropTypes.array.isRequired,
   deploymentsLinkBuilder: PropTypes.func.isRequired,
+  onDeploymentClick: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onUpdateVisibleRange: PropTypes.func.isRequired,
   onJump: PropTypes.func.isRequired,

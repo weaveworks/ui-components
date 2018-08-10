@@ -84,6 +84,11 @@ class DeploymentAnnotations extends React.PureComponent {
     this.setState({ isHovered: false });
   };
 
+  handleClick = () => {
+    const { action, serviceIDs, timestamp } = this.props;
+    this.props.onClick({ action, serviceIDs, timestamp });
+  };
+
   render() {
     return (
       <DeploymentAnnotationWrapper>
@@ -97,6 +102,7 @@ class DeploymentAnnotations extends React.PureComponent {
               onAxis={this.props.onAxis}
               onMouseMove={this.handleMouseEnter}
               onMouseLeave={this.handleMouseLeave}
+              onClick={this.handleClick}
             />
           </MaybeLinkable>
         </DeploymentAnnotationContainer>
@@ -127,6 +133,7 @@ DeploymentAnnotations.propTypes = {
   timestamp: PropTypes.string.isRequired,
   containerWidth: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
   linkTo: PropTypes.string,
   onAxis: PropTypes.bool,
 };
