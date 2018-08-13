@@ -66,6 +66,7 @@ class TimelineDeployments extends React.PureComponent {
             serviceIDs={deployment.serviceIDs}
             timestamp={deployment.timestamp}
             linkTo={this.props.linkBuilder(deployment)}
+            onClick={this.props.onClick}
             containerWidth={this.props.width}
             containerHeight={55}
           />
@@ -80,6 +81,7 @@ TimelineDeployments.propTypes = {
   timeScale: PropTypes.func.isRequired,
   deployments: PropTypes.array.isRequired,
   linkBuilder: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default TimelineDeployments;

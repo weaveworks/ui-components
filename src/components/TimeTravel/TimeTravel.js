@@ -363,6 +363,7 @@ class TimeTravel extends React.PureComponent {
             rangeMs={this.state.rangeMs}
             deployments={this.props.deployments}
             deploymentsLinkBuilder={this.props.deploymentsLinkBuilder}
+            onDeploymentClick={this.props.onDeploymentClick}
             isLoading={this.props.isLoading}
             onJump={this.handleTimelineJump}
             onZoom={this.handleTimelineZoom}
@@ -462,13 +463,17 @@ TimeTravel.propTypes = {
    */
   onChangeRange: PropTypes.func,
   /**
+   * Optional list of deployment annotations shown in the timeline
+   */
+  deployments: PropTypes.array,
+  /**
    * Optional function that builds links that deployment clicks should lead to
    */
   deploymentsLinkBuilder: PropTypes.func,
   /**
-   * Optional list of deployment annotations shown in the timeline
+   * Optional hook for deployment annotation clicks
    */
-  deployments: PropTypes.array,
+  onDeploymentClick: PropTypes.func,
   /**
    * Optional callback when visible part of the timeline gets updated
    */
@@ -486,8 +491,9 @@ TimeTravel.defaultProps = {
   onChangeLiveMode: noop,
   hasRangeSelector: false,
   rangeMs: 3600000, // 1 hour as a default, only relevant if range selector is enabled
-  deploymentsLinkBuilder: noop,
   deployments: [],
+  deploymentsLinkBuilder: noop,
+  onDeploymentClick: noop,
   isLoading: false,
   onChangeRange: noop,
   onTimestampInputEdit: noop,
