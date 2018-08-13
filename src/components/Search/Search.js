@@ -67,6 +67,10 @@ const Styled = component => styled(component)`
   ${Dropdown} {
     flex: 1;
     border-left: 1px solid ${props => props.theme.colors.gray200};
+
+    .dropdown-popover {
+      width: auto;
+    }
   }
 
   ${Input} {

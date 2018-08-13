@@ -21,6 +21,10 @@ const Styled = component => styled(component)`
   }
 `;
 
+const NarrowSearch = Search.extend`
+  width: 300px;
+`;
+
 class SearchExample extends React.Component {
   state = {
     queries: {
@@ -51,14 +55,17 @@ class SearchExample extends React.Component {
         </Example>
         <Example>
           <h3>With filters</h3>
-          <Search
+          <NarrowSearch
             onChange={(text, terms) =>
               this.setState({
                 queries: { ...this.state.queries, filters: { text, terms } },
               })
             }
             filters={[
-              { value: 'red', label: 'Red' },
+              {
+                value: 'red',
+                label: 'Red Red Red Red Red Red Red Red Red Red Red Red Red',
+              },
               { value: 'blue', label: 'Blue' },
             ]}
           />
