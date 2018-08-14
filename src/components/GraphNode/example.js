@@ -1,7 +1,7 @@
 import React from 'react';
 import faker from 'faker';
 import { format } from 'd3-format';
-import { keys, times, sample, compact } from 'lodash';
+import { keys, times, sample } from 'lodash';
 import styled from 'styled-components';
 
 import { Example, Info } from '../../utils/example';
