@@ -1,15 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {
-  map,
-  concat,
-  without,
-  includes,
-  isEmpty,
-  debounce,
-  last,
-  noop,
-} from 'lodash';
+import { map, includes, without, isEmpty, last, noop } from 'lodash';
 import PropTypes from 'prop-types';
 
 import { copyPropTypes } from '../../utils/compose';
@@ -17,15 +8,6 @@ import Input from '../Input';
 import Dropdown from '../Dropdown';
 
 import Term from './_SearchTerm';
-
-// Don't make functions async if we are running tests
-const timeout = (cb, t) => {
-  if (process.env.NODE_ENV === 'test') {
-    return cb;
-  }
-
-  return debounce(cb, t);
-};
 
 const TermsContainer = styled.ul`
   list-style: none;
@@ -93,57 +75,43 @@ const Styled = component => styled(component)`
 `;
 
 class Search extends React.PureComponent {
-  constructor(props, context) {
-    super(props, context);
-
-    this.doSearch = timeout(this.doSearch.bind(this), 200);
-  }
-
-  state = {
-    text: this.props.initialQuery,
-    terms: this.props.initialPinnedTerms,
-  };
-
   addSearchTerm = (ev, value) => {
-    if (!includes(this.state.terms, value)) {
-      // only push unique values
-      this.setState(
-        { terms: concat(...this.state.terms, value) },
-        this.doPinSearchTerm
-      );
+    let nextPinnedTerms = this.props.pinnedTerms;
+    // only push unique values
+    if (!includes(nextPinnedTerms, value)) {
+      nextPinnedTerms = [...nextPinnedTerms, value];
+      this.props.onPin(nextPinnedTerms);
     }
-    this.setState({ text: '' }, this.doSearch);
+    this.props.onChange('', nextPinnedTerms);
   };
 
   removeSearchTerm = value => {
-    const terms = without(this.state.terms, value);
-    this.setState({ terms }, this.doPinSearchTerm);
+    const nextPinnedTerms = without(this.props.pinnedTerms, value);
+    this.props.onChange(this.props.query, nextPinnedTerms);
   };
 
   handleInputKeyPress = ev => {
-    if (ev.key === 'Enter' && this.state.text.length > 0) {
+    if (ev.key === 'Enter' && this.props.query.length > 0) {
       ev.preventDefault();
-      this.addSearchTerm(ev, this.state.text);
-    }
-
-    if (ev.key === 'Backspace' && this.state.text === '') {
+      this.addSearchTerm(ev, this.props.query);
+    } else if (ev.key === 'Backspace' && this.props.query === '') {
       ev.preventDefault();
-      const term = last(this.state.terms);
+      const term = last(this.props.pinnedTerms);
       if (term) {
         // Allow the user to edit the text of the last term instead of removing the whole thing.
-        this.setState({ text: term }, () => this.removeSearchTerm(term));
+        this.removeSearchTerm(term);
       }
     }
   };
 
   handleInputChange = ev => {
-    this.setState({ text: ev.target.value }, this.doSearch);
+    this.props.onChange(ev.target.value, this.props.pinnedTerms);
   };
 
   handleInputBlur = ev => {
     // If the input loses focus, pin the search term. Skip if input is empty.
-    if (this.state.text) {
-      this.addSearchTerm(ev, this.state.text);
+    if (this.props.query) {
+      this.addSearchTerm(ev, this.props.query);
     }
     this.props.onBlur(ev);
   };
@@ -153,39 +121,29 @@ class Search extends React.PureComponent {
     this.addSearchTerm(ev, value);
   };
 
-  doPinSearchTerm() {
-    this.props.onChange(this.state.text, this.state.terms);
-    this.props.onPin(this.state.terms);
-  }
-
-  doSearch() {
-    this.props.onChange(this.state.text, this.state.terms);
-  }
-
   render() {
-    const { className, filters, placeholder } = this.props;
-    const { terms, text } = this.state;
+    const { className, filters, placeholder, query, pinnedTerms } = this.props;
 
     return (
       <div className={className}>
         <Icon className="fa fa-search" />
         <SearchInput>
           <TermsContainer>
-            {map(terms, term => (
+            {map(pinnedTerms, term => (
               <Term key={term} term={term} onRemove={this.removeSearchTerm} />
             ))}
           </TermsContainer>
           <Input
             hideValidationMessage
             onChange={this.handleInputChange}
-            value={text}
+            value={query}
             onKeyDown={this.handleInputKeyPress}
             onBlur={this.handleInputBlur}
             onFocus={this.props.onFocus}
             inputRef={ref => {
               this.input = ref;
             }}
-            placeholder={terms.length === 0 ? placeholder : null}
+            placeholder={pinnedTerms.length === 0 ? placeholder : null}
           />
         </SearchInput>
 
@@ -206,12 +164,17 @@ Search.propTypes = {
    * The initial value to use to populate the search text field.
    * Changes to this prop will be ignored after initial render.
    */
-  initialQuery: PropTypes.string,
+  query: PropTypes.string.isRequired,
   /**
    * The initial pinned terms of the search field.
    * Changes to this prop will be ignored after initial render.
    */
-  initialPinnedTerms: PropTypes.arrayOf(PropTypes.string),
+  pinnedTerms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  /**
+   * Handler that runs when the text input changes.
+   * Returns the text as first argument, and the list of pinned terms as the second.
+   */
+  onChange: PropTypes.func.isRequired,
   /**
    * A list of selectable filters to be rendered in a `<Dropdown />`.
    * When an option is clicked, the `value` is added to the search terms.
@@ -229,11 +192,6 @@ Search.propTypes = {
    */
   placeholder: PropTypes.string,
   /**
-   * Handler that runs when the text input changes.
-   * Returns the text as first argument, and the list of pinned terms as the second.
-   */
-  onChange: PropTypes.func,
-  /**
    * Handler that runs when a search is pinned or unpinned.
    * Returns an array of the currently pinned terms.
    */
@@ -243,12 +201,9 @@ Search.propTypes = {
 };
 
 Search.defaultProps = {
-  filters: [],
-  initialQuery: '',
-  initialPinnedTerms: [],
   placeholder: '',
+  filters: [],
   onPin: noop,
-  onChange: noop,
   onFocus: noop,
   onBlur: noop,
 };
