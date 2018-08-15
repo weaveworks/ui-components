@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
 import 'jest-styled-components';
 import { createSpy } from 'expect';
+import { noop } from 'lodash';
 
 import { withTheme } from '../../utils/theme';
 
@@ -11,19 +12,31 @@ import Search from './Search';
 describe('<Search />', () => {
   describe('snapshots', () => {
     it('renders empty', () => {
-      const tree = renderer.create(withTheme(<Search />)).toJSON();
+      const tree = renderer
+        .create(withTheme(<Search query="" pinnedTerms={[]} onChange={noop} />))
+        .toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders a search string', () => {
       const tree = renderer
-        .create(withTheme(<Search initialQuery="ui-server" />))
+        .create(
+          withTheme(
+            <Search query="ui-server" pinnedTerms={[]} onChange={noop} />
+          )
+        )
         .toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('renders a group of terms', () => {
       const tree = renderer
         .create(
-          withTheme(<Search initialPinnedTerms={['deployments', 'default']} />)
+          withTheme(
+            <Search
+              query=""
+              pinnedTerms={['deployments', 'default']}
+              onChange={noop}
+            />
+          )
         )
         .toJSON();
       expect(tree).toMatchSnapshot();
@@ -33,6 +46,9 @@ describe('<Search />', () => {
         .create(
           withTheme(
             <Search
+              query=""
+              pinnedTerms={[]}
+              onChange={noop}
               filters={[
                 { value: 'automated', label: 'Automated' },
                 { value: 'locked', label: 'Locked' },
@@ -47,31 +63,30 @@ describe('<Search />', () => {
   it('returns search terms', () => {
     const spy = createSpy();
     const search = mount(
-      withTheme(
-        <Search
-          onChange={spy}
-          filters={[
-            { value: 'automated', label: 'Automated' },
-            { value: 'locked', label: 'Locked' },
-          ]}
-        />
-      )
+      withTheme(<Search query="" pinnedTerms={['a']} onChange={spy} />)
     );
     const $input = search.find('input');
     $input.simulate('change', { target: { value: 'myterm' } });
-    const [text, terms] = spy.calls[0].arguments;
-    expect(text).toEqual('myterm');
-    expect(terms).toEqual([]);
+    expect(spy.calls[0].arguments).toEqual(['myterm', ['a']]);
+  });
+  it('blurs the selection', () => {
     // Blur should add the text as a term
+    const spy = createSpy();
+    const search = mount(
+      withTheme(<Search query="a" pinnedTerms={[]} onChange={spy} />)
+    );
+    const $input = search.find('input');
     $input.simulate('blur');
-    const [newText, newTerms] = spy.calls[1].arguments;
-    expect(newText).toEqual('');
-    expect(newTerms).toEqual(['myterm']);
+    expect(spy.calls[0].arguments).toEqual(['', ['a']]);
   });
   it('populates search terms from the filters dropdown', () => {
+    const spy = createSpy();
     const search = mount(
       withTheme(
         <Search
+          query=""
+          pinnedTerms={[]}
+          onChange={spy}
           filters={[
             { value: 'automated', label: 'Automated' },
             { value: 'locked', label: 'Locked' },
@@ -91,25 +106,18 @@ describe('<Search />', () => {
       .find('.dropdown-item')
       .first()
       .simulate('click');
-    expect(
-      search
-        .find('.search-term')
-        .first()
-        .text()
-    ).toEqual('automated');
+    expect(spy.calls[0].arguments).toEqual(['', ['automated']]);
   });
   it('clears terms', () => {
-    const search = mount(withTheme(<Search initialPinnedTerms={['a', 'b']} />));
+    const spy = createSpy();
+    const search = mount(
+      withTheme(<Search query="" pinnedTerms={['a', 'b']} onChange={spy} />)
+    );
     // Remove the 'a' search term
     search
       .find('.remove-term')
       .first()
       .simulate('click');
-    expect(
-      search
-        .find('.search-term')
-        .first()
-        .text()
-    ).toEqual('b');
+    expect(spy.calls[0].arguments).toEqual(['', ['b']]);
   });
 });

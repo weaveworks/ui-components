@@ -1,7 +1,7 @@
 import React from 'react';
 import faker from 'faker';
 import { format } from 'd3-format';
-import { keys, times, sample, compact } from 'lodash';
+import { keys, times, sample } from 'lodash';
 import styled from 'styled-components';
 
 import { Example, Info } from '../../utils/example';
@@ -78,6 +78,8 @@ export default class GraphNodeExample extends React.Component {
     },
     size: 65,
     contrastMode: false,
+    query: '',
+    pinnedTerms: [],
     searchTerms: [],
   };
 
@@ -161,8 +163,14 @@ export default class GraphNodeExample extends React.Component {
         <Example>
           <Info>Random Nodes (standard format with search matches)</Info>
           <Search
-            onChange={(text, terms = []) =>
-              this.setState({ searchTerms: compact([text, ...terms]) })
+            query={this.state.query}
+            pinnedTerms={this.state.pinnedTerms}
+            onChange={(query, pinnedTerms) =>
+              this.setState({
+                query,
+                pinnedTerms,
+                searchTerms: [...pinnedTerms, query],
+              })
             }
           />
           {this.state.randomSearchableNodes.map(node => (

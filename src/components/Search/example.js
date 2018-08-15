@@ -31,34 +31,52 @@ class SearchExample extends React.Component {
       normal: { text: '', terms: [] },
       filters: { text: '', terms: [] },
     },
+    query1: '',
+    query2: '',
+    query3: '',
+    pinnedTerms1: [],
+    pinnedTerms2: [],
+    pinnedTerms3: ['foo:bar', 'is:automated'],
   };
+
   render() {
-    const {
-      queries: { normal, filters },
-    } = this.state;
     return (
       <div className={this.props.className}>
         <Example>
           <h3>Normal</h3>
           <Search
-            onChange={(text, terms) =>
+            query={this.state.query1}
+            pinnedTerms={this.state.pinnedTerms1}
+            onChange={(query1, pinnedTerms1) =>
               this.setState({
-                queries: { ...this.state.queries, normal: { text, terms } },
+                query1,
+                pinnedTerms1,
+                queries: {
+                  ...this.state.queries,
+                  normal: { text: query1, terms: pinnedTerms1 },
+                },
               })
             }
           />
           <List
             items={['red', 'green', 'blue']}
-            terms={normal.terms}
-            text={normal.text}
+            terms={this.state.queries.normal.terms}
+            text={this.state.queries.normal.text}
           />
         </Example>
         <Example>
           <h3>With filters</h3>
           <NarrowSearch
-            onChange={(text, terms) =>
+            query={this.state.query2}
+            pinnedTerms={this.state.pinnedTerms2}
+            onChange={(query2, pinnedTerms2) =>
               this.setState({
-                queries: { ...this.state.queries, filters: { text, terms } },
+                query2,
+                pinnedTerms2,
+                queries: {
+                  ...this.state.queries,
+                  filters: { text: query2, terms: pinnedTerms2 },
+                },
               })
             }
             filters={[
@@ -71,14 +89,18 @@ class SearchExample extends React.Component {
           />
           <List
             items={['red', 'green', 'blue']}
-            text={filters.text}
-            terms={filters.terms}
+            text={this.state.queries.filters.text}
+            terms={this.state.queries.filters.terms}
           />
         </Example>
         <Example>
           <h3>With an initial query and filters</h3>
           <Search
-            initialPinnedTerms={['foo:bar', 'is:automated']}
+            query={this.state.query3}
+            pinnedTerms={this.state.pinnedTerms3}
+            onChange={(query3, pinnedTerms3) =>
+              this.setState({ query3, pinnedTerms3 })
+            }
             filters={[
               { value: 'is:automated', label: 'Automated' },
               { value: 'is:locked', label: 'Locked' },
