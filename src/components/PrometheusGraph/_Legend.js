@@ -22,7 +22,7 @@ const LegendItem = styled.div`
   display: flex;
   font-size: ${props => props.theme.fontSizes.small};
   align-items: flex-start;
-  padding: 2px 16px 2px 7px;
+  padding: 2px 22px 2px 7px;
   margin-right: 2px;
   margin-bottom: 2px;
   border-radius: ${props => props.theme.borderRadius.soft};
@@ -134,6 +134,7 @@ class Legend extends React.PureComponent {
   };
 
   seriesSelected = series => this.state.selectedKeys.includes(series.key);
+  seriesHovered = series => this.props.hoveredKey === series.key;
 
   render() {
     const caretIcon = this.state.shown ? 'fa-caret-down' : 'fa-caret-right';
@@ -149,6 +150,8 @@ class Legend extends React.PureComponent {
           <LegendItems>
             {this.props.multiSeries.map(series => {
               const multiLine = size(series.legendNameParts) > 1;
+              const selected = this.seriesSelected(series);
+              const hovered = this.seriesHovered(series);
 
               return (
                 <LegendItem
@@ -157,12 +160,13 @@ class Legend extends React.PureComponent {
                   onClick={ev => this.handleLegendItemClick(ev, series)}
                   onMouseEnter={() => this.handleLegendItemMouseEnter(series)}
                   onMouseLeave={() => this.handleLegendItemMouseLeave()}
-                  selected={this.seriesSelected(series)}
+                  selected={selected}
                 >
                   <ColorBox color={series.color} />
                   <LegendItemName multiLine={multiLine}>
                     {series.legendNameParts.join('\n')}
                   </LegendItemName>
+                  {this.props.renderItemSuffix(series, { selected, hovered })}
                 </LegendItem>
               );
             })}
@@ -175,12 +179,18 @@ class Legend extends React.PureComponent {
 
 Legend.propTypes = {
   multiSeries: PropTypes.array.isRequired,
+  hoveredKey: PropTypes.string,
   selectedKeys: PropTypes.array.isRequired,
+  renderItemContent: PropTypes.func.isRequired,
   onSelectedKeysChange: PropTypes.func.isRequired,
   onHoveredKeyChange: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   collapsable: PropTypes.bool.isRequired,
   shown: PropTypes.bool.isRequired,
+};
+
+Legend.defaultProps = {
+  hoveredKey: null,
 };
 
 export default Legend;

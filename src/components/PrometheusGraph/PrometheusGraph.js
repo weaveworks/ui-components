@@ -494,6 +494,8 @@ class PrometheusGraph extends React.PureComponent {
           shown={legendShown}
           collapsable={legendCollapsable}
           selectedKeys={selectedLegendKeys}
+          hoveredKey={hoveredLegendKey}
+          renderItemSuffix={this.props.renderLegendItemSuffix}
           onSelectedKeysChange={this.handleSelectedLegendKeysChange}
           onHoveredKeyChange={this.handleHoveredLegendKeyChange}
           multiSeries={multiSeries}
@@ -560,6 +562,10 @@ PrometheusGraph.propTypes = {
    */
   error: PropTypes.string,
   /**
+   * Optional content to be appended to the ending of the legend item
+   */
+  renderLegendItemSuffix: PropTypes.func,
+  /**
    * Making graph legend section collapsable
    */
   legendCollapsable: PropTypes.bool,
@@ -598,6 +604,7 @@ PrometheusGraph.defaultProps = {
   valuesMinSpread: 0.012,
   showStacked: false,
   simpleTooltip: false,
+  renderLegendItemSuffix: noop,
   legendCollapsable: false,
   legendShown: true,
   loading: false,
