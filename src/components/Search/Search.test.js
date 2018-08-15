@@ -79,14 +79,15 @@ describe('<Search />', () => {
     $input.simulate('blur');
     expect(spy.calls[0].arguments).toEqual(['', ['a']]);
   });
-  it('populates search terms from the filters dropdown', () => {
+  it('calls the onFilterSelect prop with selected filter value', () => {
     const spy = createSpy();
     const search = mount(
       withTheme(
         <Search
           query=""
           pinnedTerms={[]}
-          onChange={spy}
+          onChange={noop}
+          onFilterSelect={spy}
           filters={[
             { value: 'automated', label: 'Automated' },
             { value: 'locked', label: 'Locked' },
@@ -106,7 +107,7 @@ describe('<Search />', () => {
       .find('.dropdown-item')
       .first()
       .simulate('click');
-    expect(spy.calls[0].arguments).toEqual(['', ['automated']]);
+    expect(spy.calls[0].arguments).toEqual(['automated']);
   });
   it('clears terms', () => {
     const spy = createSpy();
@@ -119,5 +120,29 @@ describe('<Search />', () => {
       .first()
       .simulate('click');
     expect(spy.calls[0].arguments).toEqual(['', ['b']]);
+  });
+  it('should raise an error if you forget to provide an onFilterSelect callback', () => {
+    const search = mount(
+      withTheme(
+        <Search
+          query="ui-server"
+          pinnedTerms={[]}
+          onChange={noop}
+          filters={[{ value: '1', label: 'one' }]}
+        />
+      )
+    );
+    search
+      .find('.dropdown-toggle')
+      .first()
+      .simulate('click');
+
+    expect(() =>
+      // select a filter
+      search
+        .find('.dropdown-item')
+        .first()
+        .simulate('click')
+    ).toThrow();
   });
 });

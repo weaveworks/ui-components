@@ -69,6 +69,15 @@ class SearchExample extends React.Component {
           <NarrowSearch
             query={this.state.query2}
             pinnedTerms={this.state.pinnedTerms2}
+            onFilterSelect={value =>
+              this.setState({
+                pinnedTerms2: [value],
+                queries: {
+                  ...this.state.queries,
+                  filters: { text: '', terms: [value] },
+                },
+              })
+            }
             onChange={(query2, pinnedTerms2) =>
               this.setState({
                 query2,
@@ -80,11 +89,11 @@ class SearchExample extends React.Component {
               })
             }
             filters={[
+              { value: 'red', label: 'Red' },
               {
-                value: 'red',
-                label: 'Red Red Red Red Red Red Red Red Red Red Red Red Red',
+                value: 'blue',
+                label: 'Blublublublublublublublublublublu',
               },
-              { value: 'blue', label: 'Blue' },
             ]}
           />
           <List
@@ -101,6 +110,7 @@ class SearchExample extends React.Component {
             onChange={(query3, pinnedTerms3) =>
               this.setState({ query3, pinnedTerms3 })
             }
+            onFilterSelect={value => this.setState({ pinnedTerms3: [value] })}
             filters={[
               { value: 'is:automated', label: 'Automated' },
               { value: 'is:locked', label: 'Locked' },

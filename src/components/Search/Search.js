@@ -75,7 +75,7 @@ const Styled = component => styled(component)`
 `;
 
 class Search extends React.PureComponent {
-  addSearchTerm = (ev, value) => {
+  addSearchTerm = value => {
     let nextPinnedTerms = this.props.pinnedTerms;
     // only push unique values
     if (!includes(nextPinnedTerms, value)) {
@@ -93,7 +93,7 @@ class Search extends React.PureComponent {
   handleInputKeyPress = ev => {
     if (ev.key === 'Enter' && this.props.query.length > 0) {
       ev.preventDefault();
-      this.addSearchTerm(ev, this.props.query);
+      this.addSearchTerm(this.props.query);
     } else if (ev.key === 'Backspace' && this.props.query === '') {
       ev.preventDefault();
       const term = last(this.props.pinnedTerms);
@@ -111,14 +111,14 @@ class Search extends React.PureComponent {
   handleInputBlur = ev => {
     // If the input loses focus, pin the search term. Skip if input is empty.
     if (this.props.query) {
-      this.addSearchTerm(ev, this.props.query);
+      this.addSearchTerm(this.props.query);
     }
     this.props.onBlur(ev);
   };
 
   handleFilterChange = (ev, value) => {
     this.input.focus();
-    this.addSearchTerm(ev, value);
+    this.props.onFilterSelect(value);
   };
 
   render() {
@@ -196,6 +196,11 @@ Search.propTypes = {
    * Returns an array of the currently pinned terms.
    */
   onPin: PropTypes.func,
+  /**
+   * Handler that runs when an item from the search filter dropdown is selected
+   * Returns the selected filter value.
+   */
+  onFilterSelect: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
 };
@@ -204,6 +209,9 @@ Search.defaultProps = {
   placeholder: '',
   filters: [],
   onPin: noop,
+  onFilterSelect: () => {
+    throw new Error('Please provide an onFilterSelect(value) callback!');
+  },
   onFocus: noop,
   onBlur: noop,
 };
