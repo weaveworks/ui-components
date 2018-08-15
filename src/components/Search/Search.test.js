@@ -121,4 +121,28 @@ describe('<Search />', () => {
       .simulate('click');
     expect(spy.calls[0].arguments).toEqual(['', ['b']]);
   });
+  it('should raise an error if you forget to provide an onFilterSelect callback', () => {
+    const search = mount(
+      withTheme(
+        <Search
+          query="ui-server"
+          pinnedTerms={[]}
+          onChange={noop}
+          filters={[{ value: '1', label: 'one' }]}
+        />
+      )
+    );
+    search
+      .find('.dropdown-toggle')
+      .first()
+      .simulate('click');
+
+    expect(() =>
+      // select a filter
+      search
+        .find('.dropdown-item')
+        .first()
+        .simulate('click')
+    ).toThrow();
+  });
 });

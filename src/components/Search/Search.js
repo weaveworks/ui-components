@@ -75,7 +75,7 @@ const Styled = component => styled(component)`
 `;
 
 class Search extends React.PureComponent {
-  addSearchTerm = (ev, value) => {
+  addSearchTerm = value => {
     let nextPinnedTerms = this.props.pinnedTerms;
     // only push unique values
     if (!includes(nextPinnedTerms, value)) {
@@ -93,7 +93,7 @@ class Search extends React.PureComponent {
   handleInputKeyPress = ev => {
     if (ev.key === 'Enter' && this.props.query.length > 0) {
       ev.preventDefault();
-      this.addSearchTerm(ev, this.props.query);
+      this.addSearchTerm(this.props.query);
     } else if (ev.key === 'Backspace' && this.props.query === '') {
       ev.preventDefault();
       const term = last(this.props.pinnedTerms);
@@ -111,12 +111,13 @@ class Search extends React.PureComponent {
   handleInputBlur = ev => {
     // If the input loses focus, pin the search term. Skip if input is empty.
     if (this.props.query) {
-      this.addSearchTerm(ev, this.props.query);
+      this.addSearchTerm(this.props.query);
     }
     this.props.onBlur(ev);
   };
 
   handleFilterChange = (ev, value) => {
+    this.input.focus();
     this.props.onFilterSelect(value);
   };
 
@@ -208,7 +209,9 @@ Search.defaultProps = {
   placeholder: '',
   filters: [],
   onPin: noop,
-  onFilterSelect: noop,
+  onFilterSelect: () => {
+    throw new Error('Please provide an onFilterSelect(value) callback!');
+  },
   onFocus: noop,
   onBlur: noop,
 };
