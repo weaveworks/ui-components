@@ -117,8 +117,7 @@ class Search extends React.PureComponent {
   };
 
   handleFilterChange = (ev, value) => {
-    this.input.focus();
-    this.addSearchTerm(ev, value);
+    this.props.onFilterSelect(value);
   };
 
   render() {
@@ -196,6 +195,11 @@ Search.propTypes = {
    * Returns an array of the currently pinned terms.
    */
   onPin: PropTypes.func,
+  /**
+   * Handler that runs when an item from the search filter dropdown is selected
+   * Returns the selected filter value.
+   */
+  onFilterSelect: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
 };
@@ -204,6 +208,7 @@ Search.defaultProps = {
   placeholder: '',
   filters: [],
   onPin: noop,
+  onFilterSelect: noop,
   onFocus: noop,
   onBlur: noop,
 };
