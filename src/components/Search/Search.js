@@ -18,8 +18,7 @@ const TermsContainer = styled.ul`
 `;
 
 const Icon = styled.i`
-  line-height: 34px;
-  padding: 0 8px;
+  padding: 10px 8px 10px 10px;
 `;
 
 const SearchInput = styled.div`
@@ -35,6 +34,7 @@ const Styled = component => styled(component)`
   background-color: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.purple100};
   border-radius: ${props => props.theme.borderRadius.soft};
+  font-size: ${props => props.theme.fontSizes.small};
 
   div,
   input {
@@ -48,6 +48,7 @@ const Styled = component => styled(component)`
 
   ${Dropdown} {
     flex: 1;
+    line-height: 36px;
     border-left: 1px solid ${props => props.theme.colors.gray200};
 
     .dropdown-popover {

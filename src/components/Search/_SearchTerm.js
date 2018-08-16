@@ -7,7 +7,7 @@ import { copyPropTypes } from '../../utils/compose';
 
 const Styled = component => styled(component)`
   margin: 4px 0 4px 2px;
-  padding: 4px;
+  padding: 6px;
   background-color: ${props => props.theme.colors.blue200};
   margin-left: 4px;
   border-radius: ${props => props.theme.borderRadius.soft};
