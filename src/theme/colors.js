@@ -25,6 +25,8 @@ export const colors = {
   blue400: 'hsl(191, 100%, 50%)', // #00d2ff
   blue200: 'hsl(191, 100%, 80%)', // #99ecff
   blue50: 'hsl(191, 100%, 97%)', // #f0fcff
+  green500: 'hsl(161, 54%, 48%)', // #38bd93
+  yellow500: 'hsl(46, 69%, 49%)', // #d4ab27
 
   // Neutral Colors
   black: 'hsl(0, 0%, 10%)', // #1a1a1a
@@ -33,12 +35,6 @@ export const colors = {
   gray100: 'hsl(0, 0%, 90%)', // #e6e6e6
   gray50: 'hsl(0, 0%, 96%)', // #f4f4f4
   white: 'hsl(0, 0%, 100%)', // #ffffff
-
-  /* Legacy */
-  status: {
-    success: '#38bd93', // green
-    warning: '#d4ab27', // amber
-  },
 
   // PromQL
   promQL: {

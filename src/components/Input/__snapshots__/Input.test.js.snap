@@ -86,13 +86,13 @@ exports[`<Input /> should render correctly 1`] = `
             "color": "hsl(0, 0%, 100%)",
           },
           "success": Object {
-            "background": "#38bd93",
-            "borderColor": "#278265",
+            "background": "hsl(161, 54%, 48%)",
+            "borderColor": "#268165",
             "color": "hsl(0, 0%, 100%)",
           },
           "warning": Object {
-            "background": "#d4ab27",
-            "borderColor": "#93771b",
+            "background": "hsl(46, 69%, 49%)",
+            "borderColor": "#92771b",
             "color": "hsl(0, 0%, 100%)",
           },
         },
@@ -182,6 +182,7 @@ exports[`<Input /> should render correctly 1`] = `
         "gray200": "hsl(0, 0%, 80%)",
         "gray50": "hsl(0, 0%, 96%)",
         "gray600": "hsl(0, 0%, 45%)",
+        "green500": "hsl(161, 54%, 48%)",
         "orange500": "hsl(13, 100%, 50%)",
         "orange600": "hsl(13, 100%, 40%)",
         "orange700": "hsl(13, 100%, 35%)",
@@ -209,15 +210,12 @@ exports[`<Input /> should render correctly 1`] = `
         "purple700": "hsl(240, 20%, 35%)",
         "purple800": "hsl(240, 20%, 30%)",
         "purple900": "hsl(240, 20%, 25%)",
-        "status": Object {
-          "success": "#38bd93",
-          "warning": "#d4ab27",
-        },
         "thirdParty": Object {
           "azure": "#3769bb",
           "cornflowerBlue": "#4285f4",
         },
         "white": "hsl(0, 0%, 100%)",
+        "yellow500": "hsl(46, 69%, 49%)",
       },
       "fontFamilies": Object {
         "monospace": "'Roboto Mono', monospace",

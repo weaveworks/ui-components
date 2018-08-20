@@ -17,13 +17,13 @@ export const atoms = {
     },
     success: {
       color: colors.white,
-      background: colors.status.success,
-      borderColor: darken(0.15, colors.status.success),
+      background: colors.green500,
+      borderColor: darken(0.15, colors.green500),
     },
     warning: {
       color: colors.white,
-      background: colors.status.warning,
-      borderColor: darken(0.15, colors.status.warning),
+      background: colors.yellow500,
+      borderColor: darken(0.15, colors.yellow500),
     },
     error: {
       color: colors.white,

@@ -159,9 +159,9 @@ exports[`<Alert /> snapshots renders success 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #38bd93;
+  background: hsl(161,54%,48%);
   border-radius: 2px;
-  border: 2px solid #278265;
+  border: 2px solid #268165;
   color: hsl(0,0%,100%);
   margin: 8px 0 8px 0;
   min-height: 1em;
@@ -283,9 +283,9 @@ exports[`<Alert /> snapshots renders warning 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: #d4ab27;
+  background: hsl(46,69%,49%);
   border-radius: 2px;
-  border: 2px solid #93771b;
+  border: 2px solid #92771b;
   color: hsl(0,0%,100%);
   margin: 8px 0 8px 0;
   min-height: 1em;
