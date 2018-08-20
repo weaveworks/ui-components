@@ -209,10 +209,9 @@ exports[`<Input /> should render correctly 1`] = `
         "purple700": "hsl(240, 20%, 35%)",
         "purple800": "hsl(240, 20%, 30%)",
         "purple900": "hsl(240, 20%, 25%)",
-        "status": Object {
-          "success": "#38bd93",
-          "warning": "#d4ab27",
-        },
+        "green500": "hsl(161, 54%, 48%)",
+        "yellow500": "hsl(46, 69%, 49%)",
+
         "thirdParty": Object {
           "azure": "#3769bb",
           "cornflowerBlue": "#4285f4",

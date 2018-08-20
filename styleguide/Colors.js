@@ -165,11 +165,12 @@ class Colors extends React.Component {
         <Text large bold>
           Accent Colors
         </Text>
-        <Row>{this.renderSwatches(theme.colors, /^(orange|blue)[0-9]*$/)}</Row>
-        <Text large bold>
-          Status Colors
-        </Text>
-        <Row>{this.renderSwatches(theme.colors.status)}</Row>
+        <Row>
+          {this.renderSwatches(
+            theme.colors,
+            /^(orange|blue|green|yellow)[0-9]*$/
+          )}
+        </Row>
         <Text large bold>
           Neutral Colors
         </Text>

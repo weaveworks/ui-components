@@ -165,7 +165,7 @@ GraphNode.defaultProps = {
   isAnimated: false,
   contrastMode: false,
   forceSvg: false,
-  metricColor: theme.colors.status.warning,
+  metricColor: theme.colors.yellow500,
   metricFormattedValue: '',
   metricNumericValue: NaN,
   searchTerms: [],
