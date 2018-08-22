@@ -126,6 +126,7 @@ const Actions = styled.div`
  */
 const Dialog = ({
   active,
+  hideClose,
   title,
   width,
   actions,
@@ -138,9 +139,11 @@ const Dialog = ({
     <Window width={width}>
       <Header>
         <Title>{title}</Title>
-        <ButtonClose text="" onClick={onClose}>
-          <i className="fa fa-close" />
-        </ButtonClose>
+        {!hideClose && (
+          <ButtonClose text="" onClick={onClose}>
+            <i className="fa fa-close" />
+          </ButtonClose>
+        )}
       </Header>
       <Content>{children}</Content>
       {!isEmpty(actions) && (
@@ -194,6 +197,10 @@ Dialog.propTypes = {
    * Callback that will be run when the modal is closed
    */
   onClose: PropTypes.func,
+  /**
+   * Flag to hide the close icon in top right corner
+   */
+  hideClose: PropTypes.bool,
 };
 
 Dialog.defaultProps = {
@@ -202,6 +209,7 @@ Dialog.defaultProps = {
   actions: [],
   onActionClick: noop,
   onClose: noop,
+  hideClose: false,
 };
 
 export default Dialog;
