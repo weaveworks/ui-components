@@ -28,6 +28,7 @@ export default class DialogExample extends React.Component {
       normalButtonActive: false,
       otherButtonActive: false,
       emptyButtonActive: false,
+      hideCloseButtonActive: false,
     });
   };
 
@@ -71,6 +72,22 @@ export default class DialogExample extends React.Component {
             onClick={this.handleDialogActivate.bind(this, 'normal')}
             text="Dialog"
           />
+        </Example>
+        <Example>
+          <Info>Dialog with no close icon</Info>
+          <Button
+            onClick={this.handleDialogActivate.bind(this, 'hideClose')}
+            text="No Close Icon"
+          />
+          <Dialog
+            hideClose
+            active={this.state.hideCloseButtonActive}
+            onClose={this.handleClose}
+            title="Dialog without cross icon"
+            width="400px"
+          >
+            <p>No close icon top right </p>
+          </Dialog>
         </Example>
         <Example>
           <Info>Dialog with pre-created actions</Info>

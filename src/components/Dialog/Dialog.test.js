@@ -36,4 +36,13 @@ describe('<Dialog />', () => {
     dialog.find('.user-action').simulate('click');
     expect(newSpy).toBeCalled();
   });
+
+  it('should hide close icon when hideClose=true', () => {
+    const wrapper = shallow(<Dialog />);
+    expect(wrapper.find('i.fa.fa-close').length).toBe(1);
+    wrapper.setProps({
+      hideClose: true,
+    });
+    expect(wrapper.find('i.fa.fa-close').length).toBe(0);
+  });
 });
