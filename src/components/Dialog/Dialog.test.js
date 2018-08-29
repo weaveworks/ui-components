@@ -1,5 +1,8 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+
+import 'jest-styled-components';
+import { withTheme } from '../../utils/theme';
 
 import Dialog from './Dialog';
 
@@ -38,11 +41,34 @@ describe('<Dialog />', () => {
   });
 
   it('should hide close icon when hideClose=true', () => {
-    const wrapper = shallow(<Dialog />);
+    const wrapper = shallow(<Dialog active />);
     expect(wrapper.find('i.fa.fa-close').length).toBe(1);
     wrapper.setProps({
       hideClose: true,
     });
     expect(wrapper.find('i.fa.fa-close').length).toBe(0);
+  });
+
+  it('should only render child when active', () => {
+    const heavyFn = jest.fn();
+    const Child = () => {
+      heavyFn();
+      return <div>Metal</div>;
+    };
+    const wrapper = mount(
+      withTheme(
+        <Dialog active={false}>
+          <Child />
+        </Dialog>
+      )
+    );
+    expect(heavyFn).not.toHaveBeenCalled();
+    wrapper.setProps({
+      active: true,
+    });
+
+    setTimeout(() => {
+      expect(heavyFn).toHaveBeenCalledTimes(1);
+    }, 0);
   });
 });

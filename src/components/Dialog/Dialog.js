@@ -145,7 +145,7 @@ const Dialog = ({
           </ButtonClose>
         )}
       </Header>
-      <Content>{children}</Content>
+      <Content>{active && children}</Content>
       {!isEmpty(actions) && (
         <Actions>
           {actions.map((Action, index) => {
