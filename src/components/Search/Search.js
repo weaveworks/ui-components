@@ -15,6 +15,14 @@ const TermsContainer = styled.ul`
   margin: 0;
   padding: 0;
   flex-wrap: wrap;
+
+  ${props =>
+    props.disabled &&
+    `
+    background-color: ${props.theme.colors.gray50};
+    pointer-events: none;
+    opacity: 0.75;
+  `};
 `;
 
 const Icon = styled.i`
@@ -143,7 +151,7 @@ class Search extends React.PureComponent {
       <div className={className}>
         <Icon className="fa fa-search" disabled={disabled} />
         <SearchInput>
-          <TermsContainer>
+          <TermsContainer disabled={disabled}>
             {map(pinnedTerms, term => (
               <Term key={term} term={term} onRemove={this.removeSearchTerm} />
             ))}

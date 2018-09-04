@@ -86,11 +86,11 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
 }
 
 .c4 {
+  background-color: hsl(191,100%,80%);
+  border-radius: 2px;
   margin: 4px 0 4px 2px;
   padding: 6px;
-  background-color: hsl(191,100%,80%);
   margin-left: 4px;
-  border-radius: 2px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -200,6 +200,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   >
     <ul
       className="c3"
+      disabled={false}
     >
       <li
         className="c4 search-term"
@@ -445,6 +446,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   >
     <ul
       className="c3"
+      disabled={false}
     />
     <div
       className="c4 c5"
@@ -663,6 +665,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
   >
     <ul
       className="c3"
+      disabled={false}
     />
     <div
       className="c4 c5"
@@ -933,6 +936,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
   >
     <ul
       className="c3"
+      disabled={false}
     />
     <div
       className="c4 c5"
