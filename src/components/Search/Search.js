@@ -207,7 +207,7 @@ Search.propTypes = {
 };
 
 Search.defaultProps = {
-  placeholder: '',
+  placeholder: 'search',
   filters: [],
   onPin: noop,
   onFilterSelect: () => {
