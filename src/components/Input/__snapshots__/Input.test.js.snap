@@ -51,6 +51,26 @@ exports[`<Input /> should render correctly 1`] = `
   color: hsl(0,0%,45%);
 }
 
+.c1 input:disabled {
+  background-color: hsl(0,0%,96%);
+}
+
+.c1 input:disabled::-webkit-input-placeholder {
+  opacity: 0.5;
+}
+
+.c1 input:disabled::-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c1 input:disabled:-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c1 input:disabled:-ms-input-placeholder {
+  opacity: 0.5;
+}
+
 .c3 {
   display: block;
   padding-left: 8px;

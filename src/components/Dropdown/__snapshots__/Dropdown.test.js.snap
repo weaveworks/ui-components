@@ -59,10 +59,12 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
 >
   <div
     className="dropdown-toggle c1"
+    disabled={false}
     onClick={[Function]}
   >
     <div
       className="c2 c3"
+      disabled={false}
     >
       Select an item
     </div>
@@ -132,10 +134,12 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
 >
   <div
     className="dropdown-toggle c1"
+    disabled={false}
     onClick={[Function]}
   >
     <div
       className="c2 c3"
+      disabled={false}
     >
       First Thing
     </div>

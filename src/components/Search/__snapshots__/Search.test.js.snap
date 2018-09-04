@@ -51,6 +51,26 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   color: hsl(0,0%,45%);
 }
 
+.c7 input:disabled {
+  background-color: hsl(0,0%,96%);
+}
+
+.c7 input:disabled::-webkit-input-placeholder {
+  opacity: 0.5;
+}
+
+.c7 input:disabled::-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c7 input:disabled:-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c7 input:disabled:-ms-input-placeholder {
+  opacity: 0.5;
+}
+
 .c9 {
   display: none;
   padding-left: 8px;
@@ -173,6 +193,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
 >
   <i
     className="fa fa-search c1"
+    disabled={false}
   />
   <div
     className="c2"
@@ -219,6 +240,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
         className="c7"
       >
         <input
+          disabled={false}
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
@@ -291,6 +313,26 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   color: hsl(0,0%,45%);
 }
 
+.c6 input:disabled {
+  background-color: hsl(0,0%,96%);
+}
+
+.c6 input:disabled::-webkit-input-placeholder {
+  opacity: 0.5;
+}
+
+.c6 input:disabled::-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c6 input:disabled:-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c6 input:disabled:-ms-input-placeholder {
+  opacity: 0.5;
+}
+
 .c8 {
   display: none;
   padding-left: 8px;
@@ -396,6 +438,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
 >
   <i
     className="fa fa-search c1"
+    disabled={false}
   />
   <div
     className="c2"
@@ -415,6 +458,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
         className="c6"
       >
         <input
+          disabled={false}
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
@@ -487,6 +531,26 @@ exports[`<Search /> snapshots renders empty 1`] = `
   color: hsl(0,0%,45%);
 }
 
+.c6 input:disabled {
+  background-color: hsl(0,0%,96%);
+}
+
+.c6 input:disabled::-webkit-input-placeholder {
+  opacity: 0.5;
+}
+
+.c6 input:disabled::-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c6 input:disabled:-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c6 input:disabled:-ms-input-placeholder {
+  opacity: 0.5;
+}
+
 .c8 {
   display: none;
   padding-left: 8px;
@@ -592,6 +656,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
 >
   <i
     className="fa fa-search c1"
+    disabled={false}
   />
   <div
     className="c2"
@@ -611,6 +676,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
         className="c6"
       >
         <input
+          disabled={false}
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
@@ -681,6 +747,26 @@ exports[`<Search /> snapshots renders filters 1`] = `
 
 .c6 input:-ms-input-placeholder {
   color: hsl(0,0%,45%);
+}
+
+.c6 input:disabled {
+  background-color: hsl(0,0%,96%);
+}
+
+.c6 input:disabled::-webkit-input-placeholder {
+  opacity: 0.5;
+}
+
+.c6 input:disabled::-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c6 input:disabled:-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c6 input:disabled:-ms-input-placeholder {
+  opacity: 0.5;
 }
 
 .c8 {
@@ -840,6 +926,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
 >
   <i
     className="fa fa-search c1"
+    disabled={false}
   />
   <div
     className="c2"
@@ -859,6 +946,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
         className="c6"
       >
         <input
+          disabled={false}
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
@@ -883,10 +971,12 @@ exports[`<Search /> snapshots renders filters 1`] = `
   >
     <div
       className="dropdown-toggle c11"
+      disabled={false}
       onClick={[Function]}
     >
       <div
         className="c12 c13"
+        disabled={false}
       >
         Filters
       </div>
