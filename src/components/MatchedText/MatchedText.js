@@ -84,10 +84,7 @@ function truncateChunks(chunks, text, maxLength) {
 
 const MatchedTextWrapper = styled.span`
   background-color: ${props => transparentize(0.7, props.theme.colors.blue400)};
-  border: 1px solid ${props => props.theme.colors.blue400};
   border-radius: ${props => props.theme.borderRadius.soft};
-
-  ${props => props.noBorder && 'border: none;'};
 `;
 
 /**
@@ -102,7 +99,7 @@ const MatchedTextWrapper = styled.span`
  */
 class MatchedText extends React.Component {
   render() {
-    const { match, text, truncate, maxLength, noBorder } = this.props;
+    const { match, text, truncate, maxLength } = this.props;
 
     const showFullValue =
       !truncate || (match && match.start + match.length > truncate);
@@ -119,7 +116,7 @@ class MatchedText extends React.Component {
         {truncateChunks(chunks, displayText, maxLength).map(chunk => {
           if (chunk.match) {
             return (
-              <MatchedTextWrapper key={chunk.text} noBorder={noBorder}>
+              <MatchedTextWrapper key={chunk.text}>
                 {chunk.text}
               </MatchedTextWrapper>
             );
@@ -143,15 +140,10 @@ MatchedText.propTypes = {
     start: PropTypes.number,
     length: PropTypes.number,
   }),
-  /**
-   * The base text to display
-   */
-  noBorder: PropTypes.bool,
 };
 
 MatchedText.defaultProps = {
   match: null,
-  noBorder: false,
 };
 
 export default MatchedText;
