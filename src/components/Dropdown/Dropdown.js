@@ -13,6 +13,12 @@ const Item = styled.div`
   padding-right: 28px;
   padding-left: 12px;
   cursor: pointer;
+
+  ${props =>
+    props.disabled &&
+    `
+    cursor: default;
+  `};
 `;
 
 const Popover = styled.div`
@@ -68,6 +74,13 @@ const SelectedItem = Item.extend`
   div:last-child {
     margin-left: auto;
   }
+
+  ${props =>
+    props.disabled &&
+    `
+    color: ${props.theme.colors.gray600};
+    background-color: ${props.theme.colors.gray50};
+  `};
 `;
 
 const SelectedItemIcon = styled.span`
@@ -85,9 +98,13 @@ const StyledDropdown = component => styled(component)`
   box-sizing: border-box;
 `;
 
-const DefaultToggleView = ({ onClick, selectedLabel }) => (
-  <SelectedItem onClick={onClick} className="dropdown-toggle">
-    <Item>{selectedLabel}</Item>
+const DefaultToggleView = ({ onClick, disabled, selectedLabel }) => (
+  <SelectedItem
+    className="dropdown-toggle"
+    onClick={onClick}
+    disabled={disabled}
+  >
+    <Item disabled={disabled}>{selectedLabel}</Item>
     <SelectedItemIcon className="fa fa-caret-down" />
   </SelectedItem>
 );
@@ -154,7 +171,9 @@ class Dropdown extends React.Component {
   }
 
   handleClick() {
-    this.setState({ isOpen: true });
+    if (!this.props.disabled) {
+      this.setState({ isOpen: true });
+    }
   }
 
   handleBgClick() {
@@ -170,7 +189,7 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    const { items, value, className, placeholder } = this.props;
+    const { items, value, className, placeholder, disabled } = this.props;
     const { isOpen } = this.state;
     const divided = this.divide(items);
     // If nothing is selected, use the placeholder, else use the first item.
@@ -184,7 +203,11 @@ class Dropdown extends React.Component {
 
     return (
       <div className={className} title={label} ref={this.element}>
-        <Component selectedLabel={label} onClick={this.handleClick} />
+        <Component
+          selectedLabel={label}
+          disabled={disabled}
+          onClick={this.handleClick}
+        />
         {isOpen && (
           <div>
             <Overlay onClick={this.handleBgClick} />
@@ -246,6 +269,10 @@ Dropdown.propTypes = {
    * The initial text that will be display before a user selects an item.
    */
   placeholder: PropTypes.string,
+  /**
+   * Disables the component if true
+   */
+  disabled: PropTypes.bool,
 
   /**
    * A custom component to replace the default toggle view.
@@ -258,6 +285,7 @@ Dropdown.propTypes = {
 Dropdown.defaultProps = {
   onChange: noop,
   placeholder: '',
+  disabled: false,
   value: '',
   withComponent: DefaultToggleView,
 };

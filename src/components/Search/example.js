@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { map, filter, includes } from 'lodash';
+import { map, filter, includes, noop } from 'lodash';
 
 import { Example } from '../../utils/example';
 
@@ -115,6 +115,25 @@ class SearchExample extends React.Component {
               { value: 'is:automated', label: 'Automated' },
               { value: 'is:locked', label: 'Locked' },
             ]}
+          />
+        </Example>
+        <Example>
+          <h3>Disabled</h3>
+          <Search
+            disabled
+            query=""
+            pinnedTerms={[]}
+            filters={[{ value: 'red', label: 'Red' }]}
+            onChange={noop}
+          />
+        </Example>
+        <Example>
+          <h3>Disabled with a query and pinnedTerms</h3>
+          <Search
+            disabled
+            query="prom"
+            pinnedTerms={this.state.pinnedTerms3}
+            onChange={noop}
           />
         </Example>
       </div>

@@ -15,10 +15,25 @@ const TermsContainer = styled.ul`
   margin: 0;
   padding: 0;
   flex-wrap: wrap;
+
+  ${props =>
+    props.disabled &&
+    `
+    background-color: ${props.theme.colors.gray50};
+    pointer-events: none;
+    opacity: 0.75;
+  `};
 `;
 
 const Icon = styled.i`
   padding: 10px 8px 10px 10px;
+
+  ${props =>
+    props.disabled &&
+    `
+    color: ${props.theme.colors.gray600};
+    background-color: ${props.theme.colors.gray50};
+  `};
 `;
 
 const SearchInput = styled.div`
@@ -123,13 +138,20 @@ class Search extends React.PureComponent {
   };
 
   render() {
-    const { className, filters, placeholder, query, pinnedTerms } = this.props;
+    const {
+      className,
+      filters,
+      placeholder,
+      query,
+      pinnedTerms,
+      disabled,
+    } = this.props;
 
     return (
       <div className={className}>
-        <Icon className="fa fa-search" />
+        <Icon className="fa fa-search" disabled={disabled} />
         <SearchInput>
-          <TermsContainer>
+          <TermsContainer disabled={disabled}>
             {map(pinnedTerms, term => (
               <Term key={term} term={term} onRemove={this.removeSearchTerm} />
             ))}
@@ -145,12 +167,14 @@ class Search extends React.PureComponent {
               this.input = ref;
             }}
             placeholder={pinnedTerms.length === 0 ? placeholder : null}
+            disabled={disabled}
           />
         </SearchInput>
 
         {!isEmpty(filters) && (
           <Dropdown
             items={filters}
+            disabled={disabled}
             placeholder="Filters"
             onChange={this.handleFilterChange}
           />
@@ -193,6 +217,10 @@ Search.propTypes = {
    */
   placeholder: PropTypes.string,
   /**
+   * Disables the component if true
+   */
+  disabled: PropTypes.bool,
+  /**
    * Handler that runs when a search is pinned or unpinned.
    * Returns an array of the currently pinned terms.
    */
@@ -207,7 +235,8 @@ Search.propTypes = {
 };
 
 Search.defaultProps = {
-  placeholder: '',
+  placeholder: 'search',
+  disabled: false,
   filters: [],
   onPin: noop,
   onFilterSelect: () => {

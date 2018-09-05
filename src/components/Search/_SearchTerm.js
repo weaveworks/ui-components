@@ -6,11 +6,11 @@ import { noop } from 'lodash';
 import { copyPropTypes } from '../../utils/compose';
 
 const Styled = component => styled(component)`
+  background-color: ${props => props.theme.colors.blue200};
+  border-radius: ${props => props.theme.borderRadius.soft};
   margin: 4px 0 4px 2px;
   padding: 6px;
-  background-color: ${props => props.theme.colors.blue200};
   margin-left: 4px;
-  border-radius: ${props => props.theme.borderRadius.soft};
   display: flex;
 
   i {
@@ -23,6 +23,7 @@ class SearchTerm extends React.PureComponent {
   handleRemove = () => {
     this.props.onRemove(this.props.term, this.props.label);
   };
+
   render() {
     const { className, term, label } = this.props;
     return (

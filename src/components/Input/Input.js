@@ -45,6 +45,11 @@ const InputWrapper = styled.div`
     border-radius: ${props => props.theme.borderRadius.soft};
     height: 36px;
     box-sizing: border-box;
+
+    &:disabled {
+      ${placeholder('opacity', 0.5)};
+      background-color: ${props => props.theme.colors.gray50};
+    }
   }
 `;
 
