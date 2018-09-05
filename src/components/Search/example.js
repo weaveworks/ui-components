@@ -127,6 +127,15 @@ class SearchExample extends React.Component {
             onChange={noop}
           />
         </Example>
+        <Example>
+          <h3>Disabled with a query and pinnedTerms</h3>
+          <Search
+            disabled
+            query="prom"
+            pinnedTerms={this.state.pinnedTerms3}
+            onChange={noop}
+          />
+        </Example>
       </div>
     );
   }
