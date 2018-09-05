@@ -1,24 +1,41 @@
 import React from 'react';
+import faker from 'faker';
+import { compact } from 'lodash';
 
-import { Example } from '../../utils/example';
+import { Example, Info } from '../../utils/example';
+import Search from '../Search';
 
 import MatchedText from '.';
 
-export default function MatchedTextExample() {
-  return (
-    <div>
-      <Example>
-        <MatchedText text="no `match` prop on this MatchedText" />
-      </Example>
-      <Example>
-        <MatchedText
-          text="empty `match` object ({}) on this MatchedText"
-          match={{}}
+class MatchedTextExample extends React.Component {
+  state = {
+    text: faker.lorem.paragraphs(3),
+    pinnedSearches: [],
+    searchQuery: '',
+  };
+
+  onSearch = (searchQuery, pinnedSearches) => {
+    this.setState({ searchQuery, pinnedSearches });
+  };
+
+  render() {
+    const { text, pinnedSearches, searchQuery } = this.state;
+    const matches = compact([...pinnedSearches, searchQuery]);
+
+    return (
+      <div>
+        <Search
+          onChange={this.onSearch}
+          pinnedTerms={pinnedSearches}
+          query={searchQuery}
         />
-      </Example>
-      <Example>
-        <MatchedText text="hey its a match!" match={{ start: 10, length: 5 }} />
-      </Example>
-    </div>
-  );
+        <Example>
+          <Info>Normal text</Info>
+          <MatchedText text={text} matches={matches} />
+        </Example>
+      </div>
+    );
+  }
 }
+
+export default MatchedTextExample;
