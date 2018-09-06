@@ -124,14 +124,6 @@ class Search extends React.PureComponent {
     this.props.onChange(ev.target.value, this.props.pinnedTerms);
   };
 
-  handleInputBlur = ev => {
-    // If the input loses focus, pin the search term. Skip if input is empty.
-    if (this.props.query) {
-      this.addSearchTerm(this.props.query);
-    }
-    this.props.onBlur(ev);
-  };
-
   handleFilterChange = (ev, value) => {
     this.input.focus();
     this.props.onFilterSelect(value);
@@ -161,7 +153,7 @@ class Search extends React.PureComponent {
             onChange={this.handleInputChange}
             value={query}
             onKeyDown={this.handleInputKeyPress}
-            onBlur={this.handleInputBlur}
+            onBlur={this.props.onBlur}
             onFocus={this.props.onFocus}
             inputRef={ref => {
               this.input = ref;

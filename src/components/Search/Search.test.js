@@ -69,16 +69,6 @@ describe('<Search />', () => {
     $input.simulate('change', { target: { value: 'myterm' } });
     expect(spy.calls[0].arguments).toEqual(['myterm', ['a']]);
   });
-  it('blurs the selection', () => {
-    // Blur should add the text as a term
-    const spy = createSpy();
-    const search = mount(
-      withTheme(<Search query="a" pinnedTerms={[]} onChange={spy} />)
-    );
-    const $input = search.find('input');
-    $input.simulate('blur');
-    expect(spy.calls[0].arguments).toEqual(['', ['a']]);
-  });
   it('calls the onFilterSelect prop with selected filter value', () => {
     const spy = createSpy();
     const search = mount(
