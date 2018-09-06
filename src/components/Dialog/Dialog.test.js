@@ -71,4 +71,37 @@ describe('<Dialog />', () => {
       expect(heavyFn).toHaveBeenCalledTimes(1);
     }, 0);
   });
+
+  it('should call onClose when pressing esc', () => {
+    // mock addEventListener so we can manually call the callback
+    // https://github.com/airbnb/enzyme/issues/426
+    const eventMap = {};
+    document.addEventListener = jest.fn((event, cb) => {
+      eventMap[event] = cb;
+    });
+
+    const onCloseMock = jest.fn();
+    const payload = { key: 'Escape' };
+    const wrapper = mount(
+      withTheme(<Dialog active={false} onClose={onCloseMock} />)
+    );
+
+    expect(onCloseMock).not.toHaveBeenCalled();
+
+    // call addEventListener callback
+    eventMap.keydown(payload);
+    // should not have been called as not active
+    expect(onCloseMock).not.toHaveBeenCalled();
+
+    wrapper.setProps({ active: true });
+
+    // setProps is async
+    setTimeout(() => {
+      // call addEventListener callback
+      eventMap.keydown(payload);
+
+      expect(onCloseMock).toHaveBeenCalledTimes(1);
+      expect(onCloseMock).toHaveBeenCalledWith(payload);
+    }, 0);
+  });
 });

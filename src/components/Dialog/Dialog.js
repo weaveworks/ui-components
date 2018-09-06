@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { noop, isEmpty } from 'lodash';
@@ -124,49 +124,69 @@ const Actions = styled.div`
  * }
  * ```
  */
-const Dialog = ({
-  active,
-  hideClose,
-  title,
-  width,
-  actions,
-  onActionClick,
-  onClose,
-  children,
-}) => (
-  <Wrapper active={active}>
-    <Overlay onClick={onClose} />
-    <Window width={width}>
-      <Header>
-        <Title>{title}</Title>
-        {!hideClose && (
-          <ButtonClose text="" onClick={onClose}>
-            <i className="fa fa-close" />
-          </ButtonClose>
-        )}
-      </Header>
-      <Content>{active && children}</Content>
-      {!isEmpty(actions) && (
-        <Actions>
-          {actions.map((Action, index) => {
-            if (React.isValidElement(Action)) {
-              /* eslint-disable react/no-array-index-key */
-              return React.cloneElement(Action, { key: index });
-              /* eslint-enable react/no-array-index-key */
-            }
-            return (
-              <Button
-                key={Action}
-                text={Action}
-                onClick={() => onActionClick(Action)}
-              />
-            );
-          })}
-        </Actions>
-      )}
-    </Window>
-  </Wrapper>
-);
+class Dialog extends PureComponent {
+  componentDidMount() {
+    document.addEventListener('keydown', this.onKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  onKeyDown = event => {
+    if (this.props.active && event.key === 'Escape') {
+      this.props.onClose(event);
+    }
+  };
+
+  render() {
+    const {
+      active,
+      hideClose,
+      title,
+      width,
+      actions,
+      onActionClick,
+      onClose,
+      children,
+    } = this.props;
+
+    return (
+      <Wrapper active={active}>
+        <Overlay onClick={onClose} />
+        <Window width={width}>
+          <Header>
+            <Title>{title}</Title>
+            {!hideClose && (
+              <ButtonClose text="" onClick={onClose}>
+                <i className="fa fa-close" />
+              </ButtonClose>
+            )}
+          </Header>
+          <Content>{active && children}</Content>
+          {!isEmpty(actions) && (
+            <Actions>
+              {actions.map((Action, index) => {
+                if (React.isValidElement(Action)) {
+                  /* eslint-disable react/no-array-index-key */
+                  return React.cloneElement(Action, { key: index });
+                  /* eslint-enable react/no-array-index-key */
+                }
+                return (
+                  <Button
+                    key={Action}
+                    text={Action}
+                    onClick={() => onActionClick(Action)}
+                  />
+                );
+              })}
+            </Actions>
+          )}
+        </Window>
+      </Wrapper>
+    );
+  }
+}
 
 Dialog.propTypes = {
   /**
