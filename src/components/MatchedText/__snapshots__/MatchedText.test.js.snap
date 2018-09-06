@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MatchedText /> snapshots renders default 1`] = `
+.c0 {
+  background-color: rgba(0,208,255,0.3);
+  border-radius: 2px;
+}
+
+<span
+  title="Rerum molestiae omnis in laudantium."
+>
+  <span
+    className="c0"
+  >
+    Re
+  </span>
+  r
+  <span
+    className="c0"
+  >
+    um
+  </span>
+   molestiae omnis in laudanti
+  <span
+    className="c0"
+  >
+    um
+  </span>
+  .
+</span>
+`;
