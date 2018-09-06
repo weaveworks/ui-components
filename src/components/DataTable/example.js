@@ -18,7 +18,7 @@ const data = [
   },
 ];
 
-const nesteData = [
+const nestedData = [
   {
     workloadId: 'default:deployment/myworkload',
     containers: [
@@ -59,7 +59,7 @@ export default function DataTableExample() {
         <h3>Nested Table</h3>
         <DataTable
           nested
-          data={nesteData}
+          data={nestedData}
           sortBy="workloadId"
           sortOrder="asc"
           columns={[
@@ -97,6 +97,26 @@ export default function DataTableExample() {
             { value: 'email', label: 'Email' },
           ]}
           extraHeaders={[<Button>Extra Header</Button>]}
+        >
+          {rows =>
+            map(rows, r => (
+              <tr key={r.email}>
+                <td>{r.name}</td>
+                <td>{r.email}</td>
+              </tr>
+            ))
+          }
+        </DataTable>
+      </Example>
+      <Example>
+        <h3>Flush Table</h3>
+        <DataTable
+          data={data}
+          flush
+          columns={[
+            { value: 'name', label: 'Name' },
+            { value: 'email', label: 'Email' },
+          ]}
         >
           {rows =>
             map(rows, r => (
