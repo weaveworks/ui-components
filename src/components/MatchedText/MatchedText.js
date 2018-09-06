@@ -15,7 +15,7 @@ const splitChunk = (chunk, match) =>
 
 // Splits the text into chunks by finding all occurences of all matches in the list.
 const buildChunks = ({ text, matches }) => {
-  let chunks = [{ text }];
+  let chunks = [{ text, matched: false }];
   matches.forEach(match => {
     chunks = flatMap(
       chunks,
