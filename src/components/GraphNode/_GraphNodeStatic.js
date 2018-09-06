@@ -112,17 +112,6 @@ const LabelMinorStandard = LabelTemplate.extend`
 `;
 
 class GraphNodeStatic extends React.PureComponent {
-  findFirstSearchMatch = (searchTerms, text) => {
-    let match = null;
-    searchTerms.forEach(term => {
-      const start = text.search(term);
-      if (isEmpty(match) && start !== -1) {
-        match = { start, length: term.length };
-      }
-    });
-    return match;
-  };
-
   renderSvgLabels() {
     return (
       <SvgTextContainer y={this.props.labelOffset}>
@@ -159,22 +148,14 @@ class GraphNodeStatic extends React.PureComponent {
       >
         <LabelsStandardContainer>
           <LabelStandard highlighted={highlighted} contrastMode={contrastMode}>
-            <MatchedText
-              noBorder
-              text={label}
-              match={this.findFirstSearchMatch(searchTerms, label)}
-            />
+            <MatchedText text={label} matches={searchTerms} />
           </LabelStandard>
           {!isEmpty(labelMinor) && (
             <LabelMinorStandard
               highlighted={highlighted}
               contrastMode={contrastMode}
             >
-              <MatchedText
-                noBorder
-                text={labelMinor}
-                match={this.findFirstSearchMatch(searchTerms, labelMinor)}
-              />
+              <MatchedText text={labelMinor} matches={searchTerms} />
             </LabelMinorStandard>
           )}
 
