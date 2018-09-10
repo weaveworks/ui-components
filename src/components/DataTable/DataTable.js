@@ -4,13 +4,11 @@ import styled from 'styled-components';
 import { map, orderBy, noop, get, first, partialRight } from 'lodash';
 import { transparentize } from 'polished';
 
-import { copyPropTypes } from '../../utils/compose';
-
 import Header from './_Header';
 
 const borderColor = props => transparentize(0.6, props.theme.colors.purple100);
 
-const Styled = component => styled(component)`
+const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
   /* Any column that doesn't specify a width explicitly will share the */
@@ -31,8 +29,19 @@ const Styled = component => styled(component)`
   thead,
   tbody {
     border-bottom: 1px solid ${borderColor};
-    border-left: 3px solid transparent;
+
+    > tr td:first-child {
+      border-left: 0;
+    }
   }
+
+  ${props =>
+    props.flush &&
+    `
+    tr td:first-child {
+      padding-left: 0;
+    }
+  `};
 `;
 
 // Split this into a helper to keep the `doSort` method consistent with the initial state `sort`.
@@ -187,11 +196,18 @@ class DataTable extends React.PureComponent {
   };
 
   render() {
-    const { className, children, columns, nested, extraHeaders } = this.props;
+    const {
+      className,
+      children,
+      columns,
+      nested,
+      extraHeaders,
+      flush,
+    } = this.props;
     const { sortedData, sortOrder, sortField } = this.state;
 
     return (
-      <table className={className}>
+      <Table className={className} flush={flush}>
         <thead>
           <tr>
             {map(columns, ({ value, label, sortable, width, element }) => (
@@ -212,7 +228,7 @@ class DataTable extends React.PureComponent {
         </thead>
         {/* Don't render the tbody if nested; nested tables use <tbody> for rows */}
         {nested ? children(sortedData) : <tbody>{children(sortedData)}</tbody>}
-      </table>
+      </Table>
     );
   }
 }
@@ -232,6 +248,11 @@ DataTable.propTypes = {
    * There must be a key in your row object that matches the column `value`.
    */
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  /**
+   * Flush will align the first column with the edge of the table, instead of
+   * having left padding
+   */
+  flush: PropTypes.bool,
   /**
    * A render-prop function that will be passed the sorted rows for the table.
    */
@@ -281,6 +302,7 @@ DataTable.defaultProps = {
   extraHeaders: [],
   sortBy: '',
   onSort: noop,
+  flush: false,
 };
 
-export default copyPropTypes(DataTable, Styled(DataTable));
+export default DataTable;
