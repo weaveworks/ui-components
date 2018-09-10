@@ -48,6 +48,14 @@ const Separator = styled.div`
   width: 100%;
 `;
 
+const BgWrap = styled.div`
+  ${props =>
+    props.bg &&
+    `
+    background-color: ${props.newColor}
+`};
+`;
+
 const curly = start => (start ? '{' : '}');
 
 const maybeParseColor = v => {
@@ -108,11 +116,20 @@ class Colors extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { newColor: '' };
+    this.state = {
+      newColor: '',
+      bg: false,
+    };
   }
 
   handleChange = ev => {
     this.setState({ newColor: ev.target.value });
+  };
+
+  toggleBg = () => {
+    this.setState({
+      bg: !this.state.bg,
+    });
   };
 
   renderSwatches(collection, matcher) {
@@ -157,42 +174,48 @@ class Colors extends React.Component {
             value={this.state.newColor}
             onChange={this.handleChange}
           />
+          <label style={{ marginLeft: '10px' }}>
+            <input type="checkbox" onChange={this.toggleBg} />
+            Toggle background
+          </label>
         </NewColorFormRow>
-        <Text large bold>
-          Primary Colors
-        </Text>
-        <Row>{this.renderSwatches(theme.colors, /^purple[0-9]*$/)}</Row>
-        <Text large bold>
-          Accent Colors
-        </Text>
-        <Row>
-          {this.renderSwatches(
-            theme.colors,
-            /^(orange|blue|green|yellow)[0-9]*$/
-          )}
-        </Row>
-        <Text large bold>
-          Neutral Colors
-        </Text>
-        <Row>
-          {this.renderSwatches(theme.colors, /^(black|gray|white)[0-9]*$/)}
-        </Row>
-        <Separator />
-        <Text large bold>
-          PromQL Theme
-        </Text>
-        <Row>{this.renderSwatches(theme.colors.promQL)}</Row>
-        <Text large bold>
-          PrometheusGraph Themes
-        </Text>
-        <div>
-          <Text bold>Blue</Text>
-          <Row>{this.renderSwatches(theme.colors.graphThemes.blue)}</Row>
-          <Text bold>Purple</Text>
-          <Row>{this.renderSwatches(theme.colors.graphThemes.purple)}</Row>
-          <Text bold>Mixed</Text>
-          <Row>{this.renderSwatches(theme.colors.graphThemes.mixed)}</Row>
-        </div>
+        <BgWrap {...this.state}>
+          <Text large bold>
+            Primary Colors
+          </Text>
+          <Row>{this.renderSwatches(theme.colors, /^purple[0-9]*$/)}</Row>
+          <Text large bold>
+            Accent Colors
+          </Text>
+          <Row>
+            {this.renderSwatches(
+              theme.colors,
+              /^(orange|blue|green|yellow)[0-9]*$/
+            )}
+          </Row>
+          <Text large bold>
+            Neutral Colors
+          </Text>
+          <Row>
+            {this.renderSwatches(theme.colors, /^(black|gray|white)[0-9]*$/)}
+          </Row>
+          <Separator />
+          <Text large bold>
+            PromQL Theme
+          </Text>
+          <Row>{this.renderSwatches(theme.colors.promQL)}</Row>
+          <Text large bold>
+            PrometheusGraph Themes
+          </Text>
+          <div>
+            <Text bold>Blue</Text>
+            <Row>{this.renderSwatches(theme.colors.graphThemes.blue)}</Row>
+            <Text bold>Purple</Text>
+            <Row>{this.renderSwatches(theme.colors.graphThemes.purple)}</Row>
+            <Text bold>Mixed</Text>
+            <Row>{this.renderSwatches(theme.colors.graphThemes.mixed)}</Row>
+          </div>
+        </BgWrap>
       </div>
     );
   }
