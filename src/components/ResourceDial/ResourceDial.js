@@ -133,12 +133,12 @@ class ResourceDial extends React.PureComponent {
 
   render() {
     const { value } = this.state;
-    const { label, disabled, to } = this.props;
+    const { label, disabled, to, onClick } = this.props;
     const hasLink = !isEmpty(to) && !disabled;
     const hasValue = isFinite(value);
 
     return (
-      <DialLink to={hasLink ? to : ''}>
+      <DialLink to={hasLink ? to : ''} onClick={onClick}>
         <Motion style={{ interpolatedValue: dialSpring(hasValue ? value : 0) }}>
           {({ interpolatedValue }) => (
             <DialContainer disabled={!hasLink}>
