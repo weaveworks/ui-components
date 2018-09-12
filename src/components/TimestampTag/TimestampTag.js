@@ -109,7 +109,9 @@ class TimestampTag extends React.Component {
       >
         {relative
           ? momentTimestamp.locale(relativeLocale).fromNow(compact)
-          : momentTimestamp.startOf('second').format()}
+          : momentTimestamp
+              .startOf('second')
+              .format(compact ? 'YYYY-MM-DD' : '')}
       </Timestamp>
     );
   }
