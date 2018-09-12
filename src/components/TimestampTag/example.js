@@ -40,6 +40,8 @@ export default class TimestampTagExample extends React.Component {
           />
           <Info>Absolute timestamp</Info>
           <TimestampTag timestamp={inputTimestamp} />
+          <Info>Absolute timestamp (compact)</Info>
+          <TimestampTag compact timestamp={inputTimestamp} />
           <Info>Relative timestamp (default)</Info>
           <TimestampTag relative timestamp={inputTimestamp} />
           <Info>Relative timestamp (compact)</Info>
