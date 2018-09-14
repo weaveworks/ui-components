@@ -49,7 +49,6 @@ exports[`DataTable snapshots renders an element instead of a label 1`] = `
       <td
         className="c1"
         onClick={[Function]}
-        title={undefined}
       >
         <i
           className="fa fa-some-icon"

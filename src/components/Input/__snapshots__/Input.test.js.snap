@@ -266,7 +266,7 @@ exports[`<Input /> should render correctly 1`] = `
   <Input
     label="Hi"
     message="Doh!"
-    onChange={[Function]}
+    onChange={[MockFunction]}
     valid={false}
   >
     <Input
@@ -277,7 +277,7 @@ exports[`<Input /> should render correctly 1`] = `
       inputRef={[Function]}
       label="Hi"
       message="Doh!"
-      onChange={[Function]}
+      onChange={[MockFunction]}
       textarea={false}
       valid={false}
     >
@@ -294,7 +294,7 @@ exports[`<Input /> should render correctly 1`] = `
             className="c1"
           >
             <input
-              onChange={[Function]}
+              onChange={[MockFunction]}
             />
             <Input__Icon
               className="fa fa-times-circle"
