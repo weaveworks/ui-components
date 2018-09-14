@@ -221,7 +221,7 @@ Search.propTypes = {
    * Handler that runs when an item from the search filter dropdown is selected
    * Returns the selected filter value.
    */
-  onFilterSelect: PropTypes.func,
+  onFilterSelect: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
 };
@@ -231,9 +231,6 @@ Search.defaultProps = {
   disabled: false,
   filters: [],
   onPin: noop,
-  onFilterSelect: () => {
-    throw new Error('Please provide an onFilterSelect(value) callback!');
-  },
   onFocus: noop,
   onBlur: noop,
 };
