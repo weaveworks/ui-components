@@ -1,13 +1,10 @@
 import React from 'react';
-import enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { mount } from 'enzyme';
 import 'jest-styled-components';
 
 import { withTheme } from '../../utils/theme';
 
 import Input from './Input';
-
-enzyme.configure({ adapter: new Adapter() });
 
 describe('<Input />', () => {
   let props;
@@ -66,6 +63,8 @@ describe('<Input />', () => {
   it('should remove validation message from the DOM when hideValidationMessage=true', () => {
     props = {
       hideValidationMessage: true,
+      // https://github.com/styled-components/jest-styled-components/issues/189
+      message: 'Derp!',
     };
     wrapper = mount(withTheme(<Input {...props} />));
 

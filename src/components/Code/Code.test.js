@@ -1,12 +1,9 @@
 import React from 'react';
-import enzyme, { shallow, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow, mount } from 'enzyme';
 
 import { withTheme } from '../../utils/theme';
 
 import Code from '.';
-
-enzyme.configure({ adapter: new Adapter() });
 
 document.execCommand = () => {};
 document.getSelection = () => ({
