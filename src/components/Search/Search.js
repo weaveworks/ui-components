@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { map, includes, without, isEmpty, last, noop } from 'lodash';
 import PropTypes from 'prop-types';
+import requiredIf from 'react-required-if';
 
 import { copyPropTypes } from '../../utils/compose';
 import Input from '../Input';
@@ -221,7 +222,7 @@ Search.propTypes = {
    * Handler that runs when an item from the search filter dropdown is selected
    * Returns the selected filter value.
    */
-  onFilterSelect: PropTypes.func.isRequired,
+  onFilterSelect: requiredIf(PropTypes.func, props => props.filters.length > 0),
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
 };
@@ -230,6 +231,7 @@ Search.defaultProps = {
   placeholder: 'search',
   disabled: false,
   filters: [],
+  onFilterSelect: noop,
   onPin: noop,
   onFocus: noop,
   onBlur: noop,

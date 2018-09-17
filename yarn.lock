@@ -6822,6 +6822,10 @@ react-reconciler@^0.7.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-required-if@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-required-if/-/react-required-if-1.0.3.tgz#6a40a761b1d54815c1d4e6610910cbf92b5aa987"
+
 react-resize-aware@2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/react-resize-aware/-/react-resize-aware-2.7.0.tgz#1bb6d0b45a234d94d412b5c3f5e9d2ffbf973429"

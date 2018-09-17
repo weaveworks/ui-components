@@ -58,6 +58,7 @@
     "prop-types": "15.6.0",
     "react-input-autosize": "2.2.1",
     "react-motion": "0.5.2",
+    "react-required-if": "^1.0.3",
     "react-resize-aware": "2.7.0",
     "react-router": "3.2.0"
   },
