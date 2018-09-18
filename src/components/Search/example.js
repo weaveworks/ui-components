@@ -9,7 +9,7 @@ import Search from './Search';
 const List = ({ items, text, terms }) => {
   const list =
     text.length > 0 || terms.length > 0
-      ? filter(items, i => (text === i || includes(terms, i): true))
+      ? filter(items, i => text === i || includes(terms, i))
       : items;
 
   return <ul>{map(list, item => <li key={item}>{item}</li>)}</ul>;

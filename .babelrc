@@ -1,9 +1,9 @@
 {
   "plugins": [
-    "transform-class-properties",
-    "transform-export-extensions",
-    "transform-object-rest-spread",
-    "transform-export-default",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-proposal-export-namespace-from",
+    "@babel/plugin-proposal-object-rest-spread",
     [
       "styled-components",
       {
@@ -13,7 +13,7 @@
     "lodash"
   ],
   "presets": [
-    "es2015",
-    "react"
+    "@babel/preset-env",
+    "@babel/preset-react"
   ]
 }
