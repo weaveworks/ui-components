@@ -1,13 +1,19 @@
 {
-  "plugins" : [
+  "plugins": [
     "transform-class-properties",
     "transform-export-extensions",
     "transform-object-rest-spread",
+    "transform-export-default",
     [
-      "styled-components", {
-      "displayName": true
-    }],
+      "styled-components",
+      {
+        "displayName": true
+      }
+    ],
     "lodash"
   ],
-  "presets": ["es2015", "react"]
+  "presets": [
+    "es2015",
+    "react"
+  ]
 }

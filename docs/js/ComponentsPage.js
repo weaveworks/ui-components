@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { values, flatMap, includes, reduce, concat } from 'lodash';
+import { values, flatMap, reduce, concat } from 'lodash';
 
 import {
   Grid,
@@ -9,7 +9,7 @@ import {
 } from '../../src/components/Grid';
 import { Menu, MenuItem } from '../../src/components/Menu';
 
-import { isActivePage } from './utils';
+import { filterContextKeys, isActivePage } from './utils';
 
 class ComponentsPage extends React.Component {
   constructor(props, context) {
@@ -26,9 +26,7 @@ class ComponentsPage extends React.Component {
     // Renders a tree structure for the left-hand navigation links.
     // Filters out .js resources to avoid duplicates.
     // => { Grid: {name: 'Grid', subModules: ['Column']}, Button: {...}, ...}
-    const links = this.context.components
-      .keys()
-      .filter(n => !includes(n, '.js'));
+    const links = filterContextKeys(this.context.components.keys());
     const tree = reduce(
       links,
       (result, resource) => {

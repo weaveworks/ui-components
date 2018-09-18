@@ -19,7 +19,7 @@ const exampleCtx = require.context(
   /example\.js$/
 );
 const docCtx = require.context(
-  '!!react-docs!../../src/components',
+  '!babel-loader!react-docs!../../src/components',
   true,
   /^((?!test|index|example|_).)*$/
 );

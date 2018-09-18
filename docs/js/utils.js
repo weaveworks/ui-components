@@ -1,4 +1,5 @@
 import marked from 'marked';
+import { includes } from 'lodash';
 import { highlightAuto } from 'highlight.js';
 
 marked.setOptions({
@@ -30,3 +31,9 @@ export function isActivePage(item) {
 
   return item.toLowerCase() === p || item.toLowerCase() === page;
 }
+
+// require.context() returns multiple matches for each level of subdirectories,
+// this filters just the js files, thus ignoring the folders themselves, and
+// then removes the suffix
+export const filterContextKeys = contextKeys =>
+  contextKeys.filter(n => includes(n, '.js')).map(s => s.replace('.js', ''));
