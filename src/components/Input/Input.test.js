@@ -63,8 +63,6 @@ describe('<Input />', () => {
   it('should remove validation message from the DOM when hideValidationMessage=true', () => {
     props = {
       hideValidationMessage: true,
-      // https://github.com/styled-components/jest-styled-components/issues/189
-      message: 'Derp!',
     };
     wrapper = mount(withTheme(<Input {...props} />));
 
