@@ -5,7 +5,11 @@ import { spring, Motion } from 'react-motion';
 
 import theme from '../../theme';
 
-import GraphNodeStatic, { shapes, nodeBaseSize } from './_GraphNodeStatic';
+import GraphNodeStatic, {
+  shapes,
+  tags,
+  nodeBaseSize,
+} from './_GraphNodeStatic';
 
 function weakSpring(value) {
   return spring(value, { stiffness: 100, damping: 18, precision: 1 });
@@ -61,6 +65,10 @@ GraphNode.propTypes = {
    * Shape of the rendered node (e.g. 'hexagon')
    */
   shape: PropTypes.oneOf(keys(shapes)).isRequired,
+  /**
+   * An optional tag icon attached to the shape
+   */
+  tag: PropTypes.oneOf(keys(tags)),
   /**
    * The node main label displayed right under the node shape
    */
@@ -156,6 +164,7 @@ GraphNode.propTypes = {
 };
 
 GraphNode.defaultProps = {
+  tag: 'none',
   labelMinor: '',
   labelOffset: 0,
   stacked: false,

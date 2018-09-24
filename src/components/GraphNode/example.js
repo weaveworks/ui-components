@@ -40,10 +40,25 @@ const TextInput = styled.input.attrs({
 
 export default class GraphNodeExample extends React.Component {
   state = {
-    availableShapes: nodeTypes.map(shape => ({
-      shape,
-      key: faker.lorem.slug(),
-    })),
+    availableShapes: [
+      ...nodeTypes.map(shape => ({
+        shape,
+        label: shape,
+        key: faker.lorem.slug(),
+      })),
+      {
+        tag: 'camera',
+        shape: 'cylinder',
+        label: 'cylinder + camera',
+        key: faker.lorem.slug(),
+      },
+      {
+        tag: 'camera',
+        shape: 'dottedcylinder',
+        label: 'dottedcylinder + camera',
+        key: faker.lorem.slug(),
+      },
+    ],
     stackedShape: nodeTypes.map(shape => ({
       shape,
       key: faker.lorem.slug(),
@@ -132,7 +147,8 @@ export default class GraphNodeExample extends React.Component {
               <GraphNode
                 id={node.key}
                 shape={node.shape}
-                label={node.shape}
+                tag={node.tag}
+                label={node.label}
                 size={this.state.size}
                 contrastMode={this.state.contrastMode}
                 highlighted={node.key === this.state.hoveredNodeId}
