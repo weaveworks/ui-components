@@ -17,6 +17,7 @@ import ShapeCloud from './shapes/_ShapeCloud';
 import ShapeSheet from './shapes/_ShapeSheet';
 import ShapeCylinder from './shapes/_ShapeCylinder';
 import ShapeDottedCylinder from './shapes/_ShapeDottedCylinder';
+import TagCamera from './tags/_TagCamera';
 
 export const nodeBaseSize = 55;
 export const shapes = {
@@ -31,6 +32,10 @@ export const shapes = {
   sheet: ShapeSheet,
   cylinder: ShapeCylinder,
   dottedcylinder: ShapeDottedCylinder,
+};
+export const tags = {
+  none: () => null,
+  camera: TagCamera,
 };
 
 const labelWidth = nodeBaseSize * 2.5;
@@ -179,6 +184,7 @@ class GraphNodeStatic extends React.PureComponent {
 
   render() {
     const Shape = shapes[this.props.shape];
+    const Tag = tags[this.props.tag];
 
     return (
       <GraphNodeWrapper
@@ -204,6 +210,8 @@ class GraphNodeStatic extends React.PureComponent {
           highlighted={this.props.highlighted}
           contrastMode={this.props.contrastMode}
         />
+
+        <Tag contrastMode={this.props.contrastMode} />
       </GraphNodeWrapper>
     );
   }
@@ -212,6 +220,7 @@ class GraphNodeStatic extends React.PureComponent {
 GraphNodeStatic.propTypes = {
   id: PropTypes.string.isRequired,
   shape: PropTypes.oneOf(keys(shapes)).isRequired,
+  tag: PropTypes.oneOf(keys(tags)).isRequired,
   label: PropTypes.string.isRequired,
   labelMinor: PropTypes.string.isRequired,
   labelOffset: PropTypes.number.isRequired,
