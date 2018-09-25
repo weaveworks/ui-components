@@ -3,10 +3,11 @@ version: 2
 jobs:
   test:
     docker:
-      - image: mhart/alpine-node:8.4.0
+      - image: mhart/alpine-node:8.9.0
     steps:
       - checkout
       - run: echo 'export PATH=${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin' >> $BASH_ENV
+      - run: apk update && apk add git
       - run: yarn install
       - run: yarn lint
       - run: yarn test

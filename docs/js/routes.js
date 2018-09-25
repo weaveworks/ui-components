@@ -7,6 +7,7 @@ import ComponentsPage from './ComponentsPage';
 import StyleGuidePage from './StyleGuidePage';
 import LandingPage from './LandingPage';
 import Example from './Example';
+import { filterContextKeys } from './utils';
 
 function buildExampleComponent(el, doc, example, sub) {
   return function ExampleWrapper() {
@@ -41,7 +42,7 @@ function isSubComponent(resource) {
 export default function getRoutes(components, examples, docs, styles) {
   const availableExamples = examples.keys();
 
-  const componentRoutes = components.keys().map(resource => {
+  const componentRoutes = filterContextKeys(components.keys()).map(resource => {
     const name = resource.split('/').pop();
     const component = components(resource).default;
     const doc = docs(`${resource}`);

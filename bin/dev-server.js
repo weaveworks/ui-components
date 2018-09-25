@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
+
 const config = require('../webpack.config');
 
 new WebpackDevServer(webpack(config), {
@@ -11,4 +12,5 @@ new WebpackDevServer(webpack(config), {
   if (err) {
     throw err;
   }
+  console.log('Started server at http://localhost:8080');
 });
