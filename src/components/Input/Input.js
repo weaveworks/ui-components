@@ -36,7 +36,7 @@ const InputWrapper = styled.div`
 
   input {
     ${props => placeholder('color', props.theme.colors.gray600)};
-    ${props => placeholder('opacity', 1)};
+    ${placeholder('opacity', 1)};
 
     padding-right: ${props => (props.valid ? '12px' : '38px')};
     padding-left: 12px;
