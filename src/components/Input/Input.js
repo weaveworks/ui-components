@@ -36,11 +36,14 @@ const InputWrapper = styled.div`
 
   input {
     ${props => placeholder('color', props.theme.colors.gray600)};
+    ${placeholder('opacity', 1)};
+
     padding-right: ${props => (props.valid ? '12px' : '38px')};
     padding-left: 12px;
     width: 100%;
     line-height: 36px;
     box-shadow: none;
+    background-color: ${props => props.theme.colors.white};
     border: 1px solid ${props => props.theme.colors.gray600};
     border-radius: ${props => props.theme.borderRadius.soft};
     height: 36px;

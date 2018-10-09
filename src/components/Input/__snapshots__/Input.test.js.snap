@@ -29,6 +29,7 @@ exports[`<Input /> should render correctly 1`] = `
   width: 100%;
   line-height: 36px;
   box-shadow: none;
+  background-color: hsl(0,0%,100%);
   border: 1px solid hsl(0,0%,45%);
   border-radius: 2px;
   height: 36px;
@@ -49,6 +50,22 @@ exports[`<Input /> should render correctly 1`] = `
 
 .c1 input:-ms-input-placeholder {
   color: hsl(0,0%,45%);
+}
+
+.c1 input::-webkit-input-placeholder {
+  opacity: 1;
+}
+
+.c1 input::-moz-placeholder {
+  opacity: 1;
+}
+
+.c1 input:-moz-placeholder {
+  opacity: 1;
+}
+
+.c1 input:-ms-input-placeholder {
+  opacity: 1;
 }
 
 .c1 input:disabled {
