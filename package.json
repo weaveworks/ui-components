@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.12.3",
+  "version": "0.13.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -75,9 +75,9 @@
     "babel-eslint": "8.2.1",
     "babel-jest": "23.6.0",
     "babel-loader": "^8.0.0",
-    "css-loader": "^1.0.0",
     "babel-plugin-lodash": "^3.3.2",
     "babel-plugin-styled-components": "^1.5.0",
+    "css-loader": "^1.0.0",
     "enzyme": "3.6.0",
     "enzyme-adapter-react-16": "1.5.0",
     "enzyme-to-json": "^3.3.4",
