@@ -76,6 +76,7 @@ const rangeOptions = [
   { label: '3h', valueMs: moment.duration(3, 'hours').asMilliseconds() },
   { label: '6h', valueMs: moment.duration(6, 'hours').asMilliseconds() },
   { label: '24h', valueMs: moment.duration(24, 'hours').asMilliseconds() },
+  { label: '7d', valueMs: moment.duration(7, 'days').asMilliseconds() },
 ];
 
 class RangeSelector extends React.Component {
