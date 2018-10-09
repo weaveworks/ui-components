@@ -3,9 +3,11 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 let externals;
+let optimization;
 let mode = 'development';
 let entry = {
   docs: [
@@ -105,10 +107,11 @@ if (process.env.RELEASE) {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-    }),
   ];
+
+  optimization = {
+    minimizer: [new UglifyJsPlugin()],
+  };
 } else {
   // Normal sass loader. This complains if it runs in the RELEASE job, so only apply it if RELEASE
   // is falsey.
@@ -132,7 +135,7 @@ if (process.env.RELEASE) {
 module.exports = {
   mode,
   externals,
-  devtool: process.env.NODE_ENV !== 'production' ? 'eval-source-map' : null,
+  devtool: process.env.NODE_ENV !== 'production' ? 'eval-source-map' : false,
   resolveLoader: {
     alias: {
       'react-docs': path.join(__dirname, 'src/loaders/react-docs.js'),
@@ -144,6 +147,7 @@ module.exports = {
   entry,
   output,
   plugins,
+  optimization,
   module: {
     rules,
   },
