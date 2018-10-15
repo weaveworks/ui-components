@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { find, range, flatMap } from 'lodash';
+import { find, range, flatMap, last } from 'lodash';
 
 const AxesGridContainer = styled.div``;
 
@@ -68,7 +68,7 @@ function formatTimeTick(timeSec) {
 }
 
 function getTimeTicksBetween(startTimeSec, endTimeSec) {
-  // 1s, 2s, 5s, 15s, 30s, 1min, 2min, 5min, 15min, 30min, 1h, 2h, 4h, 8h intervals
+  // 1s, 2s, 5s, 15s, 30s, 1min, 2min, 5min, 15min, 30min, 1h, 2h, 4h, 8h, 24h intervals
   const stepsSec = [
     1,
     2,
@@ -84,10 +84,13 @@ function getTimeTicksBetween(startTimeSec, endTimeSec) {
     7200,
     14400,
     28800,
+    86400,
   ];
 
-  // Tweak the step to show a reasonable number of ticks.
-  const stepSec = find(stepsSec, s => (endTimeSec - startTimeSec) / s < 8);
+  // Tweak the step to show a reasonable number of
+  // ticks, otherwise use the biggest unit possible.
+  const stepSec =
+    find(stepsSec, s => (endTimeSec - startTimeSec) / s < 8) || last(stepsSec);
 
   // Round up the time ticks to the time ticks step precision.
   const initialTickSec = Math.ceil(startTimeSec / stepSec) * stepSec;
