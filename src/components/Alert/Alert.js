@@ -9,7 +9,6 @@ const StyledAlert = styled.div`
   display: flex;
   background: ${fromAtoms('Alert', 'type', 'background')};
   border-radius: ${props => props.theme.borderRadius.soft};
-  border: 2px solid ${fromAtoms('Alert', 'type', 'borderColor')};
   color: ${fromAtoms('Alert', 'type', 'color')};
   margin: 8px 0 8px 0;
   min-height: 1em;
