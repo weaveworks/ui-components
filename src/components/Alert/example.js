@@ -25,11 +25,6 @@ export default class AlertExample extends React.Component {
     return (
       <div>
         <Example>
-          <Alert visible={this.state.default} onClose={onClose('default')}>
-            Default: This is a default alert. It is just giving you some info.
-          </Alert>
-        </Example>
-        <Example>
           <Alert
             type="info"
             visible={this.state.info}
@@ -63,31 +58,6 @@ export default class AlertExample extends React.Component {
             onClose={onClose('error')}
           >
             Error: Wow you really screwed this up...
-          </Alert>
-        </Example>
-        <Example>
-          <Alert visible={this.state.multi} onClose={onClose('multi')}>
-            <div>
-              Multiline: This is a multiline default alert. It is just giving
-              you some info.
-            </div>
-            <div>And some more info, with extraa info down here.</div>
-            <div>And even more info.</div>
-          </Alert>
-        </Example>
-        <Example>
-          <Alert
-            title="Such title"
-            icon="warning"
-            visible={this.state.multiTitle}
-            onClose={onClose('multiTitle')}
-          >
-            <div>
-              Multiline with icon and title: This is a multiline default alert.
-              It is just giving you some info.
-            </div>
-            <div>And some more info, with extraa info down here.</div>
-            <div>And even more info.</div>
           </Alert>
         </Example>
         <Button onClick={() => this.setState(initial)} text="Reset" />
