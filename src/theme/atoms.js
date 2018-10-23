@@ -7,7 +7,7 @@ export const atoms = {
   Alert: {
     default: {
       color: colors.black,
-      background: colors.gray50,
+      background: colors.white,
       borderColor: colors.gray200,
     },
     info: {
