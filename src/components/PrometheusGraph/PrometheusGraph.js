@@ -13,6 +13,7 @@ import {
   keys,
   last,
   max,
+  min,
   noop,
   omit,
   range,
@@ -353,13 +354,17 @@ class PrometheusGraph extends React.PureComponent {
     this.setState({ multiSeries });
   };
 
-  getMaxGraphValue() {
+  getMaxMinGraphValue() {
     const yPositions = flatten(
       this.getVisibleMultiSeries().map(series =>
         series.datapoints.map(datapoint => datapoint.offset + datapoint.value)
       )
     );
-    return max([this.props.valuesMinSpread * 1.05, ...yPositions]);
+
+    return {
+      max: max([this.props.valuesMinSpread * 1.05, ...yPositions]),
+      min: min([0, ...yPositions]),
+    };
   }
 
   getTimestampQuantizer(props = this.props) {
@@ -393,9 +398,12 @@ class PrometheusGraph extends React.PureComponent {
 
   getValueScale() {
     const { chartHeight } = this.state;
-    const maxGraphValue = this.getMaxGraphValue();
+    const {
+      max: maxGraphValue,
+      min: minGraphValue,
+    } = this.getMaxMinGraphValue();
     return scaleLinear()
-      .domain([0, maxGraphValue])
+      .domain([minGraphValue, maxGraphValue])
       .range([chartHeight, 0]);
   }
 

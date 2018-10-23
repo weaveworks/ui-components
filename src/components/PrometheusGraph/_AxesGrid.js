@@ -97,7 +97,7 @@ function getTimeTicksBetween(startTimeSec, endTimeSec) {
   return range(initialTickSec, endTimeSec, stepSec);
 }
 
-function getValueTicks(metricUnits, maxValue) {
+function getValueTicks(metricUnits, minValue, maxValue) {
   /* eslint-disable no-restricted-properties */
   const powersOf10 = range(-6, 15).map(p => Math.pow(10, p));
   const steps =
@@ -107,7 +107,7 @@ function getValueTicks(metricUnits, maxValue) {
   /* eslint-enable no-restricted-properties */
 
   const step = find(steps, s => maxValue / s < 4);
-  return range(0, maxValue, step);
+  return range(minValue, maxValue, step);
 }
 
 class AxesGrid extends React.PureComponent {
@@ -122,10 +122,10 @@ class AxesGrid extends React.PureComponent {
     } = this.props;
     if (!chartWidth || !chartHeight || !hasData) return null;
 
-    const yAxisMax = valueScale.domain()[1];
+    const [yAxisMin, yAxisMax] = valueScale.domain();
     const [startTimeSec, endTimeSec] = timeScale.domain();
     const timeTicks = getTimeTicksBetween(startTimeSec, endTimeSec);
-    const valueTicks = getValueTicks(metricUnits, yAxisMax);
+    const valueTicks = getValueTicks(metricUnits, yAxisMin, yAxisMax);
     const formatValue = this.props.valueFormatter(yAxisMax);
 
     return (
