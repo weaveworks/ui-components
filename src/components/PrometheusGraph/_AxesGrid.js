@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { find, range, flatMap, last } from 'lodash';
+import { find, range, round, flatMap, last } from 'lodash';
 
 const AxesGridContainer = styled.div``;
 
@@ -107,7 +107,10 @@ function getValueTicks(metricUnits, minValue, maxValue) {
   /* eslint-enable no-restricted-properties */
 
   const step = find(steps, s => maxValue / s < 4);
-  return range(minValue, maxValue, step);
+
+  // lodash `range()` doesn't include the end value in the returned array so we
+  // add 1e-6 to move maxValue within the range
+  return range(round(minValue, 2), round(maxValue, 2) + 1e-6, step);
 }
 
 class AxesGrid extends React.PureComponent {
