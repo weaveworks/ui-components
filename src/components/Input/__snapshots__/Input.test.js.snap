@@ -108,7 +108,7 @@ exports[`<Input /> should render correctly 1`] = `
       "atoms": Object {
         "Alert": Object {
           "default": Object {
-            "background": "hsl(0, 0%, 96%)",
+            "background": "hsl(0, 0%, 100%)",
             "borderColor": "hsl(0, 0%, 80%)",
             "color": "hsl(0, 0%, 10%)",
           },

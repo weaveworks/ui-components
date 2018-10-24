@@ -6,9 +6,8 @@ exports[`<Alert /> snapshots renders default 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: hsl(0,0%,96%);
+  background: hsl(0,0%,100%);
   border-radius: 2px;
-  border: 2px solid hsl(0,0%,80%);
   color: hsl(0,0%,10%);
   margin: 8px 0 8px 0;
   min-height: 1em;
@@ -59,7 +58,6 @@ exports[`<Alert /> snapshots renders error 1`] = `
   display: flex;
   background: hsl(13,100%,40%);
   border-radius: 2px;
-  border: 2px solid hsl(13,100%,30%);
   color: hsl(0,0%,100%);
   margin: 8px 0 8px 0;
   min-height: 1em;
@@ -108,9 +106,8 @@ exports[`<Alert /> snapshots renders icon if provided 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: hsl(0,0%,96%);
+  background: hsl(0,0%,100%);
   border-radius: 2px;
-  border: 2px solid hsl(0,0%,80%);
   color: hsl(0,0%,10%);
   margin: 8px 0 8px 0;
   min-height: 1em;
@@ -161,7 +158,6 @@ exports[`<Alert /> snapshots renders success 1`] = `
   display: flex;
   background: hsl(161,54%,48%);
   border-radius: 2px;
-  border: 2px solid #268165;
   color: hsl(0,0%,100%);
   margin: 8px 0 8px 0;
   min-height: 1em;
@@ -219,9 +215,8 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background: hsl(0,0%,96%);
+  background: hsl(0,0%,100%);
   border-radius: 2px;
-  border: 2px solid hsl(0,0%,80%);
   color: hsl(0,0%,10%);
   margin: 8px 0 8px 0;
   min-height: 1em;
@@ -285,7 +280,6 @@ exports[`<Alert /> snapshots renders warning 1`] = `
   display: flex;
   background: hsl(46,69%,49%);
   border-radius: 2px;
-  border: 2px solid #92771b;
   color: hsl(0,0%,100%);
   margin: 8px 0 8px 0;
   min-height: 1em;
