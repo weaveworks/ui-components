@@ -34,6 +34,11 @@ const Title = styled.div`
   margin-bottom: 0.5em;
 `;
 
+const StyledText = styled(Text)`
+  color: ${props => props.theme.colors.white};
+  font-weight: bold;
+`;
+
 const Icon = styled.i`
   margin-right: 0.5em;
 `;
@@ -72,9 +77,7 @@ function Alert(props) {
         {title && (
           <Title>
             {icon && <Icon className={`fa ${normaliseIconName(icon)}`} />}
-            <Text normal bold>
-              {title}
-            </Text>
+            <StyledText>{title}</StyledText>
           </Title>
         )}
         {children}

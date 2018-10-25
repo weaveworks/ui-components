@@ -201,11 +201,11 @@ exports[`<Alert /> snapshots renders success 1`] = `
 `;
 
 exports[`<Alert /> snapshots renders title if provided 1`] = `
-.c3 {
+.c4 {
   font-family: 'proxima-nova',Helvetica,Arial,sans-serif;
   color: hsl(0,0%,10%);
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   text-transform: none;
   font-style: normal;
 }
@@ -248,6 +248,11 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
   margin-bottom: 0.5em;
 }
 
+.c3 {
+  color: hsl(0,0%,100%);
+  font-weight: bold;
+}
+
 <div
   className="c0"
   icon=""
@@ -262,7 +267,7 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
     >
       
       <span
-        className="c3"
+        className="c3 c4"
       >
         title
       </span>

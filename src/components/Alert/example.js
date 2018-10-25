@@ -6,11 +6,9 @@ import Button from '../Button';
 import Alert from '.';
 
 const initial = {
-  default: true,
   error: true,
   info: true,
-  multi: true,
-  multiTitle: true,
+  title: true,
   success: true,
   warning: true,
 };
@@ -58,6 +56,19 @@ export default class AlertExample extends React.Component {
             onClose={onClose('error')}
           >
             Error: Wow you really screwed this up...
+          </Alert>
+        </Example>
+        <Example>
+          <Alert
+            title="A title"
+            icon="warning"
+            visible={this.state.title}
+            onClose={onClose('title')}
+          >
+            <div>
+              This is a default alert with a title. It is just giving you some
+              info.
+            </div>
           </Alert>
         </Example>
         <Button onClick={() => this.setState(initial)} text="Reset" />

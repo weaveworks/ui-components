@@ -107,29 +107,20 @@ exports[`<Input /> should render correctly 1`] = `
     Object {
       "atoms": Object {
         "Alert": Object {
-          "default": Object {
-            "background": "hsl(0, 0%, 100%)",
-            "borderColor": "hsl(0, 0%, 80%)",
-            "color": "hsl(0, 0%, 10%)",
-          },
           "error": Object {
             "background": "hsl(13, 100%, 40%)",
-            "borderColor": "hsl(13, 100%, 30%)",
             "color": "hsl(0, 0%, 100%)",
           },
           "info": Object {
             "background": "hsl(191, 100%, 40%)",
-            "borderColor": "hsl(191, 100%, 30%)",
             "color": "hsl(0, 0%, 100%)",
           },
           "success": Object {
             "background": "hsl(161, 54%, 48%)",
-            "borderColor": "#268165",
             "color": "hsl(0, 0%, 100%)",
           },
           "warning": Object {
             "background": "hsl(46, 69%, 49%)",
-            "borderColor": "#92771b",
             "color": "hsl(0, 0%, 100%)",
           },
         },
