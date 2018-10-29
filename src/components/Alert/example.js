@@ -6,11 +6,9 @@ import Button from '../Button';
 import Alert from '.';
 
 const initial = {
-  default: true,
   error: true,
   info: true,
-  multi: true,
-  multiTitle: true,
+  title: true,
   success: true,
   warning: true,
 };
@@ -24,11 +22,6 @@ export default class AlertExample extends React.Component {
     const onClose = id => () => this.setState({ [id]: false });
     return (
       <div>
-        <Example>
-          <Alert visible={this.state.default} onClose={onClose('default')}>
-            Default: This is a default alert. It is just giving you some info.
-          </Alert>
-        </Example>
         <Example>
           <Alert
             type="info"
@@ -66,28 +59,16 @@ export default class AlertExample extends React.Component {
           </Alert>
         </Example>
         <Example>
-          <Alert visible={this.state.multi} onClose={onClose('multi')}>
-            <div>
-              Multiline: This is a multiline default alert. It is just giving
-              you some info.
-            </div>
-            <div>And some more info, with extraa info down here.</div>
-            <div>And even more info.</div>
-          </Alert>
-        </Example>
-        <Example>
           <Alert
-            title="Such title"
+            title="A title"
             icon="warning"
-            visible={this.state.multiTitle}
-            onClose={onClose('multiTitle')}
+            visible={this.state.title}
+            onClose={onClose('title')}
           >
             <div>
-              Multiline with icon and title: This is a multiline default alert.
-              It is just giving you some info.
+              This is a default alert with a title. It is just giving you some
+              info.
             </div>
-            <div>And some more info, with extraa info down here.</div>
-            <div>And even more info.</div>
           </Alert>
         </Example>
         <Button onClick={() => this.setState(initial)} text="Reset" />

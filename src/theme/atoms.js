@@ -1,34 +1,23 @@
-import { darken } from 'polished';
-
 import { colors } from './colors';
 
 // component-specific
 export const atoms = {
   Alert: {
-    default: {
-      color: colors.black,
-      background: colors.white,
-      borderColor: colors.gray200,
-    },
     info: {
       color: colors.white,
       background: colors.blue600,
-      borderColor: colors.blue800,
     },
     success: {
       color: colors.white,
       background: colors.green500,
-      borderColor: darken(0.15, colors.green500),
     },
     warning: {
       color: colors.white,
       background: colors.yellow500,
-      borderColor: darken(0.15, colors.yellow500),
     },
     error: {
       color: colors.white,
       background: colors.orange600,
-      borderColor: colors.orange800,
     },
   },
   Button: {

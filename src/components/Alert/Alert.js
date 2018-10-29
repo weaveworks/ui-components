@@ -34,6 +34,11 @@ const Title = styled.div`
   margin-bottom: 0.5em;
 `;
 
+const StyledText = styled(Text)`
+  color: ${props => props.theme.colors.white};
+  font-weight: bold;
+`;
+
 const Icon = styled.i`
   margin-right: 0.5em;
 `;
@@ -72,9 +77,7 @@ function Alert(props) {
         {title && (
           <Title>
             {icon && <Icon className={`fa ${normaliseIconName(icon)}`} />}
-            <Text normal bold>
-              {title}
-            </Text>
+            <StyledText>{title}</StyledText>
           </Title>
         )}
         {children}
@@ -102,7 +105,7 @@ Alert.propTypes = {
   /**
    * Set the color scheme to indicate the nature of the alert.
    */
-  type: PropTypes.oneOf(['default', 'info', 'success', 'warning', 'error']),
+  type: PropTypes.oneOf(['info', 'success', 'warning', 'error']),
   /**
    * Toggle whether the alert is shown
    */
@@ -116,7 +119,7 @@ Alert.propTypes = {
 Alert.defaultProps = {
   icon: '',
   title: '',
-  type: 'default',
+  type: 'info',
   visible: true,
   onClose: null,
 };
