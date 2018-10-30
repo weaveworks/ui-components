@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { map, noop, find, flattenDepth, isArray } from 'lodash';
 
 const WIDTH = '256px';
-const HEIGHT = '36px';
+const HEIGHT_NUMBER = 36;
+const HEIGHT = `${HEIGHT_NUMBER}px`;
 
 const Item = styled.div`
   overflow: hidden;
@@ -30,6 +31,9 @@ const Popover = styled.div`
   box-shadow: ${props => props.theme.boxShadow.light};
   margin-top: 4px;
   width: ${props => props.width}px;
+  /* +10 to account for list top padding */
+  max-height: ${HEIGHT_NUMBER * 10 + 10}px;
+  overflow: auto;
   box-sizing: border-box;
   padding: 6px 0;
 `;
