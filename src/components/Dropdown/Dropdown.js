@@ -94,7 +94,7 @@ const StyledDropdown = component => styled(component)`
   height: ${HEIGHT};
   line-height: 34px;
   position: relative;
-  width: ${WIDTH};
+  width: ${props => props.width || WIDTH};
   box-sizing: border-box;
 `;
 
@@ -280,6 +280,11 @@ Dropdown.propTypes = {
    * to make the dropdown list toggle.
    */
   withComponent: PropTypes.func,
+
+  /**
+   * Pass a custom width css value
+   */
+  width: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
@@ -288,6 +293,7 @@ Dropdown.defaultProps = {
   disabled: false,
   value: '',
   withComponent: DefaultToggleView,
+  width: WIDTH,
 };
 
 export default StyledDropdown(Dropdown);
