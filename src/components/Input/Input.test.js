@@ -60,6 +60,22 @@ describe('<Input />', () => {
     );
   });
 
+  it('should only render <label> if label prop is provided', () => {
+    props = {
+      valid: false,
+      message: 'Derp!',
+    };
+    wrapper = mount(withTheme(<Input {...props} />));
+
+    expect(wrapper.find('label').length).toBe(0);
+
+    wrapper = mount(
+      withTheme(<Input {...{ ...props, label: 'Woohoo, label time!' }} />)
+    );
+
+    expect(wrapper.find('label').length).toBe(1);
+  });
+
   it('should remove validation message from the DOM when hideValidationMessage=true', () => {
     props = {
       hideValidationMessage: true,
