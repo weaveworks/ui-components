@@ -19,7 +19,6 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-top: 10px;
   height: 36px;
 }
 
@@ -201,10 +200,6 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   outline: none;
 }
 
-.c0 .c5 div {
-  margin: 0;
-}
-
 <div
   className="c0"
 >
@@ -249,9 +244,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
     <div
       className="c5 c6"
     >
-      <label>
-        
-      </label>
+      
       <div
         className="c7"
       >
@@ -297,7 +290,6 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-top: 10px;
   height: 36px;
 }
 
@@ -462,10 +454,6 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   outline: none;
 }
 
-.c0 .c4 div {
-  margin: 0;
-}
-
 <div
   className="c0"
 >
@@ -483,9 +471,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
     <div
       className="c4 c5"
     >
-      <label>
-        
-      </label>
+      
       <div
         className="c6"
       >
@@ -531,7 +517,6 @@ exports[`<Search /> snapshots renders empty 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-top: 10px;
   height: 36px;
 }
 
@@ -696,10 +681,6 @@ exports[`<Search /> snapshots renders empty 1`] = `
   outline: none;
 }
 
-.c0 .c4 div {
-  margin: 0;
-}
-
 <div
   className="c0"
 >
@@ -717,9 +698,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
     <div
       className="c4 c5"
     >
-      <label>
-        
-      </label>
+      
       <div
         className="c6"
       >
@@ -765,7 +744,6 @@ exports[`<Search /> snapshots renders filters 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-top: 10px;
   height: 36px;
 }
 
@@ -982,10 +960,6 @@ exports[`<Search /> snapshots renders filters 1`] = `
   outline: none;
 }
 
-.c0 .c4 div {
-  margin: 0;
-}
-
 <div
   className="c0"
 >
@@ -1003,9 +977,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
     <div
       className="c4 c5"
     >
-      <label>
-        
-      </label>
+      
       <div
         className="c6"
       >

@@ -31,8 +31,8 @@ const InputWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  margin-top: 10px;
   height: 36px;
+  ${({ hasLabel }) => hasLabel && `margin-top: 10px`};
 
   input {
     ${props => placeholder('color', props.theme.colors.gray600)};
@@ -126,8 +126,8 @@ class Input extends React.Component {
 
     return (
       <div className={className}>
-        <label htmlFor={id}>{label}</label>
-        <InputWrapper valid={valid}>
+        {label && <label htmlFor={id}>{label}</label>}
+        <InputWrapper valid={valid} hasLabel={Boolean(label)}>
           {React.createElement(textarea ? 'textarea' : 'input', {
             ...omit(inputProps, 'autoSelectText', 'focus'),
             ref: elem => {

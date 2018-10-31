@@ -19,8 +19,8 @@ exports[`<Input /> should render correctly 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-top: 10px;
   height: 36px;
+  margin-top: 10px;
 }
 
 .c1 input {
@@ -296,6 +296,7 @@ exports[`<Input /> should render correctly 1`] = `
           Hi
         </label>
         <Input__InputWrapper
+          hasLabel={true}
           valid={false}
         >
           <div

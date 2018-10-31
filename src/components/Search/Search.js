@@ -84,10 +84,6 @@ const Styled = component => styled(component)`
     input:focus {
       outline: none;
     }
-
-    div {
-      margin: 0;
-    }
   }
 `;
 
