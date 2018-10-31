@@ -6,20 +6,22 @@ import Button from '../Button';
 
 import Dropdown from '.';
 
-const items = [
+const generateItems = (hash = '') => [
   {
-    value: 'first-thing',
+    value: `first-thing${hash}`,
     label: 'First Thing',
   },
   {
-    value: 'second-thing',
+    value: `second-thing${hash}`,
     label: 'Second Thing',
   },
   {
-    value: 'third-thing',
+    value: `third-thing${hash}`,
     label: 'Super long thing, this should get truncated',
   },
 ];
+
+const items = generateItems();
 
 const groups = [
   [
@@ -82,7 +84,12 @@ export default class DropdownExample extends React.Component {
             <Example>
               <Info>Default dropdown</Info>
               <Dropdown
-                items={items}
+                items={[
+                  ...generateItems('a'),
+                  ...generateItems('b'),
+                  ...generateItems('c'),
+                  ...generateItems('d'),
+                ]}
                 value={this.state.selected}
                 onChange={this.handleChange}
               />
@@ -137,6 +144,7 @@ export default class DropdownExample extends React.Component {
             </Example>
           </Column>
         </Row>
+        <div style={{ height: '50px' }} />
       </Grid>
     );
   }
