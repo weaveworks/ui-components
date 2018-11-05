@@ -3,7 +3,7 @@ version: 2
 jobs:
   test:
     docker:
-      - image: mhart/alpine-node:8.9.0
+      - image: mhart/alpine-node:8
     steps:
       - checkout
       - run: echo 'export PATH=${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin' >> $BASH_ENV
