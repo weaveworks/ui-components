@@ -154,9 +154,10 @@ preLoaders: [
 #### Releasing this repo
 Configure your AWS CLI tools: http://docs.aws.amazon.com/cli/latest/userguide/installing.html.
 
-Run `yarn publish` and enter the new version. This will build and publish the new version, as well as pushing static files to S3.
+Run `yarn release` to cut a new release, this will also generate and commit the CHANGELOG.md automatically.
 
-After publishing, commit the version change and push to master.
+If everything is ok, you can publish the release to github and npm with `yarn publish`, entering the new version you just created.
+This will build, publish and then push static files to S3 for the docs site.
 
 ## Adding Style Guide articles
 To add a page to the style guide:
