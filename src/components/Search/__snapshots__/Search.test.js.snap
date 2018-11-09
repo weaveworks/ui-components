@@ -5,7 +5,6 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   position: absolute;
   right: 10px;
   visibility: hidden;
-  font-size: 22px;
   color: hsl(13,100%,40%);
 }
 
@@ -111,6 +110,10 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .c4 i {
@@ -132,7 +135,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
 }
 
 .c1 {
-  padding: 10px 8px 10px 10px;
+  padding: 0 6px 0 10px;
 }
 
 .c2 {
@@ -159,6 +162,10 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   border: 1px solid hsl(240,20%,90%);
   border-radius: 2px;
   font-size: 14px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .c0 div,
@@ -276,7 +283,6 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   position: absolute;
   right: 10px;
   visibility: hidden;
-  font-size: 22px;
   color: hsl(13,100%,40%);
 }
 
@@ -386,7 +392,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
 }
 
 .c1 {
-  padding: 10px 8px 10px 10px;
+  padding: 0 6px 0 10px;
 }
 
 .c2 {
@@ -413,6 +419,10 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   border: 1px solid hsl(240,20%,90%);
   border-radius: 2px;
   font-size: 14px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .c0 div,
@@ -503,7 +513,6 @@ exports[`<Search /> snapshots renders empty 1`] = `
   position: absolute;
   right: 10px;
   visibility: hidden;
-  font-size: 22px;
   color: hsl(13,100%,40%);
 }
 
@@ -613,7 +622,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
 }
 
 .c1 {
-  padding: 10px 8px 10px 10px;
+  padding: 0 6px 0 10px;
 }
 
 .c2 {
@@ -640,6 +649,10 @@ exports[`<Search /> snapshots renders empty 1`] = `
   border: 1px solid hsl(240,20%,90%);
   border-radius: 2px;
   font-size: 14px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .c0 div,
@@ -730,7 +743,6 @@ exports[`<Search /> snapshots renders filters 1`] = `
   position: absolute;
   right: 10px;
   visibility: hidden;
-  font-size: 22px;
   color: hsl(13,100%,40%);
 }
 
@@ -892,7 +904,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
 }
 
 .c1 {
-  padding: 10px 8px 10px 10px;
+  padding: 0 6px 0 10px;
 }
 
 .c2 {
@@ -919,6 +931,10 @@ exports[`<Search /> snapshots renders filters 1`] = `
   border: 1px solid hsl(240,20%,90%);
   border-radius: 2px;
   font-size: 14px;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .c0 div,

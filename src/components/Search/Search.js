@@ -17,24 +17,12 @@ const TermsContainer = styled.ul`
   padding: 0;
   flex-wrap: wrap;
 
-  ${props =>
-    props.disabled &&
-    `
-    background-color: ${props.theme.colors.gray50};
-    pointer-events: none;
-    opacity: 0.75;
-  `};
+  ${props => props.disabled && 'opacity: 0.75;'};
 `;
 
 const Icon = styled.i`
-  padding: 10px 8px 10px 10px;
-
-  ${props =>
-    props.disabled &&
-    `
-    color: ${props.theme.colors.gray600};
-    background-color: ${props.theme.colors.gray50};
-  `};
+  padding: 0 6px 0 10px;
+  ${props => props.disabled && `color: ${props.theme.colors.gray600};`};
 `;
 
 const SearchInput = styled.div`
@@ -47,10 +35,14 @@ const SearchInput = styled.div`
 const Styled = component => styled(component)`
   position: relative;
   display: flex;
-  background-color: ${props => props.theme.colors.white};
+
+  ${props => props.disabled && `pointer-events: none;`}
+  background-color: ${props =>
+    props.theme.colors[props.disabled ? 'gray50' : 'white']};
   border: 1px solid ${props => props.theme.colors.purple100};
   border-radius: ${props => props.theme.borderRadius.soft};
   font-size: ${props => props.theme.fontSizes.small};
+  align-items: center;
 
   div,
   input {

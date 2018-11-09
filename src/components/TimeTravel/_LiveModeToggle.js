@@ -11,8 +11,6 @@ const ToggleButton = styled.button`
   background-color: transparent;
   border-right: 1px solid ${props => props.theme.colors.gray200};
   color: ${props => props.theme.colors.purple900};
-  font-size: ${props => props.theme.fontSizes.small};
-  padding: 2px 8px;
   pointer-events: all;
   outline: 0;
   cursor: pointer;
@@ -65,13 +63,13 @@ class LiveModeToggle extends React.PureComponent {
           onClick={this.handleToggle}
           pressed={this.state.showingLive}
         >
-          <span className="fa fa-play" />
+          <i className="fa fa-sm fa-fw fa-play" />
         </ToggleButton>
         <ToggleButton
           onClick={this.handleToggle}
           pressed={!this.state.showingLive}
         >
-          <span className="fa fa-pause" />
+          <i className="fa fa-sm fa-fw fa-pause" />
         </ToggleButton>
       </LiveModeToggleWrapper>
     );

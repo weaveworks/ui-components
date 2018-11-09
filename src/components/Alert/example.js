@@ -61,7 +61,7 @@ export default class AlertExample extends React.Component {
         <Example>
           <Alert
             title="A title"
-            icon="warning"
+            icon="exclamation-triangle"
             visible={this.state.title}
             onClose={onClose('title')}
           >

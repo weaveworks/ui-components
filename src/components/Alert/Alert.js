@@ -86,7 +86,7 @@ function Alert(props) {
         <CloseIcon
           visible={visible}
           onClick={onClose}
-          className="fa fa-remove"
+          className="fa fa-times"
         />
       )}
     </StyledAlert>

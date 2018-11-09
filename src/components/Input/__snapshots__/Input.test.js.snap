@@ -5,7 +5,6 @@ exports[`<Input /> should render correctly 1`] = `
   position: absolute;
   right: 10px;
   visibility: visible;
-  font-size: 22px;
   color: hsl(13,100%,40%);
 }
 

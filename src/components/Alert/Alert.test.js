@@ -40,7 +40,7 @@ describe('<Alert />', () => {
     const spy = jest.fn();
     const alert = mount(withTheme(<Alert onClose={spy}>My alert</Alert>));
     alert
-      .find('.fa-remove')
+      .find('.fa-times')
       .first()
       .simulate('click');
     expect(spy.mock.calls.length).toEqual(1);

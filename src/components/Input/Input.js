@@ -23,7 +23,6 @@ const Icon = styled.i`
   position: absolute;
   right: 10px;
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
-  font-size: ${props => props.theme.fontSizes.large};
   color: ${props => props.theme.colors.orange600};
 `;
 
