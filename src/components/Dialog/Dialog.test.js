@@ -42,11 +42,11 @@ describe('<Dialog />', () => {
 
   it('should hide close icon when hideClose=true', () => {
     const wrapper = shallow(<Dialog active />);
-    expect(wrapper.find('i.fas.fa-times').length).toBe(1);
+    expect(wrapper.find('i.fa.fa-times').length).toBe(1);
     wrapper.setProps({
       hideClose: true,
     });
-    expect(wrapper.find('i.fas.fa-times').length).toBe(0);
+    expect(wrapper.find('i.fa.fa-times').length).toBe(0);
   });
 
   it('should only render child when active', () => {
