@@ -36,9 +36,9 @@ const Styled = component => styled(component)`
   position: relative;
   display: flex;
 
-  ${props => props.disabled && `pointer-events: none;`}
-  background-color: ${props =>
-    props.theme.colors[props.disabled ? 'gray50' : 'white']};
+  ${props =>
+    props.disabled && `pointer-events: none;`} background-color: ${props =>
+      props.theme.colors[props.disabled ? 'gray50' : 'white']};
   border: 1px solid ${props => props.theme.colors.purple100};
   border-radius: ${props => props.theme.borderRadius.soft};
   font-size: ${props => props.theme.fontSizes.small};
