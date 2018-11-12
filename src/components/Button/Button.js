@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { noop, omit } from 'lodash';
 
+import { borderRadius, boxShadow, fontSize } from '../../theme/selectors';
 import { fromAtoms } from '../../utils/theme';
 
 const StyledButton = styled('button')`
@@ -13,20 +14,18 @@ const StyledButton = styled('button')`
   border: 0;
   outline: none;
   box-shadow: ${props =>
-    props.styled.selected
-      ? props.theme.boxShadow.selected
-      : props.theme.boxShadow.light};
+    props.styled.selected ? boxShadow('selected') : boxShadow('light')};
 
   /* Color */
   background: ${fromAtoms('Button', 'styled.type', 'background')};
   color: ${fromAtoms('Button', 'styled.type', 'color')};
 
   /* Text */
-  font-size: ${props => props.theme.fontSizes.small};
+  font-size: ${fontSize('small')};
 
   /* Other */
   cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-  border-radius: ${props => props.theme.borderRadius.soft};
+  border-radius: ${borderRadius('soft')};
 
   /* Pseudo-selectors */
   &:hover {
