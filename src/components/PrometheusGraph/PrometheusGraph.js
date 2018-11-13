@@ -213,6 +213,8 @@ class PrometheusGraph extends React.PureComponent {
       hoverY: null,
       chartWidth: 0,
       chartHeight: 0,
+      timeScale: null,
+      valueScale: null,
     };
   }
 
@@ -252,7 +254,14 @@ class PrometheusGraph extends React.PureComponent {
   };
 
   handleChartResize = ({ chartWidth, chartHeight }) => {
-    this.setState({ chartWidth, chartHeight });
+    this.setState({
+      chartWidth,
+      chartHeight,
+      ...this.prepareTimeAndValueScales(
+        this.props,
+        this.state.visibleMultiSeries
+      ),
+    });
   };
 
   prepareMultiSeries = (props, { selectedLegendKeys } = this.state) => {
@@ -351,18 +360,58 @@ class PrometheusGraph extends React.PureComponent {
       })),
     }));
 
-    this.setState({ multiSeries });
+    const visibleMultiSeries = // If no series is selected, show all of them.
+      this.state.selectedLegendKeys.length === 0
+        ? multiSeries
+        : // Otherwise show only the selected multi series.
+          multiSeries.filter(series =>
+            this.state.selectedLegendKeys.includes(series.key)
+          );
+
+    const { timeScale, valueScale } = this.prepareTimeAndValueScales(
+      props,
+      visibleMultiSeries
+    );
+
+    this.setState({
+      multiSeries,
+      visibleMultiSeries,
+      timeScale,
+      valueScale,
+    });
   };
 
-  getMaxMinGraphValue() {
+  prepareTimeAndValueScales = (props, multiseries) => {
+    let chartWidth;
+    let chartHeight;
+
+    if (this.chartRef) {
+      ({
+        width: chartWidth,
+        height: chartHeight,
+      } = this.chartRef.getSvgBoundingRect());
+    } else {
+      ({ chartHeight, chartWidth } = this.state);
+    }
+
+    const timeScale = this.getTimeScale(props, chartWidth);
+    const valueScale = this.getValueScale(props, multiseries, chartHeight);
+
+    return {
+      timeScale,
+      valueScale,
+    };
+  };
+
+  getMaxMinGraphValue(props, visibleMultiSeries) {
     const yPositions = flatten(
-      this.getVisibleMultiSeries().map(series =>
+      visibleMultiSeries.map(series =>
         series.datapoints.map(datapoint => datapoint.offset + datapoint.value)
       )
     );
 
     return {
-      max: max([this.props.valuesMinSpread * 1.05, ...yPositions]),
+      max: max([props.valuesMinSpread * 1.05, ...yPositions]),
       min: min([0, ...yPositions]),
     };
   }
@@ -388,34 +437,21 @@ class PrometheusGraph extends React.PureComponent {
       .range(timestampSecs);
   }
 
-  getTimeScale() {
-    const { chartWidth } = this.state;
-    const { startTimeSec, endTimeSec } = this.props;
+  getTimeScale(props, chartWidth) {
+    const { startTimeSec, endTimeSec } = props;
     return scaleLinear()
       .domain([startTimeSec, endTimeSec])
       .range([0, chartWidth]);
   }
 
-  getValueScale() {
-    const { chartHeight } = this.state;
-    const {
-      max: maxGraphValue,
-      min: minGraphValue,
-    } = this.getMaxMinGraphValue();
+  getValueScale(props, visibleMultiSeries, chartHeight) {
+    const { max: maxGraphValue, min: minGraphValue } = this.getMaxMinGraphValue(
+      props,
+      visibleMultiSeries
+    );
     return scaleLinear()
       .domain([minGraphValue, maxGraphValue])
       .range([chartHeight, 0]);
-  }
-
-  getVisibleMultiSeries() {
-    // If no series is selected, show all of them.
-    if (this.state.selectedLegendKeys.length === 0) {
-      return this.state.multiSeries;
-    }
-    // Otherwise show only the selected multi series.
-    return this.state.multiSeries.filter(series =>
-      this.state.selectedLegendKeys.includes(series.key)
-    );
   }
 
   render() {
@@ -442,11 +478,15 @@ class PrometheusGraph extends React.PureComponent {
       hoverX,
       hoverY,
       multiSeries,
+      valueScale,
+      timeScale,
+      visibleMultiSeries,
     } = this.state;
 
-    const timeScale = this.getTimeScale();
-    const valueScale = this.getValueScale();
-    const visibleMultiSeries = this.getVisibleMultiSeries();
+    if (!valueScale || !timeScale) {
+      return null;
+    }
+
     const timestampQuantizer = this.getTimestampQuantizer();
     const valueFormatter = valueFormatters[metricUnits];
     const hasData = multiSeries && multiSeries.length > 0;
@@ -465,6 +505,11 @@ class PrometheusGraph extends React.PureComponent {
             metricUnits={metricUnits}
           />
           <Chart
+            ref={el => {
+              if (el) {
+                this.chartRef = el;
+              }
+            }}
             showStacked={showStacked}
             timeScale={timeScale}
             valueScale={valueScale}
