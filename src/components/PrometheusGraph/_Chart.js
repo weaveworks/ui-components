@@ -36,17 +36,13 @@ const SeriesAreaChart = styled.path.attrs({
 
 class Chart extends React.PureComponent {
   handleResize = debounce(() => {
-    this.forceUpdate();
+    const { width, height } = this.getSvgBoundingRect();
+    this.props.onChartResize({ chartWidth: width, chartHeight: height });
   }, 50);
 
   componentDidMount() {
     this.handleResize();
     window.addEventListener('resize', this.handleResize);
-  }
-
-  componentDidUpdate() {
-    const { width, height } = this.getSvgBoundingRect();
-    this.props.onChartResize({ chartWidth: width, chartHeight: height });
   }
 
   componentWillUnmount() {
