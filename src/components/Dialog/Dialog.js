@@ -159,7 +159,7 @@ class Dialog extends PureComponent {
             <Title>{title}</Title>
             {!hideClose && (
               <ButtonClose text="" onClick={onClose}>
-                <i className="fa fa-close" />
+                <i className="fa fa-times" />
               </ButtonClose>
             )}
           </Header>

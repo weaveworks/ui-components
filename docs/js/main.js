@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { ThemeProvider, injectGlobal } from 'styled-components';
 import styledNormalize from 'styled-normalize';
 
-import 'font-awesome-webpack';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 import theme from '../../src/theme';
 

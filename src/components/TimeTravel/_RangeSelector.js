@@ -47,7 +47,7 @@ const CaretIconsContainer = styled.span`
   justify-content: center;
   margin-left: 8px;
 
-  .fa {
+  i {
     font-size: ${props => props.theme.fontSizes.tiny};
     line-height: 7px;
   }
@@ -128,8 +128,8 @@ class RangeSelector extends React.Component {
         <SelectedRangeWrapper onClick={this.handleDropDownClick}>
           <SelectedRange>{selectedRangeLabel}</SelectedRange>
           <CaretIconsContainer>
-            <span className="fa fa-caret-up" />
-            <span className="fa fa-caret-down" />
+            <i className="fa fa-caret-up" />
+            <i className="fa fa-caret-down" />
           </CaretIconsContainer>
         </SelectedRangeWrapper>
         {isOpen && (

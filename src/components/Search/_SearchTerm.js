@@ -12,6 +12,7 @@ const Styled = component => styled(component)`
   padding: 6px;
   margin-left: 4px;
   display: flex;
+  align-items: center;
 
   i {
     padding-left: 4px;
