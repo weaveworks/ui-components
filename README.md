@@ -10,7 +10,7 @@ http://weaveworks-ui-components.s3-website-us-west-2.amazonaws.com/
 * `lodash` ^4.0.0
 * `styled-components` ^2.0.0
 * `moment` ^2.0.0
-* `font-awesome` ^4.0.0
+* `font-awesome` ^5.0.0
 
 ## Installation
 `yarn add weaveworks-ui-components`
@@ -18,11 +18,15 @@ http://weaveworks-ui-components.s3-website-us-west-2.amazonaws.com/
 ```javascript
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ThemeProvider } from 'styled-components';
 
 import { WeaveLogo } from 'weaveworks-ui-components';
+import theme from 'weaveworks-ui-components/lib/theme';
 
 ReactDOM.render(
-  <WeaveLogo />,
+  <ThemeProvider theme={theme}>
+    <WeaveLogo />
+  </ThemeProvider>,
   document.getElementById('logo')
 );
 ```
