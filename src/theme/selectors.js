@@ -14,6 +14,11 @@ export const selector = (propsOrSelector, prevArgs = []) => {
 
 const themeSelector = selector('theme');
 
+// these are pre-composed selectors for our theme
+// Usage:
+//   const Success = styled.i`
+//     color: ${color('green500')};
+//   `;
 export const boxShadow = themeSelector('boxShadow');
 export const borderRadius = themeSelector('borderRadius');
 export const color = themeSelector('colors');
