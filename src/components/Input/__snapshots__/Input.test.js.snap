@@ -269,7 +269,7 @@ exports[`<Input /> should render correctly 1`] = `
       "spacing": Object {
         "base": "24px",
         "large": "48px",
-        "none": "0px",
+        "none": "0",
         "small": "16px",
         "xl": "64px",
         "xs": "8px",

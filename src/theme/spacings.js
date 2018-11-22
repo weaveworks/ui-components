@@ -1,7 +1,7 @@
 import { forEach } from 'lodash';
 
 export const spacing = {
-  none: '0px',
+  none: '0',
   xss: '4px',
   xs: '8px',
   small: '16px',
