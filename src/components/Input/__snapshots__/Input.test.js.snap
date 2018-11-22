@@ -266,6 +266,15 @@ exports[`<Input /> should render correctly 1`] = `
         "tooltip": 6,
       },
       "overlayIconSize": "300px",
+      "spacing": Object {
+        "base": "24px",
+        "large": "48px",
+        "none": "0px",
+        "small": "16px",
+        "xl": "64px",
+        "xs": "8px",
+        "xss": "4px",
+      },
       "textColor": "hsl(0, 0%, 10%)",
     }
   }

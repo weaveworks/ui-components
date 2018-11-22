@@ -12,7 +12,7 @@ exports[`<Alert /> snapshots renders default 1`] = `
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
-  padding: 1em;
+  padding: 16px;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
 }
@@ -62,7 +62,7 @@ exports[`<Alert /> snapshots renders error 1`] = `
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
-  padding: 1em;
+  padding: 16px;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
 }
@@ -112,7 +112,7 @@ exports[`<Alert /> snapshots renders icon if provided 1`] = `
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
-  padding: 1em;
+  padding: 16px;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
 }
@@ -162,7 +162,7 @@ exports[`<Alert /> snapshots renders success 1`] = `
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
-  padding: 1em;
+  padding: 16px;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
 }
@@ -221,7 +221,7 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
-  padding: 1em;
+  padding: 16px;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
 }
@@ -289,7 +289,7 @@ exports[`<Alert /> snapshots renders warning 1`] = `
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: 1;
-  padding: 1em;
+  padding: 16px;
   -webkit-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
 }

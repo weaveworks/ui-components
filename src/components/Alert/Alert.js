@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import Text from '../Text';
+import { spacing } from '../../theme/selectors';
 import { fromAtoms } from '../../utils/theme';
 
 const StyledAlert = styled.div`
@@ -13,7 +14,7 @@ const StyledAlert = styled.div`
   margin: 8px 0 8px 0;
   min-height: 1em;
   opacity: ${props => (props.visible ? '1' : '0')};
-  padding: 1em;
+  padding: ${spacing('small')};
   transition: opacity 0.2s linear;
 
   a {

@@ -18,3 +18,4 @@ export const boxShadow = themeSelector('boxShadow');
 export const borderRadius = themeSelector('borderRadius');
 export const color = themeSelector('colors');
 export const fontSize = themeSelector('fontSizes');
+export const spacing = themeSelector('spacing');
