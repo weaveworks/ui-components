@@ -44,13 +44,13 @@ const VerticalLine = styled.div`
   top: 0;
 `;
 
-const AnnotationShadow = VerticalLine.extend`
+const AnnotationShadow = styled(VerticalLine)`
   border-left: 3px solid ${props => props.theme.colors.white};
   margin-left: -1px;
   opacity: 0.2;
 `;
 
-const AnnotationLine = VerticalLine.extend`
+const AnnotationLine = styled(VerticalLine)`
   border-left: 1px solid ${props => props.theme.colors.blue400};
   opacity: 0.7;
 `;

@@ -174,12 +174,12 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
 }
 
 .c0 .c5,
-.c0 .Dropdown-sc-17i3rgt-5 {
+.c0 .c10 {
   padding: 0;
   margin: 0;
 }
 
-.c0 .Dropdown-sc-17i3rgt-5 {
+.c0 .c10 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -187,7 +187,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   border-left: 1px solid hsl(0,0%,80%);
 }
 
-.c0 .Dropdown-sc-17i3rgt-5 .dropdown-popover {
+.c0 .c10 .dropdown-popover {
   width: auto;
 }
 
@@ -431,12 +431,12 @@ exports[`<Search /> snapshots renders a search string 1`] = `
 }
 
 .c0 .c4,
-.c0 .Dropdown-sc-17i3rgt-5 {
+.c0 .c9 {
   padding: 0;
   margin: 0;
 }
 
-.c0 .Dropdown-sc-17i3rgt-5 {
+.c0 .c9 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -444,7 +444,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   border-left: 1px solid hsl(0,0%,80%);
 }
 
-.c0 .Dropdown-sc-17i3rgt-5 .dropdown-popover {
+.c0 .c9 .dropdown-popover {
   width: auto;
 }
 
@@ -661,12 +661,12 @@ exports[`<Search /> snapshots renders empty 1`] = `
 }
 
 .c0 .c4,
-.c0 .Dropdown-sc-17i3rgt-5 {
+.c0 .c9 {
   padding: 0;
   margin: 0;
 }
 
-.c0 .Dropdown-sc-17i3rgt-5 {
+.c0 .c9 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -674,7 +674,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
   border-left: 1px solid hsl(0,0%,80%);
 }
 
-.c0 .Dropdown-sc-17i3rgt-5 .dropdown-popover {
+.c0 .c9 .dropdown-popover {
   width: auto;
 }
 
@@ -848,12 +848,6 @@ exports[`<Search /> snapshots renders filters 1`] = `
 }
 
 .c11 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-right: 28px;
-  padding-left: 12px;
-  cursor: pointer;
   height: 36px;
   box-sizing: border-box;
   border-radius: 2px;
@@ -1022,7 +1016,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
     title="Filters"
   >
     <div
-      className="dropdown-toggle c11"
+      className="dropdown-toggle c11 c12 c13"
       disabled={false}
       onClick={[Function]}
     >

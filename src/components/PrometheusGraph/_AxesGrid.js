@@ -16,11 +16,11 @@ const AxisLine = styled.div.attrs({
   top: 0;
 `;
 
-const HorizontalLine = AxisLine.extend`
+const HorizontalLine = styled(AxisLine)`
   border-width: 1px 0 0 0;
 `;
 
-const VerticalLine = AxisLine.extend`
+const VerticalLine = styled(AxisLine)`
   border-width: 0 0 0 1px;
 `;
 
@@ -38,12 +38,12 @@ const TickLabel = styled.span`
   white-space: nowrap;
 `;
 
-const ValueTickLabel = TickLabel.extend`
+const ValueTickLabel = styled(TickLabel)`
   top: -8px;
   right: 5px;
 `;
 
-const TimeTickLabel = TickLabel.extend`
+const TimeTickLabel = styled(TickLabel)`
   top: ${props => props.height + 5}px;
   left: 0;
 `;

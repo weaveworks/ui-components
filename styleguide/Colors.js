@@ -34,7 +34,7 @@ const Label = styled.p`
   ${({ em }) => em && 'font-style: italic;'};
 `;
 
-const NewColorFormRow = Row.extend`
+const NewColorFormRow = styled(Row)`
   position: sticky;
   top: 0;
   padding: 12px 0;

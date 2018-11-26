@@ -78,7 +78,7 @@ const FullyPannableCanvas = styled.div`
   `};
 `;
 
-const TimelineContainer = FullyPannableCanvas.extend`
+const TimelineContainer = styled(FullyPannableCanvas)`
   background-color: ${props => transparentize(0.15, props.theme.colors.white)};
   border-radius: ${props => props.theme.borderRadius.soft};
   box-shadow: inset 0 0 7px

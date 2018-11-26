@@ -11,12 +11,6 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
 }
 
 .c1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-right: 28px;
-  padding-left: 12px;
-  cursor: pointer;
   height: 36px;
   box-sizing: border-box;
   border-radius: 2px;
@@ -58,7 +52,7 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
   title="Select an item"
 >
   <div
-    className="dropdown-toggle c1"
+    className="dropdown-toggle c1 c2 c3"
     disabled={false}
     onClick={[Function]}
   >
@@ -86,12 +80,6 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
 }
 
 .c1 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-right: 28px;
-  padding-left: 12px;
-  cursor: pointer;
   height: 36px;
   box-sizing: border-box;
   border-radius: 2px;
@@ -133,7 +121,7 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
   title="First Thing"
 >
   <div
-    className="dropdown-toggle c1"
+    className="dropdown-toggle c1 c2 c3"
     disabled={false}
     onClick={[Function]}
   >

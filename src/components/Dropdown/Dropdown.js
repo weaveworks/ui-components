@@ -47,7 +47,7 @@ const Overlay = styled.div`
   left: 0;
 `;
 
-const ItemWrapper = Item.extend`
+const ItemWrapper = styled(Item)`
   line-height: ${HEIGHT};
   color: ${props =>
     props.selected ? props.theme.colors.blue400 : props.theme.textColor};
@@ -63,7 +63,7 @@ const Divider = styled.div`
   border-bottom: 1px solid ${props => props.theme.colors.gray200};
 `;
 
-const SelectedItem = Item.extend`
+const SelectedItem = styled(Item)`
   height: ${HEIGHT};
   box-sizing: border-box;
   border-radius: ${props => props.theme.borderRadius.soft};

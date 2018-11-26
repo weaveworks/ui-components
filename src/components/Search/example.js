@@ -21,7 +21,7 @@ const Styled = component => styled(component)`
   }
 `;
 
-const NarrowSearch = Search.extend`
+const NarrowSearch = styled(Search)`
   width: 300px;
 `;
 
