@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import styled from 'styled-components';
 
 import 'jest-styled-components';
 import { withTheme } from '../../utils/theme';
@@ -41,7 +42,7 @@ describe('<Dropdown />', () => {
 
   it('is extendable', () => {
     // Make sure a styled-component gets exported
-    expect(typeof Dropdown.extend).toEqual('function');
+    expect(typeof styled(Dropdown)).toEqual('function');
     expect(Dropdown.displayName).toEqual('Dropdown');
   });
 });
