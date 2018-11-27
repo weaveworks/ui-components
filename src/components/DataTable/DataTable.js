@@ -223,7 +223,9 @@ class DataTable extends React.PureComponent {
                 {element || label}
               </Header>
             ))}
-            {map(extraHeaders, (h, i) => <th key={i}>{h}</th>)}
+            {map(extraHeaders, (h, i) => (
+              <th key={i}>{h}</th>
+            ))}
           </tr>
         </thead>
         {/* Don't render the tbody if nested; nested tables use <tbody> for rows */}

@@ -29,14 +29,11 @@ class Header extends React.Component {
     return (
       <td onClick={this.handleClick} className={className} title={title}>
         {children}{' '}
-        {order &&
-          sortable && (
-            <i
-              className={
-                order === 'desc' ? 'fa fa-caret-down' : 'fa fa-caret-up'
-              }
-            />
-          )}
+        {order && sortable && (
+          <i
+            className={order === 'desc' ? 'fa fa-caret-down' : 'fa fa-caret-up'}
+          />
+        )}
       </td>
     );
   }

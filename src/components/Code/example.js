@@ -154,9 +154,8 @@ scope launch https://${this.state.value}
               </div>
               <div>
                 {'    '}
-                <strong>&quot;AccessKeyId&quot;</strong>: &quot;{
-                  this.state.value
-                }&quot;,
+                <strong>&quot;AccessKeyId&quot;</strong>: &quot;
+                {this.state.value}&quot;,
               </div>
               <div>
                 {'    '}

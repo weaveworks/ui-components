@@ -12,7 +12,13 @@ const List = ({ items, text, terms }) => {
       ? filter(items, i => text === i || includes(terms, i))
       : items;
 
-  return <ul>{map(list, item => <li key={item}>{item}</li>)}</ul>;
+  return (
+    <ul>
+      {map(list, item => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
 };
 
 const Styled = component => styled(component)`

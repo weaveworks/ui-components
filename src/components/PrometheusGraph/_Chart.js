@@ -161,24 +161,23 @@ class Chart extends React.PureComponent {
         onMouseMove={this.handleGraphMouseMove}
         onMouseLeave={this.handleGraphMouseLeave}
       >
-        {multiSeries.map(
-          series =>
-            this.props.showStacked ? (
-              <SeriesAreaChart
-                key={series.key}
-                faded={this.isFadedSeries(series)}
-                focused={this.isFocusedSeries(series)}
-                d={areaFunction(series.datapoints)}
-                fill={series.color}
-              />
-            ) : (
-              <SeriesLineChart
-                key={series.key}
-                faded={this.isFadedSeries(series)}
-                d={lineFunction(series.datapoints)}
-                stroke={series.color}
-              />
-            )
+        {multiSeries.map(series =>
+          this.props.showStacked ? (
+            <SeriesAreaChart
+              key={series.key}
+              faded={this.isFadedSeries(series)}
+              focused={this.isFocusedSeries(series)}
+              d={areaFunction(series.datapoints)}
+              fill={series.color}
+            />
+          ) : (
+            <SeriesLineChart
+              key={series.key}
+              faded={this.isFadedSeries(series)}
+              d={lineFunction(series.datapoints)}
+              stroke={series.color}
+            />
+          )
         )}
       </Canvas>
     );
