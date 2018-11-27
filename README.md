@@ -58,6 +58,13 @@ To import styles:
 @import "~weaveworks-ui-components/styles.scss";
 ```
 ## Development
+### Commit message format
+
+This project follows the <a href="https://www.conventionalcommits.org" target="_blank">Conventional Commits</a> specification.
+A pre-commit hook is configured to enforce following this format of commit message.
+But don't worry its quite simple! Check out the <a href="https://www.conventionalcommits.org" target="_blank">Conventional Commits</a> website for a couple of example messages.
+
+
 ### Adding a component
 
 1. Place your component in a `src/components/<component name>/` directory.
