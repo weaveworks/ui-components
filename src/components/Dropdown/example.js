@@ -144,7 +144,7 @@ export default class DropdownExample extends React.Component {
             </Example>
           </Column>
         </Row>
-        <div style={{ height: '50px' }} />
+        <div style={{ height: '70px' }} />
       </Grid>
     );
   }

@@ -31,8 +31,10 @@ const Popover = styled.div`
   box-shadow: ${props => props.theme.boxShadow.light};
   margin-top: 4px;
   width: ${props => props.width}px;
-  /* +10 to account for list top padding */
-  max-height: ${HEIGHT_NUMBER * 10 + 10}px;
+  /* +10 to account for list top padding.
+   * Multiply by an 0.5 to visually slice the last item in half to more clearly show that the
+   * dropdown can be scrolled. */
+  max-height: ${HEIGHT_NUMBER * 10.5 + 10}px;
   overflow: auto;
   box-sizing: border-box;
   padding: 6px 0;
