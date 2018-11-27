@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { noop, isEmpty } from 'lodash';
-
+import { spacing } from '../../theme/selectors';
 import Button from '../Button';
 
 const Wrapper = styled.div`
@@ -46,7 +46,7 @@ const Window = styled.div`
   width: ${props => props.width};
   margin: 0 auto;
   max-width: 768px;
-  padding: 15px 20px 20px;
+  padding: ${spacing('base')} ${spacing('medium')} ${spacing('medium')};
   position: relative;
 `;
 
@@ -65,8 +65,8 @@ const ButtonClose = styled.button`
   border: 0;
   background: transparent;
   cursor: pointer;
-  margin-right: -5px;
-  padding: 5px;
+  margin-right: -${spacing('xxs')};
+  padding: ${spacing('xxs')};
   outline: 0;
 
   &:hover {
@@ -81,7 +81,7 @@ const Actions = styled.div`
   min-height: 36px;
 
   button {
-    margin-left: 10px;
+    margin-left: ${spacing('small')};
   }
 `;
 

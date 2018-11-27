@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { spacing } from '../../theme/selectors';
 
 const Container = styled.div`
   display: flex;
   position: relative;
-  padding: 12px 16px;
+  padding: ${spacing('small')} ${spacing('base')};
 
   ${props =>
     props.active &&
@@ -17,7 +18,7 @@ const Container = styled.div`
 const Link = Container.withComponent('a');
 
 const Icon = styled.span`
-  margin-right: 12px;
+  margin-right: ${spacing('small')};
 `;
 
 const Content = styled.div`

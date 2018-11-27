@@ -19,6 +19,8 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   -ms-flex-align: center;
   align-items: center;
   height: 36px;
+  margin-top: 8px;
+  margin-top: 0px;
 }
 
 .c7 input {
@@ -251,7 +253,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
     <div
       className="c5 c6"
     >
-      
+
       <div
         className="c7"
       >
@@ -271,7 +273,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
       <span
         className="c9"
       >
-        
+
       </span>
     </div>
   </div>
@@ -297,6 +299,8 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   -ms-flex-align: center;
   align-items: center;
   height: 36px;
+  margin-top: 8px;
+  margin-top: 0px;
 }
 
 .c6 input {
@@ -481,7 +485,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
     <div
       className="c4 c5"
     >
-      
+
       <div
         className="c6"
       >
@@ -501,7 +505,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
       <span
         className="c8"
       >
-        
+
       </span>
     </div>
   </div>
@@ -527,6 +531,8 @@ exports[`<Search /> snapshots renders empty 1`] = `
   -ms-flex-align: center;
   align-items: center;
   height: 36px;
+  margin-top: 8px;
+  margin-top: 0px;
 }
 
 .c6 input {
@@ -711,7 +717,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
     <div
       className="c4 c5"
     >
-      
+
       <div
         className="c6"
       >
@@ -731,7 +737,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
       <span
         className="c8"
       >
-        
+
       </span>
     </div>
   </div>
@@ -757,6 +763,8 @@ exports[`<Search /> snapshots renders filters 1`] = `
   -ms-flex-align: center;
   align-items: center;
   height: 36px;
+  margin-top: 8px;
+  margin-top: 0px;
 }
 
 .c6 input {
@@ -842,7 +850,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-right: 28px;
+  padding-right: 24px;
   padding-left: 12px;
   cursor: pointer;
 }
@@ -987,7 +995,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
     <div
       className="c4 c5"
     >
-      
+
       <div
         className="c6"
       >
@@ -1007,7 +1015,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
       <span
         className="c8"
       >
-        
+
       </span>
     </div>
   </div>

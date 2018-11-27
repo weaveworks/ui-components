@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import styled from 'styled-components';
 import { noop } from 'lodash';
+import { spacing } from '../../theme/selectors';
 
 const Item = styled.div`
   border-radius: ${props => props.theme.borderRadius.soft};
   display: block;
   min-height: 40px;
   line-height: 40px;
-  padding-left: 20px;
+  padding-left: ${spacing('medium')};
 
   &:hover {
     transition: color, 0.3s, ease;
@@ -22,7 +23,7 @@ const Item = styled.div`
     props.isSubItem &&
     `
     font-size: 14px;
-    padding-left: 40px;
+    padding-left: ${props.theme.spacing.xl};
     line-height: 30px;
     min-height: 30px;
   `};

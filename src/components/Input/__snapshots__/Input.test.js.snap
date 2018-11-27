@@ -19,11 +19,11 @@ exports[`<Input /> should render correctly 1`] = `
   -ms-flex-align: center;
   align-items: center;
   height: 36px;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .c1 input {
-  padding-right: 38px;
+  padding-right: 32px;
   padding-left: 12px;
   width: 100%;
   line-height: 36px;
@@ -267,13 +267,15 @@ exports[`<Input /> should render correctly 1`] = `
       },
       "overlayIconSize": "300px",
       "spacing": Object {
-        "base": "24px",
-        "large": "48px",
+        "base": "16px",
+        "large": "32px",
+        "medium": "24px",
         "none": "0",
-        "small": "16px",
-        "xl": "64px",
+        "small": "12px",
+        "xl": "48px",
         "xs": "8px",
-        "xss": "4px",
+        "xxl": "64px",
+        "xxs": "4px",
       },
       "textColor": "hsl(0, 0%, 10%)",
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { spacing } from '../../theme/selectors';
 
 const TabName = styled.span``;
 
@@ -14,8 +15,11 @@ const getBgColor = (selected, secondary, theme) => {
 const Styled = component => styled(component)`
   cursor: pointer;
   margin-bottom: -1px;
-  margin-right: 5px;
-  padding: ${props => (props.small ? '5px 10px' : '10px 20px')};
+  margin-right: ${spacing('xxs')};
+  padding-top: ${props => (props.small ? spacing('xs') : spacing('xs'))};
+  padding-bottom: ${props => (props.small ? spacing('xs') : spacing('xs'))};
+  padding-left: ${props => (props.small ? spacing('small') : spacing('base'))};
+  padding-right: ${props => (props.small ? spacing('small') : spacing('base'))};
   font-size: ${props =>
     props.small ? props.theme.fontSizes.normal : props.theme.fontSizes.large};
   outline: 0;

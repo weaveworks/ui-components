@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { pick, map, find, get } from 'lodash';
 import PropTypes from 'prop-types';
+import { spacing } from '../../theme/selectors';
 
 import Tab from './Tab';
 import TabButton from './_TabButton';
@@ -20,7 +21,8 @@ const bordersOnlyTop = props => `
 `;
 
 const TabContent = styled.div`
-  padding: ${props => (props.small ? '10px' : '20px')};
+  padding: ${props =>
+    props.small ? props.theme.spacing.small : props.theme.spacing.medium};
   background-color: ${props =>
     props.secondary ? 'transparent' : props.theme.colors.white};
 

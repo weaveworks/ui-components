@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { omit, noop } from 'lodash';
 import styled, { css } from 'styled-components';
+import { spacing } from '../../theme/selectors';
 
 const placeholder = (property, content) => css`
   &::-webkit-input-placeholder {
@@ -31,14 +32,16 @@ const InputWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 36px;
-  ${({ hasLabel }) => hasLabel && `margin-top: 10px`};
+  margin-top: ${spacing('xs')};
+  ${({ hasLabel }) => !hasLabel && `margin-top: 0px`};
 
   input {
     ${props => placeholder('color', props.theme.colors.gray600)};
     ${placeholder('opacity', 1)};
 
-    padding-right: ${props => (props.valid ? '12px' : '38px')};
-    padding-left: 12px;
+    padding-right: ${props =>
+      props.valid ? spacing('small') : spacing('large')};
+    padding-left: ${spacing('small')};
     width: 100%;
     line-height: 36px;
     box-shadow: none;
@@ -56,13 +59,13 @@ const InputWrapper = styled.div`
 `;
 
 const StyledInput = component => styled(component)`
-  padding: 8px;
+  padding: ${spacing('xs')};
 `;
 
 const ValidationMessage = styled.span`
   display: ${props => (props.remove || !props.visible ? 'none' : 'block')};
-  padding-left: 8px;
-  margin-top: 8px;
+  padding-left: ${spacing('xs')};
+  margin-top: ${spacing('xs')};
   font-size: ${props => props.theme.fontSizes.small};
   text-align: left;
   color: ${props => (props.valid ? 'inherit' : props.theme.colors.orange600)};

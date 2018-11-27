@@ -3,6 +3,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { clamp, find, debounce, noop } from 'lodash';
+import { spacing } from '../../theme/selectors';
 
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
 
@@ -28,7 +29,7 @@ const TimelineBar = styled.div`
 const TimeControlsWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin: 8px 0 25px;
+  margin: ${spacing('xs')} 0 ${spacing('medium')};
 `;
 
 const TimeControlsContainer = styled.div`

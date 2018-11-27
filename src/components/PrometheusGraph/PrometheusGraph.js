@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { spacing } from '../../theme/selectors';
 import {
   first,
   flatten,
@@ -94,13 +95,13 @@ function getColorTheme({ colorTheme, showStacked }) {
 
 const GraphWrapper = styled.div`
   position: relative;
-  padding-left: 45px;
+  padding-left: ${spacing('xl')};
 `;
 
 const GraphContainer = styled.div`
   position: relative;
   min-height: 170px;
-  margin-bottom: 20px;
+  margin-bottom: ${spacing('medium')};
   opacity: ${props => (props.loading ? 0.35 : 1)};
 `;
 

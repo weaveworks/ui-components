@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { map, noop, find, flattenDepth, isArray } from 'lodash';
+import { spacing } from '../../theme/selectors';
 
 const WIDTH = '256px';
 const HEIGHT_NUMBER = 36;
@@ -11,10 +12,9 @@ const Item = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-right: 28px;
-  padding-left: 12px;
+  padding-right: ${spacing('medium')};
+  padding-left: ${spacing('small')};
   cursor: pointer;
-
   ${props =>
     props.disabled &&
     `
@@ -37,7 +37,7 @@ const Popover = styled.div`
   max-height: ${HEIGHT_NUMBER * 10.5 + 10}px;
   overflow: auto;
   box-sizing: border-box;
-  padding: 6px 0;
+  padding: ${spacing('xxs')} 0;
 `;
 
 const Overlay = styled.div`
@@ -54,7 +54,6 @@ const ItemWrapper = styled(Item)`
   color: ${props =>
     props.selected ? props.theme.colors.blue400 : props.theme.textColor};
   min-height: ${HEIGHT};
-
   &:hover {
     background-color: ${props => props.theme.colors.gray50};
   }
@@ -72,15 +71,12 @@ const SelectedItem = styled(Item)`
   background-color: ${props => props.theme.colors.white};
   border: 1px solid ${props => props.theme.colors.gray600};
   display: flex;
-
   ${Item} {
     padding: 0;
   }
-
   div:last-child {
     margin-left: auto;
   }
-
   ${props =>
     props.disabled &&
     `

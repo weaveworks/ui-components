@@ -5,7 +5,7 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-right: 28px;
+  padding-right: 24px;
   padding-left: 12px;
   cursor: pointer;
 }
@@ -74,12 +74,21 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-right: 28px;
+  padding-right: 24px;
   padding-left: 12px;
   cursor: pointer;
 }
 
 .c1 {
+<<<<<<< HEAD
+=======
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 24px;
+  padding-left: 12px;
+  cursor: pointer;
+>>>>>>> feat: replace component margins and padding with theme spacing
   height: 36px;
   box-sizing: border-box;
   border-radius: 2px;
