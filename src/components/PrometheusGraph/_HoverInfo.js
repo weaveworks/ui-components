@@ -91,8 +91,8 @@ class HoverInfo extends React.PureComponent {
     );
 
     // Render focused circle last so that it stands out.
-    const sortedHoverPoints = [...filteredHoverPoints].sort(
-      p => (p.focused ? 1 : -1)
+    const sortedHoverPoints = [...filteredHoverPoints].sort(p =>
+      p.focused ? 1 : -1
     );
 
     const timestamp = moment.unix(this.props.timestampSec).format();

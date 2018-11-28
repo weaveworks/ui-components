@@ -221,24 +221,22 @@ class Dropdown extends React.Component {
               className="dropdown-popover"
               width={this.element.current.offsetWidth}
             >
-              {map(
-                divided,
-                (item, index) =>
-                  item ? (
-                    <ItemWrapper
-                      className="dropdown-item"
-                      key={item.value}
-                      onClick={ev =>
-                        this.handleChange(ev, item.value, item.label)
-                      }
-                      selected={item.value === value}
-                      title={item && item.label}
-                    >
-                      {item.label}
-                    </ItemWrapper>
-                  ) : (
-                    <Divider key={index} />
-                  )
+              {map(divided, (item, index) =>
+                item ? (
+                  <ItemWrapper
+                    className="dropdown-item"
+                    key={item.value}
+                    onClick={ev =>
+                      this.handleChange(ev, item.value, item.label)
+                    }
+                    selected={item.value === value}
+                    title={item && item.label}
+                  >
+                    {item.label}
+                  </ItemWrapper>
+                ) : (
+                  <Divider key={index} />
+                )
               )}
             </Popover>
           </div>
