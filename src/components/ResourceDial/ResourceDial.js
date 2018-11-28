@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import { format } from 'd3-format';
 import { arc } from 'd3-shape';
 import { isEmpty, isFinite } from 'lodash';
-import { spacing } from '../../theme/selectors';
 
 import theme from '../../theme';
+import { spacing } from '../../theme/selectors';
 
 const DIAL_RADIUS_PX = 85;
 const DIAL_BORDER_PX = 8;

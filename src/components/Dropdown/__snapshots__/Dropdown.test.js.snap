@@ -80,15 +80,6 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
 }
 
 .c1 {
-<<<<<<< HEAD
-=======
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-right: 24px;
-  padding-left: 12px;
-  cursor: pointer;
->>>>>>> feat: replace component margins and padding with theme spacing
   height: 36px;
   box-sizing: border-box;
   border-radius: 2px;

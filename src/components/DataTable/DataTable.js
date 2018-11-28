@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { map, orderBy, noop, get, first, partialRight } from 'lodash';
 import { transparentize } from 'polished';
+
 import { spacing } from '../../theme/selectors';
 
 import Header from './_Header';

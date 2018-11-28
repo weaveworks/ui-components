@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { pick, map, find, get } from 'lodash';
 import PropTypes from 'prop-types';
-import { spacing } from '../../theme/selectors';
 
 import Tab from './Tab';
 import TabButton from './_TabButton';

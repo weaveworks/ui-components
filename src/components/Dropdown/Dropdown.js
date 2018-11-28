@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { map, noop, find, flattenDepth, isArray } from 'lodash';
+
 import { spacing } from '../../theme/selectors';
 
 const WIDTH = '256px';

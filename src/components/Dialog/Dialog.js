@@ -2,8 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { noop, isEmpty } from 'lodash';
-import { spacing } from '../../theme/selectors';
+
 import Button from '../Button';
+import { spacing } from '../../theme/selectors';
 
 const Wrapper = styled.div`
   z-index: ${props => props.theme.layers.modal};

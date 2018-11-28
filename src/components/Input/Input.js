@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { omit, noop } from 'lodash';
 import styled, { css } from 'styled-components';
+
 import { spacing } from '../../theme/selectors';
 
 const placeholder = (property, content) => css`

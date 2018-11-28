@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { spacing } from '../../theme/selectors';
 import {
   first,
   flatten,
@@ -34,6 +33,7 @@ import {
 import { stack } from 'd3-shape';
 
 import theme from '../../theme';
+import { spacing } from '../../theme/selectors';
 
 import Chart from './_Chart';
 import AxesGrid from './_AxesGrid';

@@ -3,8 +3,8 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { clamp, find, debounce, noop } from 'lodash';
-import { spacing } from '../../theme/selectors';
 
+import { spacing } from '../../theme/selectors';
 import { formattedTimestamp, getTimeScale } from '../../utils/timeline';
 
 import { MAX_TICK_SPACING_PX } from './_TimelinePeriodLabels';
