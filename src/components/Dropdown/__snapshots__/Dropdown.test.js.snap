@@ -5,7 +5,7 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-right: 28px;
+  padding-right: 24px;
   padding-left: 12px;
   cursor: pointer;
 }
@@ -74,7 +74,7 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-right: 28px;
+  padding-right: 24px;
   padding-left: 12px;
   cursor: pointer;
 }

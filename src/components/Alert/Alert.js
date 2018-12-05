@@ -11,10 +11,10 @@ const StyledAlert = styled.div`
   background: ${fromAtoms('Alert', 'type', 'background')};
   border-radius: ${props => props.theme.borderRadius.soft};
   color: ${fromAtoms('Alert', 'type', 'color')};
-  margin: 8px 0 8px 0;
+  margin: ${spacing('xs')} 0 ${spacing('xs')} 0;
   min-height: 1em;
   opacity: ${props => (props.visible ? '1' : '0')};
-  padding: ${spacing('small')};
+  padding: ${spacing('base')};
   transition: opacity 0.2s linear;
 
   a {
@@ -32,7 +32,7 @@ const Content = styled.div`
 `;
 
 const Title = styled.div`
-  margin-bottom: 0.5em;
+  margin-bottom: ${spacing('xs')};
 `;
 
 const StyledText = styled(Text)`
@@ -41,13 +41,13 @@ const StyledText = styled(Text)`
 `;
 
 const Icon = styled.i`
-  margin-right: 0.5em;
+  margin-right: ${spacing('xs')};
 `;
 
 const CloseIcon = styled.i`
   cursor: pointer;
   display: ${props => (props.visible ? 'block' : 'none')};
-  margin-left: 1em;
+  margin-left: ${spacing('base')};
 `;
 
 const normaliseIconName = name =>

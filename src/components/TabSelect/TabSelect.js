@@ -20,7 +20,8 @@ const bordersOnlyTop = props => `
 `;
 
 const TabContent = styled.div`
-  padding: ${props => (props.small ? '10px' : '20px')};
+  padding: ${props =>
+    props.small ? props.theme.spacing.small : props.theme.spacing.medium};
   background-color: ${props =>
     props.secondary ? 'transparent' : props.theme.colors.white};
 

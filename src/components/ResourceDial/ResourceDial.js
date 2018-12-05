@@ -8,6 +8,7 @@ import { arc } from 'd3-shape';
 import { isEmpty, isFinite } from 'lodash';
 
 import theme from '../../theme';
+import { spacing } from '../../theme/selectors';
 
 const DIAL_RADIUS_PX = 85;
 const DIAL_BORDER_PX = 8;
@@ -80,7 +81,7 @@ const DialValueContainer = styled.div`
 
 const DialValue = styled.div`
   font-size: ${props => props.theme.fontSizes.huge};
-  margin: 0 4px;
+  margin: 0 ${spacing('xxs')};
 `;
 
 const PercentageSign = styled.div`

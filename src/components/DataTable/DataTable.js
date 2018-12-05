@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { map, orderBy, noop, get, first, partialRight } from 'lodash';
 import { transparentize } from 'polished';
 
+import { spacing } from '../../theme/selectors';
+
 import Header from './_Header';
 
 const borderColor = props => transparentize(0.6, props.theme.colors.purple100);
@@ -16,7 +18,7 @@ const Table = styled.table`
   table-layout: fixed;
 
   td {
-    padding: 10px 8px;
+    padding: ${spacing('small')} ${spacing('xs')};
     vertical-align: top;
     border-left: 1px solid ${borderColor};
   }

@@ -245,7 +245,7 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
 }
 
 .c2 {
-  margin-bottom: 0.5em;
+  margin-bottom: 8px;
 }
 
 .c3 {

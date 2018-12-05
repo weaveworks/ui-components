@@ -21,7 +21,7 @@ exports[`DataTable snapshots renders an element instead of a label 1`] = `
 }
 
 .c0 td {
-  padding: 10px 8px;
+  padding: 12px 8px;
   vertical-align: top;
   border-left: 1px solid rgba(224,224,235,0.4);
 }
@@ -133,7 +133,7 @@ exports[`DataTable snapshots renders column widths 1`] = `
 }
 
 .c0 td {
-  padding: 10px 8px;
+  padding: 12px 8px;
   vertical-align: top;
   border-left: 1px solid rgba(224,224,235,0.4);
 }
@@ -229,7 +229,7 @@ exports[`DataTable snapshots renders extra headers 1`] = `
 }
 
 .c0 td {
-  padding: 10px 8px;
+  padding: 12px 8px;
   vertical-align: top;
   border-left: 1px solid rgba(224,224,235,0.4);
 }
@@ -335,7 +335,7 @@ exports[`DataTable snapshots renders nested rows 1`] = `
 }
 
 .c0 td {
-  padding: 10px 8px;
+  padding: 12px 8px;
   vertical-align: top;
   border-left: 1px solid rgba(224,224,235,0.4);
 }
@@ -461,7 +461,7 @@ exports[`DataTable snapshots renders rows 1`] = `
 }
 
 .c0 td {
-  padding: 10px 8px;
+  padding: 12px 8px;
   vertical-align: top;
   border-left: 1px solid rgba(224,224,235,0.4);
 }
@@ -557,7 +557,7 @@ exports[`DataTable snapshots sorts fields by a give order 1`] = `
 }
 
 .c0 td {
-  padding: 10px 8px;
+  padding: 12px 8px;
   vertical-align: top;
   border-left: 1px solid rgba(224,224,235,0.4);
 }
@@ -653,7 +653,7 @@ exports[`DataTable snapshots sorts rows by a field 1`] = `
 }
 
 .c0 td {
-  padding: 10px 8px;
+  padding: 12px 8px;
   vertical-align: top;
   border-left: 1px solid rgba(224,224,235,0.4);
 }

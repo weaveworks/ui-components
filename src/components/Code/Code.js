@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 import { isFunction, isString, trim, noop } from 'lodash';
 
+import { spacing } from '../../theme/selectors';
+
 const scale = keyframes`
   0% {
     transform: scale(0)
@@ -19,7 +21,7 @@ const CopyNotice = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  padding: 10px 15px;
+  padding: ${spacing('xs')};
   ${props => props.isHovered && 'transition: opacity 300ms ease;'};
   border-radius: ${props => props.theme.borderRadius.soft};
   background-color: ${props => props.theme.colors.purple800};
@@ -56,18 +58,18 @@ const ScrollWrap = styled.div`
 const Content = styled.div`
   flex-grow: 1;
   color: ${props => props.theme.colors.purple50};
-  padding: 10px 15px;
+  padding: ${spacing('xs')} ${spacing('base')};
 `;
 
 const Pre = styled.pre`
-  margin: 10px 0;
+  margin: ${spacing('small')} 0;
   font-family: ${props => props.theme.fontFamilies.monospace};
   font-size: ${props => props.theme.fontSizes.small};
 `;
 
 const PaddedLine = styled.div`
   &:not(:last-child) {
-    padding-bottom: 8px;
+    padding-bottom: ${spacing('xs')};
   }
 
   /* required to make jsx children work with adding '\n' in multiLine */

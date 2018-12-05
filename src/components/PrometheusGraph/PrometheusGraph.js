@@ -33,6 +33,7 @@ import {
 import { stack } from 'd3-shape';
 
 import theme from '../../theme';
+import { spacing } from '../../theme/selectors';
 
 import Chart from './_Chart';
 import AxesGrid from './_AxesGrid';
@@ -94,13 +95,13 @@ function getColorTheme({ colorTheme, showStacked }) {
 
 const GraphWrapper = styled.div`
   position: relative;
-  padding-left: 45px;
+  padding-left: ${spacing('xl')};
 `;
 
 const GraphContainer = styled.div`
   position: relative;
   min-height: 170px;
-  margin-bottom: 20px;
+  margin-bottom: ${spacing('medium')};
   opacity: ${props => (props.loading ? 0.35 : 1)};
 `;
 
