@@ -3,7 +3,9 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const HEIGHT_PX = 27;
+import { spacing } from '../../theme/selectors';
+
+const HEIGHT_PX = 29;
 
 const RangeSelectorWrapper = styled.div`
   border-left: 1px solid ${props => props.theme.colors.gray200};
@@ -13,7 +15,7 @@ const RangeSelectorWrapper = styled.div`
 const SelectedRangeWrapper = styled.div`
   background-color: transparent;
   cursor: pointer;
-  padding: 3px 8px;
+  padding: ${spacing('xxs')} ${spacing('xs')};
   display: flex;
   justify-content: space-between;
   line-height: 21px;
@@ -45,7 +47,7 @@ const CaretIconsContainer = styled.span`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 8px;
+  margin-left: ${spacing('xs')};
 
   i {
     font-size: ${props => props.theme.fontSizes.tiny};
@@ -56,7 +58,7 @@ const CaretIconsContainer = styled.span`
 const RangeOption = styled.div`
   line-height: ${HEIGHT_PX}px;
   cursor: pointer;
-  padding: 0 8px;
+  padding: ${spacing('none')} ${spacing('xs')};
 
   &:hover {
     background-color: ${props => props.theme.colors.gray50};

@@ -2,14 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { spacing } from '../../theme/selectors';
+
 const PanButton = styled.button`
   background-color: transparent;
   color: ${props => props.theme.colors.purple400};
   font-size: ${props => props.theme.fontSizes.small};
   cursor: pointer;
   pointer-events: all;
-  padding: 5px 0;
-  margin: 0 5px;
+  padding: ${spacing('xxs')} 0;
+  margin: 0 ${spacing('xxs')};
   width: 20px;
   outline: 0;
   border: 0;
