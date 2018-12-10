@@ -106,7 +106,7 @@ function getValueTicks(metricUnits, minValue, maxValue) {
       : range(50).map(p => Math.pow(2, p));
   /* eslint-enable no-restricted-properties */
 
-  const step = find(steps, s => maxValue / s < 4);
+  const step = find(steps, s => (maxValue - minValue) / s < 4);
 
   // lodash `range()` doesn't include the end value in the returned array so we
   // add 1e-6 to move maxValue within the range
