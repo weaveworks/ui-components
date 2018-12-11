@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AutosizeInput from 'react-input-autosize';
 
+import { spacing } from '../../theme/selectors';
+
 const TimestampInputWrapper = styled.div`
   font-size: ${props => props.theme.fontSizes.small};
   align-items: baseline;
-  padding: 3px 8px;
+  padding: ${spacing('xxs')} ${spacing('xs')};
   pointer-events: all;
   opacity: 0.8;
   display: flex;
@@ -18,7 +20,7 @@ const TimestampInputContainer = styled(AutosizeInput)`
     font-size: ${props => props.theme.fontSizes.normal};
     font-family: ${props => props.theme.fontFamilies.monospace};
     background-color: transparent;
-    margin-right: 3px;
+    margin-right: ${spacing('xxs')};
     text-align: left;
     min-width: 195px;
     max-width: 300px;
