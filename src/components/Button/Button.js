@@ -14,7 +14,7 @@ import { fromAtoms } from '../../utils/theme';
 const StyledButton = styled('button')`
   /* Display & Box Model */
   height: 36px;
-  min-width: 90px;
+  min-width: 80px;
   padding: 0 ${spacing('small')};
   border: 0;
   outline: none;
