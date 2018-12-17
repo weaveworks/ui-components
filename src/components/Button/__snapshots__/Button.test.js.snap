@@ -3,7 +3,7 @@
 exports[`<Button /> accepts a style prop 1`] = `
 .c0 {
   height: 36px;
-  min-width: 90px;
+  min-width: 80px;
   padding: 0 12px;
   border: 0;
   outline: none;
@@ -40,7 +40,7 @@ exports[`<Button /> accepts a style prop 1`] = `
 exports[`<Button /> snapshots renders danger 1`] = `
 .c0 {
   height: 36px;
-  min-width: 90px;
+  min-width: 80px;
   padding: 0 12px;
   border: 0;
   outline: none;
@@ -72,7 +72,7 @@ exports[`<Button /> snapshots renders danger 1`] = `
 exports[`<Button /> snapshots renders default 1`] = `
 .c0 {
   height: 36px;
-  min-width: 90px;
+  min-width: 80px;
   padding: 0 12px;
   border: 0;
   outline: none;
@@ -104,7 +104,7 @@ exports[`<Button /> snapshots renders default 1`] = `
 exports[`<Button /> snapshots renders disabled 1`] = `
 .c0 {
   height: 36px;
-  min-width: 90px;
+  min-width: 80px;
   padding: 0 12px;
   border: 0;
   outline: none;
@@ -136,7 +136,7 @@ exports[`<Button /> snapshots renders disabled 1`] = `
 exports[`<Button /> snapshots renders primary 1`] = `
 .c0 {
   height: 36px;
-  min-width: 90px;
+  min-width: 80px;
   padding: 0 12px;
   border: 0;
   outline: none;
@@ -168,7 +168,7 @@ exports[`<Button /> snapshots renders primary 1`] = `
 exports[`<Button /> snapshots renders selected 1`] = `
 .c0 {
   height: 36px;
-  min-width: 90px;
+  min-width: 80px;
   padding: 0 12px;
   border: 0;
   outline: none;
