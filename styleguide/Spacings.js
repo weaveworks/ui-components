@@ -4,25 +4,26 @@ import { map } from 'lodash';
 
 import Text from '../src/components/Text';
 import theme from '../src/theme';
+import { color, fontSize, spacing } from '../src/theme/selectors';
 
 const Row = styled.div`
-  margin-bottom: ${props => props.theme.spacing.large};
+  margin-bottom: ${spacing('large')};
 `;
 
-const Block = styled.span`
+const Block = styled.div`
   display: block;
-  margin-right: ${props => props.theme.spacing.base};
-  margin-bottom: ${props => props.theme.spacing.medium};
+  margin-right: ${spacing('base')};
+  margin-bottom: ${spacing('medium')};
 `;
 
 const SpacingElement = styled.div`
-  background-color: ${props => props.theme.colors.blue400};
+  background-color: ${color('blue400')};
 `;
 
 const SizeLabel = styled.div`
-  color: ${props => props.theme.colors.gray600};
-  font-size: ${props => props.theme.fontSizes.normal};
-  margin-top: ${props => props.theme.spacing.xs};
+  color: ${color('gray600')};
+  font-size: ${fontSize('normal')};
+  margin-top: ${spacing('xs')};
 `;
 
 const curly = start => (start ? '{' : '}');
