@@ -5,26 +5,27 @@ import { parseToHsl } from 'polished';
 
 import Text from '../src/components/Text';
 import theme from '../src/theme';
+import { color, spacing, borderRadius } from '../src/theme/selectors';
 
 const TEST_COLOR_NAME = 'A new color';
 
 const Row = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: ${spacing('large')};
 `;
 
 const SwatchesBlock = styled.div`
-  margin-top: 10px;
+  margin-bottom: ${spacing('small')};
 `;
 
 const Sample = styled.div`
   display: inline-block;
-  margin-right: 20px;
+  margin-right: ${spacing('medium')};
 `;
 
 const Swatch = styled.div`
-  width: 110px;
-  height: 110px;
-  border-radius: ${props => props.theme.borderRadius};
+  width: 112px;
+  height: 112px;
+  border-radius: ${borderRadius('soft')};
   background-color: ${props => props.color};
 `;
 
@@ -37,14 +38,14 @@ const Label = styled.p`
 const NewColorFormRow = styled(Row)`
   position: sticky;
   top: 0;
-  padding: 12px 0;
-  background-color: ${theme.colors.gray50};
+  padding: ${spacing('small')} 0;
+  background-color: ${color('gray50')};
 `;
 
 const Separator = styled.div`
-  border-top: 4px solid ${theme.colors.gray200};
+  border-top: ${spacing('xxs')} solid ${color('gray200')};
   display: block;
-  margin: 50px 0;
+  margin: ${spacing('xl')} 0;
   width: 100%;
 `;
 

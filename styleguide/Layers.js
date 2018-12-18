@@ -4,13 +4,14 @@ import { map } from 'lodash';
 
 import Text from '../src/components/Text';
 import theme from '../src/theme';
+import { spacing } from '../src/theme/selectors';
 
 const Row = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: ${spacing('large')};
 `;
 
 const FontRow = styled.div`
-  margin-bottom: 5px;
+  margin-bottom: ${spacing('xxs')};
 `;
 
 const curly = start => (start ? '{' : '}');
