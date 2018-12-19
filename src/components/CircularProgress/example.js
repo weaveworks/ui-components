@@ -15,7 +15,7 @@ export default class Name extends React.Component {
         </Example>
         <Example>
           <Info>Bigger</Info>
-          <CircularProgress size={45} />
+          <CircularProgress size={48} />
         </Example>
         <Example>
           <Info>Aligned with inline text</Info>

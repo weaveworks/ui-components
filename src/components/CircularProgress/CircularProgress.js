@@ -51,10 +51,10 @@ const DotSpinner = styled.div`
   ${props =>
     props.scale &&
     `
-    margin: ${15 * props.scale}px;
-    font-size: ${5 * props.scale}px;
-    width: ${5 * props.scale}px;
-    height: ${5 * props.scale}px;
+    margin: ${16 * props.scale}px;
+    font-size: ${4 * props.scale}px;
+    width: ${4 * props.scale}px;
+    height: ${4 * props.scale}px;
   `};
 `;
 
@@ -98,7 +98,7 @@ const ProgressWrapper = styled.div`
 const CircularProgress = props => (
   <ProgressWrapper {...props}>
     <ProgressContainer>
-      <DotSpinner scale={props.size / 35} />
+      <DotSpinner scale={props.size / 32} />
     </ProgressContainer>
   </ProgressWrapper>
 );
@@ -113,7 +113,7 @@ CircularProgress.propTypes = {
 };
 
 CircularProgress.defaultProps = {
-  size: 30,
+  size: 32,
   inline: false,
   center: false,
 };
