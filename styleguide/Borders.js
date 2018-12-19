@@ -4,22 +4,23 @@ import { map } from 'lodash';
 
 import Text from '../src/components/Text';
 import theme from '../src/theme';
+import { color, fontSize, spacing } from '../src/theme/selectors';
 
 const Row = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: ${spacing('large')};
 `;
 
-const Block = styled.span`
+const Block = styled.div`
   display: inline-block;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  margin-right: ${spacing('medium')};
+  margin-bottom: ${spacing('medium')};
 `;
 
 const BorderElement = styled.div`
-  border: 1px solid ${props => props.theme.colors.black};
-  background-color: ${props => props.theme.colors.white};
-  font-size: ${props => props.theme.fontSizes.normal};
-  padding: 30px;
+  border: 1px solid ${color('black')};
+  background-color: ${color('white')};
+  font-size: ${fontSize('normal')};
+  padding: ${spacing('large')};
 `;
 
 const curly = start => (start ? '{' : '}');

@@ -4,18 +4,19 @@ import { map } from 'lodash';
 
 import Text from '../src/components/Text';
 import theme from '../src/theme';
+import { fontSize, spacing } from '../src/theme/selectors';
 
 const Row = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: ${spacing('large')};
 `;
 
 const FontRow = styled.div`
-  margin-bottom: 5px;
+  margin-bottom: ${spacing('xxs')};
 `;
 
 const FontFamily = styled.div`
   font-family: ${props => props.family};
-  font-size: ${props => props.theme.fontSizes.normal};
+  font-size: ${fontSize('normal')};
   opacity: 0.5;
 `;
 
