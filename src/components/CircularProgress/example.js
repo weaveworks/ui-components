@@ -10,12 +10,12 @@ export default class Name extends React.Component {
     return (
       <div>
         <Example>
-          <Info>Default</Info>
-          <CircularProgress />
+          <Info>Small</Info>
+          <CircularProgress size="small" />
         </Example>
         <Example>
-          <Info>Bigger</Info>
-          <CircularProgress size={45} />
+          <Info>Medium (Default)</Info>
+          <CircularProgress />
         </Example>
         <Example>
           <Info>Aligned with inline text</Info>

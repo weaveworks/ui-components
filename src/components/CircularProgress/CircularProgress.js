@@ -49,13 +49,21 @@ const DotSpinner = styled.div`
   transform: translateZ(0);
 
   ${props =>
-    props.scale &&
+    props.size === 'small' &&
     `
-    margin: ${15 * props.scale}px;
-    font-size: ${5 * props.scale}px;
-    width: ${5 * props.scale}px;
-    height: ${5 * props.scale}px;
+    margin: ${props.theme.spacing.small};
+    font-size: 3px;
+    width: 3px;
+    height: 3px;
   `};
+  ${props =>
+    props.size === 'medium' &&
+    `
+      margin: ${props.theme.spacing.base};
+      font-size: ${props.theme.spacing.xxs};
+      width: ${props.theme.spacing.xxs};
+      height: ${props.theme.spacing.xxs};
+    `};
 `;
 
 const ProgressContainer = styled.div`
@@ -63,8 +71,18 @@ const ProgressContainer = styled.div`
 `;
 
 const ProgressWrapper = styled.div`
-  width: ${props => props.size}px;
-  height: ${props => props.size}px;
+  ${props =>
+    props.size === 'small' &&
+    `
+  width: ${props.theme.spacing.medium};
+  height: ${props.theme.spacing.medium};
+`};
+  ${props =>
+    props.size === 'medium' &&
+    `
+  width: ${props.theme.spacing.large};
+  height: ${props.theme.spacing.large};
+  `};
 
   ${props =>
     props.inline &&
@@ -81,14 +99,14 @@ const ProgressWrapper = styled.div`
 `;
 
 /**
- * Size is set in px
+ * Size "small" or "medium"
  * ```javascript
  * import React from 'react';
  * import { CircularProgress } from 'weaveworks-ui-components'
  *
  * React.render(
  *   <div>
- *     <CircularProgress size={35} />
+ *     <CircularProgress size="small" />
  *     <CircularProgress inline /> Inline
  *     <CircularProgress center />
  *   </div>
@@ -98,14 +116,14 @@ const ProgressWrapper = styled.div`
 const CircularProgress = props => (
   <ProgressWrapper {...props}>
     <ProgressContainer>
-      <DotSpinner scale={props.size / 35} />
+      <DotSpinner size={props.size} />
     </ProgressContainer>
   </ProgressWrapper>
 );
 
 CircularProgress.propTypes = {
-  /** Size of spinner in px */
-  size: PropTypes.number,
+  /** Size of spinner : 'small' or 'medium' */
+  size: PropTypes.string,
   /** Whether to display the spinner inline */
   inline: PropTypes.bool,
   /** Whether to center the spinner horizontally */
@@ -113,7 +131,7 @@ CircularProgress.propTypes = {
 };
 
 CircularProgress.defaultProps = {
-  size: 30,
+  size: 'medium',
   inline: false,
   center: false,
 };
