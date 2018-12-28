@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.18.0"></a>
+# [0.18.0](https://github.com/weaveworks/ui-components/compare/v0.17.0...v0.18.0) (2018-12-28)
+
+
+### Bug Fixes
+
+* decrease-button-min-width ([864cf8a](https://github.com/weaveworks/ui-components/commit/864cf8a))
+* standardise spacing and cleanup styleguide ([aac2841](https://github.com/weaveworks/ui-components/commit/aac2841))
+
+
+### Features
+
+* add spacing showcase ([4a89be9](https://github.com/weaveworks/ui-components/commit/4a89be9))
+* hardcoding spacing values from our system ([136554b](https://github.com/weaveworks/ui-components/commit/136554b))
+* limit circular progress to two standard sizes ([2d43b4c](https://github.com/weaveworks/ui-components/commit/2d43b4c))
+
+
+
 <a name="0.17.0"></a>
 # [0.17.0](https://github.com/weaveworks/ui-components/compare/v0.16.0...v0.17.0) (2018-12-11)
 
