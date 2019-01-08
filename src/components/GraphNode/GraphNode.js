@@ -12,7 +12,7 @@ import GraphNodeStatic, {
 } from './_GraphNodeStatic';
 
 function weakSpring(value) {
-  return spring(value, { stiffness: 100, damping: 18, precision: 1 });
+  return spring(value, { damping: 18, precision: 1, stiffness: 100 });
 }
 
 /**
@@ -40,9 +40,9 @@ class GraphNode extends React.PureComponent {
       // Animate only the position and size props.
       <Motion
         style={{
+          size: weakSpring(this.props.size),
           x: weakSpring(this.props.x),
           y: weakSpring(this.props.y),
-          size: weakSpring(this.props.size),
         }}
       >
         {interpolated =>
@@ -58,17 +58,37 @@ class GraphNode extends React.PureComponent {
 
 GraphNode.propTypes = {
   /**
+   * The color of the node in any of the standard formats
+   */
+  color: PropTypes.string,
+  /**
+   * Renders the node in a high contrast mode
+   */
+  contrastMode: PropTypes.bool,
+  /**
+   * The cursor type shown on hovering over the node
+   */
+  cursorType: PropTypes.string,
+  /**
+   * Displays all the node labels as SVG elements
+   */
+  forceSvg: PropTypes.bool,
+  /**
+   * A callback to which the GraphNode `ref` will be passed.
+   */
+  graphNodeRef: PropTypes.func,
+  /**
+   * If true, shows the glow around the node as well as its metric data
+   */
+  highlighted: PropTypes.bool,
+  /**
    * A unique node ID
    */
   id: PropTypes.string.isRequired,
   /**
-   * Shape of the rendered node (e.g. 'hexagon')
+   * Animates the node motion if true
    */
-  shape: PropTypes.oneOf(keys(shapes)).isRequired,
-  /**
-   * An optional tag icon attached to the shape
-   */
-  tag: PropTypes.oneOf(keys(tags)),
+  isAnimated: PropTypes.bool,
   /**
    * The node main label displayed right under the node shape
    */
@@ -82,34 +102,6 @@ GraphNode.propTypes = {
    */
   labelOffset: PropTypes.number,
   /**
-   * Shows a stack of nodes instead of a singular node if true
-   */
-  stacked: PropTypes.bool,
-  /**
-   * If true, shows the glow around the node as well as its metric data
-   */
-  highlighted: PropTypes.bool,
-  /**
-   * The color of the node in any of the standard formats
-   */
-  color: PropTypes.string,
-  /**
-   * The radius of the shape in pixels
-   */
-  size: PropTypes.number,
-  /**
-   * Animates the node motion if true
-   */
-  isAnimated: PropTypes.bool,
-  /**
-   * Renders the node in a high contrast mode
-   */
-  contrastMode: PropTypes.bool,
-  /**
-   * Displays all the node labels as SVG elements
-   */
-  forceSvg: PropTypes.bool,
-  /**
    * The background color of the node metric fill
    */
   metricColor: PropTypes.string,
@@ -122,25 +114,9 @@ GraphNode.propTypes = {
    */
   metricNumericValue: PropTypes.number,
   /**
-   * Search terms to be applied on the node
+   * Callback for mouse click on the node
    */
-  searchTerms: PropTypes.arrayOf(PropTypes.string),
-  /**
-   * The cursor type shown on hovering over the node
-   */
-  cursorType: PropTypes.string,
-  /**
-   * Render function for the info to be displayed before node labels (not working in full SVG mode)
-   */
-  renderPrependedInfo: PropTypes.func,
-  /**
-   * Render function for the info to be displayed after node labels (not working in full SVG mode)
-   */
-  renderAppendedInfo: PropTypes.func,
-  /**
-   * A callback to which the GraphNode `ref` will be passed.
-   */
-  graphNodeRef: PropTypes.func,
+  onClick: PropTypes.func,
   /**
    * Callback for mouse pointer entering the node
    */
@@ -150,9 +126,33 @@ GraphNode.propTypes = {
    */
   onMouseLeave: PropTypes.func,
   /**
-   * Callback for mouse click on the node
+   * Render function for the info to be displayed after node labels (not working in full SVG mode)
    */
-  onClick: PropTypes.func,
+  renderAppendedInfo: PropTypes.func,
+  /**
+   * Render function for the info to be displayed before node labels (not working in full SVG mode)
+   */
+  renderPrependedInfo: PropTypes.func,
+  /**
+   * Search terms to be applied on the node
+   */
+  searchTerms: PropTypes.arrayOf(PropTypes.string),
+  /**
+   * Shape of the rendered node (e.g. 'hexagon')
+   */
+  shape: PropTypes.oneOf(keys(shapes)).isRequired,
+  /**
+   * The radius of the shape in pixels
+   */
+  size: PropTypes.number,
+  /**
+   * Shows a stack of nodes instead of a singular node if true
+   */
+  stacked: PropTypes.bool,
+  /**
+   * An optional tag icon attached to the shape
+   */
+  tag: PropTypes.oneOf(keys(tags)),
   /**
    * x-coordinate position of the node
    */
@@ -164,27 +164,27 @@ GraphNode.propTypes = {
 };
 
 GraphNode.defaultProps = {
-  tag: 'none',
+  color: theme.colors.purple400,
+  contrastMode: false,
+  cursorType: 'pointer',
+  forceSvg: false,
+  graphNodeRef: undefined,
+  highlighted: false,
+  isAnimated: false,
   labelMinor: '',
   labelOffset: 0,
-  stacked: false,
-  highlighted: false,
-  color: theme.colors.purple400,
-  size: nodeBaseSize,
-  isAnimated: false,
-  contrastMode: false,
-  forceSvg: false,
   metricColor: theme.colors.yellow500,
   metricFormattedValue: '',
   metricNumericValue: NaN,
-  searchTerms: [],
-  cursorType: 'pointer',
-  renderPrependedInfo: noop,
-  renderAppendedInfo: noop,
-  graphNodeRef: undefined,
+  onClick: noop,
   onMouseEnter: noop,
   onMouseLeave: noop,
-  onClick: noop,
+  renderAppendedInfo: noop,
+  renderPrependedInfo: noop,
+  searchTerms: [],
+  size: nodeBaseSize,
+  stacked: false,
+  tag: 'none',
   x: 0,
   y: 0,
 };

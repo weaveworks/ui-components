@@ -42,21 +42,21 @@ const TranslatedNode = ({ name, point, ...props }) => (
 
 export default class GraphNodeExample extends React.Component {
   state = {
-    thickness: 1,
     arrowOffset: 28,
     contrastMode: false,
-    highlightedEdgeId: null,
     edges: [
       { id: 'straight-edge', waypoints: [A, D] },
       { id: 'curvy-edge', waypoints: [A, B, C, D], withArrow: true },
-      { id: 'dotted-edge', waypoints: [A, B, C, D], isDotted: true },
+      { id: 'dotted-edge', isDotted: true, waypoints: [A, B, C, D] },
       {
         id: 'animated-edge',
+        isAnimated: true,
         waypoints: [A, C, B, D],
         withArrow: true,
-        isAnimated: true,
       },
     ],
+    highlightedEdgeId: null,
+    thickness: 1,
   };
 
   componentDidMount() {

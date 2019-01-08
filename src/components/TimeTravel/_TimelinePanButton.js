@@ -53,9 +53,9 @@ class TimelinePanButton extends React.Component {
 }
 
 TimelinePanButton.propTypes = {
-  timeScale: PropTypes.func.isRequired,
-  movePixels: PropTypes.number.isRequired,
   icon: PropTypes.string.isRequired,
+  movePixels: PropTypes.number.isRequired,
+  timeScale: PropTypes.func.isRequired,
 };
 
 export default TimelinePanButton;

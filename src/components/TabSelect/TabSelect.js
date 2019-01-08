@@ -89,20 +89,6 @@ class TabSelect extends React.PureComponent {
 
 TabSelect.propTypes = {
   /**
-   * Secondary styling for TabSelect without border around content and
-   * transparent background
-   */
-  secondary: PropTypes.bool,
-  /**
-   * Small styling for TabSelect
-   */
-  small: PropTypes.bool,
-  /**
-   * The tab to show on first render.
-   * Supplying a new value to this prop will override the currently selected item
-   */
-  selectedTab: PropTypes.string,
-  /**
    * Children of `TabSelect` must be a `Tab` component
    */
   // eslint can't figure out that this is required because of custom checker
@@ -125,12 +111,26 @@ TabSelect.propTypes = {
     });
     return error;
   },
+  /**
+   * Secondary styling for TabSelect without border around content and
+   * transparent background
+   */
+  secondary: PropTypes.bool,
+  /**
+   * The tab to show on first render.
+   * Supplying a new value to this prop will override the currently selected item
+   */
+  selectedTab: PropTypes.string,
+  /**
+   * Small styling for TabSelect
+   */
+  small: PropTypes.bool,
 };
 
 TabSelect.defaultProps = {
   secondary: false,
-  small: false,
   selectedTab: '',
+  small: false,
 };
 
 export default Styled(TabSelect);

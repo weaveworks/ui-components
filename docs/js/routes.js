@@ -50,45 +50,45 @@ export default function getRoutes(components, examples, docs, styles) {
       ? examples(`./${name}/example.js`).default
       : null;
     return {
-      path: name.replace('.js', '').toLowerCase(),
       component: buildExampleComponent(
         component,
         doc,
         example,
         isSubComponent(resource)
       ),
+      path: name.replace('.js', '').toLowerCase(),
     };
   });
 
   const styleguideRoutes = styles.keys().map(resource => {
     const name = resource.split('/').pop();
     return {
-      path: name.replace('.js', '').toLowerCase(),
       component: buildStyleGuidePage(styles(resource).default),
+      path: name.replace('.js', '').toLowerCase(),
     };
   });
 
   return {
-    path: '/',
-    component: App,
-    indexRoute: { component: LandingPage },
     childRoutes: [
       {
-        path: 'components',
+        childRoutes: componentRoutes,
         component: ComponentsPage,
         indexRoute: {
           onEnter: (nextState, replace) => replace('components/button'),
         },
-        childRoutes: componentRoutes,
+        path: 'components',
       },
       {
-        path: 'styleguide',
+        childRoutes: styleguideRoutes,
         component: StyleGuidePage,
         indexRoute: {
           onEnter: (nextState, replace) => replace('styleguide/intro'),
         },
-        childRoutes: styleguideRoutes,
+        path: 'styleguide',
       },
     ],
+    component: App,
+    indexRoute: { component: LandingPage },
+    path: '/',
   };
 }

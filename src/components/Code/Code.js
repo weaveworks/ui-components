@@ -192,8 +192,8 @@ class Code extends Component {
 
   onMouseLeave = () => {
     this.setState({
-      isHovered: false,
       isCopying: false,
+      isHovered: false,
     });
   };
 

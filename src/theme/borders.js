@@ -1,9 +1,9 @@
 import { kebabCase, forEach } from 'lodash';
 
 export const borderRadius = {
+  circle: '50%',
   none: '0',
   soft: '2px',
-  circle: '50%',
 };
 
 // Collects all theme border radii as SCSS vars.

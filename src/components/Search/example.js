@@ -33,16 +33,16 @@ const NarrowSearch = styled(Search)`
 
 class SearchExample extends React.Component {
   state = {
+    pinnedTerms1: [],
+    pinnedTerms2: [],
+    pinnedTerms3: ['foo:bar', 'is:automated'],
     queries: {
-      normal: { text: '', terms: [] },
-      filters: { text: '', terms: [] },
+      filters: { terms: [], text: '' },
+      normal: { terms: [], text: '' },
     },
     query1: '',
     query2: '',
     query3: '',
-    pinnedTerms1: [],
-    pinnedTerms2: [],
-    pinnedTerms3: ['foo:bar', 'is:automated'],
   };
 
   render() {
@@ -55,12 +55,12 @@ class SearchExample extends React.Component {
             pinnedTerms={this.state.pinnedTerms1}
             onChange={(query1, pinnedTerms1) =>
               this.setState({
-                query1,
                 pinnedTerms1,
                 queries: {
                   ...this.state.queries,
-                  normal: { text: query1, terms: pinnedTerms1 },
+                  normal: { terms: pinnedTerms1, text: query1 },
                 },
+                query1,
               })
             }
           />
@@ -80,25 +80,25 @@ class SearchExample extends React.Component {
                 pinnedTerms2: [value],
                 queries: {
                   ...this.state.queries,
-                  filters: { text: '', terms: [value] },
+                  filters: { terms: [value], text: '' },
                 },
               })
             }
             onChange={(query2, pinnedTerms2) =>
               this.setState({
-                query2,
                 pinnedTerms2,
                 queries: {
                   ...this.state.queries,
-                  filters: { text: query2, terms: pinnedTerms2 },
+                  filters: { terms: pinnedTerms2, text: query2 },
                 },
+                query2,
               })
             }
             filters={[
-              { value: 'red', label: 'Red' },
+              { label: 'Red', value: 'red' },
               {
-                value: 'blue',
                 label: 'Blublublublublublublublublublublu',
+                value: 'blue',
               },
             ]}
           />
@@ -114,12 +114,12 @@ class SearchExample extends React.Component {
             query={this.state.query3}
             pinnedTerms={this.state.pinnedTerms3}
             onChange={(query3, pinnedTerms3) =>
-              this.setState({ query3, pinnedTerms3 })
+              this.setState({ pinnedTerms3, query3 })
             }
             onFilterSelect={value => this.setState({ pinnedTerms3: [value] })}
             filters={[
-              { value: 'is:automated', label: 'Automated' },
-              { value: 'is:locked', label: 'Locked' },
+              { label: 'Automated', value: 'is:automated' },
+              { label: 'Locked', value: 'is:locked' },
             ]}
           />
         </Example>
@@ -129,7 +129,7 @@ class SearchExample extends React.Component {
             disabled
             query=""
             pinnedTerms={[]}
-            filters={[{ value: 'red', label: 'Red' }]}
+            filters={[{ label: 'Red', value: 'red' }]}
             onChange={noop}
           />
         </Example>

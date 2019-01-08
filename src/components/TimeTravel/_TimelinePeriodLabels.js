@@ -15,27 +15,27 @@ const TICKS_ROW_SPACING = 16;
 const FADE_OUT_FACTOR = 1.4;
 
 const TICK_SETTINGS_PER_PERIOD = {
-  year: {
-    format: 'YYYY',
-    childPeriod: 'month',
-    periodIntervals: [1], // 1 year
-  },
-  month: {
-    format: 'MMMM',
-    parentPeriod: 'year',
-    childPeriod: 'day',
-    periodIntervals: [1, 3], // 1 month, 1 quarter
-  },
   day: {
+    childPeriod: 'minute',
     format: 'Do',
     parentPeriod: 'month',
-    childPeriod: 'minute',
     periodIntervals: [1, 7], // 1 day, 1 week
   },
   minute: {
     format: 'HH:mm',
     parentPeriod: 'day',
     periodIntervals: [1, 5, 15, 60, 180, 360], // 1min, 5min, 15min, 1h, 3h, 6h
+  },
+  month: {
+    childPeriod: 'day',
+    format: 'MMMM',
+    parentPeriod: 'year',
+    periodIntervals: [1, 3], // 1 month, 1 quarter
+  },
+  year: {
+    childPeriod: 'month',
+    format: 'YYYY',
+    periodIntervals: [1], // 1 year
   },
 };
 
@@ -46,8 +46,8 @@ function linearGradientValue(x, [a, b]) {
 
 const TimelineLabels = styled.div.attrs({
   style: ({ y, opacity }) => ({
-    transform: `translateY(${y}px)`,
     opacity,
+    transform: `translateY(${y}px)`,
   }),
 })``;
 
@@ -92,9 +92,9 @@ class TimelinePeriodLabels extends React.PureComponent {
     // it inside the visible range with a prepended arrow to the past.
     const ticks = [
       {
-        timestamp: formattedTimestamp(momentTimestamp),
-        position: -halfWidth,
         isBehind: true,
+        position: -halfWidth,
+        timestamp: formattedTimestamp(momentTimestamp),
       },
     ];
 
@@ -123,7 +123,7 @@ class TimelinePeriodLabels extends React.PureComponent {
         ticks.pop();
       }
 
-      ticks.push({ timestamp: formattedTimestamp(momentTimestamp), position });
+      ticks.push({ position, timestamp: formattedTimestamp(momentTimestamp) });
     } while (momentTimestamp.isBefore(momentEnd));
 
     return ticks;
@@ -210,13 +210,13 @@ class TimelinePeriodLabels extends React.PureComponent {
 }
 
 TimelinePeriodLabels.propTypes = {
-  period: PropTypes.string.isRequired,
-  focusedTimestamp: PropTypes.string.isRequired,
-  durationMsPerPixel: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-  clickableStartAt: PropTypes.string.isRequired,
   clickableEndAt: PropTypes.string.isRequired,
+  clickableStartAt: PropTypes.string.isRequired,
+  durationMsPerPixel: PropTypes.number.isRequired,
+  focusedTimestamp: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  period: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
 };
 
 export default TimelinePeriodLabels;

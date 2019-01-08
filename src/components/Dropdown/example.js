@@ -8,16 +8,16 @@ import Dropdown from '.';
 
 const generateItems = (hash = '') => [
   {
-    value: `first-thing${hash}`,
     label: 'First Thing',
+    value: `first-thing${hash}`,
   },
   {
-    value: `second-thing${hash}`,
     label: 'Second Thing',
+    value: `second-thing${hash}`,
   },
   {
-    value: `third-thing${hash}`,
     label: 'Super long thing, this should get truncated',
+    value: `third-thing${hash}`,
   },
 ];
 
@@ -26,35 +26,35 @@ const items = generateItems();
 const groups = [
   [
     {
-      value: 'a-first',
       label: 'A: First Thing',
+      value: 'a-first',
     },
     {
-      value: 'a-second',
       label: 'A: Second Thing',
+      value: 'a-second',
     },
   ],
   [
     {
-      value: 'b-first',
       label: 'B: First Thing',
+      value: 'b-first',
     },
     {
-      value: 'b-second',
       label: 'B: Second Thing',
+      value: 'b-second',
     },
   ],
 ];
 
 const divided = [
   {
-    value: 'c-first',
     label: 'C: First Thing',
+    value: 'c-first',
   },
   null,
   {
-    value: 'd-first',
     label: 'D: First Thing',
+    value: 'd-first',
   },
 ];
 

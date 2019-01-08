@@ -59,10 +59,10 @@ class TimestampTooltip extends React.PureComponent {
     return this.tooltipRef
       ? this.tooltipRef.getBoundingClientRect()
       : {
-          width: 0,
           height: 0,
-          top: 0,
           left: 0,
+          top: 0,
+          width: 0,
         };
   }
 
@@ -89,9 +89,9 @@ class TimestampTooltip extends React.PureComponent {
 
 TimestampTooltip.propTypes = {
   containerWidth: PropTypes.number.isRequired,
-  timestamp: PropTypes.string.isRequired,
   offsetX: PropTypes.number,
   offsetY: PropTypes.number,
+  timestamp: PropTypes.string.isRequired,
 };
 
 TimestampTooltip.defaultProps = {

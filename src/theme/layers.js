@@ -1,13 +1,13 @@
 import { kebabCase, forEach } from 'lodash';
 
 export const layers = {
-  front: 1,
-  toolbar: 2,
   alert: 3,
-  notification: 4,
   dropdown: 5,
-  tooltip: 6,
+  front: 1,
   modal: 7,
+  notification: 4,
+  toolbar: 2,
+  tooltip: 6,
 };
 
 // Collects all theme z-index layers as SCSS vars

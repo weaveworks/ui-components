@@ -89,8 +89,8 @@ class Legend extends React.PureComponent {
     super(props, context);
 
     this.state = {
-      shown: props.shown,
       selectedKeys: props.selectedKeys,
+      shown: props.shown,
     };
   }
 
@@ -166,7 +166,7 @@ class Legend extends React.PureComponent {
                   <LegendItemName multiLine={multiLine}>
                     {series.legendNameParts.join('\n')}
                   </LegendItemName>
-                  {this.props.renderItemSuffix(series, { selected, hovered })}
+                  {this.props.renderItemSuffix(series, { hovered, selected })}
                 </LegendItem>
               );
             })}
@@ -178,14 +178,14 @@ class Legend extends React.PureComponent {
 }
 
 Legend.propTypes = {
-  multiSeries: PropTypes.array.isRequired,
-  hoveredKey: PropTypes.string,
-  selectedKeys: PropTypes.array.isRequired,
-  renderItemContent: PropTypes.func.isRequired,
-  onSelectedKeysChange: PropTypes.func.isRequired,
-  onHoveredKeyChange: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
   collapsable: PropTypes.bool.isRequired,
+  hoveredKey: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  multiSeries: PropTypes.array.isRequired,
+  onHoveredKeyChange: PropTypes.func.isRequired,
+  onSelectedKeysChange: PropTypes.func.isRequired,
+  renderItemContent: PropTypes.func.isRequired,
+  selectedKeys: PropTypes.array.isRequired,
   shown: PropTypes.bool.isRequired,
 };
 

@@ -12,17 +12,17 @@ const COMPACT_LOCALE_KEY = 'compact-time-ranges';
   const defaultLocale = moment.locale();
   moment.locale(COMPACT_LOCALE_KEY, {
     relativeTime: {
-      future: 'in %s',
-      past: '%s ago',
-      s: '%ds',
-      m: '1m',
-      mm: '%dm',
-      h: '1h',
-      hh: '%dh',
       d: '1d',
       dd: '%dd',
+      future: 'in %s',
+      h: '1h',
+      hh: '%dh',
+      m: '1m',
       M: '1mo',
+      mm: '%dm',
       MM: '%dmo',
+      past: '%s ago',
+      s: '%ds',
       y: '1y',
       yy: '%dy',
     },
@@ -119,14 +119,6 @@ class TimestampTag extends React.Component {
 
 TimestampTag.propTypes = {
   /**
-   * Timestamp to be displayed
-   */
-  timestamp: PropTypes.string.isRequired,
-  /**
-   * Show relative timestamp if true
-   */
-  relative: PropTypes.bool,
-  /**
    * Show in compact format if true (only for relative timestamps)
    */
   compact: PropTypes.bool,
@@ -138,13 +130,21 @@ TimestampTag.propTypes = {
    * Auto-refresh interval (in milliseconds)
    */
   intervalMs: PropTypes.number,
+  /**
+   * Show relative timestamp if true
+   */
+  relative: PropTypes.bool,
+  /**
+   * Timestamp to be displayed
+   */
+  timestamp: PropTypes.string.isRequired,
 };
 
 TimestampTag.defaultProps = {
-  relative: false,
   compact: false,
   inheritStyles: false,
   intervalMs: 15000,
+  relative: false,
 };
 
 export default TimestampTag;

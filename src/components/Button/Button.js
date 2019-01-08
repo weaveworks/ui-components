@@ -90,18 +90,17 @@ class Button extends React.PureComponent {
 
 Button.propTypes = {
   /**
-   * Callback that will be run when the button is clicked.
+   * Turn the button red to indicate something bad might happen
    */
-  onClick: PropTypes.func,
-  /**
-   * Text that will be used as the button label.
-   * If this props is provided, it will be passed back to the `onClick` handler
-   */
-  text: PropTypes.string,
+  danger: PropTypes.bool,
   /**
    * Disable the button.
    */
   disabled: PropTypes.bool,
+  /**
+   * Callback that will be run when the button is clicked.
+   */
+  onClick: PropTypes.func,
   /**
    * Render the button in blue700 (useful for CTAs)
    */
@@ -111,9 +110,10 @@ Button.propTypes = {
    */
   selected: PropTypes.bool,
   /**
-   * Turn the button red to indicate something bad might happen
+   * Text that will be used as the button label.
+   * If this props is provided, it will be passed back to the `onClick` handler
    */
-  danger: PropTypes.bool,
+  text: PropTypes.string,
   /**
    * The type of button, as it relates to <form> components
    */
@@ -121,13 +121,13 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
+  danger: false,
+  disabled: false,
+  onClick: noop,
+  primary: false,
+  selected: false,
   text: 'Submit',
   type: 'submit',
-  disabled: false,
-  primary: false,
-  danger: false,
-  selected: false,
-  onClick: noop,
 };
 
 export default Button;

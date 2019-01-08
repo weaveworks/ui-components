@@ -38,7 +38,7 @@ export default class ResourceDialExample extends React.Component {
             <ResourceDial
               label="Memory usage"
               value={this.state.memoryUsage}
-              to={{ pathname: window.location.pathname, hash: '#memory-usage' }}
+              to={{ hash: '#memory-usage', pathname: window.location.pathname }}
             />
           </InlineWrapper>
         </Example>

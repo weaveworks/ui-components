@@ -118,8 +118,8 @@ class Colors extends React.Component {
     super(props);
 
     this.state = {
-      newColor: '',
       bg: false,
+      newColor: '',
     };
   }
 

@@ -43,9 +43,9 @@ const TimelineLoader = ({ timeScale, startAt, endAt, width }) => {
 };
 
 TimelineLoader.propTypes = {
-  timeScale: PropTypes.func.isRequired,
-  startAt: PropTypes.string,
   endAt: PropTypes.string,
+  startAt: PropTypes.string,
+  timeScale: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
 };
 

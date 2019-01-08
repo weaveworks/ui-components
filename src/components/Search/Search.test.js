@@ -69,8 +69,8 @@ describe('<Search />', () => {
               onChange={noop}
               onFilterSelect={noop}
               filters={[
-                { value: 'automated', label: 'Automated' },
-                { value: 'locked', label: 'Locked' },
+                { label: 'Automated', value: 'automated' },
+                { label: 'Locked', value: 'locked' },
               ]}
             />
           )
@@ -107,8 +107,8 @@ describe('<Search />', () => {
           onChange={noop}
           onFilterSelect={spy}
           filters={[
-            { value: 'automated', label: 'Automated' },
-            { value: 'locked', label: 'Locked' },
+            { label: 'Automated', value: 'automated' },
+            { label: 'Locked', value: 'locked' },
           ]}
         />
       )

@@ -122,18 +122,18 @@ const CircularProgress = props => (
 );
 
 CircularProgress.propTypes = {
-  /** Size of spinner : 'small' or 'medium' */
-  size: PropTypes.string,
-  /** Whether to display the spinner inline */
-  inline: PropTypes.bool,
   /** Whether to center the spinner horizontally */
   center: PropTypes.bool,
+  /** Whether to display the spinner inline */
+  inline: PropTypes.bool,
+  /** Size of spinner : 'small' or 'medium' */
+  size: PropTypes.string,
 };
 
 CircularProgress.defaultProps = {
-  size: 'medium',
-  inline: false,
   center: false,
+  inline: false,
+  size: 'medium',
 };
 
 export default CircularProgress;

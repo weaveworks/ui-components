@@ -100,6 +100,10 @@ Alert.propTypes = {
    */
   icon: PropTypes.string,
   /**
+   * Callback that runs with the alert is dismissed by clicking the 'X'
+   */
+  onClose: PropTypes.func,
+  /**
    * Show a title for the alert
    */
   title: PropTypes.string,
@@ -111,18 +115,14 @@ Alert.propTypes = {
    * Toggle whether the alert is shown
    */
   visible: PropTypes.bool,
-  /**
-   * Callback that runs with the alert is dismissed by clicking the 'X'
-   */
-  onClose: PropTypes.func,
 };
 
 Alert.defaultProps = {
   icon: '',
+  onClose: null,
   title: '',
   type: 'info',
   visible: true,
-  onClose: null,
 };
 
 export default Alert;

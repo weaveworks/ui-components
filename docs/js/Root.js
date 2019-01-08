@@ -30,8 +30,8 @@ const routes = getRoutes(componentCtx, exampleCtx, docCtx, styleGuideCtx);
 class Root extends React.Component {
   getChildContext() {
     return {
-      router: this.props.router,
       components: componentCtx,
+      router: this.props.router,
       styles: styleGuideCtx,
     };
   }
@@ -43,8 +43,8 @@ class Root extends React.Component {
 }
 
 Root.childContextTypes = {
-  router: PropTypes.object,
   components: PropTypes.func,
+  router: PropTypes.object,
   styles: PropTypes.func,
 };
 

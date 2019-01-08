@@ -191,23 +191,19 @@ class Dialog extends PureComponent {
 
 Dialog.propTypes = {
   /**
-   * Flag to show/hide the dialog
-   */
-  active: PropTypes.bool.isRequired,
-  /**
-   * The title of the dialog
-   */
-  title: PropTypes.string,
-  /**
-   * Width of the dialog window (CSS format)
-   */
-  width: PropTypes.string,
-  /**
    * An array of options that the user will be able to click.
    * Each item in the array will be rendered as a <Button /> in the dialog window.
    * Items can also be React elements.
    */
   actions: PropTypes.array,
+  /**
+   * Flag to show/hide the dialog
+   */
+  active: PropTypes.bool.isRequired,
+  /**
+   * Flag to hide the close icon in top right corner
+   */
+  hideClose: PropTypes.bool,
   /**
    * Callback that runs when an action is clicked by the user. If the actions
    * If the `actions` prop is an array of strings,
@@ -219,18 +215,22 @@ Dialog.propTypes = {
    */
   onClose: PropTypes.func,
   /**
-   * Flag to hide the close icon in top right corner
+   * The title of the dialog
    */
-  hideClose: PropTypes.bool,
+  title: PropTypes.string,
+  /**
+   * Width of the dialog window (CSS format)
+   */
+  width: PropTypes.string,
 };
 
 Dialog.defaultProps = {
-  title: '',
-  width: '75%',
   actions: [],
+  hideClose: false,
   onActionClick: noop,
   onClose: noop,
-  hideClose: false,
+  title: '',
+  width: '75%',
 };
 
 export default Dialog;

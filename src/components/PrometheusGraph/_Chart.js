@@ -16,19 +16,19 @@ const Canvas = styled.svg`
 `;
 
 const SeriesLineChart = styled.path.attrs({
-  strokeWidth: 2,
   fill: 'none',
+  strokeWidth: 2,
 })`
   opacity: ${props => (props.faded ? 0.1 : 1)};
   pointer-events: none;
 `;
 
 const SeriesAreaChart = styled.path.attrs({
+  stroke: ({ fill }) => fill,
   // Use strokeWidth only on focused area graphs to make sure ultra-thin ones
   // still get visible, but don't use it when multiple series are visible so
   // that it doesn't look like it's other series' border.
   strokeWidth: ({ focused }) => (focused ? 1 : 0),
-  stroke: ({ fill }) => fill,
 })`
   opacity: ${props => (props.faded ? 0.05 : 0.75)};
   pointer-events: none;
@@ -37,7 +37,7 @@ const SeriesAreaChart = styled.path.attrs({
 class Chart extends React.PureComponent {
   handleResize = debounce(() => {
     const { width, height } = this.getSvgBoundingRect();
-    this.props.onChartResize({ chartWidth: width, chartHeight: height });
+    this.props.onChartResize({ chartHeight: height, chartWidth: width });
   }, 50);
 
   componentDidMount() {
@@ -63,11 +63,11 @@ class Chart extends React.PureComponent {
     let hoverPoints = this.props.multiSeries.map(series => {
       const datapoint = getDatapointAtTimestamp(series, hoverTimestampSec);
       return {
-        graphValue: datapoint.offset + datapoint.value,
-        value: datapoint.value,
-        key: series.key,
-        hoverName: series.hoverName,
         color: series.color,
+        graphValue: datapoint.offset + datapoint.value,
+        hoverName: series.hoverName,
+        key: series.key,
+        value: datapoint.value,
       };
     });
 
@@ -91,17 +91,17 @@ class Chart extends React.PureComponent {
     }));
 
     this.props.onHoverUpdate({
-      hoverY: cursorYOffset,
-      hoverX: timeScale(hoverTimestampSec),
-      hoverTimestampSec,
       hoverPoints,
+      hoverTimestampSec,
+      hoverX: timeScale(hoverTimestampSec),
+      hoverY: cursorYOffset,
     });
   };
 
   handleGraphMouseLeave = () => {
     this.props.onHoverUpdate({
-      hoverTimestampSec: null,
       hoverPoints: null,
+      hoverTimestampSec: null,
       hoverX: null,
       hoverY: null,
     });
@@ -113,10 +113,10 @@ class Chart extends React.PureComponent {
 
   getSvgBoundingRect() {
     const defaultRect = {
-      width: 0,
       height: 0,
-      top: 0,
       left: 0,
+      top: 0,
+      width: 0,
     };
 
     return this.svgRef ? this.svgRef.getBoundingClientRect() : defaultRect;
@@ -185,15 +185,15 @@ class Chart extends React.PureComponent {
 }
 
 Chart.propTypes = {
+  hoveredLegendKey: PropTypes.string,
   multiSeries: PropTypes.array.isRequired,
+  onChartResize: PropTypes.func.isRequired,
+  onHoverUpdate: PropTypes.func.isRequired,
+  selectedLegendKeys: PropTypes.array.isRequired,
   showStacked: PropTypes.bool.isRequired,
   timeScale: PropTypes.func.isRequired,
-  valueScale: PropTypes.func.isRequired,
   timestampQuantizer: PropTypes.func.isRequired,
-  selectedLegendKeys: PropTypes.array.isRequired,
-  hoveredLegendKey: PropTypes.string,
-  onHoverUpdate: PropTypes.func.isRequired,
-  onChartResize: PropTypes.func.isRequired,
+  valueScale: PropTypes.func.isRequired,
 };
 
 Chart.defaultProps = {

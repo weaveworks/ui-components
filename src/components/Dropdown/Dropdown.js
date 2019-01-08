@@ -244,11 +244,15 @@ class Dropdown extends React.Component {
 }
 
 const itemPropType = PropTypes.shape({
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   label: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 });
 
 Dropdown.propTypes = {
+  /**
+   * Disables the component if true
+   */
+  disabled: PropTypes.bool,
   /**
    * Array of items (or groups of items) that will be selectable.
    * `value` should be an internal value,
@@ -258,11 +262,6 @@ Dropdown.propTypes = {
     PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType])
   ).isRequired,
   /**
-   * The value of the currently selected item. This much match a value in the `items` prop.
-   * If no value is provided, the first elements's value will be used.
-   */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  /**
    * A handler function that will run when a value is selected.
    */
   onChange: PropTypes.func,
@@ -271,9 +270,15 @@ Dropdown.propTypes = {
    */
   placeholder: PropTypes.string,
   /**
-   * Disables the component if true
+   * The value of the currently selected item. This much match a value in the `items` prop.
+   * If no value is provided, the first elements's value will be used.
    */
-  disabled: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  /**
+   * Pass a custom width css value
+   */
+  width: PropTypes.string,
 
   /**
    * A custom component to replace the default toggle view.
@@ -281,20 +286,15 @@ Dropdown.propTypes = {
    * to make the dropdown list toggle.
    */
   withComponent: PropTypes.func,
-
-  /**
-   * Pass a custom width css value
-   */
-  width: PropTypes.string,
 };
 
 Dropdown.defaultProps = {
+  disabled: false,
   onChange: noop,
   placeholder: '',
-  disabled: false,
   value: '',
-  withComponent: DefaultToggleView,
   width: WIDTH,
+  withComponent: DefaultToggleView,
 };
 
 export default StyledDropdown(Dropdown);

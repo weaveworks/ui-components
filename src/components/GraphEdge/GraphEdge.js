@@ -8,7 +8,7 @@ import { spring, Motion } from 'react-motion';
 import { encodeIdAttribute } from '../../utils/dom';
 
 function weakSpring(value) {
-  return spring(value, { stiffness: 100, damping: 18, precision: 1 });
+  return spring(value, { damping: 18, precision: 1, stiffness: 100 });
 }
 
 const spline = line()
@@ -198,9 +198,9 @@ class GraphEdge extends React.PureComponent {
       // { x0: 11, y0: 22, x1: 33, y1: 44 } that we convert to the array format when rendering.
       <Motion
         style={{
-          interpolatedThickness: weakSpring(this.props.thickness),
-          interpolatedArrowOffset: weakSpring(this.props.arrowOffset),
           ...this.state.waypointsMap,
+          interpolatedArrowOffset: weakSpring(this.props.arrowOffset),
+          interpolatedThickness: weakSpring(this.props.thickness),
         }}
       >
         {({
@@ -210,9 +210,9 @@ class GraphEdge extends React.PureComponent {
         }) =>
           this.renderEdge({
             ...otherProps,
+            arrowOffset: interpolatedArrowOffset,
             encodedArrowId,
             thickness: interpolatedThickness,
-            arrowOffset: interpolatedArrowOffset,
             waypoints: waypointsMapToArray(interpolatedWaypoints),
           })
         }
@@ -223,9 +223,45 @@ class GraphEdge extends React.PureComponent {
 
 GraphEdge.propTypes = {
   /**
+   * Distance from the target point (tweak this to pull the arrow out of the rendered node)
+   */
+  arrowOffset: PropTypes.number,
+  /**
+   * Renders the edge in a high contrast mode
+   */
+  contrastMode: PropTypes.bool,
+  /**
+   * A callback to which the GraphNode `ref` will be passed.
+   */
+  graphEdgeRef: PropTypes.func,
+  /**
+   * Shows the blue shadow around the edge if true
+   */
+  highlighted: PropTypes.bool,
+  /**
    * A unique edge ID
    */
   id: PropTypes.string.isRequired,
+  /**
+   * Animates the edge motion if true
+   */
+  isAnimated: PropTypes.bool,
+  /**
+   * Shows extra dots on the edge path if true
+   */
+  isDotted: PropTypes.bool,
+  /**
+   * Callback for mouse pointer entering the edge
+   */
+  onMouseEnter: PropTypes.func,
+  /**
+   * Callback for mouse pointer leaving the edge
+   */
+  onMouseLeave: PropTypes.func,
+  /**
+   * Thickness of the rendered edge line
+   */
+  thickness: PropTypes.number,
   /**
    * A list of points in the { x, y } format describing the edge path
    */
@@ -240,59 +276,23 @@ GraphEdge.propTypes = {
    */
   waypointsCap: PropTypes.number,
   /**
-   * Thickness of the rendered edge line
-   */
-  thickness: PropTypes.number,
-  /**
-   * Shows the blue shadow around the edge if true
-   */
-  highlighted: PropTypes.bool,
-  /**
    * Draws a one-way arrow on the edge if true
    */
   withArrow: PropTypes.bool,
-  /**
-   * Distance from the target point (tweak this to pull the arrow out of the rendered node)
-   */
-  arrowOffset: PropTypes.number,
-  /**
-   * Shows extra dots on the edge path if true
-   */
-  isDotted: PropTypes.bool,
-  /**
-   * Animates the edge motion if true
-   */
-  isAnimated: PropTypes.bool,
-  /**
-   * Renders the edge in a high contrast mode
-   */
-  contrastMode: PropTypes.bool,
-  /**
-   * A callback to which the GraphNode `ref` will be passed.
-   */
-  graphEdgeRef: PropTypes.func,
-  /**
-   * Callback for mouse pointer entering the edge
-   */
-  onMouseEnter: PropTypes.func,
-  /**
-   * Callback for mouse pointer leaving the edge
-   */
-  onMouseLeave: PropTypes.func,
 };
 
 GraphEdge.defaultProps = {
-  waypointsCap: 10,
-  thickness: 1,
-  highlighted: false,
-  withArrow: false,
   arrowOffset: 0,
-  isDotted: false,
-  isAnimated: false,
   contrastMode: false,
   graphEdgeRef: undefined,
+  highlighted: false,
+  isAnimated: false,
+  isDotted: false,
   onMouseEnter: noop,
   onMouseLeave: noop,
+  thickness: 1,
+  waypointsCap: 10,
+  withArrow: false,
 };
 
 export default GraphEdge;

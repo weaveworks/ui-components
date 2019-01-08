@@ -8,8 +8,8 @@ import Alert from '.';
 const initial = {
   error: true,
   info: true,
-  title: true,
   success: true,
+  title: true,
   warning: true,
 };
 

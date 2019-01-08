@@ -127,15 +127,15 @@ class DeploymentAnnotations extends React.PureComponent {
 }
 
 DeploymentAnnotations.propTypes = {
-  x: PropTypes.number.isRequired,
   action: PropTypes.string.isRequired,
-  serviceIDs: PropTypes.array.isRequired,
-  timestamp: PropTypes.string.isRequired,
-  containerWidth: PropTypes.number.isRequired,
   containerHeight: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired,
+  containerWidth: PropTypes.number.isRequired,
   linkTo: PropTypes.string,
   onAxis: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  serviceIDs: PropTypes.array.isRequired,
+  timestamp: PropTypes.string.isRequired,
+  x: PropTypes.number.isRequired,
 };
 
 DeploymentAnnotations.defaultProps = {

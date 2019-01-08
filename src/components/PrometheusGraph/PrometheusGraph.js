@@ -115,6 +115,20 @@ const AxisLabel = styled.span`
 `;
 
 const valueFormatters = {
+  bytes: maxBytes => {
+    const data = [
+      { label: 'TB', unit: 1024 * 1024 * 1024 * 1024 },
+      { label: 'GB', unit: 1024 * 1024 * 1024 },
+      { label: 'MB', unit: 1024 * 1024 },
+      { label: 'kB', unit: 1024 },
+      { label: 'B', unit: 1 },
+    ].find(({ unit }) => maxBytes / unit >= 2);
+    return n => {
+      if (n === null) return '---';
+      if (!data) return '0';
+      return `${Math.round(n / data.unit)} ${data.label}`;
+    };
+  },
   numeric: number => {
     const step = number / 7;
     const formatNumber =
@@ -125,6 +139,14 @@ const valueFormatters = {
       if (n === null) return '---';
       if (n === 0) return '0';
       return formatNumber(n);
+    };
+  },
+  percent: () => {
+    const formatPercent = format('.2%');
+    return n => {
+      if (n === null) return '---';
+      if (n === 0) return '0%';
+      return formatPercent(n);
     };
   },
   seconds: maxSeconds => {
@@ -141,28 +163,6 @@ const valueFormatters = {
       if (n === null) return '---';
       if (!data) return '0';
       return `${Math.round(n / data.unit)} ${data.label}`;
-    };
-  },
-  bytes: maxBytes => {
-    const data = [
-      { label: 'TB', unit: 1024 * 1024 * 1024 * 1024 },
-      { label: 'GB', unit: 1024 * 1024 * 1024 },
-      { label: 'MB', unit: 1024 * 1024 },
-      { label: 'kB', unit: 1024 },
-      { label: 'B', unit: 1 },
-    ].find(({ unit }) => maxBytes / unit >= 2);
-    return n => {
-      if (n === null) return '---';
-      if (!data) return '0';
-      return `${Math.round(n / data.unit)} ${data.label}`;
-    };
-  },
-  percent: () => {
-    const formatPercent = format('.2%');
-    return n => {
-      if (n === null) return '---';
-      if (n === 0) return '0%';
-      return formatPercent(n);
     };
   },
 };
@@ -205,15 +205,15 @@ class PrometheusGraph extends React.PureComponent {
     super(props, context);
 
     this.state = {
-      multiSeries: [],
-      selectedLegendKeys: props.selectedLegendKeys,
+      chartHeight: 0,
+      chartWidth: 0,
       hoveredLegendKey: null,
-      hoverTimestampSec: null,
       hoverPoints: null,
+      hoverTimestampSec: null,
       hoverX: null,
       hoverY: null,
-      chartWidth: 0,
-      chartHeight: 0,
+      multiSeries: [],
+      selectedLegendKeys: props.selectedLegendKeys,
       timeScale: null,
       valueScale: null,
     };
@@ -256,12 +256,13 @@ class PrometheusGraph extends React.PureComponent {
 
   handleChartResize = ({ chartWidth, chartHeight }) => {
     this.setState({
-      chartWidth,
-      chartHeight,
       ...this.prepareTimeAndValueScales(
         this.props,
         this.state.visibleMultiSeries
       ),
+
+      chartHeight,
+      chartWidth,
     });
   };
 
@@ -350,15 +351,15 @@ class PrometheusGraph extends React.PureComponent {
 
     // Finally store the multi-series ready to be graphed.
     const multiSeries = multiSeriesKeys.map((seriesKey, seriesIndex) => ({
-      key: seriesKey,
       color: getSeriesColor(seriesIndex),
-      hoverName: getSeriesNameParts(multiSeriesByKey[seriesKey]),
-      legendNameParts: getSeriesNameParts(multiSeriesByKey[seriesKey], true),
       datapoints: timestampSecs.map((timestampSec, timestampIndex) => ({
+        offset: getStackedOffset(seriesKey, timestampIndex),
         timestampSec,
         value: valuesByTimestamp[timestampSec][seriesKey],
-        offset: getStackedOffset(seriesKey, timestampIndex),
       })),
+      hoverName: getSeriesNameParts(multiSeriesByKey[seriesKey]),
+      key: seriesKey,
+      legendNameParts: getSeriesNameParts(multiSeriesByKey[seriesKey], true),
     }));
 
     const visibleMultiSeries = // If no series is selected, show all of them.
@@ -376,9 +377,9 @@ class PrometheusGraph extends React.PureComponent {
 
     this.setState({
       multiSeries,
-      visibleMultiSeries,
       timeScale,
       valueScale,
+      visibleMultiSeries,
     });
   };
 
@@ -563,21 +564,25 @@ class PrometheusGraph extends React.PureComponent {
 
 PrometheusGraph.propTypes = {
   /**
-   * List of datapoints to be rendered in the graph
+   * Color theme for the graph
    */
-  multiSeries: PropTypes.array.isRequired,
+  colorTheme: PropTypes.oneOf(['mixed', 'blue', 'purple']),
   /**
-   * Granularity in seconds between adjacent datapoints across the time scale
+   * Optional list of deployment annotations shown over the graph
    */
-  stepDurationSec: PropTypes.number.isRequired,
+  deployments: PropTypes.array,
   /**
-   * Start timestamp of the rendered chart (unix timestamp)
+   * Optional function that builds links that deployment clicks should lead to
    */
-  startTimeSec: PropTypes.number.isRequired,
+  deploymentsLinkBuilder: PropTypes.func,
   /**
    * End timestamp of the rendered chart (unix timestamp)
    */
   endTimeSec: PropTypes.number.isRequired,
+  /**
+   * If set, shows the error message over the graph
+   */
+  error: PropTypes.string,
   /**
    * Optional method that generates the series key based on its data.
    */
@@ -588,17 +593,41 @@ PrometheusGraph.propTypes = {
    */
   getSeriesNameParts: PropTypes.func,
   /**
-   * Color theme for the graph
+   * Making graph legend section collapsable
    */
-  colorTheme: PropTypes.oneOf(['mixed', 'blue', 'purple']),
+  legendCollapsable: PropTypes.bool,
+  /**
+   * Display legend section initially
+   */
+  legendShown: PropTypes.bool,
+  /**
+   * If true, shows a loading overlay on top of the graph
+   */
+  loading: PropTypes.bool,
   /**
    * Series values format
    */
   metricUnits: PropTypes.oneOf(['numeric', 'seconds', 'bytes', 'percent']),
   /**
-   * Minimal allowed length of the Y-axis values spread
+   * List of datapoints to be rendered in the graph
    */
-  valuesMinSpread: PropTypes.number,
+  multiSeries: PropTypes.array.isRequired,
+  /**
+   * Called when legend selection changes
+   */
+  onChangeLegendSelection: PropTypes.func,
+  /**
+   * Optional hook for deployment annotation clicks
+   */
+  onDeploymentClick: PropTypes.func,
+  /**
+   * Optional content to be appended to the ending of the legend item
+   */
+  renderLegendItemSuffix: PropTypes.func,
+  /**
+   * Initially preselected legend items
+   */
+  selectedLegendKeys: PropTypes.array,
   /**
    * If true, shows the stacked area graph, otherwise show a simple line graph
    */
@@ -608,65 +637,37 @@ PrometheusGraph.propTypes = {
    */
   simpleTooltip: PropTypes.bool,
   /**
-   * If true, shows a loading overlay on top of the graph
+   * Start timestamp of the rendered chart (unix timestamp)
    */
-  loading: PropTypes.bool,
+  startTimeSec: PropTypes.number.isRequired,
   /**
-   * If set, shows the error message over the graph
+   * Granularity in seconds between adjacent datapoints across the time scale
    */
-  error: PropTypes.string,
+  stepDurationSec: PropTypes.number.isRequired,
   /**
-   * Optional content to be appended to the ending of the legend item
+   * Minimal allowed length of the Y-axis values spread
    */
-  renderLegendItemSuffix: PropTypes.func,
-  /**
-   * Making graph legend section collapsable
-   */
-  legendCollapsable: PropTypes.bool,
-  /**
-   * Display legend section initially
-   */
-  legendShown: PropTypes.bool,
-  /**
-   * Initially preselected legend items
-   */
-  selectedLegendKeys: PropTypes.array,
-  /**
-   * Called when legend selection changes
-   */
-  onChangeLegendSelection: PropTypes.func,
-  /**
-   * Optional list of deployment annotations shown over the graph
-   */
-  deployments: PropTypes.array,
-  /**
-   * Optional function that builds links that deployment clicks should lead to
-   */
-  deploymentsLinkBuilder: PropTypes.func,
-  /**
-   * Optional hook for deployment annotation clicks
-   */
-  onDeploymentClick: PropTypes.func,
+  valuesMinSpread: PropTypes.number,
 };
 
 PrometheusGraph.defaultProps = {
+  colorTheme: 'mixed',
+  deployments: [],
+  deploymentsLinkBuilder: noop,
   error: '',
   getSeriesKey: undefined,
   getSeriesNameParts: getDefaultSeriesNameParts,
-  colorTheme: 'mixed',
-  metricUnits: 'numeric',
-  valuesMinSpread: 0.012,
-  showStacked: false,
-  simpleTooltip: false,
-  renderLegendItemSuffix: noop,
   legendCollapsable: false,
   legendShown: true,
   loading: false,
+  metricUnits: 'numeric',
   onChangeLegendSelection: noop,
-  selectedLegendKeys: [],
-  deployments: [],
-  deploymentsLinkBuilder: noop,
   onDeploymentClick: noop,
+  renderLegendItemSuffix: noop,
+  selectedLegendKeys: [],
+  showStacked: false,
+  simpleTooltip: false,
+  valuesMinSpread: 0.012,
 };
 
 export default PrometheusGraph;

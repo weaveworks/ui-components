@@ -23,7 +23,7 @@ function generateRandomMultiSeries(
     metric: { [key]: faker.lorem.slug() },
     values: range(startTime, endTime + 1e-6, stepDuration).map(time => [
       time,
-      faker.random.number({ min: 10, max: 20 }),
+      faker.random.number({ max: 20, min: 10 }),
     ]),
   }));
 }
@@ -37,20 +37,20 @@ function generateCorrelatedMultiSeries(
     metric: { [key]: ['aaa', 'bbb', 'bbb', 'ccc', 'ddd'][index] },
     values: range(startTime, endTime + 1e-6, stepDuration).map(time => [
       time,
-      faker.random.number({ min: 10, max: 20 }),
+      faker.random.number({ max: 20, min: 10 }),
     ]),
   }));
 }
 
 function generateDeployments({ startTime, endTime }, count) {
   return times(count, () => ({
-    Stamp: moment.unix(faker.random.number({ min: startTime, max: endTime })),
     Data: compact([
       `Commit: ${faker.lorem.word()}`,
       Math.random() < 0.5 && faker.lorem.slug(),
       Math.random() < 0.5 && faker.lorem.slug(),
       Math.random() < 0.5 && faker.lorem.slug(),
     ]).join(', '),
+    Stamp: moment.unix(faker.random.number({ max: endTime, min: startTime })),
   }));
 }
 
@@ -59,11 +59,11 @@ export default class PrometheusGraphExample extends React.Component {
     super();
 
     this.state = {
+      endTime: moment('2018-02-05T11:54:14Z').unix(),
+      loading: true,
       selectedCorrelatedKeys: [],
       startTime: moment('2018-02-05T11:24:14Z').unix(),
-      endTime: moment('2018-02-05T11:54:14Z').unix(),
       stepDuration: 9,
-      loading: true,
     };
 
     this.state.multiSeriesJobs = generateRandomMultiSeries(

@@ -22,11 +22,11 @@ const theme = {
   // Component-specific
   atoms,
 
-  // Box shadows
-  boxShadow,
-
   // Borders
   borderRadius,
+
+  // Box shadows
+  boxShadow,
 
   // Colors
   colors,
@@ -38,11 +38,11 @@ const theme = {
   // z-index layers
   layers,
 
-  // Spacings
-  spacing,
-
   // Misc
   overlayIconSize,
+
+  // Spacings
+  spacing,
   textColor,
 };
 

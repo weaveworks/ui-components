@@ -8,9 +8,9 @@ import Dialog from '.';
 
 export default class DialogExample extends React.Component {
   state = {
+    emptyButtonActive: false,
     normalButtonActive: false,
     otherButtonActive: false,
-    emptyButtonActive: false,
   };
 
   handleDialogActivate = (type, args) => {
@@ -25,10 +25,10 @@ export default class DialogExample extends React.Component {
 
   handleClose = () => {
     this.setState({
-      normalButtonActive: false,
-      otherButtonActive: false,
       emptyButtonActive: false,
       hideCloseButtonActive: false,
+      normalButtonActive: false,
+      otherButtonActive: false,
     });
   };
 

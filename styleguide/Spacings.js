@@ -48,7 +48,7 @@ class Spacings extends React.Component {
         <Row>
           {map(theme.spacing, (value, name) => (
             <Block key={name}>
-              <SpacingElement style={{ width: value, height: value }} />
+              <SpacingElement style={{ height: value, width: value }} />
               <SizeLabel>{value}</SizeLabel>
               theme.spacing.<b>{name}</b>
             </Block>

@@ -167,20 +167,9 @@ class Search extends React.PureComponent {
 
 Search.propTypes = {
   /**
-   * The initial value to use to populate the search text field.
-   * Changes to this prop will be ignored after initial render.
+   * Disables the component if true
    */
-  query: PropTypes.string.isRequired,
-  /**
-   * The initial pinned terms of the search field.
-   * Changes to this prop will be ignored after initial render.
-   */
-  pinnedTerms: PropTypes.arrayOf(PropTypes.string).isRequired,
-  /**
-   * Handler that runs when the text input changes.
-   * Returns the text as first argument, and the list of pinned terms as the second.
-   */
-  onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
   /**
    * A list of selectable filters to be rendered in a `<Dropdown />`.
    * When an option is clicked, the `value` is added to the search terms.
@@ -189,40 +178,51 @@ Search.propTypes = {
    */
   filters: PropTypes.arrayOf(
     PropTypes.shape({
-      value: PropTypes.string,
       label: PropTypes.string,
+      value: PropTypes.string,
     })
   ),
+  onBlur: PropTypes.func,
   /**
-   * Text that will be passed to the search input as the placeholder.
+   * Handler that runs when the text input changes.
+   * Returns the text as first argument, and the list of pinned terms as the second.
    */
-  placeholder: PropTypes.string,
-  /**
-   * Disables the component if true
-   */
-  disabled: PropTypes.bool,
-  /**
-   * Handler that runs when a search is pinned or unpinned.
-   * Returns an array of the currently pinned terms.
-   */
-  onPin: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
   /**
    * Handler that runs when an item from the search filter dropdown is selected
    * Returns the selected filter value.
    */
   onFilterSelect: requiredIf(PropTypes.func, props => props.filters.length > 0),
   onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
+  /**
+   * Handler that runs when a search is pinned or unpinned.
+   * Returns an array of the currently pinned terms.
+   */
+  onPin: PropTypes.func,
+  /**
+   * The initial pinned terms of the search field.
+   * Changes to this prop will be ignored after initial render.
+   */
+  pinnedTerms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  /**
+   * Text that will be passed to the search input as the placeholder.
+   */
+  placeholder: PropTypes.string,
+  /**
+   * The initial value to use to populate the search text field.
+   * Changes to this prop will be ignored after initial render.
+   */
+  query: PropTypes.string.isRequired,
 };
 
 Search.defaultProps = {
-  placeholder: 'search',
   disabled: false,
   filters: [],
-  onFilterSelect: noop,
-  onPin: noop,
-  onFocus: noop,
   onBlur: noop,
+  onFilterSelect: noop,
+  onFocus: noop,
+  onPin: noop,
+  placeholder: 'search',
 };
 
 export default copyPropTypes(Search, Styled(Search));
