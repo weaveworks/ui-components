@@ -107,7 +107,7 @@ const Label = styled.span`
 
 // TODO: Extract this into the theme.
 const dialSpring = value =>
-  spring(value, { stiffness: 50, damping: 13, precision: 0.01 });
+  spring(value, { damping: 13, precision: 0.01, stiffness: 50 });
 
 class ResourceDial extends React.PureComponent {
   constructor(props, context) {
@@ -169,27 +169,27 @@ class ResourceDial extends React.PureComponent {
 
 ResourceDial.propTypes = {
   /**
-   * Resource usage label shown below the percentage value
-   */
-  label: PropTypes.string.isRequired,
-  /**
-   * The percentage value to be displayed by the dial, should be between 0 and 1
-   */
-  value: PropTypes.number,
-  /**
    * Disables the link if set to true
    */
   disabled: PropTypes.bool,
   /**
+   * Resource usage label shown below the percentage value
+   */
+  label: PropTypes.string.isRequired,
+  /**
    * React router link for clicking on the dial
    */
   to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /**
+   * The percentage value to be displayed by the dial, should be between 0 and 1
+   */
+  value: PropTypes.number,
 };
 
 ResourceDial.defaultProps = {
-  value: null,
   disabled: false,
   to: '',
+  value: null,
 };
 
 export default ResourceDial;

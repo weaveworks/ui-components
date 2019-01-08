@@ -44,6 +44,10 @@ const Styled = StyledHeader(Header);
 
 Styled.propTypes = {
   /**
+   * Sort order. Should be either `asc` or `desc`
+   */
+  order: PropTypes.oneOf(['asc', 'desc']),
+  /**
    * Whether or not the column will be sortable
    */
   sortable: PropTypes.bool,
@@ -51,10 +55,6 @@ Styled.propTypes = {
    * The width that will be applied to the column
    */
   width: PropTypes.string,
-  /**
-   * Sort order. Should be either `asc` or `desc`
-   */
-  order: PropTypes.oneOf(['asc', 'desc']),
 };
 
 Styled.defaultProps = {

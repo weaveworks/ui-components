@@ -38,11 +38,6 @@ class SearchTerm extends React.PureComponent {
 
 SearchTerm.propTypes = {
   /**
-   * The internal identifier for a term.
-   * If no `label` is supplied, `term` will be rendered.
-   */
-  term: PropTypes.string.isRequired,
-  /**
    * Display value that will be rendered.
    */
   label: PropTypes.string,
@@ -51,6 +46,11 @@ SearchTerm.propTypes = {
    * The `term` prop will be passed to the `onRemove` handler.
    */
   onRemove: PropTypes.func,
+  /**
+   * The internal identifier for a term.
+   * If no `label` is supplied, `term` will be rendered.
+   */
+  term: PropTypes.string.isRequired,
 };
 
 SearchTerm.defaultProps = {

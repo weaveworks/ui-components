@@ -11,18 +11,18 @@ module.exports = class LocalModuleProxy {
       if (self.opts.enabled) {
         if (moduleName === requestedModule) {
           const proxyReq = {
-            path: request.path,
-            request: path,
-            query: request.query,
             directory: request.directory,
+            path: request.path,
+            query: request.query,
+            request: path,
           };
           this.doResolve(['file'], proxyReq, callback);
         } else if (modules && modules[requestedModule]) {
           const proxyReq = {
-            path: request.path,
-            request: modules[requestedModule],
-            query: request.query,
             directory: request.directory,
+            path: request.path,
+            query: request.query,
+            request: modules[requestedModule],
           };
           this.doResolve(['file'], proxyReq, callback);
         } else {

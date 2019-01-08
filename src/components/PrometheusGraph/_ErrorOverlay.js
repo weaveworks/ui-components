@@ -41,9 +41,9 @@ class ErrorOverlay extends React.PureComponent {
 }
 
 ErrorOverlay.propTypes = {
+  error: PropTypes.string,
   hasData: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.string,
 };
 
 ErrorOverlay.defaultProps = {

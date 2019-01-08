@@ -24,8 +24,8 @@ function getClipPathDefinition(clipId, height, radius) {
 }
 
 const NodeAnchor = styled.circle.attrs({
-  strokeWidth: 0.005,
   r: 0.1,
+  strokeWidth: 0.005,
 })`
   fill: ${props =>
     props.contrastMode
@@ -35,9 +35,9 @@ const NodeAnchor = styled.circle.attrs({
 `;
 
 const MetricText = styled.text.attrs({
-  transform: 'scale(0.015)',
   dominantBaseline: 'middle',
   textAnchor: 'middle',
+  transform: 'scale(0.015)',
 })`
   fill: ${props =>
     props.contrastMode
@@ -74,7 +74,7 @@ class BaseShape extends React.Component {
         {hasMetric && NodeMetricFill(renderTemplate, { clipId, metricColor })}
 
         {NodeShadow(renderTemplate, contrastMode)}
-        {NodeBorder(renderTemplate, contrastMode, { hasMetric, color })}
+        {NodeBorder(renderTemplate, contrastMode, { color, hasMetric })}
 
         {hasMetric && highlighted ? (
           <MetricText contrastMode={contrastMode}>
@@ -89,14 +89,14 @@ class BaseShape extends React.Component {
 }
 
 BaseShape.propTypes = {
-  id: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
-  size: PropTypes.number.isRequired,
-  renderTemplate: PropTypes.func.isRequired,
   highlighted: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
   metricColor: PropTypes.string.isRequired,
   metricFormattedValue: PropTypes.string.isRequired,
   metricNumericValue: PropTypes.number,
+  renderTemplate: PropTypes.func.isRequired,
+  size: PropTypes.number.isRequired,
 };
 
 BaseShape.defaultProps = {

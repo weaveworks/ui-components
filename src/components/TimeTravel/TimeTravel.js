@@ -144,14 +144,14 @@ class TimeTravel extends React.PureComponent {
     super(props, context);
 
     this.state = {
-      timestampNow: formattedTimestamp(),
-      focusedTimestamp: formattedTimestamp(props.timestamp),
       durationMsPerPixel: initialDurationMsPerTimelinePx(
         props.earliestTimestamp
       ),
-      showingLive: props.showingLive,
+      focusedTimestamp: formattedTimestamp(props.timestamp),
       rangeMs: props.rangeMs,
+      showingLive: props.showingLive,
       timelineWidthPx: null,
+      timestampNow: formattedTimestamp(),
     };
 
     this.delayedReportZoom = debounce(this.reportZoom, 5000);
@@ -408,62 +408,6 @@ class TimeTravel extends React.PureComponent {
 
 TimeTravel.propTypes = {
   /**
-   * The timestamp in focus
-   */
-  timestamp: PropTypes.string.isRequired,
-  /**
-   * The earliest timestamp we can travel back in time to
-   */
-  earliestTimestamp: PropTypes.string,
-  /**
-   * Required callback handling every timestamp change
-   */
-  onChangeTimestamp: PropTypes.func.isRequired,
-  /**
-   * Optional callback handling timestamp change by direct input box editing (e.g. for tracking)
-   */
-  onTimestampInputEdit: PropTypes.func,
-  /**
-   * Optional callback handling clicks on timeline pan buttons (e.g. for tracking)
-   */
-  onTimelinePanButtonClick: PropTypes.func,
-  /**
-   * Optional callback handling clicks on timeline labels (e.g. for tracking)
-   */
-  onTimelineLabelClick: PropTypes.func,
-  /**
-   * Optional callback handling timeline zooming (e.g. for tracking)
-   */
-  onTimelineZoom: PropTypes.func,
-  /**
-   * Optional callback handling timeline panning (e.g. for tracking)
-   */
-  onTimelinePan: PropTypes.func,
-  /**
-   * Enables Time Travel to be in the live auto-update mode
-   */
-  hasLiveMode: PropTypes.bool,
-  /**
-   * The live mode shows current time and ignores the `timestamp` param
-   */
-  showingLive: PropTypes.bool,
-  /**
-   * Optional callback handling the change of live mode
-   */
-  onChangeLiveMode: PropTypes.func,
-  /**
-   * Adds a range selector to the timestamp selector, for when the timestamp info is not enough
-   */
-  hasRangeSelector: PropTypes.bool,
-  /**
-   * Duration in milliseconds of the focused range (which ends at `timestamp`)
-   */
-  rangeMs: PropTypes.number,
-  /**
-   * Optional callback handling range in milliseconds change
-   */
-  onChangeRange: PropTypes.func,
-  /**
    * Optional list of deployment annotations shown in the timeline
    */
   deployments: PropTypes.array,
@@ -472,37 +416,95 @@ TimeTravel.propTypes = {
    */
   deploymentsLinkBuilder: PropTypes.func,
   /**
+   * The earliest timestamp we can travel back in time to
+   */
+  earliestTimestamp: PropTypes.string,
+  /**
+   * Enables Time Travel to be in the live auto-update mode
+   */
+  hasLiveMode: PropTypes.bool,
+  /**
+   * Adds a range selector to the timestamp selector, for when the timestamp info is not enough
+   */
+  hasRangeSelector: PropTypes.bool,
+  /**
+   * Shows timeline loading indicator
+   */
+  isLoading: PropTypes.bool,
+  /**
+   * Optional callback handling the change of live mode
+   */
+  onChangeLiveMode: PropTypes.func,
+  /**
+   * Optional callback handling range in milliseconds change
+   */
+  onChangeRange: PropTypes.func,
+  /**
+   * Required callback handling every timestamp change
+   */
+  onChangeTimestamp: PropTypes.func.isRequired,
+  /**
    * Optional hook for deployment annotation clicks
    */
   onDeploymentClick: PropTypes.func,
+  /**
+   * Optional callback handling clicks on timeline labels (e.g. for tracking)
+   */
+  onTimelineLabelClick: PropTypes.func,
+  /**
+   * Optional callback handling timeline panning (e.g. for tracking)
+   */
+  onTimelinePan: PropTypes.func,
+  /**
+   * Optional callback handling clicks on timeline pan buttons (e.g. for tracking)
+   */
+  onTimelinePanButtonClick: PropTypes.func,
+  /**
+   * Optional callback handling timeline zooming (e.g. for tracking)
+   */
+  onTimelineZoom: PropTypes.func,
+  /**
+   * Optional callback handling timestamp change by direct input box editing (e.g. for tracking)
+   */
+  onTimestampInputEdit: PropTypes.func,
   /**
    * Optional callback when visible part of the timeline gets updated
    */
   onUpdateVisibleRange: PropTypes.func,
   /**
-   * Shows timeline loading indicator
+   * Duration in milliseconds of the focused range (which ends at `timestamp`)
    */
-  isLoading: PropTypes.bool,
+  rangeMs: PropTypes.number,
+  /**
+   * The live mode shows current time and ignores the `timestamp` param
+   */
+  showingLive: PropTypes.bool,
+  /**
+   * The timestamp in focus
+   */
+  timestamp: PropTypes.string.isRequired,
 };
 
 TimeTravel.defaultProps = {
-  earliestTimestamp: '2014-01-01T00:00:00Z',
-  hasLiveMode: false,
-  showingLive: true, // only relevant if live mode is enabled
-  onChangeLiveMode: noop,
-  hasRangeSelector: false,
-  rangeMs: 3600000, // 1 hour as a default, only relevant if range selector is enabled
   deployments: [],
   deploymentsLinkBuilder: noop,
-  onDeploymentClick: noop,
+  earliestTimestamp: '2014-01-01T00:00:00Z',
+  hasLiveMode: false,
+  hasRangeSelector: false,
   isLoading: false,
+  onChangeLiveMode: noop,
   onChangeRange: noop,
-  onTimestampInputEdit: noop,
-  onTimelinePanButtonClick: noop,
+  onDeploymentClick: noop,
   onTimelineLabelClick: noop,
-  onTimelineZoom: noop,
   onTimelinePan: noop,
+  onTimelinePanButtonClick: noop,
+  onTimelineZoom: noop,
+  onTimestampInputEdit: noop,
   onUpdateVisibleRange: noop,
+  // 1 hour as a default, only relevant if range selector is enabled
+  rangeMs: 3600000,
+  // only relevant if live mode is enabled
+  showingLive: true,
 };
 
 export default TimeTravel;

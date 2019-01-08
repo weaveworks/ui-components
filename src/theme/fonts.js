@@ -1,13 +1,13 @@
 import { kebabCase, forEach } from 'lodash';
 
 export const fontFamilies = {
-  regular: "'proxima-nova', Helvetica, Arial, sans-serif",
   monospace: "'Roboto Mono', monospace",
+  regular: "'proxima-nova', Helvetica, Arial, sans-serif",
 };
 
 export const fontSizes = {
-  huge: '48px',
   extraLarge: '32px',
+  huge: '48px',
   large: '22px',
   normal: '16px',
   small: '14px',

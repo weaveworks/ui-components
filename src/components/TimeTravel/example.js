@@ -10,13 +10,13 @@ import TimeTravel from '.';
 
 function generateDeployments({ startTime, endTime }, count) {
   return times(count, () => ({
-    Stamp: moment.unix(faker.random.number({ min: startTime, max: endTime })),
     Data: compact([
       `Commit: ${faker.lorem.word()}`,
       Math.random() < 0.5 && faker.lorem.slug(),
       Math.random() < 0.5 && faker.lorem.slug(),
       Math.random() < 0.5 && faker.lorem.slug(),
     ]).join(', '),
+    Stamp: moment.unix(faker.random.number({ max: endTime, min: startTime })),
   }));
 }
 
@@ -25,6 +25,18 @@ export default class TimeTravelExample extends React.Component {
     super(props);
 
     this.state = {
+      deployments: generateDeployments(
+        {
+          endTime: moment().unix(),
+          startTime: moment()
+            .subtract(1, 'month')
+            .unix(),
+        },
+        500
+      ),
+      isLoading2: false,
+      rangeMs3: 3600000,
+      showingLive3: true,
       timestamp1: moment()
         .utc()
         .format(),
@@ -34,20 +46,8 @@ export default class TimeTravelExample extends React.Component {
       timestamp3: moment()
         .utc()
         .format(),
-      isLoading2: false,
-      showingLive3: true,
-      rangeMs3: 3600000,
-      visibleStartAt: null,
       visibleEndAt: null,
-      deployments: generateDeployments(
-        {
-          startTime: moment()
-            .subtract(1, 'month')
-            .unix(),
-          endTime: moment().unix(),
-        },
-        500
-      ),
+      visibleStartAt: null,
     };
   }
 
@@ -56,7 +56,7 @@ export default class TimeTravelExample extends React.Component {
   };
 
   handleChangeTimestamp2 = timestamp2 => {
-    this.setState({ timestamp2, isLoading2: true });
+    this.setState({ isLoading2: true, timestamp2 });
     // Show loading indicator for 5 seconds after every timestamp change..
     setTimeout(() => {
       this.setState({ isLoading2: false });
@@ -77,8 +77,8 @@ export default class TimeTravelExample extends React.Component {
 
   handleUpdateVisibleRange = ({ startAt, endAt }) => {
     this.setState({
-      visibleStartAt: startAt,
       visibleEndAt: endAt,
+      visibleStartAt: startAt,
     });
   };
 

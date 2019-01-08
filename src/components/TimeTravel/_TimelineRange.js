@@ -32,9 +32,9 @@ const TimelineRange = ({ color, timeScale, startAt, endAt, width }) => {
 
 TimelineRange.propTypes = {
   color: PropTypes.string.isRequired,
-  timeScale: PropTypes.func.isRequired,
-  startAt: PropTypes.string,
   endAt: PropTypes.string,
+  startAt: PropTypes.string,
+  timeScale: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
 };
 

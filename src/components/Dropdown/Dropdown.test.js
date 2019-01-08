@@ -10,16 +10,16 @@ import Dropdown from './Dropdown';
 describe('<Dropdown />', () => {
   const items = [
     {
-      value: 'first-thing',
       label: 'First Thing',
+      value: 'first-thing',
     },
     {
-      value: 'second-thing',
       label: 'Second Thing',
+      value: 'second-thing',
     },
     {
-      value: 'third-thing',
       label: 'Super long thing, this should get truncated',
+      value: 'third-thing',
     },
   ];
 

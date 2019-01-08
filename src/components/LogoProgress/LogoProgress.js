@@ -110,8 +110,8 @@ class LogoProgress extends React.Component {
   render() {
     const { size = 150 } = this.props;
     const styles = {
-      width: size,
       height: size,
+      width: size,
     };
 
     return (

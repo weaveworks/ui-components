@@ -40,71 +40,71 @@ const TextInput = styled.input.attrs({
 
 export default class GraphNodeExample extends React.Component {
   state = {
-    availableShapes: [
-      ...nodeTypes.map(shape => ({
-        shape,
-        label: shape,
-        key: faker.lorem.slug(),
-      })),
-      {
-        tag: 'camera',
-        shape: 'cylinder',
-        label: 'cylinder + camera',
-        key: faker.lorem.slug(),
-      },
-      {
-        tag: 'camera',
-        shape: 'dottedcylinder',
-        label: 'dottedcylinder + camera',
-        key: faker.lorem.slug(),
-      },
-    ],
-    stackedShape: nodeTypes.map(shape => ({
-      shape,
-      key: faker.lorem.slug(),
-    })),
-    randomSearchableNodes: times(20, () => ({
-      shape: sample(nodeTypes),
-      key: faker.lorem.slug(),
-      label: faker.lorem.word(),
-      labelMinor: `ip-${faker.internet
-        .ip()
-        .split('.')
-        .join('-')}`,
-    })),
-    randomSvgNodes: times(20, () => ({
-      shape: sample(nodeTypes),
-      key: faker.lorem.slug(),
-      label: faker.lorem.word(),
-      labelMinor: `ip-${faker.internet
-        .ip()
-        .split('.')
-        .join('-')}`,
-    })),
-    metricNodes: [0, 0.01, 0.1, 0.5, 0.9, 0.99, 1].map(value => ({
-      key: faker.lorem.slug(),
-      metricFormattedValue: format('.0%')(value),
-      metricNumericValue: value,
-    })),
     animatedNode: {
       size: 50,
       x: 50,
       y: 50,
     },
-    size: 65,
+    availableShapes: [
+      ...nodeTypes.map(shape => ({
+        key: faker.lorem.slug(),
+        label: shape,
+        shape,
+      })),
+      {
+        key: faker.lorem.slug(),
+        label: 'cylinder + camera',
+        shape: 'cylinder',
+        tag: 'camera',
+      },
+      {
+        key: faker.lorem.slug(),
+        label: 'dottedcylinder + camera',
+        shape: 'dottedcylinder',
+        tag: 'camera',
+      },
+    ],
     contrastMode: false,
-    query: '',
+    metricNodes: [0, 0.01, 0.1, 0.5, 0.9, 0.99, 1].map(value => ({
+      key: faker.lorem.slug(),
+      metricFormattedValue: format('.0%')(value),
+      metricNumericValue: value,
+    })),
     pinnedTerms: [],
+    query: '',
+    randomSearchableNodes: times(20, () => ({
+      key: faker.lorem.slug(),
+      label: faker.lorem.word(),
+      labelMinor: `ip-${faker.internet
+        .ip()
+        .split('.')
+        .join('-')}`,
+      shape: sample(nodeTypes),
+    })),
+    randomSvgNodes: times(20, () => ({
+      key: faker.lorem.slug(),
+      label: faker.lorem.word(),
+      labelMinor: `ip-${faker.internet
+        .ip()
+        .split('.')
+        .join('-')}`,
+      shape: sample(nodeTypes),
+    })),
     searchTerms: [],
+    size: 65,
+    stackedShape: nodeTypes.map(shape => ({
+      key: faker.lorem.slug(),
+      shape,
+    })),
   };
 
   componentDidMount() {
     this.timer = setInterval(() => {
       this.setState({
         animatedNode: {
-          size: faker.random.number({ min: 30, max: 90 }),
-          x: faker.random.number({ min: 100, max: 700 }),
-          y: faker.random.number({ min: 100, max: 500 }),
+          size: faker.random.number({ max: 90, min: 30 }),
+          x: faker.random.number({ max: 700, min: 100 }),
+          y: faker.random.number({ max: 500, min: 100 }),
         },
       });
     }, 1000);
@@ -183,8 +183,8 @@ export default class GraphNodeExample extends React.Component {
             pinnedTerms={this.state.pinnedTerms}
             onChange={(query, pinnedTerms) =>
               this.setState({
-                query,
                 pinnedTerms,
+                query,
                 searchTerms: [...pinnedTerms, query],
               })
             }

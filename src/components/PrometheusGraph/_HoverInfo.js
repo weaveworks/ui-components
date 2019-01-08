@@ -44,7 +44,7 @@ const TooltipRowValue = styled.span`
 `;
 
 const HoverLine = styled.div.attrs({
-  style: ({ left, height }) => ({ left, height }),
+  style: ({ left, height }) => ({ height, left }),
 })`
   border-left: 1px solid ${props => props.theme.colors.gray600};
   pointer-events: none;
@@ -136,15 +136,15 @@ class HoverInfo extends React.PureComponent {
 }
 
 HoverInfo.propTypes = {
-  chartWidth: PropTypes.number.isRequired,
   chartHeight: PropTypes.number.isRequired,
-  valueScale: PropTypes.func.isRequired,
-  valueFormatter: PropTypes.func.isRequired,
-  simpleTooltip: PropTypes.bool.isRequired,
+  chartWidth: PropTypes.number.isRequired,
   datapoints: PropTypes.array,
-  timestampSec: PropTypes.number.isRequired,
   mouseX: PropTypes.number,
   mouseY: PropTypes.number,
+  simpleTooltip: PropTypes.bool.isRequired,
+  timestampSec: PropTypes.number.isRequired,
+  valueFormatter: PropTypes.func.isRequired,
+  valueScale: PropTypes.func.isRequired,
 };
 
 HoverInfo.defaultProps = {

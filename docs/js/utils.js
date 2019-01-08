@@ -3,17 +3,17 @@ import { includes } from 'lodash';
 import { highlightAuto } from 'highlight.js';
 
 marked.setOptions({
-  renderer: new marked.Renderer(),
-  gfm: true,
-  tables: true,
   breaks: false,
-  pedantic: false,
-  sanitize: false,
-  smartLists: true,
-  smartypants: false,
+  gfm: true,
   highlight(code) {
     return highlightAuto(code).value;
   },
+  pedantic: false,
+  renderer: new marked.Renderer(),
+  sanitize: false,
+  smartLists: true,
+  smartypants: false,
+  tables: true,
 });
 
 export function renderMarkdown(string) {

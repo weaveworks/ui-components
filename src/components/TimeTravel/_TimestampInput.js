@@ -89,9 +89,9 @@ class TimestampInput extends React.PureComponent {
 }
 
 TimestampInput.propTypes = {
-  timestamp: PropTypes.string.isRequired,
-  onChangeTimestamp: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  onChangeTimestamp: PropTypes.func.isRequired,
+  timestamp: PropTypes.string.isRequired,
 };
 
 TimestampInput.defaultProps = {

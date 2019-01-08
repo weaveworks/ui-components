@@ -49,13 +49,13 @@ const Text = props => <StyledText {...props} />;
 
 Text.propTypes = {
   /**
-   * Italicize the text
-   */
-  italic: PropTypes.bool,
-  /**
    * Make the text bold
    */
   bold: PropTypes.bool,
+  /**
+   * Italicize the text
+   */
+  italic: PropTypes.bool,
 };
 
 Text.defaultProps = {

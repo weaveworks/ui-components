@@ -71,6 +71,10 @@ class MenuItem extends React.Component {
 
 MenuItem.propTypes = {
   /**
+   * Renders small text if true.
+   */
+  isSubItem: PropTypes.bool,
+  /**
    * Handler that will be run on click. The `text` prop is passed to the handler function.
    */
   onClick: PropTypes.func,
@@ -78,10 +82,6 @@ MenuItem.propTypes = {
    * Text that will be displayed as the menu item.
    */
   text: PropTypes.string,
-  /**
-   * Renders small text if true.
-   */
-  isSubItem: PropTypes.bool,
 };
 
 MenuItem.defaultProps = {

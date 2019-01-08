@@ -129,9 +129,9 @@ const sort = (data, key, order) => orderBy(data, key, [order]);
  */
 class DataTable extends React.PureComponent {
   state = {
+    sortedData: sort(this.props.data, this.props.sortBy, this.props.sortOrder),
     sortField: this.props.sortBy || get(first(this.props.columns), 'value'),
     sortOrder: this.props.sortOrder,
-    sortedData: sort(this.props.data, this.props.sortBy, this.props.sortOrder),
   };
 
   componentDidMount() {
@@ -164,8 +164,6 @@ class DataTable extends React.PureComponent {
     const { sortOverrides } = this.props;
 
     this.setState({
-      sortField,
-      sortOrder,
       sortedData:
         // User overrides if specified, else do the default sort
         sortOverrides && sortOverrides[sortField]
@@ -175,6 +173,8 @@ class DataTable extends React.PureComponent {
               sortOrder
             )
           : sort(data, sortField, sortOrder),
+      sortField,
+      sortOrder,
     });
   };
 
@@ -238,25 +238,15 @@ class DataTable extends React.PureComponent {
 }
 
 const columnPropType = PropTypes.shape({
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  element: PropTypes.element,
+  initialSortOrder: PropTypes.oneOf(['asc', 'desc']),
   label: PropTypes.string,
   sortable: PropTypes.bool,
-  initialSortOrder: PropTypes.oneOf(['asc', 'desc']),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   width: PropTypes.string,
-  element: PropTypes.element,
 });
 
 DataTable.propTypes = {
-  /**
-   * The rows that will be sorted by clicking on the headers.
-   * There must be a key in your row object that matches the column `value`.
-   */
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  /**
-   * Flush will align the first column with the edge of the table, instead of
-   * having left padding
-   */
-  flush: PropTypes.bool,
   /**
    * A render-prop function that will be passed the sorted rows for the table.
    */
@@ -267,6 +257,30 @@ DataTable.propTypes = {
    * If an `element` key is specified, that element will be used instead of `label`.
    */
   columns: PropTypes.arrayOf(columnPropType).isRequired,
+  /**
+   * The rows that will be sorted by clicking on the headers.
+   * There must be a key in your row object that matches the column `value`.
+   */
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  /**
+   * Extra elements that will be added to the table headers.
+   * These columns will NOT be sortable.
+   */
+  extraHeaders: PropTypes.arrayOf(PropTypes.element),
+  /**
+   * Flush will align the first column with the edge of the table, instead of
+   * having left padding
+   */
+  flush: PropTypes.bool,
+  /**
+   * If true, a wrapping `<tbody />` element will NOT be rendered.
+   * All child rows of `nested` tables should be <tbody /> tags
+   */
+  nested: PropTypes.bool,
+  /**
+   * Optional callback triggered when a header is clicked.
+   */
+  onSort: PropTypes.func,
   /**
    * The value by which to sort the rows passed to the `data` prop.
    */
@@ -283,30 +297,16 @@ DataTable.propTypes = {
    *
    */
   sortOverrides: PropTypes.object,
-  /**
-   * If true, a wrapping `<tbody />` element will NOT be rendered.
-   * All child rows of `nested` tables should be <tbody /> tags
-   */
-  nested: PropTypes.bool,
-  /**
-   * Extra elements that will be added to the table headers.
-   * These columns will NOT be sortable.
-   */
-  extraHeaders: PropTypes.arrayOf(PropTypes.element),
-  /**
-   * Optional callback triggered when a header is clicked.
-   */
-  onSort: PropTypes.func,
 };
 
 DataTable.defaultProps = {
+  extraHeaders: [],
+  flush: false,
+  nested: false,
+  onSort: noop,
+  sortBy: '',
   sortOrder: 'asc',
   sortOverrides: {},
-  nested: false,
-  extraHeaders: [],
-  sortBy: '',
-  onSort: noop,
-  flush: false,
 };
 
 export default DataTable;

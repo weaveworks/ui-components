@@ -37,7 +37,7 @@ const Table = styled.table`
 `;
 
 const TableHeader = styled.tr`
-  box-shadow: 0 4px 2px -2px ${props => transparentize(0.84, props.theme.colors.black)};
+  box-shadow: 0 4px 2px -2px ${({ theme }) => transparentize(0.84, theme.colors.black)};
   border-bottom: 1px solid ${props => props.theme.colors.gray600};
 
   th {
@@ -82,9 +82,9 @@ export default class Example extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      dialogActive: false,
       callbackName: '',
       demoOutput: '',
+      dialogActive: false,
     };
     this.instrumentElement = this.instrumentElementProps.bind(this);
     this.renderPropTable = this.renderPropTable.bind(this);
@@ -94,7 +94,6 @@ export default class Example extends React.Component {
 
   handleAction(propName, ...args) {
     this.setState({
-      dialogActive: true,
       callbackName: propName,
       demoOutput: map(args, arg => {
         if (arg && arg.persist) {
@@ -103,6 +102,7 @@ export default class Example extends React.Component {
         }
         return arg;
       }),
+      dialogActive: true,
     });
   }
   instrumentElementProps(props) {

@@ -22,20 +22,20 @@ import TagCamera from './tags/_TagCamera';
 export const nodeBaseSize = 55;
 export const shapes = {
   circle: ShapeCircle,
-  triangle: ShapeTriangle,
-  square: ShapeSquare,
-  pentagon: ShapePentagon,
-  hexagon: ShapeHexagon,
-  heptagon: ShapeHeptagon,
-  octagon: ShapeOctagon,
   cloud: ShapeCloud,
-  sheet: ShapeSheet,
   cylinder: ShapeCylinder,
   dottedcylinder: ShapeDottedCylinder,
+  heptagon: ShapeHeptagon,
+  hexagon: ShapeHexagon,
+  octagon: ShapeOctagon,
+  pentagon: ShapePentagon,
+  sheet: ShapeSheet,
+  square: ShapeSquare,
+  triangle: ShapeTriangle,
 };
 export const tags = {
-  none: () => null,
   camera: TagCamera,
+  none: () => null,
 };
 
 const labelWidth = nodeBaseSize * 2.5;
@@ -147,8 +147,8 @@ class GraphNodeStatic extends React.PureComponent {
         width={labelWidth}
         height="200px"
         style={{
-          textAlign: 'center',
           pointerEvents: 'none',
+          textAlign: 'center',
         }}
       >
         <LabelsStandardContainer>
@@ -218,27 +218,27 @@ class GraphNodeStatic extends React.PureComponent {
 }
 
 GraphNodeStatic.propTypes = {
+  color: PropTypes.string.isRequired,
+  contrastMode: PropTypes.bool.isRequired,
+  cursorType: PropTypes.string.isRequired,
+  forceSvg: PropTypes.bool.isRequired,
+  highlighted: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
-  shape: PropTypes.oneOf(keys(shapes)).isRequired,
-  tag: PropTypes.oneOf(keys(tags)).isRequired,
   label: PropTypes.string.isRequired,
   labelMinor: PropTypes.string.isRequired,
   labelOffset: PropTypes.number.isRequired,
-  stacked: PropTypes.bool.isRequired,
-  highlighted: PropTypes.bool.isRequired,
-  color: PropTypes.string.isRequired,
-  contrastMode: PropTypes.bool.isRequired,
-  forceSvg: PropTypes.bool.isRequired,
   metricColor: PropTypes.string.isRequired,
   metricFormattedValue: PropTypes.string.isRequired,
   metricNumericValue: PropTypes.number.isRequired,
-  searchTerms: PropTypes.arrayOf(PropTypes.string).isRequired,
-  cursorType: PropTypes.string.isRequired,
-  renderPrependedInfo: PropTypes.func.isRequired,
-  renderAppendedInfo: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
-  onClick: PropTypes.func.isRequired,
+  renderAppendedInfo: PropTypes.func.isRequired,
+  renderPrependedInfo: PropTypes.func.isRequired,
+  searchTerms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  shape: PropTypes.oneOf(keys(shapes)).isRequired,
+  stacked: PropTypes.bool.isRequired,
+  tag: PropTypes.oneOf(keys(tags)).isRequired,
 };
 
 export default GraphNodeStatic;

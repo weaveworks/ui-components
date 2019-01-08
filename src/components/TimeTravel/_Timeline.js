@@ -119,10 +119,10 @@ class Timeline extends React.PureComponent {
     super(props);
 
     this.state = {
-      width: TIMELINE_MAX_WIDTH_PX,
+      hasPanned: false,
       isAnimated: false,
       isPanning: false,
-      hasPanned: false,
+      width: TIMELINE_MAX_WIDTH_PX,
     };
 
     this.delayedHandleResize = debounce(this.handleResize, 200);
@@ -159,7 +159,7 @@ class Timeline extends React.PureComponent {
     if (this.state.hasPanned) {
       this.props.onRelease();
     }
-    this.setState({ isPanning: false, hasPanned: false });
+    this.setState({ hasPanned: false, isPanning: false });
     this.delayedUpdateVisibleRange();
   };
 
@@ -190,10 +190,10 @@ class Timeline extends React.PureComponent {
 
     // Update the visible part of the timeline.
     this.props.onUpdateVisibleRange({
-      startAt: moment(timeScale.invert(-width / 2))
+      endAt: moment(timeScale.invert(width / 2))
         .utc()
         .format(),
-      endAt: moment(timeScale.invert(width / 2))
+      startAt: moment(timeScale.invert(-width / 2))
         .utc()
         .format(),
     });
@@ -283,7 +283,7 @@ class Timeline extends React.PureComponent {
         <ResizeAware
           onlyEvent
           onResize={this.delayedHandleResize}
-          style={{ width: '100%', height: '100%' }}
+          style={{ height: '100%', width: '100%' }}
         >
           <TimelineContainer
             panning={isPanning}
@@ -294,27 +294,27 @@ class Timeline extends React.PureComponent {
             {this.state.isAnimated ? (
               <Motion
                 style={{
+                  durationMsPerPixel: strongSpring(durationMsPerPixel),
                   focusedTimestampMs: strongSpring(
                     moment(focusedTimestamp).valueOf()
                   ),
-                  durationMsPerPixel: strongSpring(durationMsPerPixel),
                   rangeMs: strongSpring(rangeMs),
                 }}
               >
                 {interpolated =>
                   this.renderContent({
+                    durationMsPerPixel: interpolated.durationMsPerPixel,
                     focusedTimestamp: formattedTimestamp(
                       interpolated.focusedTimestampMs
                     ),
-                    durationMsPerPixel: interpolated.durationMsPerPixel,
                     rangeMs: interpolated.rangeMs,
                   })
                 }
               </Motion>
             ) : (
               this.renderContent({
-                focusedTimestamp,
                 durationMsPerPixel,
+                focusedTimestamp,
                 rangeMs,
               })
             )}
@@ -326,22 +326,22 @@ class Timeline extends React.PureComponent {
 }
 
 Timeline.propTypes = {
-  inspectingInterval: PropTypes.bool.isRequired,
-  timestampNow: PropTypes.string.isRequired,
-  focusedTimestamp: PropTypes.string.isRequired,
-  earliestTimestamp: PropTypes.string,
-  durationMsPerPixel: PropTypes.number.isRequired,
-  rangeMs: PropTypes.number.isRequired,
   deployments: PropTypes.array.isRequired,
   deploymentsLinkBuilder: PropTypes.func.isRequired,
-  onDeploymentClick: PropTypes.func.isRequired,
+  durationMsPerPixel: PropTypes.number.isRequired,
+  earliestTimestamp: PropTypes.string,
+  focusedTimestamp: PropTypes.string.isRequired,
+  inspectingInterval: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  onUpdateVisibleRange: PropTypes.func.isRequired,
+  onDeploymentClick: PropTypes.func.isRequired,
   onJump: PropTypes.func.isRequired,
-  onZoom: PropTypes.func.isRequired,
   onPan: PropTypes.func.isRequired,
   onRelease: PropTypes.func.isRequired,
   onResize: PropTypes.func.isRequired,
+  onUpdateVisibleRange: PropTypes.func.isRequired,
+  onZoom: PropTypes.func.isRequired,
+  rangeMs: PropTypes.number.isRequired,
+  timestampNow: PropTypes.string.isRequired,
 };
 
 Timeline.defaultProps = {

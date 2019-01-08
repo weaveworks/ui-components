@@ -24,6 +24,14 @@
     "object-curly-spacing": ["error", "always"],
     "one-var" : 0,
     "prefer-promise-reject-errors": 0,
+    "sort-keys": [
+      "error",
+      "asc",
+      {
+        "natural": true,
+        "caseSensitive": false
+      }
+    ],
 
     // import
     "import/default": "error",

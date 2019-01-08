@@ -7,7 +7,7 @@ import { find, range, round, flatMap, last } from 'lodash';
 const AxesGridContainer = styled.div``;
 
 const AxisLine = styled.div.attrs({
-  style: ({ width = 0, height = 0 }) => ({ width, height }),
+  style: ({ width = 0, height = 0 }) => ({ height, width }),
 })`
   border-style: dashed;
   border-color: ${props => props.theme.colors.gray200};
@@ -153,13 +153,13 @@ class AxesGrid extends React.PureComponent {
 }
 
 AxesGrid.propTypes = {
-  hasData: PropTypes.bool.isRequired,
-  chartWidth: PropTypes.number.isRequired,
   chartHeight: PropTypes.number.isRequired,
-  timeScale: PropTypes.func.isRequired,
-  valueScale: PropTypes.func.isRequired,
-  valueFormatter: PropTypes.func.isRequired,
+  chartWidth: PropTypes.number.isRequired,
+  hasData: PropTypes.bool.isRequired,
   metricUnits: PropTypes.string.isRequired,
+  timeScale: PropTypes.func.isRequired,
+  valueFormatter: PropTypes.func.isRequired,
+  valueScale: PropTypes.func.isRequired,
 };
 
 export default AxesGrid;

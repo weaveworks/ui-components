@@ -29,18 +29,18 @@ describe('webpack LocalModuleProxy', () => {
   it('resolves a module request to another directory', () => {
     proxy.apply(mockResolver);
     mockResolver.simulate({
-      path: 'myfile.js',
-      request: 'foo',
-      query: null,
       directory: false,
+      path: 'myfile.js',
+      query: null,
+      request: 'foo',
     });
     expect(spy).toHaveBeenCalledWith(
       ['file'],
       {
-        path: 'myfile.js',
-        request: `${process.cwd()}/tmp/foo.js`,
-        query: null,
         directory: false,
+        path: 'myfile.js',
+        query: null,
+        request: `${process.cwd()}/tmp/foo.js`,
       },
       stub
     );
@@ -53,10 +53,10 @@ describe('webpack LocalModuleProxy', () => {
     });
     proxy.apply(mockResolver);
     mockResolver.simulate({
-      path: 'myfile.js',
-      request: 'foo',
-      query: null,
       directory: false,
+      path: 'myfile.js',
+      query: null,
+      request: 'foo',
     });
     expect(spy).toNotHaveBeenCalled();
   });
@@ -64,40 +64,40 @@ describe('webpack LocalModuleProxy', () => {
     proxy = new LocalModuleProxy({
       enabled: true,
       modules: {
-        foo: `${process.cwd()}/tmp/foo.js`,
         bar: `${process.cwd()}/tmp/bar.js`,
+        foo: `${process.cwd()}/tmp/foo.js`,
       },
     });
     proxy.apply(mockResolver);
     mockResolver.simulate({
-      path: 'myFoo.js',
-      request: 'foo',
-      query: null,
       directory: false,
+      path: 'myFoo.js',
+      query: null,
+      request: 'foo',
     });
     expect(spy).toHaveBeenCalledWith(
       ['file'],
       {
-        path: 'myFoo.js',
-        request: `${process.cwd()}/tmp/foo.js`,
-        query: null,
         directory: false,
+        path: 'myFoo.js',
+        query: null,
+        request: `${process.cwd()}/tmp/foo.js`,
       },
       stub
     );
     mockResolver.simulate({
-      path: 'myBar.js',
-      request: 'bar',
-      query: null,
       directory: false,
+      path: 'myBar.js',
+      query: null,
+      request: 'bar',
     });
     expect(spy).toHaveBeenCalledWith(
       ['file'],
       {
-        path: 'myBar.js',
-        request: `${process.cwd()}/tmp/bar.js`,
-        query: null,
         directory: false,
+        path: 'myBar.js',
+        query: null,
+        request: `${process.cwd()}/tmp/bar.js`,
       },
       stub
     );

@@ -16,9 +16,9 @@ describe('<Input />', () => {
 
     props = {
       label: 'Hi',
-      valid: false,
       message: 'Doh!',
       onChange,
+      valid: false,
     };
 
     wrapper = mount(withTheme(<Input {...props} />));
@@ -34,8 +34,8 @@ describe('<Input />', () => {
 
   it('should not render validation message when valid=true', () => {
     props = {
-      valid: true,
       message: 'Derp!',
+      valid: true,
     };
     wrapper = mount(withTheme(<Input {...props} />), {
       lifecycleExperimental: true,
@@ -49,8 +49,8 @@ describe('<Input />', () => {
 
   it('should render validation message when valid=false', () => {
     props = {
-      valid: false,
       message: 'Derp!',
+      valid: false,
     };
     wrapper = mount(withTheme(<Input {...props} />));
 
@@ -62,8 +62,8 @@ describe('<Input />', () => {
 
   it('should only render <label> if label prop is provided', () => {
     props = {
-      valid: false,
       message: 'Derp!',
+      valid: false,
     };
     wrapper = mount(withTheme(<Input {...props} />));
 

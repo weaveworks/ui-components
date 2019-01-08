@@ -17,11 +17,11 @@ const formattedDeployments = ({ deployments, timeScale, chartWidth }) =>
     .map(({ Data, Stamp }) => {
       const [action, ...serviceIDs] = Data.split(', ');
       return {
+        action,
         key: `${Data} --- ${Stamp}`,
         position: timeScale(moment(Stamp).unix()),
-        timestamp: moment(Stamp).format(),
         serviceIDs,
-        action,
+        timestamp: moment(Stamp).format(),
       };
     })
     .filter(
@@ -69,12 +69,12 @@ class DeploymentAnnotations extends React.PureComponent {
 }
 
 DeploymentAnnotations.propTypes = {
-  chartWidth: PropTypes.number.isRequired,
   chartHeight: PropTypes.number.isRequired,
-  timeScale: PropTypes.func.isRequired,
+  chartWidth: PropTypes.number.isRequired,
   deployments: PropTypes.array.isRequired,
   linkBuilder: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
+  timeScale: PropTypes.func.isRequired,
 };
 
 export default DeploymentAnnotations;

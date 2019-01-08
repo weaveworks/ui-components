@@ -77,12 +77,12 @@ class TimelineLabel extends React.Component {
 }
 
 TimelineLabel.propTypes = {
-  periodFormat: PropTypes.string.isRequired,
-  timestamp: PropTypes.string.isRequired,
-  position: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   isBehind: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  periodFormat: PropTypes.string.isRequired,
+  position: PropTypes.number.isRequired,
+  timestamp: PropTypes.string.isRequired,
 };
 
 TimelineLabel.defaultProps = {

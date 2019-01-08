@@ -3,47 +3,47 @@ import { colors } from './colors';
 // component-specific
 export const atoms = {
   Alert: {
-    info: {
+    error: {
+      background: colors.orange600,
       color: colors.white,
+    },
+    info: {
       background: colors.blue600,
+      color: colors.white,
     },
     success: {
-      color: colors.white,
       background: colors.green500,
+      color: colors.white,
     },
     warning: {
-      color: colors.white,
       background: colors.yellow500,
-    },
-    error: {
       color: colors.white,
-      background: colors.orange600,
     },
   },
   Button: {
-    default: {
-      color: colors.black,
-      background: colors.white,
-      hoverColor: colors.purple800,
-      hoverBackground: colors.gray50,
-    },
-    primary: {
-      color: colors.white,
-      background: colors.blue700,
-      hoverColor: colors.white,
-      hoverBackground: colors.blue800,
-    },
     danger: {
-      color: colors.white,
       background: colors.orange600,
-      hoverColor: colors.white,
+      color: colors.white,
       hoverBackground: colors.orange700,
+      hoverColor: colors.white,
+    },
+    default: {
+      background: colors.white,
+      color: colors.black,
+      hoverBackground: colors.gray50,
+      hoverColor: colors.purple800,
     },
     disabled: {
-      color: colors.gray600,
       background: colors.gray50,
-      hoverColor: colors.gray600,
+      color: colors.gray600,
       hoverBackground: colors.gray50,
+      hoverColor: colors.gray600,
+    },
+    primary: {
+      background: colors.blue700,
+      color: colors.white,
+      hoverBackground: colors.blue800,
+      hoverColor: colors.white,
     },
   },
 };

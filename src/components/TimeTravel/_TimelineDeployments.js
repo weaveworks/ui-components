@@ -20,11 +20,11 @@ const formattedDeployments = ({ deployments, timeScale, width }) =>
     .map(({ Data, Stamp }) => {
       const [action, ...serviceIDs] = Data.split(', ');
       return {
+        action,
         key: `${Data} --- ${Stamp}`,
         position: timeScale(moment(Stamp)),
-        timestamp: moment(Stamp).format(),
         serviceIDs,
-        action,
+        timestamp: moment(Stamp).format(),
       };
     })
     .filter(
@@ -77,11 +77,11 @@ class TimelineDeployments extends React.PureComponent {
 }
 
 TimelineDeployments.propTypes = {
-  width: PropTypes.number.isRequired,
-  timeScale: PropTypes.func.isRequired,
   deployments: PropTypes.array.isRequired,
   linkBuilder: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
+  timeScale: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired,
 };
 
 export default TimelineDeployments;

@@ -86,8 +86,8 @@ class ComponentsPage extends React.Component {
 // Pass components in as context to give `ComponentsPage` access to them for rendering.
 // This is to avoid having to wire up redux or having a top-level state.
 ComponentsPage.contextTypes = {
-  router: PropTypes.object.isRequired,
   components: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired,
 };
 
 export default ComponentsPage;

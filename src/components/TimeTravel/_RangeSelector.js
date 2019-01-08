@@ -119,9 +119,9 @@ class RangeSelector extends React.Component {
       this.containerRef && this.containerRef.getBoundingClientRect();
     const menuStyle = anchorEl
       ? {
-          top: anchorEl.top - selectedRangeIndex * HEIGHT_PX - 1,
           left: anchorEl.right - anchorEl.width,
           minWidth: anchorEl.width + 1,
+          top: anchorEl.top - selectedRangeIndex * HEIGHT_PX - 1,
         }
       : {};
 
@@ -155,8 +155,8 @@ class RangeSelector extends React.Component {
 }
 
 RangeSelector.propTypes = {
-  rangeMs: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
+  rangeMs: PropTypes.number.isRequired,
 };
 
 export default RangeSelector;

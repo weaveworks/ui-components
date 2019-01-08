@@ -10,11 +10,11 @@ const Rect = styled.rect.attrs({
 })``;
 
 const Circle = styled.circle.attrs({
-  stroke: props => props.theme.colors.white,
   fill: props =>
     props.contrastMode
       ? props.theme.colors.black
       : props.theme.colors.purple800,
+  stroke: props => props.theme.colors.white,
 })``;
 
 export default class TagCamera extends React.Component {

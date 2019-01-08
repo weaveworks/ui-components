@@ -15,7 +15,7 @@ const splitChunk = (chunk, match) =>
 
 // Splits the text into chunks by finding all occurences of all matches in the list.
 const buildChunks = ({ text, matches }) => {
-  let chunks = [{ text, matched: false }];
+  let chunks = [{ matched: false, text }];
   matches.forEach(match => {
     chunks = flatMap(
       chunks,
@@ -76,13 +76,13 @@ class MatchedText extends React.PureComponent {
 
 MatchedText.propTypes = {
   /**
-   * The base text to display
-   */
-  text: PropTypes.string.isRequired,
-  /**
    * The chunks to be highlighted
    */
   matches: PropTypes.arrayOf(PropTypes.string),
+  /**
+   * The base text to display
+   */
+  text: PropTypes.string.isRequired,
 };
 
 MatchedText.defaultProps = {

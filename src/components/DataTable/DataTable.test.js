@@ -19,17 +19,17 @@ const getFirstRowName = table =>
 describe('DataTable', () => {
   const data = [
     {
-      name: 'Bob',
       email: 'a@weave.works',
+      name: 'Bob',
     },
     {
-      name: 'Albert',
       // Notice the emails are inverted to test sorting by this field
       email: 'b@weave.works',
+      name: 'Albert',
     },
     {
-      name: 'Ty',
       email: 'c@weave.works',
+      name: 'Ty',
     },
   ];
 
@@ -41,8 +41,8 @@ describe('DataTable', () => {
             <DataTable
               data={data}
               columns={[
-                { value: 'name', label: 'Name' },
-                { value: 'email', label: 'Email' },
+                { label: 'Name', value: 'name' },
+                { label: 'Email', value: 'email' },
               ]}
             >
               {rows =>
@@ -68,8 +68,8 @@ describe('DataTable', () => {
               data={data}
               sortBy="email"
               columns={[
-                { value: 'name', label: 'Name' },
-                { value: 'email', label: 'Email' },
+                { label: 'Name', value: 'name' },
+                { label: 'Email', value: 'email' },
               ]}
             >
               {rows =>
@@ -95,8 +95,8 @@ describe('DataTable', () => {
               sortBy="email"
               sortOrder="desc"
               columns={[
-                { value: 'name', label: 'Name' },
-                { value: 'email', label: 'Email' },
+                { label: 'Name', value: 'name' },
+                { label: 'Email', value: 'email' },
               ]}
             >
               {rows =>
@@ -117,16 +117,16 @@ describe('DataTable', () => {
     it('renders nested rows', () => {
       const nesteData = [
         {
-          workloadId: 'default:deployment/myworkload',
           containers: [
-            { name: 'nginx', behind: '4' },
-            { name: 'redis', behind: '1' },
-            { name: 'envoy', behind: '2' },
+            { behind: '4', name: 'nginx' },
+            { behind: '1', name: 'redis' },
+            { behind: '2', name: 'envoy' },
           ],
+          workloadId: 'default:deployment/myworkload',
         },
         {
+          containers: [{ behind: '2', name: 'helloworld' }],
           workloadId: 'default:deployment/helloworld',
-          containers: [{ name: 'helloworld', behind: '2' }],
         },
       ];
 
@@ -138,9 +138,9 @@ describe('DataTable', () => {
               sortBy="workloadId"
               sortOrder="asc"
               columns={[
-                { value: 'workloadId', label: 'Workload' },
-                { value: 'containers', label: 'Containers' },
-                { value: 'behind', label: 'Behind' },
+                { label: 'Workload', value: 'workloadId' },
+                { label: 'Containers', value: 'containers' },
+                { label: 'Behind', value: 'behind' },
               ]}
             >
               {rows =>
@@ -172,8 +172,8 @@ describe('DataTable', () => {
             <DataTable
               data={data}
               columns={[
-                { value: 'name', label: 'Name' },
-                { value: 'email', label: 'Email' },
+                { label: 'Name', value: 'name' },
+                { label: 'Email', value: 'email' },
               ]}
               extraHeaders={[
                 <div>Some other header</div>,
@@ -202,8 +202,8 @@ describe('DataTable', () => {
             <DataTable
               data={data}
               columns={[
-                { value: 'name', element: <i className="fa fa-some-icon" /> },
-                { value: 'email', label: 'Email' },
+                { element: <i className="fa fa-some-icon" />, value: 'name' },
+                { label: 'Email', value: 'email' },
               ]}
             >
               {rows =>
@@ -228,8 +228,8 @@ describe('DataTable', () => {
             <DataTable
               data={data}
               columns={[
-                { value: 'name', label: 'Name', width: '20px' },
-                { value: 'email', label: 'Email', width: '80px' },
+                { label: 'Name', value: 'name', width: '20px' },
+                { label: 'Email', value: 'email', width: '80px' },
               ]}
             >
               {rows =>
@@ -256,8 +256,8 @@ describe('DataTable', () => {
           sortBy="email"
           sortOrder="asc"
           columns={[
-            { value: 'name', label: 'Name' },
-            { value: 'email', label: 'Email' },
+            { label: 'Name', value: 'name' },
+            { label: 'Email', value: 'email' },
           ]}
         >
           {rows =>
@@ -298,8 +298,8 @@ describe('DataTable', () => {
           sortBy="name"
           sortOrder="asc"
           columns={[
-            { value: 'name', label: 'Name' },
-            { value: 'email', label: 'Email' },
+            { label: 'Name', value: 'name' },
+            { label: 'Email', value: 'email' },
           ]}
           sortOverrides={{ name: sortByNameLength }}
         >

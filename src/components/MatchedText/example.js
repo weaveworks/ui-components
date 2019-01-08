@@ -9,13 +9,13 @@ import MatchedText from '.';
 
 class MatchedTextExample extends React.Component {
   state = {
-    text: faker.lorem.paragraphs(3),
     pinnedSearches: [],
     searchQuery: '',
+    text: faker.lorem.paragraphs(3),
   };
 
   onSearch = (searchQuery, pinnedSearches) => {
-    this.setState({ searchQuery, pinnedSearches });
+    this.setState({ pinnedSearches, searchQuery });
   };
 
   render() {
