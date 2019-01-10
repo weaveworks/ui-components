@@ -15,7 +15,8 @@ const mockResolver = {
 };
 
 describe('webpack LocalModuleProxy', () => {
-  let proxy, spy;
+  let proxy;
+  let spy;
 
   beforeEach(() => {
     spy = createSpy();
