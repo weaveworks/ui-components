@@ -16,7 +16,6 @@ const Item = styled.div`
   &:hover {
     transition: color, 0.3s, ease;
     color: ${props => !props.active && props.theme.colors.purple800};
-    background-color: ${props => !props.active && props.theme.colors.gray50};
     cursor: pointer;
   }
 
