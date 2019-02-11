@@ -50,7 +50,7 @@
   "license": "Apache-2.0",
   "peerDependencies": {
     "@fortawesome/fontawesome-free": "^5.0.0",
-    "lodash": "^4.0.0",
+    "lodash": "^4.17.11",
     "moment": "^2.0.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
@@ -114,7 +114,7 @@
     "jest": "23.6.0",
     "jest-styled-components": "6.2.1",
     "less": "2.7.2",
-    "lodash": "4.17.10",
+    "lodash": "4.17.11",
     "marked": "0.3.12",
     "moment": "2.21.0",
     "node-sass": "4.5.3",
