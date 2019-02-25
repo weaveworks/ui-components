@@ -50,7 +50,7 @@ const Overlay = styled.div`
   left: 0;
 `;
 
-const ItemWrapper = styled(Item)`
+const DefaultItemWrapper = styled(Item)`
   line-height: ${HEIGHT};
   color: ${props =>
     props.selected ? props.theme.colors.blue400 : props.theme.textColor};
@@ -111,6 +111,11 @@ const DefaultToggleView = ({ onClick, disabled, selectedLabel }) => (
     <SelectedItemIcon className="fa fa-caret-down" />
   </SelectedItem>
 );
+
+const DefaultComponents = {
+  ItemWrapper: DefaultItemWrapper,
+  ToggleView: DefaultToggleView,
+};
 
 /**
  * A selectable drop-down menu.
@@ -192,7 +197,14 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    const { items, value, className, placeholder, disabled } = this.props;
+    const {
+      items,
+      value,
+      className,
+      placeholder,
+      disabled,
+      withComponent,
+    } = this.props;
     const { isOpen } = this.state;
     const divided = this.divide(items);
     // If nothing is selected, use the placeholder, else use the first item.
@@ -202,11 +214,15 @@ class Dropdown extends React.Component {
         ? { label: placeholder, value: null }
         : divided && divided[0]);
     const label = currentItem && currentItem.label;
-    const Component = this.props.withComponent;
+    const Components = {
+      ...DefaultComponents,
+      ...(withComponent && { ToggleView: withComponent }),
+      ...this.props.Components,
+    };
 
     return (
       <div className={className} title={label} ref={this.element}>
-        <Component
+        <Components.ToggleView
           selectedLabel={label}
           disabled={disabled}
           onClick={this.handleClick}
@@ -220,7 +236,7 @@ class Dropdown extends React.Component {
             >
               {map(divided, (item, index) =>
                 item ? (
-                  <ItemWrapper
+                  <Components.ItemWrapper
                     className="dropdown-item"
                     key={item.value}
                     onClick={ev =>
@@ -230,7 +246,7 @@ class Dropdown extends React.Component {
                     title={item && item.label}
                   >
                     {item.label}
-                  </ItemWrapper>
+                  </Components.ItemWrapper>
                 ) : (
                   <Divider key={index} />
                 )
@@ -249,6 +265,13 @@ const itemPropType = PropTypes.shape({
 });
 
 Dropdown.propTypes = {
+  /**
+   * Over-ride internal components.
+   */
+  Components: PropTypes.shape({
+    ItemWrapper: PropTypes.func,
+    ToggleView: PropTypes.func,
+  }),
   /**
    * Disables the component if true
    */
@@ -281,6 +304,7 @@ Dropdown.propTypes = {
   width: PropTypes.string,
 
   /**
+   * DEPRECATED(Use `Components={{ ToggleView: Component }}`).
    * A custom component to replace the default toggle view.
    * The properties `selectedLabel` and `onClick` are provided. `onClick` needs to be incorporated
    * to make the dropdown list toggle.
@@ -289,12 +313,13 @@ Dropdown.propTypes = {
 };
 
 Dropdown.defaultProps = {
+  Components: DefaultComponents,
   disabled: false,
   onChange: noop,
   placeholder: '',
   value: '',
   width: WIDTH,
-  withComponent: DefaultToggleView,
+  withComponent: null,
 };
 
 export default StyledDropdown(Dropdown);
