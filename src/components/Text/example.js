@@ -8,36 +8,63 @@ export default function TextExample() {
   return (
     <div>
       <Example>
+        <Text tiny>Tiny</Text>
+        <br />
+        <Text tiny italic>
+          Tiny Italic
+        </Text>
+        <br />
+        <Text tiny bold>
+          Tiny Bold
+        </Text>
+      </Example>
+      <Example>
+        <Text small>Small</Text>
+        <br />
+        <Text small italic>
+          Small Italic
+        </Text>
+        <br />
+        <Text small bold>
+          Small Bold
+        </Text>
+      </Example>
+      <Example>
         <Text>Normal</Text>
-      </Example>
-      <Example>
+        <br />
         <Text italic>Normal Italic</Text>
-      </Example>
-      <Example>
+        <br />
         <Text bold>Normal Bold</Text>
       </Example>
       <Example>
         <Text large>Large</Text>
-      </Example>
-      <Example>
+        <br />
         <Text large italic>
           Large Italic
         </Text>
-      </Example>
-      <Example>
+        <br />
         <Text large bold>
           Large Bold
         </Text>
       </Example>
       <Example>
-        <Text huge>Huge</Text>
-      </Example>
-      <Example>
-        <Text huge italic>
-          Huge Italic
+        <Text extraLarge>Extra Large</Text>
+        <br />
+        <Text extraLarge italic>
+          Extra Large Italic
+        </Text>
+        <br />
+        <Text extraLarge bold>
+          Extra Large Bold
         </Text>
       </Example>
       <Example>
+        <Text huge>Huge</Text>
+        <br />
+        <Text huge italic>
+          Huge Italic
+        </Text>
+        <br />
         <Text huge bold>
           Huge Bold
         </Text>
