@@ -58,6 +58,19 @@ const divided = [
   },
 ];
 
+const itemsWithSelectedLabel = [
+  {
+    label: 'C: First Thing - it comes first',
+    selectedLabel: 'C: First Thing',
+    value: 'c-first',
+  },
+  {
+    label: 'D: First Thing - well, it also comes first',
+    selectedLabel: 'D: First Thing',
+    value: 'd-first',
+  },
+];
+
 const DropdownButton = ({ onClick }) => (
   <Button onClick={onClick}>
     More actions <i className="fa fa-caret-down" />
@@ -123,6 +136,18 @@ export default class DropdownExample extends React.Component {
               <Dropdown
                 items={items}
                 placeholder="Select an item"
+                value={this.state.selected}
+                onChange={this.handleChange}
+              />
+            </Example>
+          </Column>
+        </Row>
+        <Row>
+          <Column span={6}>
+            <Example>
+              <Info>Specifying a different `selectedLabel` for each item:</Info>
+              <Dropdown
+                items={itemsWithSelectedLabel}
                 value={this.state.selected}
                 onChange={this.handleChange}
               />

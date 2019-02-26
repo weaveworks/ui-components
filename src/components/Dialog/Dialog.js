@@ -192,7 +192,7 @@ class Dialog extends PureComponent {
 Dialog.propTypes = {
   /**
    * An array of options that the user will be able to click.
-   * Each item in the array will be rendered as a <Button /> in the dialog window.
+   * Each item in the array will be rendered as a `<Button />` in the dialog window.
    * Items can also be React elements.
    */
   actions: PropTypes.array,
