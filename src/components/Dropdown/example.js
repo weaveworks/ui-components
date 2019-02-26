@@ -64,10 +64,6 @@ const DropdownButton = ({ onClick }) => (
   </Button>
 );
 
-const BiggerItem = ({ children, onClick }) => (
-  <h1 onClick={onClick}>{children}</h1>
-);
-
 export default class DropdownExample extends React.Component {
   constructor() {
     super();
@@ -137,31 +133,10 @@ export default class DropdownExample extends React.Component {
           <Column span={6}>
             <Example>
               <Info>
-                With{' '}
-                <code>
-                  {'<Dropdown Components={{ ToggleView: Button }} />'}
-                </code>
+                With <code>Button</code> component
               </Info>
               <Dropdown
-                Components={{ ToggleView: DropdownButton }}
-                items={divided}
-                value={this.state.selected}
-                onChange={this.handleChange}
-              />
-            </Example>
-          </Column>
-        </Row>
-        <Row>
-          <Column span={6}>
-            <Example>
-              <Info>
-                With{' '}
-                <code>
-                  {'<Dropdown Components={{ ItemWrapper: BiggerItem }} />'}
-                </code>
-              </Info>
-              <Dropdown
-                Components={{ ItemWrapper: BiggerItem }}
+                withComponent={DropdownButton}
                 items={divided}
                 value={this.state.selected}
                 onChange={this.handleChange}
