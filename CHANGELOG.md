@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.19.0"></a>
+# [0.19.0](https://github.com/weaveworks/ui-components/compare/v0.18.0...v0.19.0) (2019-02-26)
+
+
+### Bug Fixes
+
+* cve-2018-16487 ([48efb7d](https://github.com/weaveworks/ui-components/commit/48efb7d))
+* removes grey roundrect for cleaner look ([6e5adec](https://github.com/weaveworks/ui-components/commit/6e5adec))
+
+
+### Features
+
+* allow over-riding internal dropdown components ([cd7a9ad](https://github.com/weaveworks/ui-components/commit/cd7a9ad))
+* render props column in docs as markdown ([74c3cec](https://github.com/weaveworks/ui-components/commit/74c3cec))
+* **dropdown:** allow different selectedLabel prop ([b7bf3dd](https://github.com/weaveworks/ui-components/commit/b7bf3dd))
+
+
+
 <a name="0.18.0"></a>
 # [0.18.0](https://github.com/weaveworks/ui-components/compare/v0.17.0...v0.18.0) (2018-12-28)
 

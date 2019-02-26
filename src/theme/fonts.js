@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 import { kebabCase, forEach } from 'lodash';
 
 export const fontFamilies = {
@@ -6,8 +7,8 @@ export const fontFamilies = {
 };
 
 export const fontSizes = {
-  extraLarge: '32px',
   huge: '48px',
+  extraLarge: '32px',
   large: '22px',
   normal: '16px',
   small: '14px',

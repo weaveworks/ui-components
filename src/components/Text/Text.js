@@ -22,22 +22,28 @@ const StyledText = styled.span`
  * export default function TextExample() {
  *   return (
  *     <div>
+ *       <Text tiny>Tiny</Text>
+ *       <Text tiny italic>Tiny Italic</Text>
+ *       <Text tiny bold>Tiny Bold</Text>
+ *
+ *       <Text small>Small</Text>
+ *       <Text small italic>Small Italic</Text>
+ *       <Text small bold>Small Bold</Text>
+ *
  *       <Text>Normal</Text>
- *
  *       <Text italic>Normal Italic</Text>
- *
  *       <Text bold>Normal Bold</Text>
  *
  *       <Text large>Large</Text>
- *
  *       <Text large italic>Large Italic</Text>
- *
  *       <Text large bold>Large Bold</Text>
  *
+ *       <Text extraLarge>Extra Large</Text>
+ *       <Text extraLarge italic>Extra Large Italic</Text>
+ *       <Text extraLarge bold>Extra Large Bold</Text>
+ *
  *       <Text huge>Huge</Text>
- *
  *       <Text huge italic>Huge Italic</Text>
- *
  *       <Text huge bold>Huge Bold</Text>
  *     </div>
  *   );
