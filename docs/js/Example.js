@@ -56,6 +56,10 @@ const TableRow = styled.tr`
     background-color: ${props => props.theme.colors.purple100};
   }
 
+  p {
+    margin: 0;
+  }
+
   td {
     padding: 3px 4px;
   }
@@ -141,10 +145,8 @@ export default class Example extends React.Component {
               <td>{name}</td>
               <td>{value.required && value.required.toString()}</td>
               <td>{getReadableValueType(value.type)}</td>
-              <td>{value.description}</td>
-              <td style={{ whiteSpace: 'nowrap' }}>
-                {getDefaultValue(value.defaultValue)}
-              </td>
+              <td dangerouslySetInnerHTML={renderMarkdown(value.description)} />
+              <td>{getDefaultValue(value.defaultValue)}</td>
             </TableRow>
           ))}
         </tbody>
