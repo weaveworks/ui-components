@@ -201,7 +201,8 @@ class Dropdown extends React.Component {
       (placeholder
         ? { label: placeholder, value: null }
         : divided && divided[0]);
-    const label = currentItem && currentItem.label;
+    const label =
+      currentItem && (currentItem.selectedLabel || currentItem.label);
     const Component = this.props.withComponent;
 
     return (
@@ -244,7 +245,8 @@ class Dropdown extends React.Component {
 }
 
 const itemPropType = PropTypes.shape({
-  label: PropTypes.string,
+  label: PropTypes.node,
+  selectedLabel: PropTypes.node,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 });
 
@@ -255,8 +257,10 @@ Dropdown.propTypes = {
   disabled: PropTypes.bool,
   /**
    * Array of items (or groups of items) that will be selectable.
-   * `value` should be an internal value,
-   * `label` is what will be displayed to the user.
+   * - `value` should be an internal value,
+   * - `label` is what will be displayed to the user.
+   * - `selectedLabel` (optional) what will be displayed in the collapsed state of the dropdown. If
+   *   omitted `label` will be used.
    */
   items: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.arrayOf(itemPropType), itemPropType])
