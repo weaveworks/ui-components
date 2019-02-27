@@ -56,9 +56,9 @@ const Subtext = styled.span`
  */
 class ListItem extends React.Component {
   handleClick = ev => {
-    ev.preventDefault();
     const { onClick, value } = this.props;
     if (onClick) {
+      ev.preventDefault();
       onClick(value);
     }
   };
