@@ -228,7 +228,9 @@ class Dropdown extends React.Component {
                       this.handleChange(ev, item.value, item.label)
                     }
                     selected={item.value === value}
-                    title={item && typeof item.label === "string" ? item.label : ""}
+                    title={
+                      item && typeof item.label === 'string' ? item.label : ''
+                    }
                   >
                     {item.label}
                   </ItemWrapper>
