@@ -363,12 +363,10 @@ class PrometheusGraph extends React.PureComponent {
     }));
 
     const visibleMultiSeries = // If no series is selected, show all of them.
-      this.state.selectedLegendKeys.length === 0
+      selectedLegendKeys.length === 0
         ? multiSeries
         : // Otherwise show only the selected multi series.
-          multiSeries.filter(series =>
-            this.state.selectedLegendKeys.includes(series.key)
-          );
+          multiSeries.filter(series => selectedLegendKeys.includes(series.key));
 
     const { timeScale, valueScale } = this.prepareTimeAndValueScales(
       props,

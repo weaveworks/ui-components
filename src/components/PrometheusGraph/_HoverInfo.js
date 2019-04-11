@@ -16,6 +16,7 @@ const TooltipRow = styled.div`
     props.focused &&
     `
     font-weight: bold;
+    background-color: ${props.theme.colors.purple100};;
   `};
 `;
 
