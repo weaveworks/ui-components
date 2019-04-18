@@ -38,19 +38,20 @@ const arcPath = arc()
   .innerRadius(DIAL_RADIUS_PX - DIAL_BORDER_PX)
   .outerRadius(DIAL_RADIUS_PX)
   .cornerRadius(5)
-  .startAngle(0)
-  .endAngle(percentage => 2 * Math.PI * adjustArc(percentage));
+  .startAngle(-Math.PI / 2)
+  .endAngle(percentage => Math.PI * adjustArc(percentage) - Math.PI / 2);
 
 const DialLink = styled(Link)`
   border-radius: ${props => props.theme.borderRadius.circle};
   width: ${2 * DIAL_RADIUS_PX}px;
-  height: ${2 * DIAL_RADIUS_PX}px;
+  height: ${1.4 * DIAL_RADIUS_PX}px;
   display: block;
 `;
 
 const DialContainer = styled.div`
   color: ${props => props.theme.colors.gray600};
   border-radius: ${props => props.theme.borderRadius.circle};
+  padding-top: ${spacing('large')};
   position: relative;
   box-sizing: border-box;
   display: flex;
@@ -81,11 +82,13 @@ const DialValueContainer = styled.div`
 
 const DialValue = styled.div`
   font-size: ${props => props.theme.fontSizes.huge};
+  color: ${props => props.theme.colors.blue600};
   margin: 0 ${spacing('xxs')};
 `;
 
 const PercentageSign = styled.div`
   font-size: ${props => props.theme.fontSizes.large};
+  color: ${props => props.theme.colors.blue600};
   padding-top: 6px;
   overflow: visible;
   width: 0;
