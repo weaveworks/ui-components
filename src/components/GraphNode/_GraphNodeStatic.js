@@ -8,6 +8,7 @@ import MatchedText from '../MatchedText';
 
 import ShapeCircle from './shapes/_ShapeCircle';
 import ShapeTriangle from './shapes/_ShapeTriangle';
+import ShapeDottedTriangle from './shapes/_ShapeDottedTriangle';
 import ShapeSquare from './shapes/_ShapeSquare';
 import ShapePentagon from './shapes/_ShapePentagon';
 import ShapeHexagon from './shapes/_ShapeHexagon';
@@ -25,6 +26,7 @@ export const shapes = {
   cloud: ShapeCloud,
   cylinder: ShapeCylinder,
   dottedcylinder: ShapeDottedCylinder,
+  dottedtriangle: ShapeDottedTriangle,
   heptagon: ShapeHeptagon,
   hexagon: ShapeHexagon,
   octagon: ShapeOctagon,
