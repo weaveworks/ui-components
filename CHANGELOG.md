@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.20.0"></a>
+# [0.20.0](https://github.com/weaveworks/ui-components/compare/v0.19.5...v0.20.0) (2019-05-20)
+
+
+### Bug Fixes
+
+* **shape:** don't apply strokeDasharray on dottedtriangle highlight ([6017018](https://github.com/weaveworks/ui-components/commit/6017018))
+
+
+### Features
+
+* **shape:** add dotted triangle shape ([151fc1d](https://github.com/weaveworks/ui-components/commit/151fc1d))
+
+
+
 <a name="0.19.5"></a>
 ## [0.19.5](https://github.com/weaveworks/ui-components/compare/v0.19.4...v0.19.5) (2019-04-18)
 
