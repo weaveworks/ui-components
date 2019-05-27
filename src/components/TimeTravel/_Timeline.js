@@ -137,6 +137,11 @@ class Timeline extends React.PureComponent {
       .on('drag', this.handlePan);
     this.svg.call(this.drag);
 
+    // Defaulting events to passive was introduced in Chrome 73 (https://www.chromestatus.com/features/6662647093133312)
+    // and since then, the React onWheel event broke  - see https://github.com/weaveworks/service-ui/issues/3750.
+    // TODO: Replace this with native onWheel event once https://github.com/facebook/react/issues/14856 gets resolved.
+    this.svgRef.addEventListener('wheel', this.handleZoom, { passive: false });
+
     // Keep animation disabled for first half a second, so that nothing
     // would move when re-mounting time travel component when switching
     // between pages - keep the experience smooth!
@@ -149,6 +154,12 @@ class Timeline extends React.PureComponent {
     if (this.props.rangeMs !== nextProps.rangeMs) {
       this.delayedUpdateVisibleRange();
     }
+  }
+
+  componentWillUnmount() {
+    this.svgRef.removeEventListener('wheel', this.handleZoom, {
+      passive: false,
+    });
   }
 
   handlePanStart = () => {
@@ -288,7 +299,6 @@ class Timeline extends React.PureComponent {
           <TimelineContainer
             panning={isPanning}
             innerRef={this.saveSvgRef}
-            onWheel={this.handleZoom}
             title="Scroll to zoom, drag to pan"
           >
             {this.state.isAnimated ? (
