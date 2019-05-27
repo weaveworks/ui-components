@@ -6,11 +6,13 @@ See it in action:
 http://weaveworks-ui-components.s3-website-us-west-2.amazonaws.com/
 
 ## Prerequisites
-* `React` & `ReactDOM` ^16.0.0
-* `lodash` ^4.0.0
-* `styled-components` ^2.0.0
-* `moment` ^2.0.0
-* `font-awesome` ^5.0.0
+
+- [![@fortawesome/fontawesome-free](https://img.shields.io/npm/dependency-version/weaveworks-ui-components/peer/@fortawesome/fontawesome-free.svg)](https://github.com/weaveworks/ui-components/blob/master/package.json)
+- [![lodash](https://img.shields.io/npm/dependency-version/weaveworks-ui-components/peer/lodash.svg)](https://github.com/weaveworks/ui-components/blob/master/package.json)
+- [![moment](https://img.shields.io/npm/dependency-version/weaveworks-ui-components/peer/moment.svg)](https://github.com/weaveworks/ui-components/blob/master/package.json)
+- [![react](https://img.shields.io/npm/dependency-version/weaveworks-ui-components/peer/react.svg)](https://github.com/weaveworks/ui-components/blob/master/package.json)
+- [![react-dom](https://img.shields.io/npm/dependency-version/weaveworks-ui-components/peer/react-dom.svg)](https://github.com/weaveworks/ui-components/blob/master/package.json)
+- [![styled-components](https://img.shields.io/npm/dependency-version/weaveworks-ui-components/peer/styled-components.svg)](https://github.com/weaveworks/ui-components/blob/master/package.json)
 
 ## Installation
 `yarn add weaveworks-ui-components`
