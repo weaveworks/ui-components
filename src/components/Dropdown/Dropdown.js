@@ -19,7 +19,9 @@ const Item = styled.div`
   ${props =>
     props.disabled &&
     `
-    cursor: default;
+    cursor: not-allowed;
+    color: ${props.theme.colors.gray600};
+    background-color: ${props.theme.colors.gray50};
   `};
 `;
 
@@ -52,8 +54,7 @@ const Overlay = styled.div`
 
 const ItemWrapper = styled(Item)`
   line-height: ${HEIGHT};
-  color: ${props =>
-    props.selected ? props.theme.colors.blue400 : props.theme.textColor};
+  ${props => props.selected && `color: ${props.theme.colors.blue400};`}
   min-height: ${HEIGHT};
   &:hover {
     background-color: ${props => props.theme.colors.gray50};
@@ -78,12 +79,6 @@ const SelectedItem = styled(Item)`
   div:last-child {
     margin-left: auto;
   }
-  ${props =>
-    props.disabled &&
-    `
-    color: ${props.theme.colors.gray600};
-    background-color: ${props.theme.colors.gray50};
-  `};
 `;
 
 const SelectedItemIcon = styled.span`
@@ -224,8 +219,11 @@ class Dropdown extends React.Component {
                   <ItemWrapper
                     className="dropdown-item"
                     key={item.value}
-                    onClick={ev =>
-                      this.handleChange(ev, item.value, item.label)
+                    disabled={item.disabled}
+                    onClick={
+                      item.disabled
+                        ? undefined
+                        : ev => this.handleChange(ev, item.value, item.label)
                     }
                     selected={item.value === value}
                     title={
@@ -247,6 +245,7 @@ class Dropdown extends React.Component {
 }
 
 const itemPropType = PropTypes.shape({
+  disabled: PropTypes.bool,
   label: PropTypes.node,
   selectedLabel: PropTypes.node,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

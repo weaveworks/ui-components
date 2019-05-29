@@ -153,6 +153,19 @@ export default class DropdownExample extends React.Component {
               />
             </Example>
           </Column>
+          <Column span={6}>
+            <Example>
+              <Info>Disabling some items</Info>
+              <Dropdown
+                items={[
+                  itemsWithSelectedLabel[0],
+                  { ...itemsWithSelectedLabel[1], disabled: true },
+                ]}
+                value={this.state.selected}
+                onChange={this.handleChange}
+              />
+            </Example>
+          </Column>
         </Row>
         <Row>
           <Column span={6}>
