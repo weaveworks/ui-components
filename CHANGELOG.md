@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.21.0"></a>
+# [0.21.0](https://github.com/weaveworks/ui-components/compare/v0.20.0...v0.21.0) (2019-05-29)
+
+
+### Bug Fixes
+
+* **timeline:** address [@foot](https://github.com/foot)'s comment ([f08f994](https://github.com/weaveworks/ui-components/commit/f08f994))
+* **timeline:** enable preventDefault() on onWheel event ([dde25bc](https://github.com/weaveworks/ui-components/commit/dde25bc))
+
+
+### Features
+
+* **dropdown:** adds disabled state to dropdown items ([d23c52d](https://github.com/weaveworks/ui-components/commit/d23c52d))
+
+
+
 <a name="0.20.0"></a>
 # [0.20.0](https://github.com/weaveworks/ui-components/compare/v0.19.5...v0.20.0) (2019-05-20)
 
