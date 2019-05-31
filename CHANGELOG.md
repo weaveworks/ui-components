@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.21.2"></a>
+## [0.21.2](https://github.com/weaveworks/ui-components/compare/v0.21.1...v0.21.2) (2019-05-31)
+
+
+### Bug Fixes
+
+* tweaks dropdown-item disabled style ([76ba82d](https://github.com/weaveworks/ui-components/commit/76ba82d))
+
+
+
 <a name="0.21.1"></a>
 ## [0.21.1](https://github.com/weaveworks/ui-components/compare/v0.21.0...v0.21.1) (2019-05-29)
 
