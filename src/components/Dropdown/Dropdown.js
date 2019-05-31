@@ -20,8 +20,8 @@ const Item = styled.div`
     props.disabled &&
     `
     cursor: not-allowed;
-    color: ${props.theme.colors.gray600};
-    background-color: ${props.theme.colors.gray50};
+    color: ${props.theme.colors.gray200};
+    background-color: ${props.theme.colors.white};
   `};
 `;
 
@@ -56,7 +56,7 @@ const ItemWrapper = styled(Item)`
   line-height: ${HEIGHT};
   ${props => props.selected && `color: ${props.theme.colors.blue400};`}
   min-height: ${HEIGHT};
-  &:hover {
+  &:hover:not([disabled]) {
     background-color: ${props => props.theme.colors.gray50};
   }
 `;
