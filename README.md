@@ -1,5 +1,5 @@
 [![npm version](https://badge.fury.io/js/weaveworks-ui-components.svg)](https://badge.fury.io/js/weaveworks-ui-components)
-[![Circle CI](https://circleci.com/gh/weaveworks/ui-components/tree/master.svg?style=shield)](https://circleci.com/gh/weaveworks/ui-components/tree/master)
+[![Circle CI](https://circleci.com/gh/weaveworks/ui-components/tree/master.svg?style=shield)](https://circleci.com/gh/weaveworks/ui-components/tree/master) [![Greenkeeper badge](https://badges.greenkeeper.io/weaveworks/ui-components.svg)](https://greenkeeper.io/)
 
 See it in action:
 
