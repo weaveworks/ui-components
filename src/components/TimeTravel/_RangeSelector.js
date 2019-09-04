@@ -126,7 +126,7 @@ class RangeSelector extends React.Component {
       : {};
 
     return (
-      <RangeSelectorWrapper innerRef={this.saveNodeRef}>
+      <RangeSelectorWrapper ref={this.saveNodeRef}>
         <SelectedRangeWrapper onClick={this.handleDropDownClick}>
           <SelectedRange>{selectedRangeLabel}</SelectedRange>
           <CaretIconsContainer>

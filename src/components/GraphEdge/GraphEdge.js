@@ -16,10 +16,10 @@ const spline = line()
   .x(d => d.x)
   .y(d => d.y);
 
-const EdgeShadow = styled.path.attrs({
+const EdgeShadow = styled.path.attrs(({ thickness }) => ({
   // Animation optimization.
-  style: ({ thickness }) => ({ strokeWidth: 10 * thickness }),
-})`
+  style: { strokeWidth: 10 * thickness },
+}))`
   stroke: ${props => props.theme.colors.blue400};
   stroke-opacity: 0;
   fill: none;
@@ -42,10 +42,10 @@ const EdgeDotted = styled.path`
   fill: none;
 `;
 
-const EdgeLine = styled.path.attrs({
+const EdgeLine = styled.path.attrs(({ thickness }) => ({
   // Animation optimization.
-  style: ({ thickness }) => ({ strokeWidth: thickness }),
-})`
+  style: { strokeWidth: thickness },
+}))`
   stroke: ${props =>
     props.contrastMode
       ? props.theme.colors.black

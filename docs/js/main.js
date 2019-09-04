@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ThemeProvider, injectGlobal } from 'styled-components';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import styledNormalize from 'styled-normalize';
 
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -14,7 +14,7 @@ import Root from './Root';
 import '../css/demo.scss';
 import '../img/favicon.ico';
 
-(() => injectGlobal`
+const GlobalStyle = createGlobalStyle`
   ${styledNormalize}
 
   /* https://github.com/necolas/normalize.css/issues/694 */
@@ -27,11 +27,14 @@ import '../img/favicon.ico';
     font-family: inherit;
     /* stylelint-enable sh-waqar/declaration-use-variable */
   }
-`)();
+`;
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <Root />
+    <>
+      <GlobalStyle />
+      <Root />
+    </>
   </ThemeProvider>,
   document.getElementById('demo')
 );

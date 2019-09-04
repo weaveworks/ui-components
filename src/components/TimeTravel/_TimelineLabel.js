@@ -3,9 +3,9 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const TimelineLabelWrapper = styled.span.attrs({
-  style: ({ x }) => ({ transform: `translateX(${x}px)` }),
-})`
+const TimelineLabelWrapper = styled.span.attrs(({ x }) => ({
+  style: { transform: `translateX(${x}px)` },
+}))`
   position: absolute;
 `;
 

@@ -298,7 +298,7 @@ class Timeline extends React.PureComponent {
         >
           <TimelineContainer
             panning={isPanning}
-            innerRef={this.saveSvgRef}
+            ref={this.saveSvgRef}
             title="Scroll to zoom, drag to pan"
           >
             {this.state.isAnimated ? (

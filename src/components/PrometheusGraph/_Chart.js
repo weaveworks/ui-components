@@ -23,13 +23,13 @@ const SeriesLineChart = styled.path.attrs({
   pointer-events: none;
 `;
 
-const SeriesAreaChart = styled.path.attrs({
-  stroke: ({ fill }) => fill,
+const SeriesAreaChart = styled.path.attrs(({ fill, focused }) => ({
+  stroke: fill,
   // Use strokeWidth only on focused area graphs to make sure ultra-thin ones
   // still get visible, but don't use it when multiple series are visible so
   // that it doesn't look like it's other series' border.
-  strokeWidth: ({ focused }) => (focused ? 1 : 0),
-})`
+  strokeWidth: focused ? 1 : 0,
+}))`
   opacity: ${props => (props.faded ? 0.05 : 0.75)};
   pointer-events: none;
 `;
@@ -157,7 +157,7 @@ class Chart extends React.PureComponent {
       <Canvas
         width="100%"
         height="100%"
-        innerRef={this.saveSvgRef}
+        ref={this.saveSvgRef}
         onMouseMove={this.handleGraphMouseMove}
         onMouseLeave={this.handleGraphMouseLeave}
       >

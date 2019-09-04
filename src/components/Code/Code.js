@@ -217,7 +217,7 @@ class Code extends Component {
         <ScrollWrap>
           <Content>
             <Pre
-              innerRef={e => {
+              ref={e => {
                 this.preNode = e;
               }}
             >
