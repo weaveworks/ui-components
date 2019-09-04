@@ -3,6 +3,8 @@ import { shallow, mount } from 'enzyme';
 
 import { withTheme } from '../../utils/theme';
 
+import { CopyNotice } from './Code';
+
 import Code from '.';
 
 document.execCommand = () => {};
@@ -21,7 +23,8 @@ describe('<Code />', () => {
       onCopy,
     };
     wrapper = shallow(
-      withTheme(<Code {...props}>such code much programming</Code>)
+      <Code {...props}>such code much programming</Code>,
+      withTheme
     );
   });
 
@@ -30,7 +33,7 @@ describe('<Code />', () => {
       withTheme(<Code {...props}>such code much programming</Code>)
     );
     expect(onCopy).not.toHaveBeenCalled();
-    wrapper.find('Code__CopyNotice').simulate('click');
+    wrapper.find(CopyNotice).simulate('click');
     expect(onCopy).toHaveBeenCalledTimes(1);
   });
 
@@ -40,46 +43,43 @@ describe('<Code />', () => {
 
   it('should render multi line string correctly with multiCommand=true', () => {
     wrapper = shallow(
-      withTheme(
-        <Code multiCommand>
-          {`
+      <Code multiCommand>
+        {`
 sudo curl -l git.io/scope -o /usr/local/bin/scope
 sudo chmod a+x /usr/local/bin/scope
 scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
           `}
-        </Code>
-      )
+      </Code>,
+      withTheme
     );
     expect(wrapper.dive()).toMatchSnapshot();
   });
 
   it('should render multi line function correctly with multiCommand=true', () => {
     wrapper = shallow(
-      withTheme(
-        <Code multiCommand>
-          {() => `
+      <Code multiCommand>
+        {() => `
 sudo curl -l git.io/scope -o /usr/local/bin/scope
 sudo chmod a+x /usr/local/bin/scope
 scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
       `}
-        </Code>
-      )
+      </Code>,
+      withTheme
     );
     expect(wrapper.dive()).toMatchSnapshot();
   });
 
   it('should render multi line jsx correctly with multiCommand=true', () => {
     wrapper = shallow(
-      withTheme(
-        <Code multiCommand>
-          <div>sudo curl -L git.io/scope -o /usr/local/bin/scope</div>
-          <div>sudo chmod a+x /usr/local/bin/scope</div>
-          <div>
-            scope launch <wbr />
-            https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
-          </div>
-        </Code>
-      )
+      <Code multiCommand>
+        <div>sudo curl -L git.io/scope -o /usr/local/bin/scope</div>
+        <div>sudo chmod a+x /usr/local/bin/scope</div>
+        <div>
+          scope launch <wbr />
+          https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
+        </div>
+      </Code>,
+      withTheme
     );
     expect(wrapper.dive()).toMatchSnapshot();
   });
