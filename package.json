@@ -3,6 +3,9 @@
   "version": "0.21.2",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": ">=8 <12"
+  },
   "scripts": {
     "ci": "yarn lint && yarn test",
     "lint": "eslint src docs styleguide && stylelint src",
