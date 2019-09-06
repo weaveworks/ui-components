@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.22.0"></a>
+# [0.22.0](https://github.com/weaveworks/ui-components/compare/v0.21.2...v0.22.0) (2019-09-06)
+
+
+### Bug Fixes
+
+* adds engines field to package.json ([a5f36f5](https://github.com/weaveworks/ui-components/commit/a5f36f5))
+* tests after styled components upgrade ([ec7e500](https://github.com/weaveworks/ui-components/commit/ec7e500))
+
+
+### Features
+
+* updates to styled-components 4 ([46ed24a](https://github.com/weaveworks/ui-components/commit/46ed24a))
+
+
+
 <a name="0.21.2"></a>
 ## [0.21.2](https://github.com/weaveworks/ui-components/compare/v0.21.1...v0.21.2) (2019-05-31)
 
