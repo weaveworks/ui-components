@@ -13,9 +13,9 @@ const DeploymentAnnotationWrapper = styled.div.attrs({
   height: 100%;
 `;
 
-const DeploymentAnnotationContainer = styled.div.attrs({
-  style: ({ x }) => ({ left: x }),
-})`
+const DeploymentAnnotationContainer = styled.div.attrs(({ x }) => ({
+  style: { left: x },
+}))`
   pointer-events: all;
   position: absolute;
   height: 100%;
@@ -33,7 +33,7 @@ const FocusPoint = styled.span`
     margin-top: ${props.radius}px;
     width: ${2 * props.radius}px;
     height: ${2 * props.radius}px;
-    bottom: -${props.onAxis ? props.radius : 0}px;
+    bottom: -${props.isOnAxis ? props.radius : 0}px;
   `};
 `;
 
@@ -99,7 +99,7 @@ class DeploymentAnnotations extends React.PureComponent {
             <FocusPoint
               hoverable
               radius="5"
-              onAxis={this.props.onAxis}
+              isOnAxis={this.props.isOnAxis}
               onMouseMove={this.handleMouseEnter}
               onMouseLeave={this.handleMouseLeave}
               onClick={this.handleClick}
@@ -130,8 +130,8 @@ DeploymentAnnotations.propTypes = {
   action: PropTypes.string.isRequired,
   containerHeight: PropTypes.number.isRequired,
   containerWidth: PropTypes.number.isRequired,
+  isOnAxis: PropTypes.bool,
   linkTo: PropTypes.string,
-  onAxis: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   serviceIDs: PropTypes.array.isRequired,
   timestamp: PropTypes.string.isRequired,
@@ -139,8 +139,8 @@ DeploymentAnnotations.propTypes = {
 };
 
 DeploymentAnnotations.defaultProps = {
+  isOnAxis: false,
   linkTo: '',
-  onAxis: false,
 };
 
 export default DeploymentAnnotations;

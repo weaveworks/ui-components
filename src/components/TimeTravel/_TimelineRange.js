@@ -3,12 +3,12 @@ import moment from 'moment';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const TimelineRangeOverlay = styled.div.attrs({
-  style: ({ x, width }) => ({
+const TimelineRangeOverlay = styled.div.attrs(({ x, width }) => ({
+  style: {
     transform: `translateX(${x}px)`,
     width,
-  }),
-})`
+  },
+}))`
   background-color: ${props => props.color};
   position: absolute;
   opacity: 0.15;

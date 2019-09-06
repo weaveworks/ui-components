@@ -44,12 +44,12 @@ function linearGradientValue(x, [a, b]) {
   return (x - a) / (b - a);
 }
 
-const TimelineLabels = styled.div.attrs({
-  style: ({ y, opacity }) => ({
+const TimelineLabels = styled.div.attrs(({ y, opacity }) => ({
+  style: {
     opacity,
     transform: `translateY(${y}px)`,
-  }),
-})``;
+  },
+}))``;
 
 // TODO: Tidy up this component.
 class TimelinePeriodLabels extends React.PureComponent {

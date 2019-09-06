@@ -44,18 +44,18 @@ const TooltipRowValue = styled.span`
   white-space: nowrap;
 `;
 
-const HoverLine = styled.div.attrs({
-  style: ({ left, height }) => ({ height, left }),
-})`
+const HoverLine = styled.div.attrs(({ left, height }) => ({
+  style: { height, left },
+}))`
   border-left: 1px solid ${props => props.theme.colors.gray600};
   pointer-events: none;
   position: absolute;
   top: 0;
 `;
 
-const FocusPoint = styled.span.attrs({
-  style: ({ top }) => ({ top }),
-})`
+const FocusPoint = styled.span.attrs(({ top }) => ({
+  style: { top },
+}))`
   border: 2.5px solid ${props => props.color};
   border-radius: ${props => props.theme.borderRadius.circle};
   background-color: ${props => props.theme.colors.white};

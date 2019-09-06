@@ -46,20 +46,24 @@ const GraphNodeWrapper = styled.g`
   cursor: ${props => props.cursorType};
 `;
 
-const SvgTextContainer = styled.g.attrs({
-  transform: props => `translate(0, ${props.y + 85})`,
-})`
+const SvgTextContainer = styled.g.attrs(({ y }) => ({
+  transform: `translate(0, ${y + 85})`,
+}))`
   pointer-events: all;
 `;
 
-const LabelSvg = styled.text.attrs({
-  fill: props =>
-    props.contrastMode
-      ? props.theme.colors.black
-      : props.theme.colors.purple800,
-  textAnchor: 'middle',
-  y: -38,
-})`
+const LabelSvg = styled.text.attrs(
+  ({
+    contrastMode,
+    theme: {
+      colors: { black, purple800 },
+    },
+  }) => ({
+    fill: contrastMode ? black : purple800,
+    textAnchor: 'middle',
+    y: -38,
+  })
+)`
   font-size: ${props => props.theme.fontSizes.normal};
 `;
 

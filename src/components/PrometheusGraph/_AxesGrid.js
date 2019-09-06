@@ -6,9 +6,9 @@ import { find, range, round, flatMap, last } from 'lodash';
 
 const AxesGridContainer = styled.div``;
 
-const AxisLine = styled.div.attrs({
-  style: ({ width = 0, height = 0 }) => ({ height, width }),
-})`
+const AxisLine = styled.div.attrs(({ width = 0, height = 0 }) => ({
+  style: { height, width },
+}))`
   border-style: dashed;
   border-color: ${props => props.theme.colors.gray200};
   position: absolute;
@@ -24,9 +24,9 @@ const VerticalLine = styled(AxisLine)`
   border-width: 0 0 0 1px;
 `;
 
-const TickContainer = styled.div.attrs({
-  style: ({ left = 0, top = 0 }) => ({ left, top }),
-})`
+const TickContainer = styled.div.attrs(({ left = 0, top = 0 }) => ({
+  style: { left, top },
+}))`
   position: absolute;
 `;
 

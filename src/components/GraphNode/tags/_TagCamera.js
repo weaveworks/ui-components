@@ -1,21 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Rect = styled.rect.attrs({
-  fill: props =>
-    props.contrastMode
-      ? props.theme.colors.black
-      : props.theme.colors.purple800,
-  rx: 5,
-})``;
+const Rect = styled.rect.attrs(
+  ({
+    contrastMode,
+    theme: {
+      colors: { black, purple800 },
+    },
+  }) => ({
+    fill: contrastMode ? black : purple800,
+    rx: 5,
+  })
+)``;
 
-const Circle = styled.circle.attrs({
-  fill: props =>
-    props.contrastMode
-      ? props.theme.colors.black
-      : props.theme.colors.purple800,
-  stroke: props => props.theme.colors.white,
-})``;
+const Circle = styled.circle.attrs(
+  ({
+    contrastMode,
+    theme: {
+      colors: { black, purple800, white },
+    },
+  }) => ({
+    fill: contrastMode ? black : purple800,
+    stroke: white,
+  })
+)``;
 
 export default class TagCamera extends React.Component {
   render() {

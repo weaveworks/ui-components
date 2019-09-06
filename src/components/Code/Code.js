@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { isFunction, isString, trim, noop } from 'lodash';
 
 import { spacing } from '../../theme/selectors';
@@ -17,7 +17,7 @@ const scale = keyframes`
   }
 `;
 
-const CopyNotice = styled.div`
+export const CopyNotice = styled.div`
   position: absolute;
   top: 0;
   right: 0;
@@ -33,7 +33,7 @@ const CopyNotice = styled.div`
     `
     & > i {
         transform-origin: center;
-        animation-name: ${scale};
+        animation-name: ${css(scale)};
         animation-duration: .4s;
       }
   `};
@@ -217,7 +217,7 @@ class Code extends Component {
         <ScrollWrap>
           <Content>
             <Pre
-              innerRef={e => {
+              ref={e => {
                 this.preNode = e;
               }}
             >

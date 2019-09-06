@@ -1,16 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Code /> should render correctly 1`] = `
-<Code__CodeWrapper
+<StyledComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "Code__CodeWrapper-sc-1no9z1g-1",
+        "isStatic": false,
+        "lastClassName": "hZydFr",
+        "rules": Array [
+          "position:relative;background-color:",
+          [Function],
+          ";box-sizing:border-box;border-radius:",
+          [Function],
+          ";cursor:pointer;&:hover ",
+          ".Code__CopyNotice-sc-1no9z1g-0",
+          "{opacity:0.9;}",
+        ],
+      },
+      "displayName": "Code__CodeWrapper",
+      "foldedComponentIds": Array [],
+      "render": [Function],
+      "styledComponentId": "Code__CodeWrapper-sc-1no9z1g-1",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
   onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
   <Code__ScrollWrap>
     <Code__Content>
-      <Code__Pre
-        innerRef={[Function]}
-      >
+      <Code__Pre>
         such code much programming
       </Code__Pre>
     </Code__Content>
@@ -21,20 +48,47 @@ exports[`<Code /> should render correctly 1`] = `
   >
     Copy to clipboard
   </Code__CopyNotice>
-</Code__CodeWrapper>
+</StyledComponent>
 `;
 
 exports[`<Code /> should render multi line function correctly with multiCommand=true 1`] = `
-<Code__CodeWrapper
+<StyledComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "Code__CodeWrapper-sc-1no9z1g-1",
+        "isStatic": false,
+        "lastClassName": "hZydFr",
+        "rules": Array [
+          "position:relative;background-color:",
+          [Function],
+          ";box-sizing:border-box;border-radius:",
+          [Function],
+          ";cursor:pointer;&:hover ",
+          ".Code__CopyNotice-sc-1no9z1g-0",
+          "{opacity:0.9;}",
+        ],
+      },
+      "displayName": "Code__CodeWrapper",
+      "foldedComponentIds": Array [],
+      "render": [Function],
+      "styledComponentId": "Code__CodeWrapper-sc-1no9z1g-1",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
   onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
   <Code__ScrollWrap>
     <Code__Content>
-      <Code__Pre
-        innerRef={[Function]}
-      >
+      <Code__Pre>
         <Code__PaddedLine
           key="sudo curl -l git.io/scope -o /usr/local/bin/scope"
         >
@@ -65,20 +119,47 @@ exports[`<Code /> should render multi line function correctly with multiCommand=
   >
     Copy to clipboard
   </Code__CopyNotice>
-</Code__CodeWrapper>
+</StyledComponent>
 `;
 
 exports[`<Code /> should render multi line jsx correctly with multiCommand=true 1`] = `
-<Code__CodeWrapper
+<StyledComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "Code__CodeWrapper-sc-1no9z1g-1",
+        "isStatic": false,
+        "lastClassName": "hZydFr",
+        "rules": Array [
+          "position:relative;background-color:",
+          [Function],
+          ";box-sizing:border-box;border-radius:",
+          [Function],
+          ";cursor:pointer;&:hover ",
+          ".Code__CopyNotice-sc-1no9z1g-0",
+          "{opacity:0.9;}",
+        ],
+      },
+      "displayName": "Code__CodeWrapper",
+      "foldedComponentIds": Array [],
+      "render": [Function],
+      "styledComponentId": "Code__CodeWrapper-sc-1no9z1g-1",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
   onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
   <Code__ScrollWrap>
     <Code__Content>
-      <Code__Pre
-        innerRef={[Function]}
-      >
+      <Code__Pre>
         <Code__PaddedLine
           key="0/.0"
         >
@@ -117,20 +198,47 @@ exports[`<Code /> should render multi line jsx correctly with multiCommand=true 
   >
     Copy to clipboard
   </Code__CopyNotice>
-</Code__CodeWrapper>
+</StyledComponent>
 `;
 
 exports[`<Code /> should render multi line string correctly with multiCommand=true 1`] = `
-<Code__CodeWrapper
+<StyledComponent
+  forwardedComponent={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "attrs": Array [],
+      "componentStyle": ComponentStyle {
+        "componentId": "Code__CodeWrapper-sc-1no9z1g-1",
+        "isStatic": false,
+        "lastClassName": "hZydFr",
+        "rules": Array [
+          "position:relative;background-color:",
+          [Function],
+          ";box-sizing:border-box;border-radius:",
+          [Function],
+          ";cursor:pointer;&:hover ",
+          ".Code__CopyNotice-sc-1no9z1g-0",
+          "{opacity:0.9;}",
+        ],
+      },
+      "displayName": "Code__CodeWrapper",
+      "foldedComponentIds": Array [],
+      "render": [Function],
+      "styledComponentId": "Code__CodeWrapper-sc-1no9z1g-1",
+      "target": "div",
+      "toString": [Function],
+      "warnTooManyClasses": [Function],
+      "withComponent": [Function],
+    }
+  }
+  forwardedRef={null}
   onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
   <Code__ScrollWrap>
     <Code__Content>
-      <Code__Pre
-        innerRef={[Function]}
-      >
+      <Code__Pre>
         <Code__PaddedLine
           key="sudo curl -l git.io/scope -o /usr/local/bin/scope"
         >
@@ -161,5 +269,5 @@ exports[`<Code /> should render multi line string correctly with multiCommand=tr
   >
     Copy to clipboard
   </Code__CopyNotice>
-</Code__CodeWrapper>
+</StyledComponent>
 `;

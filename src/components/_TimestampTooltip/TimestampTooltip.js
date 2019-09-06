@@ -4,11 +4,11 @@ import styled from 'styled-components';
 
 import TimestampTag from '../TimestampTag';
 
-const TooltipContainer = styled.div.attrs({
+const TooltipContainer = styled.div.attrs(({ offsetX, offsetY }) => ({
   // Using attrs prevents extensive styled components
   // generation every time the tooltip is repositioned.
-  style: ({ offsetX, offsetY }) => ({ left: offsetX, top: offsetY }),
-})`
+  style: { left: offsetX, top: offsetY },
+}))`
   color: ${props => props.theme.colors.purple900};
   background-color: ${props => props.theme.colors.gray50};
   border: 1px solid ${props => props.theme.colors.gray200};
@@ -76,7 +76,7 @@ class TimestampTooltip extends React.PureComponent {
         offsetX={clampedX}
         offsetY={offsetY}
         visible={this.state.prerendered}
-        innerRef={this.saveTooltipRef}
+        ref={this.saveTooltipRef}
       >
         <TimestampWrapper>
           <TimestampTag timestamp={timestamp} />

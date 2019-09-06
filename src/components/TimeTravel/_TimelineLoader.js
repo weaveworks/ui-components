@@ -19,12 +19,12 @@ const blinking = keyframes`
 `;
 /* stylelint-enable color-no-hex */
 
-const TimelineLoaderOverlay = styled.div.attrs({
-  style: ({ x, width }) => ({
+const TimelineLoaderOverlay = styled.div.attrs(({ x, width }) => ({
+  style: {
     left: `${x}px`,
     width,
-  }),
-})`
+  },
+}))`
   animation: ${blinking} 2s linear infinite;
   pointer-events: none;
   position: absolute;

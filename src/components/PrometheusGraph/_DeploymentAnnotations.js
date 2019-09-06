@@ -60,7 +60,7 @@ class DeploymentAnnotations extends React.PureComponent {
             containerHeight={this.props.chartHeight}
             linkTo={this.props.linkBuilder(deployment)}
             onClick={this.props.onClick}
-            onAxis
+            isOnAxis
           />
         ))}
       </DeploymentAnnotationsWrapper>

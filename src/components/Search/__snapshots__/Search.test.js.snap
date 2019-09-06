@@ -855,7 +855,13 @@ exports[`<Search /> snapshots renders filters 1`] = `
   cursor: pointer;
 }
 
-.c11 {
+.c12 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 24px;
+  padding-left: 12px;
+  cursor: pointer;
   height: 36px;
   box-sizing: border-box;
   border-radius: 2px;
@@ -867,11 +873,11 @@ exports[`<Search /> snapshots renders filters 1`] = `
   display: flex;
 }
 
-.c11 .c12 {
+.c12 .c11 {
   padding: 0;
 }
 
-.c11 div:last-child {
+.c12 div:last-child {
   margin-left: auto;
 }
 
@@ -1024,12 +1030,12 @@ exports[`<Search /> snapshots renders filters 1`] = `
     title="Filters"
   >
     <div
-      className="dropdown-toggle c11 c12 c13"
+      className="c11 dropdown-toggle c12"
       disabled={false}
       onClick={[Function]}
     >
       <div
-        className="c12 c13"
+        className="c11 c13"
         disabled={false}
       >
         Filters

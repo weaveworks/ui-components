@@ -37,7 +37,6 @@ exports[`<Alert /> snapshots renders default 1`] = `
 
 <div
   className="c0"
-  icon=""
   title=""
   type="info"
 >
@@ -87,7 +86,6 @@ exports[`<Alert /> snapshots renders error 1`] = `
 
 <div
   className="c0"
-  icon=""
   title=""
   type="error"
 >
@@ -137,7 +135,6 @@ exports[`<Alert /> snapshots renders icon if provided 1`] = `
 
 <div
   className="c0"
-  icon="warning"
   title=""
   type="info"
 >
@@ -187,7 +184,6 @@ exports[`<Alert /> snapshots renders success 1`] = `
 
 <div
   className="c0"
-  icon=""
   title=""
   type="success"
 >
@@ -255,7 +251,6 @@ exports[`<Alert /> snapshots renders title if provided 1`] = `
 
 <div
   className="c0"
-  icon=""
   title="title"
   type="info"
 >
@@ -314,7 +309,6 @@ exports[`<Alert /> snapshots renders warning 1`] = `
 
 <div
   className="c0"
-  icon=""
   title=""
   type="warning"
 >
