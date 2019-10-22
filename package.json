@@ -1,6 +1,6 @@
 {
   "name": "weaveworks-ui-components",
-  "version": "0.22.0",
+  "version": "0.22.4",
   "description": "",
   "main": "index.js",
   "engines": {

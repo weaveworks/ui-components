@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.22.4"></a>
+## [0.22.4](https://github.com/weaveworks/ui-components/compare/v0.22.0...v0.22.4) (2019-10-22)
+
+
+
 <a name="0.22.0"></a>
 # [0.22.0](https://github.com/weaveworks/ui-components/compare/v0.21.2...v0.22.0) (2019-09-06)
 
