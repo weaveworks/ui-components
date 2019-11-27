@@ -47,7 +47,7 @@ const Window = styled.div`
   width: ${props => props.width};
   margin: 0 auto;
   max-width: 768px;
-  padding: ${spacing('base')} ${spacing('medium')} ${spacing('medium')};
+  padding: ${spacing('medium')};
   position: relative;
 `;
 
@@ -58,8 +58,7 @@ const Header = styled.div`
 `;
 
 const Title = styled.span`
-  font-size: ${props => props.theme.fontSizes.normal};
-  font-weight: bold;
+  font-size: ${props => props.theme.fontSizes.large};
 `;
 
 const ButtonClose = styled.button`
