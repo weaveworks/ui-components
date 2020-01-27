@@ -20,8 +20,8 @@ const Item = styled.div`
     props.disabled &&
     `
     cursor: not-allowed;
-    color: ${props.theme.colors.gray200};
-    background-color: ${props.theme.colors.white};
+    color: ${props.theme.colors.gray600};
+    background-color: ${props.theme.colors.gray50};
   `};
 `;
 
@@ -79,6 +79,8 @@ const SelectedItem = styled(Item)`
   div:last-child {
     margin-left: auto;
   }
+  ${props =>
+    props.disabled && `background-color: ${props.theme.colors.gray50};`};
 `;
 
 const SelectedItemIcon = styled.span`
