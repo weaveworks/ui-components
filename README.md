@@ -180,9 +180,10 @@ To add a page to the style guide:
 
 If you have any questions about, feedback for or problems with `ui-components`:
 
-- Invite yourself to the <a href="https://weaveworks.github.io/community-slack/" target="_blank"> #weave-community </a> slack channel.
-- Ask a question on the <a href="https://weave-community.slack.com/messages/general/"> #weave-community</a> slack channel.
-- Send an email to <a href="mailto:weave-users@weave.works">weave-users@weave.works</a>
+- Invite yourself to the <a href="https://slack.weave.works" target="_blank"> Weave Users Slack </a> slack.
+- Ask a question on the <a href="https://weave-community.slack.com/messages/general/"> #general</a> slack channel.
 - <a href="https://github.com/weaveworks/ui-components/issues/new">File an issue.</a>
+
+Weaveworks follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md). Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting a Weaveworks project maintainer, or Alexis Richardson (alexis@weave.works).
 
 Your feedback is always welcome!
