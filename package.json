@@ -24,7 +24,9 @@
     "docs:publish": "yarn docs:build && yarn docs:copy-images && yarn docs:s3",
     "docs:analyze": "ANALYZE_BUNDLE=true yarn docs:build",
     "start": "node bin/dev-server",
-    "prettify": "prettier --write '{src,docs,styleguide}/**/*.{js,jsx}'"
+    "prettify": "prettier --write '{src,docs,styleguide}/**/*.{js,jsx}'",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "jest": {
     "setupFiles": [
@@ -73,7 +75,8 @@
     "react-motion": "0.5.2",
     "react-required-if": "^1.0.3",
     "react-resize-aware": "2.7.0",
-    "react-router": "3.2.0"
+    "react-router": "3.2.0",
+    "react-use": "^17.2.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -87,6 +90,10 @@
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
     "@fortawesome/fontawesome-free": "^5.5.0",
+    "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-essentials": "^6.1.21",
+    "@storybook/addon-links": "^6.1.21",
+    "@storybook/react": "^6.1.21",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "10.1.0",
     "babel-jest": "23.6.0",

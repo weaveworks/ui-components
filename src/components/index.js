@@ -43,3 +43,5 @@ export Search from './Search';
 export GraphNode from './GraphNode';
 
 export GraphEdge from './GraphEdge';
+
+export SparkTimeline from './SparkTimeline';
