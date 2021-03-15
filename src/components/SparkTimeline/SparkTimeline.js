@@ -83,7 +83,6 @@ const SparkTimeline = ({ data, ...props }) => {
   const groupedData = entries(groupBy(data, d => d.ts)).map(([k, v]) => {
     return { ts: k, n: v.length, statuses: v.map(d => d.status) };
   });
-  console.log(props.axisOnHover);
   return <SparkTimelineInner data={groupedData} {...props} />;
 };
 
@@ -92,7 +91,7 @@ Expects:
 - Data: [ { ts: [0..25], n } ]
 */
 
-const SparkTimelineInner = ({ axisOnHover, data }) => {
+const SparkTimelineInner = ({ axisOnHover, data, showHeadLabel }) => {
   const [ref, { width }] = useMeasure();
 
   const { true: outOfRange, false: inRange } = groupBy(data, d => d.ts >= 24);
@@ -116,7 +115,6 @@ const SparkTimelineInner = ({ axisOnHover, data }) => {
   const headOffset = lastCommit ? x(lastCommit.ts) + olderCommitPadding : 0;
   const noCommits = !oldCommit && !lastCommit;
 
-  console.log({ axisOnHover });
   return (
     <Container ref={ref}>
       <SvgCanvas axisOnHover={axisOnHover} width={width} height={height}>
@@ -139,7 +137,7 @@ const SparkTimelineInner = ({ axisOnHover, data }) => {
           >
             now
           </text>
-          {!noCommits && (
+          {!noCommits && showHeadLabel && (
             <HeadText
               fill="currentColor"
               x={headOffset}
@@ -155,8 +153,8 @@ const SparkTimelineInner = ({ axisOnHover, data }) => {
               <text fill="currentColor" y="10" textAnchor="middle" dy="0.71em">
                 3d
               </text>
-              <PointLayer>
-                <Point status={status[0]} r={commitRadius} />
+              <PointLayer status={oldCommit.statuses[0]}>
+                <Point status={oldCommit.statuses[0]} r={commitRadius} />
               </PointLayer>
             </>
           )}
@@ -171,7 +169,11 @@ const SparkTimelineInner = ({ axisOnHover, data }) => {
               </g>
             ))}
             {points.map(({ ts, n, statuses }) => (
-              <PointLayer transform={`translate(${x(ts)}, 0)`} key={ts}>
+              <PointLayer
+                status={statuses[0]}
+                transform={`translate(${x(ts)}, 0)`}
+                key={ts}
+              >
                 {n > 1 && (
                   <Point cy={3} status={statuses[0]} r={commitRadius} />
                 )}
@@ -191,13 +193,18 @@ SparkTimeline.propTypes = {
    */
   data: PropTypes.array,
   /**
-   * Data points
+   * Axis on hover
    */
   axisOnHover: PropTypes.bool,
+  /**
+   * Axis on hover
+   */
+  showHeadLabel: PropTypes.bool,
 };
 
 SparkTimeline.defaultProps = {
   axisOnHover: true,
+  showHeadLabel: true,
   data: undefined,
 };
 

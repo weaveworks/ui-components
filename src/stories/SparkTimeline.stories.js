@@ -66,19 +66,26 @@ Basic.args = {
 export const InDataTableRow = DataTableRow.bind({});
 InDataTableRow.args = {
   data: [
-    [{ ts: 4 }, { ts: 4, status: 'success' }, { ts: 6, status: 'success' }],
-    [{ ts: 5 }, { ts: 12, status: 'success' }],
-    [{ ts: 25 }],
+    [
+      { ts: 4, status: 'success' },
+      { ts: 4, status: 'success' },
+      { ts: 6, status: 'success' },
+    ],
+    [{ ts: 5, status: 'success' }, { ts: 12, status: 'success' }],
+    [{ ts: 25, status: 'success' }],
     [],
     range(24).map(n => ({
       ts: n,
+      status: 'success',
     })),
     range(25).flatMap(n => [
       {
         ts: n,
+        status: 'success',
       },
       {
         ts: n,
+        status: 'success',
       },
     ]),
   ],
