@@ -30,13 +30,13 @@ export const CopyNotice = styled.div`
   color: ${props => props.theme.colors.purple50};
   ${props =>
     props.isCopying &&
-    `
-    & > i {
+    css`
+      & > i {
         transform-origin: center;
-        animation-name: ${css(scale)};
-        animation-duration: .4s;
+        animation-name: ${scale};
+        animation-duration: 0.4s;
       }
-  `};
+    `};
 `;
 
 const CodeWrapper = styled.div`
