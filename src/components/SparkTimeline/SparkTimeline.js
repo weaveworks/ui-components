@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import { entries, groupBy, range } from 'lodash';
 import { scaleLinear } from 'd3-scale';
 import { useMeasure } from 'react-use';
+import moment from 'moment';
 
 import { color } from '../../theme/selectors';
+import { COMPACT_LOCALE_KEY } from '../../utils/format';
 
 const Container = styled.div`
   width: 100%;
@@ -114,6 +116,10 @@ const SparkTimelineInner = ({ axisOnHover, data, showHeadLabel }) => {
   const lastCommit = points[0];
   const headOffset = lastCommit ? x(lastCommit.ts) + olderCommitPadding : 0;
   const noCommits = !oldCommit && !lastCommit;
+  const oldCommitString = moment(new Date('2021-03-15T13:30:34.761Z'))
+    .utc()
+    .locale(COMPACT_LOCALE_KEY)
+    .fromNow(true);
 
   return (
     <Container ref={ref}>
@@ -151,7 +157,7 @@ const SparkTimelineInner = ({ axisOnHover, data, showHeadLabel }) => {
           {oldCommit && (
             <>
               <text fill="currentColor" y="10" textAnchor="middle" dy="0.71em">
-                3d
+                {oldCommitString}
               </text>
               <PointLayer status={oldCommit.statuses[0]}>
                 <Point status={oldCommit.statuses[0]} r={commitRadius} />
