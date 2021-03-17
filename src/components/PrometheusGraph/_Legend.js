@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { size, without } from 'lodash';
 
 const LegendContainer = styled.div`
-  opacity: ${props => (props.loading ? 0.35 : 1)};
+  opacity: ${props => (props.$loading ? 0.35 : 1)};
 `;
 
 const LegendItems = styled.div`
@@ -140,7 +140,7 @@ class Legend extends React.PureComponent {
     const caretIcon = this.state.shown ? 'fa-caret-down' : 'fa-caret-right';
 
     return (
-      <LegendContainer loading={this.props.loading}>
+      <LegendContainer $loading={this.props.loading}>
         {this.props.collapsable && (
           <LegendToggle onClick={this.handleLegendToggle}>
             Legend <LegendCaret className={`fa ${caretIcon}`} />
@@ -184,7 +184,6 @@ Legend.propTypes = {
   multiSeries: PropTypes.array.isRequired,
   onHoveredKeyChange: PropTypes.func.isRequired,
   onSelectedKeysChange: PropTypes.func.isRequired,
-  renderItemContent: PropTypes.func.isRequired,
   selectedKeys: PropTypes.array.isRequired,
   shown: PropTypes.bool.isRequired,
 };

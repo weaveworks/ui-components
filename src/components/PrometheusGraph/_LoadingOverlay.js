@@ -20,7 +20,7 @@ class LoadingOverlay extends React.PureComponent {
 
     return (
       <LoadingContainer>
-        <CircularProgress center size={30} />
+        <CircularProgress center />
       </LoadingContainer>
     );
   }
