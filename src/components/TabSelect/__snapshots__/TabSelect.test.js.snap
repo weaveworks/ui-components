@@ -18,12 +18,12 @@ exports[`<Tab Select /> snapshots renders 1`] = `
   border-bottom: 1px solid transparent;
 }
 
-.c0 .c1 {
+.c0 ._TabButton__TabName-sc-1o9j7wa-0 {
   color: hsl(240,20%,25%);
   opacity: 1;
 }
 
-.c2 {
+.c1 {
   cursor: pointer;
   margin-bottom: -1px;
   margin-right: 4px;
@@ -39,12 +39,12 @@ exports[`<Tab Select /> snapshots renders 1`] = `
   border: 1px solid hsl(240,20%,90%);
 }
 
-.c2 .c1 {
+.c1 ._TabButton__TabName-sc-1o9j7wa-0 {
   color: hsl(240,20%,25%);
   opacity: 0.65;
 }
 
-.c3 {
+.c2 {
   padding: 24px;
   background-color: hsl(0,0%,100%);
   border-top-right-radius: 2px;
@@ -54,47 +54,47 @@ exports[`<Tab Select /> snapshots renders 1`] = `
 }
 
 <div
-  className=""
+  className="TabSelect-sc-11jclhd-2"
 >
   <div
-    className=""
+    className="TabSelect__TabButtons-sc-11jclhd-0"
   >
     <button
       className="c0"
       onClick={[Function]}
     >
       <span
-        className="c1 "
+        className="_TabButton__TabName-sc-1o9j7wa-0"
       >
         A
       </span>
     </button>
     <button
-      className="c2"
+      className="c1"
       onClick={[Function]}
     >
       <span
-        className="c1 "
+        className="_TabButton__TabName-sc-1o9j7wa-0"
       >
         B
       </span>
     </button>
     <button
-      className="c2"
+      className="c1"
       onClick={[Function]}
     >
       <span
-        className="c1 "
+        className="_TabButton__TabName-sc-1o9j7wa-0"
       >
         C
       </span>
     </button>
   </div>
   <div
-    className="c3"
+    className="c2"
   >
     <div
-      className=""
+      className="Tab-sc-66qbzf-0"
     >
       Tab A
     </div>
@@ -103,28 +103,6 @@ exports[`<Tab Select /> snapshots renders 1`] = `
 `;
 
 exports[`<Tab Select /> snapshots renders with a selectedTab 1`] = `
-.c2 {
-  cursor: pointer;
-  margin-bottom: -1px;
-  margin-right: 4px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  padding-right: 16px;
-  font-size: 22px;
-  outline: 0;
-  background-color: hsl(0,0%,100%);
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  border: 1px solid hsl(240,20%,90%);
-  border-bottom: 1px solid transparent;
-}
-
-.c2 .c1 {
-  color: hsl(240,20%,25%);
-  opacity: 1;
-}
-
 .c0 {
   cursor: pointer;
   margin-bottom: -1px;
@@ -141,12 +119,34 @@ exports[`<Tab Select /> snapshots renders with a selectedTab 1`] = `
   border: 1px solid hsl(240,20%,90%);
 }
 
-.c0 .c1 {
+.c0 ._TabButton__TabName-sc-1o9j7wa-0 {
   color: hsl(240,20%,25%);
   opacity: 0.65;
 }
 
-.c3 {
+.c1 {
+  cursor: pointer;
+  margin-bottom: -1px;
+  margin-right: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+  font-size: 22px;
+  outline: 0;
+  background-color: hsl(0,0%,100%);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  border: 1px solid hsl(240,20%,90%);
+  border-bottom: 1px solid transparent;
+}
+
+.c1 ._TabButton__TabName-sc-1o9j7wa-0 {
+  color: hsl(240,20%,25%);
+  opacity: 1;
+}
+
+.c2 {
   padding: 24px;
   background-color: hsl(0,0%,100%);
   border-top-right-radius: 2px;
@@ -156,27 +156,27 @@ exports[`<Tab Select /> snapshots renders with a selectedTab 1`] = `
 }
 
 <div
-  className=""
+  className="TabSelect-sc-11jclhd-2"
 >
   <div
-    className=""
+    className="TabSelect__TabButtons-sc-11jclhd-0"
   >
     <button
       className="c0"
       onClick={[Function]}
     >
       <span
-        className="c1 "
+        className="_TabButton__TabName-sc-1o9j7wa-0"
       >
         A
       </span>
     </button>
     <button
-      className="c2"
+      className="c1"
       onClick={[Function]}
     >
       <span
-        className="c1 "
+        className="_TabButton__TabName-sc-1o9j7wa-0"
       >
         B
       </span>
@@ -186,17 +186,17 @@ exports[`<Tab Select /> snapshots renders with a selectedTab 1`] = `
       onClick={[Function]}
     >
       <span
-        className="c1 "
+        className="_TabButton__TabName-sc-1o9j7wa-0"
       >
         C
       </span>
     </button>
   </div>
   <div
-    className="c3"
+    className="c2"
   >
     <div
-      className=""
+      className="Tab-sc-66qbzf-0"
     >
       Tab B
     </div>
