@@ -9,6 +9,7 @@ import Dialog from '.';
 export default class DialogExample extends React.Component {
   state = {
     emptyButtonActive: false,
+    hideCloseButtonActive: false,
     normalButtonActive: false,
     otherButtonActive: false,
   };

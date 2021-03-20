@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const ErrorContainer = styled.div`
   color: ${props => props.theme.colors.orange600};
-  opacity: ${props => (props.loading ? 0.2 : 1)};
+  opacity: ${props => (props.$loading ? 0.2 : 1)};
   position: absolute;
   top: 0;
   left: 0;
@@ -33,7 +33,7 @@ class ErrorOverlay extends React.PureComponent {
     if (!error) return null;
 
     return (
-      <ErrorContainer loading={loading}>
+      <ErrorContainer $loading={loading}>
         <ErrorText hasData={hasData}>{error}</ErrorText>
       </ErrorContainer>
     );

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
-.c3 {
+.c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -10,13 +10,7 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
   cursor: pointer;
 }
 
-.c2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-right: 24px;
-  padding-left: 12px;
-  cursor: pointer;
+.c3 {
   height: 36px;
   box-sizing: border-box;
   border-radius: 2px;
@@ -28,11 +22,11 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
   display: flex;
 }
 
-.c2 .c1 {
+.c3 .c1 {
   padding: 0;
 }
 
-.c2 div:last-child {
+.c3 div:last-child {
   margin-left: auto;
 }
 
@@ -58,25 +52,25 @@ exports[`<Dropdown /> snapshots renders a placeholder 1`] = `
   title="Select an item"
 >
   <div
-    className="c1 dropdown-toggle c2"
+    className="c1 c2 c3 dropdown-toggle"
     disabled={false}
     onClick={[Function]}
   >
     <div
-      className="c1 c3"
+      className="c1 c2"
       disabled={false}
     >
       Select an item
     </div>
     <span
-      className="fa fa-caret-down c4"
+      className="c4 fa fa-caret-down"
     />
   </div>
 </div>
 `;
 
 exports[`<Dropdown /> snapshots renders default 1`] = `
-.c3 {
+.c2 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -85,13 +79,7 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
   cursor: pointer;
 }
 
-.c2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-right: 24px;
-  padding-left: 12px;
-  cursor: pointer;
+.c3 {
   height: 36px;
   box-sizing: border-box;
   border-radius: 2px;
@@ -103,11 +91,11 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
   display: flex;
 }
 
-.c2 .c1 {
+.c3 .c1 {
   padding: 0;
 }
 
-.c2 div:last-child {
+.c3 div:last-child {
   margin-left: auto;
 }
 
@@ -133,18 +121,18 @@ exports[`<Dropdown /> snapshots renders default 1`] = `
   title="First Thing"
 >
   <div
-    className="c1 dropdown-toggle c2"
+    className="c1 c2 c3 dropdown-toggle"
     disabled={false}
     onClick={[Function]}
   >
     <div
-      className="c1 c3"
+      className="c1 c2"
       disabled={false}
     >
       First Thing
     </div>
     <span
-      className="fa fa-caret-down c4"
+      className="c4 fa fa-caret-down"
     />
   </div>
 </div>

@@ -102,13 +102,13 @@ const GraphContainer = styled.div`
   position: relative;
   min-height: 170px;
   margin-bottom: ${spacing('medium')};
-  opacity: ${props => (props.loading ? 0.35 : 1)};
+  opacity: ${props => (props.$loading ? 0.35 : 1)};
 `;
 
 const AxisLabel = styled.span`
   color: ${props => props.theme.colors.black};
   font-size: ${props => props.theme.fontSizes.normal};
-  opacity: ${props => (props.loading ? 0.35 : 1)};
+  opacity: ${props => (props.$loading ? 0.35 : 1)};
   transform: translate(-60px, 165px) rotate(-90deg);
   transform-origin: left top 0;
   display: inline-block;
@@ -493,8 +493,8 @@ class PrometheusGraph extends React.PureComponent {
 
     return (
       <GraphWrapper>
-        <AxisLabel loading={loading}>{yAxisLabel}</AxisLabel>
-        <GraphContainer loading={loading}>
+        <AxisLabel $loading={loading}>{yAxisLabel}</AxisLabel>
+        <GraphContainer $loading={loading}>
           <AxesGrid
             hasData={hasData}
             chartWidth={chartWidth}

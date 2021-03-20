@@ -101,7 +101,7 @@ exports[`<Input /> should render correctly 1`] = `
   padding: 8px;
 }
 
-<ThemeProvider
+<Component
   theme={
     Object {
       "atoms": Object {
@@ -287,244 +287,57 @@ exports[`<Input /> should render correctly 1`] = `
     onChange={[MockFunction]}
     valid={false}
   >
-    <StyledComponent
-      forwardedComponent={
-        Object {
-          "$$typeof": Symbol(react.forward_ref),
-          "attrs": Array [],
-          "componentStyle": ComponentStyle {
-            "componentId": "Input-sc-1qr5ihg-2",
-            "isStatic": false,
-            "lastClassName": "c0",
-            "rules": Array [
-              "padding:",
-              [Function],
-              ";",
-            ],
-          },
-          "displayName": "Input",
-          "foldedComponentIds": Array [],
-          "render": [Function],
-          "styledComponentId": "Input-sc-1qr5ihg-2",
-          "target": [Function],
-          "toString": [Function],
-          "warnTooManyClasses": [Function],
-          "withComponent": [Function],
-        }
-      }
-      forwardedRef={null}
+    <Input
+      autoSelectText={false}
+      className="c0"
+      focus={false}
+      hideValidationMessage={false}
+      inputRef={[Function]}
       label="Hi"
       message="Doh!"
       onChange={[MockFunction]}
+      textarea={false}
       valid={false}
     >
-      <Input
-        autoSelectText={false}
+      <div
         className="c0"
-        focus={false}
-        hideValidationMessage={false}
-        inputRef={[Function]}
-        label="Hi"
-        message="Doh!"
-        onChange={[MockFunction]}
-        textarea={false}
-        valid={false}
       >
-        <div
-          className="c0"
+        <label>
+          Hi
+        </label>
+        <Input__InputWrapper
+          hasLabel={true}
+          valid={false}
         >
-          <label>
-            Hi
-          </label>
-          <Input__InputWrapper
-            hasLabel={true}
-            valid={false}
+          <div
+            className="c1"
           >
-            <StyledComponent
-              forwardedComponent={
-                Object {
-                  "$$typeof": Symbol(react.forward_ref),
-                  "attrs": Array [],
-                  "componentStyle": ComponentStyle {
-                    "componentId": "Input__InputWrapper-sc-1qr5ihg-1",
-                    "isStatic": false,
-                    "lastClassName": "c1",
-                    "rules": Array [
-                      "position:relative;display:flex;align-items:center;height:36px;margin-top:",
-                      [Function],
-                      ";",
-                      [Function],
-                      ";input{",
-                      [Function],
-                      ";",
-                      "&::-webkit-input-placeholder{",
-                      "opacity",
-                      ":",
-                      "1",
-                      ";}&::-moz-placeholder{",
-                      "opacity",
-                      ":",
-                      "1",
-                      ";}&:-moz-placeholder{",
-                      "opacity",
-                      ":",
-                      "1",
-                      ";}&:-ms-input-placeholder{",
-                      "opacity",
-                      ":",
-                      "1",
-                      ";}",
-                      ";padding-right:",
-                      [Function],
-                      ";padding-left:",
-                      [Function],
-                      ";width:100%;line-height:36px;box-shadow:none;background-color:",
-                      [Function],
-                      ";border:1px solid ",
-                      [Function],
-                      ";border-radius:",
-                      [Function],
-                      ";height:36px;box-sizing:border-box;&:disabled{",
-                      "&::-webkit-input-placeholder{",
-                      "opacity",
-                      ":",
-                      "0.5",
-                      ";}&::-moz-placeholder{",
-                      "opacity",
-                      ":",
-                      "0.5",
-                      ";}&:-moz-placeholder{",
-                      "opacity",
-                      ":",
-                      "0.5",
-                      ";}&:-ms-input-placeholder{",
-                      "opacity",
-                      ":",
-                      "0.5",
-                      ";}",
-                      ";background-color:",
-                      [Function],
-                      ";}}",
-                    ],
-                  },
-                  "displayName": "Input__InputWrapper",
-                  "foldedComponentIds": Array [],
-                  "render": [Function],
-                  "styledComponentId": "Input__InputWrapper-sc-1qr5ihg-1",
-                  "target": "div",
-                  "toString": [Function],
-                  "warnTooManyClasses": [Function],
-                  "withComponent": [Function],
-                }
-              }
-              forwardedRef={null}
-              hasLabel={true}
-              valid={false}
-            >
-              <div
-                className="c1"
-              >
-                <input
-                  onChange={[MockFunction]}
-                />
-                <Input__Icon
-                  className="fa fa-times-circle"
-                  visible={true}
-                >
-                  <StyledComponent
-                    className="fa fa-times-circle"
-                    forwardedComponent={
-                      Object {
-                        "$$typeof": Symbol(react.forward_ref),
-                        "attrs": Array [],
-                        "componentStyle": ComponentStyle {
-                          "componentId": "Input__Icon-sc-1qr5ihg-0",
-                          "isStatic": false,
-                          "lastClassName": "c2",
-                          "rules": Array [
-                            "position:absolute;right:10px;visibility:",
-                            [Function],
-                            ";color:",
-                            [Function],
-                            ";",
-                          ],
-                        },
-                        "displayName": "Input__Icon",
-                        "foldedComponentIds": Array [],
-                        "render": [Function],
-                        "styledComponentId": "Input__Icon-sc-1qr5ihg-0",
-                        "target": "i",
-                        "toString": [Function],
-                        "warnTooManyClasses": [Function],
-                        "withComponent": [Function],
-                      }
-                    }
-                    forwardedRef={null}
-                    visible={true}
-                  >
-                    <i
-                      className="fa fa-times-circle c2"
-                    />
-                  </StyledComponent>
-                </Input__Icon>
-              </div>
-            </StyledComponent>
-          </Input__InputWrapper>
-          <Input__ValidationMessage
-            remove={false}
-            valid={false}
-            visible={true}
-          >
-            <StyledComponent
-              forwardedComponent={
-                Object {
-                  "$$typeof": Symbol(react.forward_ref),
-                  "attrs": Array [],
-                  "componentStyle": ComponentStyle {
-                    "componentId": "Input__ValidationMessage-sc-1qr5ihg-3",
-                    "isStatic": false,
-                    "lastClassName": "c3",
-                    "rules": Array [
-                      "display:",
-                      [Function],
-                      ";padding-left:",
-                      [Function],
-                      ";margin-top:",
-                      [Function],
-                      ";font-size:",
-                      [Function],
-                      ";text-align:left;color:",
-                      [Function],
-                      ";visibility:",
-                      [Function],
-                      ";",
-                    ],
-                  },
-                  "displayName": "Input__ValidationMessage",
-                  "foldedComponentIds": Array [],
-                  "render": [Function],
-                  "styledComponentId": "Input__ValidationMessage-sc-1qr5ihg-3",
-                  "target": "span",
-                  "toString": [Function],
-                  "warnTooManyClasses": [Function],
-                  "withComponent": [Function],
-                }
-              }
-              forwardedRef={null}
-              remove={false}
-              valid={false}
+            <input
+              onChange={[MockFunction]}
+            />
+            <Input__Icon
+              className="fa fa-times-circle"
               visible={true}
             >
-              <span
-                className="c3"
-              >
-                Doh!
-              </span>
-            </StyledComponent>
-          </Input__ValidationMessage>
-        </div>
-      </Input>
-    </StyledComponent>
+              <i
+                className="c2 fa fa-times-circle"
+              />
+            </Input__Icon>
+          </div>
+        </Input__InputWrapper>
+        <Input__ValidationMessage
+          remove={false}
+          valid={false}
+          visible={true}
+        >
+          <span
+            className="c3"
+          >
+            Doh!
+          </span>
+        </Input__ValidationMessage>
+      </div>
+    </Input>
   </Input>
-</ThemeProvider>
+</Component>
 `;

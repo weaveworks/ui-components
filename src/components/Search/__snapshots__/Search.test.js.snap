@@ -176,12 +176,12 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
 }
 
 .c0 .c5,
-.c0 .c10 {
+.c0 .Dropdown-sc-17i3rgt-7 {
   padding: 0;
   margin: 0;
 }
 
-.c0 .c10 {
+.c0 .Dropdown-sc-17i3rgt-7 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -189,7 +189,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   border-left: 1px solid hsl(0,0%,80%);
 }
 
-.c0 .c10 .dropdown-popover {
+.c0 .Dropdown-sc-17i3rgt-7 .dropdown-popover {
   width: auto;
 }
 
@@ -213,7 +213,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
   className="c0"
 >
   <i
-    className="fa fa-search c1"
+    className="c1 fa fa-search"
     disabled={false}
   />
   <div
@@ -267,7 +267,7 @@ exports[`<Search /> snapshots renders a group of terms 1`] = `
           value=""
         />
         <i
-          className="fa fa-times-circle c8"
+          className="c8 fa fa-times-circle"
         />
       </div>
       <span
@@ -435,12 +435,12 @@ exports[`<Search /> snapshots renders a search string 1`] = `
 }
 
 .c0 .c4,
-.c0 .c9 {
+.c0 .Dropdown-sc-17i3rgt-7 {
   padding: 0;
   margin: 0;
 }
 
-.c0 .c9 {
+.c0 .Dropdown-sc-17i3rgt-7 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -448,7 +448,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   border-left: 1px solid hsl(0,0%,80%);
 }
 
-.c0 .c9 .dropdown-popover {
+.c0 .Dropdown-sc-17i3rgt-7 .dropdown-popover {
   width: auto;
 }
 
@@ -472,7 +472,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
   className="c0"
 >
   <i
-    className="fa fa-search c1"
+    className="c1 fa fa-search"
     disabled={false}
   />
   <div
@@ -499,7 +499,7 @@ exports[`<Search /> snapshots renders a search string 1`] = `
           value="ui-server"
         />
         <i
-          className="fa fa-times-circle c7"
+          className="c7 fa fa-times-circle"
         />
       </div>
       <span
@@ -667,12 +667,12 @@ exports[`<Search /> snapshots renders empty 1`] = `
 }
 
 .c0 .c4,
-.c0 .c9 {
+.c0 .Dropdown-sc-17i3rgt-7 {
   padding: 0;
   margin: 0;
 }
 
-.c0 .c9 {
+.c0 .Dropdown-sc-17i3rgt-7 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -680,7 +680,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
   border-left: 1px solid hsl(0,0%,80%);
 }
 
-.c0 .c9 .dropdown-popover {
+.c0 .Dropdown-sc-17i3rgt-7 .dropdown-popover {
   width: auto;
 }
 
@@ -704,7 +704,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
   className="c0"
 >
   <i
-    className="fa fa-search c1"
+    className="c1 fa fa-search"
     disabled={false}
   />
   <div
@@ -731,7 +731,7 @@ exports[`<Search /> snapshots renders empty 1`] = `
           value=""
         />
         <i
-          className="fa fa-times-circle c7"
+          className="c7 fa fa-times-circle"
         />
       </div>
       <span
@@ -846,7 +846,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
   padding: 8px;
 }
 
-.c13 {
+.c12 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -855,13 +855,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
   cursor: pointer;
 }
 
-.c12 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding-right: 24px;
-  padding-left: 12px;
-  cursor: pointer;
+.c13 {
   height: 36px;
   box-sizing: border-box;
   border-radius: 2px;
@@ -873,11 +867,11 @@ exports[`<Search /> snapshots renders filters 1`] = `
   display: flex;
 }
 
-.c12 .c11 {
+.c13 .c11 {
   padding: 0;
 }
 
-.c12 div:last-child {
+.c13 div:last-child {
   margin-left: auto;
 }
 
@@ -988,7 +982,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
   className="c0"
 >
   <i
-    className="fa fa-search c1"
+    className="c1 fa fa-search"
     disabled={false}
   />
   <div
@@ -1015,7 +1009,7 @@ exports[`<Search /> snapshots renders filters 1`] = `
           value=""
         />
         <i
-          className="fa fa-times-circle c7"
+          className="c7 fa fa-times-circle"
         />
       </div>
       <span
@@ -1030,18 +1024,18 @@ exports[`<Search /> snapshots renders filters 1`] = `
     title="Filters"
   >
     <div
-      className="c11 dropdown-toggle c12"
+      className="c11 c12 c13 dropdown-toggle"
       disabled={false}
       onClick={[Function]}
     >
       <div
-        className="c11 c13"
+        className="c11 c12"
         disabled={false}
       >
         Filters
       </div>
       <span
-        className="fa fa-caret-down c14"
+        className="c14 fa fa-caret-down"
       />
     </div>
   </div>

@@ -1,185 +1,117 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Code /> should render correctly 1`] = `
-<StyledComponent
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "Code__CodeWrapper-sc-1no9z1g-1",
-        "isStatic": false,
-        "lastClassName": "hZydFr",
-        "rules": Array [
-          "position:relative;background-color:",
-          [Function],
-          ";box-sizing:border-box;border-radius:",
-          [Function],
-          ";cursor:pointer;&:hover ",
-          ".Code__CopyNotice-sc-1no9z1g-0",
-          "{opacity:0.9;}",
-        ],
-      },
-      "displayName": "Code__CodeWrapper",
-      "foldedComponentIds": Array [],
-      "render": [Function],
-      "styledComponentId": "Code__CodeWrapper-sc-1no9z1g-1",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
+<div
+  className="Code__CodeWrapper-sc-1no9z1g-1 jTyFrG"
   onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <Code__ScrollWrap>
-    <Code__Content>
-      <Code__Pre>
+  <div
+    className="Code__ScrollWrap-sc-1no9z1g-2 djYguF"
+  >
+    <div
+      className="Code__Content-sc-1no9z1g-3 dsHiaX"
+    >
+      <pre
+        className="Code__Pre-sc-1no9z1g-4 bxgykZ"
+      >
         such code much programming
-      </Code__Pre>
-    </Code__Content>
-  </Code__ScrollWrap>
-  <Code__CopyNotice
-    isCopying={false}
-    isHovered={false}
+      </pre>
+    </div>
+  </div>
+  <div
+    className="Code__CopyNotice-sc-1no9z1g-0 cuyWgG"
   >
     Copy to clipboard
-  </Code__CopyNotice>
-</StyledComponent>
+  </div>
+</div>
 `;
 
 exports[`<Code /> should render multi line function correctly with multiCommand=true 1`] = `
-<StyledComponent
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "Code__CodeWrapper-sc-1no9z1g-1",
-        "isStatic": false,
-        "lastClassName": "hZydFr",
-        "rules": Array [
-          "position:relative;background-color:",
-          [Function],
-          ";box-sizing:border-box;border-radius:",
-          [Function],
-          ";cursor:pointer;&:hover ",
-          ".Code__CopyNotice-sc-1no9z1g-0",
-          "{opacity:0.9;}",
-        ],
-      },
-      "displayName": "Code__CodeWrapper",
-      "foldedComponentIds": Array [],
-      "render": [Function],
-      "styledComponentId": "Code__CodeWrapper-sc-1no9z1g-1",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
+<div
+  className="Code__CodeWrapper-sc-1no9z1g-1 jTyFrG"
   onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <Code__ScrollWrap>
-    <Code__Content>
-      <Code__Pre>
-        <Code__PaddedLine
-          key="sudo curl -l git.io/scope -o /usr/local/bin/scope"
+  <div
+    className="Code__ScrollWrap-sc-1no9z1g-2 djYguF"
+  >
+    <div
+      className="Code__Content-sc-1no9z1g-3 dsHiaX"
+    >
+      <pre
+        className="Code__Pre-sc-1no9z1g-4 bxgykZ"
+      >
+        <div
+          className="Code__PaddedLine-sc-1no9z1g-5 cWhzHF"
         >
           sudo curl -l git.io/scope -o /usr/local/bin/scope
           
 
-        </Code__PaddedLine>
-        <Code__PaddedLine
-          key="sudo chmod a+x /usr/local/bin/scope"
+        </div>
+        <div
+          className="Code__PaddedLine-sc-1no9z1g-5 cWhzHF"
         >
           sudo chmod a+x /usr/local/bin/scope
           
 
-        </Code__PaddedLine>
-        <Code__PaddedLine
-          key="scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works"
+        </div>
+        <div
+          className="Code__PaddedLine-sc-1no9z1g-5 cWhzHF"
         >
           scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
           
 
-        </Code__PaddedLine>
-      </Code__Pre>
-    </Code__Content>
-  </Code__ScrollWrap>
-  <Code__CopyNotice
-    isCopying={false}
-    isHovered={false}
+        </div>
+      </pre>
+    </div>
+  </div>
+  <div
+    className="Code__CopyNotice-sc-1no9z1g-0 cuyWgG"
   >
     Copy to clipboard
-  </Code__CopyNotice>
-</StyledComponent>
+  </div>
+</div>
 `;
 
 exports[`<Code /> should render multi line jsx correctly with multiCommand=true 1`] = `
-<StyledComponent
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "Code__CodeWrapper-sc-1no9z1g-1",
-        "isStatic": false,
-        "lastClassName": "hZydFr",
-        "rules": Array [
-          "position:relative;background-color:",
-          [Function],
-          ";box-sizing:border-box;border-radius:",
-          [Function],
-          ";cursor:pointer;&:hover ",
-          ".Code__CopyNotice-sc-1no9z1g-0",
-          "{opacity:0.9;}",
-        ],
-      },
-      "displayName": "Code__CodeWrapper",
-      "foldedComponentIds": Array [],
-      "render": [Function],
-      "styledComponentId": "Code__CodeWrapper-sc-1no9z1g-1",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
+<div
+  className="Code__CodeWrapper-sc-1no9z1g-1 jTyFrG"
   onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <Code__ScrollWrap>
-    <Code__Content>
-      <Code__Pre>
-        <Code__PaddedLine
-          key="0/.0"
+  <div
+    className="Code__ScrollWrap-sc-1no9z1g-2 djYguF"
+  >
+    <div
+      className="Code__Content-sc-1no9z1g-3 dsHiaX"
+    >
+      <pre
+        className="Code__Pre-sc-1no9z1g-4 bxgykZ"
+      >
+        <div
+          className="Code__PaddedLine-sc-1no9z1g-5 cWhzHF"
         >
           <div>
             sudo curl -L git.io/scope -o /usr/local/bin/scope
           </div>
           
 
-        </Code__PaddedLine>
-        <Code__PaddedLine
-          key="1/.1"
+        </div>
+        <div
+          className="Code__PaddedLine-sc-1no9z1g-5 cWhzHF"
         >
           <div>
             sudo chmod a+x /usr/local/bin/scope
           </div>
           
 
-        </Code__PaddedLine>
-        <Code__PaddedLine
-          key="2/.2"
+        </div>
+        <div
+          className="Code__PaddedLine-sc-1no9z1g-5 cWhzHF"
         >
           <div>
             scope launch 
@@ -188,86 +120,62 @@ exports[`<Code /> should render multi line jsx correctly with multiCommand=true 
           </div>
           
 
-        </Code__PaddedLine>
-      </Code__Pre>
-    </Code__Content>
-  </Code__ScrollWrap>
-  <Code__CopyNotice
-    isCopying={false}
-    isHovered={false}
+        </div>
+      </pre>
+    </div>
+  </div>
+  <div
+    className="Code__CopyNotice-sc-1no9z1g-0 cuyWgG"
   >
     Copy to clipboard
-  </Code__CopyNotice>
-</StyledComponent>
+  </div>
+</div>
 `;
 
 exports[`<Code /> should render multi line string correctly with multiCommand=true 1`] = `
-<StyledComponent
-  forwardedComponent={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "attrs": Array [],
-      "componentStyle": ComponentStyle {
-        "componentId": "Code__CodeWrapper-sc-1no9z1g-1",
-        "isStatic": false,
-        "lastClassName": "hZydFr",
-        "rules": Array [
-          "position:relative;background-color:",
-          [Function],
-          ";box-sizing:border-box;border-radius:",
-          [Function],
-          ";cursor:pointer;&:hover ",
-          ".Code__CopyNotice-sc-1no9z1g-0",
-          "{opacity:0.9;}",
-        ],
-      },
-      "displayName": "Code__CodeWrapper",
-      "foldedComponentIds": Array [],
-      "render": [Function],
-      "styledComponentId": "Code__CodeWrapper-sc-1no9z1g-1",
-      "target": "div",
-      "toString": [Function],
-      "warnTooManyClasses": [Function],
-      "withComponent": [Function],
-    }
-  }
-  forwardedRef={null}
+<div
+  className="Code__CodeWrapper-sc-1no9z1g-1 jTyFrG"
   onClick={[Function]}
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}
 >
-  <Code__ScrollWrap>
-    <Code__Content>
-      <Code__Pre>
-        <Code__PaddedLine
-          key="sudo curl -l git.io/scope -o /usr/local/bin/scope"
+  <div
+    className="Code__ScrollWrap-sc-1no9z1g-2 djYguF"
+  >
+    <div
+      className="Code__Content-sc-1no9z1g-3 dsHiaX"
+    >
+      <pre
+        className="Code__Pre-sc-1no9z1g-4 bxgykZ"
+      >
+        <div
+          className="Code__PaddedLine-sc-1no9z1g-5 cWhzHF"
         >
           sudo curl -l git.io/scope -o /usr/local/bin/scope
           
 
-        </Code__PaddedLine>
-        <Code__PaddedLine
-          key="sudo chmod a+x /usr/local/bin/scope"
+        </div>
+        <div
+          className="Code__PaddedLine-sc-1no9z1g-5 cWhzHF"
         >
           sudo chmod a+x /usr/local/bin/scope
           
 
-        </Code__PaddedLine>
-        <Code__PaddedLine
-          key="scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works"
+        </div>
+        <div
+          className="Code__PaddedLine-sc-1no9z1g-5 cWhzHF"
         >
           scope launch https://yjsjsubdx1h8un1f858gp7to8d51zdre@frontend.dev.weave.works
           
 
-        </Code__PaddedLine>
-      </Code__Pre>
-    </Code__Content>
-  </Code__ScrollWrap>
-  <Code__CopyNotice
-    isCopying={false}
-    isHovered={false}
+        </div>
+      </pre>
+    </div>
+  </div>
+  <div
+    className="Code__CopyNotice-sc-1no9z1g-0 cuyWgG"
   >
     Copy to clipboard
-  </Code__CopyNotice>
-</StyledComponent>
+  </div>
+</div>
 `;

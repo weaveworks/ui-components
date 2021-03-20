@@ -67,14 +67,13 @@ const LabelSvg = styled.text.attrs(
   font-size: ${props => props.theme.fontSizes.normal};
 `;
 
-const LabelMinorSvg = styled.text.attrs({
-  fill: props =>
-    props.contrastMode
-      ? props.theme.colors.black
-      : props.theme.colors.purple600,
+const LabelMinorSvg = styled.text.attrs(props => ({
+  fill: props.contrastMode
+    ? props.theme.colors.black
+    : props.theme.colors.purple600,
   textAnchor: 'middle',
   y: -20,
-})`
+}))`
   font-size: ${props => props.theme.fontSizes.small};
 `;
 
