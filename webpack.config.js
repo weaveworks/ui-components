@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 let externals;
@@ -110,7 +110,7 @@ if (process.env.RELEASE) {
   ];
 
   optimization = {
-    minimizer: [new UglifyJsPlugin()],
+    minimizer: [new TerserPlugin()],
   };
 } else {
   // Normal sass loader. This complains if it runs in the RELEASE job, so only apply it if RELEASE
