@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.22.7](https://github.com/weaveworks/ui-components/compare/v0.22.6...v0.22.7) (2021-07-09)
+
+
+### Features
+
+* migrate from uglifyjs-webpack-plugin to terser-webpack-plugin ([4f14e82](https://github.com/weaveworks/ui-components/commit/4f14e82b9bae4d1ee856f172575cdc28c9bdfebd))
+
 ### [0.22.6](https://github.com/weaveworks/ui-components/compare/v0.22.5...v0.22.6) (2020-06-08)
 
 ### [0.22.5](https://github.com/weaveworks/ui-components/compare/v0.22.4...v0.22.5) (2020-06-08)
