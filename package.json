@@ -118,7 +118,7 @@
     "jest-styled-components": "^6.3.3",
     "less": "2.7.2",
     "lodash": "^4.17.12",
-    "marked": "0.3.19",
+    "marked": "4.0.10",
     "moment": "2.21.0",
     "node-sass": "^4.14.1",
     "prettier": "1.15.2",
