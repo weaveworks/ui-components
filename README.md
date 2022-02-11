@@ -3,7 +3,7 @@
 
 See it in action:
 
-http://weaveworks-ui-components.s3-website-us-west-2.amazonaws.com/
+https://ui-components.weave.works/
 
 ## Prerequisites
 
